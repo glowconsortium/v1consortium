@@ -1,2 +1,5 @@
-# Summary
-A brief summary of the content goes here.
++++
+date = '{{ .Date }}'
+draft = true
+title = '{{ replace .File.ContentBaseName "-" " " | title }}'
++++
