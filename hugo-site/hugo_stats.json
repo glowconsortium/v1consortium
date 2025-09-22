@@ -1,0 +1,59 @@
+{
+  "htmlElements": {
+    "tags": [
+      "a",
+      "article",
+      "body",
+      "code",
+      "div",
+      "footer",
+      "h1",
+      "h2",
+      "h3",
+      "head",
+      "header",
+      "html",
+      "li",
+      "link",
+      "main",
+      "meta",
+      "nav",
+      "p",
+      "script",
+      "strong",
+      "title",
+      "ul"
+    ],
+    "classes": [
+      "bg-gray-50",
+      "container",
+      "font-bold",
+      "lg:px-8",
+      "max-w-4xl",
+      "max-w-none",
+      "mb-4",
+      "mb-8",
+      "mx-auto",
+      "prose",
+      "prose-lg",
+      "px-4",
+      "py-12",
+      "sm:px-6",
+      "text-4xl",
+      "text-gray-900"
+    ],
+    "ids": [
+      "analytics",
+      "content-organization",
+      "data-management",
+      "enterprise-plan",
+      "form-builder",
+      "how-to-add-a-new-post",
+      "introduction",
+      "powerful-features-for-modern-forms",
+      "professional-plan",
+      "simple-transparent-pricing",
+      "starter-plan"
+    ]
+  }
+}

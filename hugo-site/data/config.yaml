@@ -1,0 +1,10 @@
+# File: /hugo-site/hugo-site/data/config.yaml
+
+site:
+  title: "Your Site Title"
+  description: "A brief description of your site."
+  author: "Your Name"
+  baseURL: "https://yourdomain.com/"
+  languageCode: "en-us"
+  params:
+    customParam: "Custom value for your site"
