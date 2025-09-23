@@ -5,57 +5,59 @@ layout: "simple"
 
 ## Terms of Service
 
-*Last Updated: July 2025*
+*Last Updated: September 2025*
 
-These Terms of Service ("Terms") govern your use of FleetOps, a fleet management platform provided by FleetOps, Inc. ("FleetOps," "we," "us," or "our"). By accessing or using our services, you agree to be bound by these Terms.
+These Terms of Service ("Terms") govern your use of V1 Consortium compliance and screening services provided by V1 Consortium, LLC ("V1 Consortium," "we," "us," or "our"). By accessing or using our services, you agree to be bound by these Terms.
 
 ---
 
 ## 1. Acceptance of Terms
 
-By creating an account, accessing our platform, or using any FleetOps services, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, you may not use our services.
+By creating an account, accessing our platform, or using any V1 Consortium services, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, you may not use our services.
 
-These Terms apply to all users, including fleet managers, drivers, dispatchers, administrators, and any other authorized personnel within your organization.
+These Terms apply to all users, including employers, HR managers, Designated Employer Representatives (DERs), safety managers, employees, and any other authorized personnel within your organization.
 
 ---
 
 ## 2. Description of Service
 
-FleetOps is a comprehensive fleet management platform that provides:
+V1 Consortium is a comprehensive Third Party Administrator (TPA) providing compliance and screening services including:
 
-* **Fleet Operations Management**: Vehicle tracking, driver management, and trip coordination
-* **Compliance Management**: DOT compliance, IFTA reporting, UCR registration, and regulatory tracking
-* **AI-Powered Features**: Predictive maintenance, route optimization, and intelligent analytics
-* **Document Management**: Secure storage and management of fleet-related documents
-* **Communication Tools**: In-platform messaging and notification systems
-* **Reporting and Analytics**: Performance metrics, compliance reports, and operational insights
+* **Drug Testing Administration**: DOT and non-DOT drug and alcohol testing programs
+* **MVR Monitoring**: Continuous Motor Vehicle Record monitoring and violation alerts
+* **DOT Physical Management**: Medical examination coordination and certificate tracking
+* **Background Check Services**: Criminal history, employment verification, and reference checks
+* **Compliance Management**: Regulatory tracking, reporting, and violation management
+* **Document Management**: Secure storage of medical and compliance documentation
+* **Training Services**: Compliance education and certification programs
 
 ---
 
 ## 3. Account Registration and Eligibility
 
 ### 3.1 Eligibility
-You must be at least 18 years old and have the legal authority to enter into this agreement on behalf of your organization. By using FleetOps, you represent that you meet these requirements.
+You must be at least 18 years old and have the legal authority to enter into this agreement on behalf of your organization. By using V1 Consortium services, you represent that you meet these requirements.
 
 ### 3.2 Account Information
 You agree to provide accurate, current, and complete information during registration and to update such information to keep it accurate, current, and complete. You are responsible for safeguarding your account credentials and for all activities that occur under your account.
 
 ### 3.3 Organization Accounts
-FleetOps is designed for business use. Individual accounts must be associated with a legitimate transportation or logistics business. We reserve the right to verify your business credentials and operating authority.
+V1 Consortium services are designed for business use. Organizations must provide legitimate business credentials and may be required to demonstrate compliance program authority.
 
 ---
 
 ## 4. Subscription Plans and Billing
 
 ### 4.1 Subscription Tiers
-FleetOps offers various subscription plans based on fleet size and feature requirements:
-* **Starter Plan**: For small operations with basic features
-* **Professional Plan**: For growing fleets with advanced features
-* **Enterprise Plan**: For large operations with custom requirements
+V1 Consortium offers various subscription plans based on employee count and service requirements:
+* **Starter Plan**: For small organizations with basic compliance needs
+* **Professional Plan**: For growing organizations with comprehensive requirements
+* **Enterprise Plan**: For large organizations with advanced compliance programs
+* **Custom Plans**: Tailored solutions for specialized requirements
 
 ### 4.2 Billing and Payment
 * Subscription fees are billed monthly or annually in advance
-* Usage-based charges (additional carriers, assets, AI tokens) are billed monthly in arrears
+* Additional services (background checks, training modules) are billed as used
 * All fees are non-refundable except as explicitly stated in these Terms
 * You authorize us to charge your designated payment method for all fees
 
@@ -63,40 +65,41 @@ FleetOps offers various subscription plans based on fleet size and feature requi
 We may change our fees with 30 days' written notice. Continued use of the service after fee changes constitutes acceptance of the new fees.
 
 ### 4.4 Late Payments
-Accounts with overdue payments may be suspended. A reconnection fee may apply when service is restored.
+Accounts with overdue payments may be suspended. Critical compliance services may be maintained during brief payment delays, but extended non-payment will result in service termination.
 
 ---
 
 ## 5. Acceptable Use Policy
 
 ### 5.1 Permitted Use
-You may use FleetOps only for legitimate fleet management and transportation business purposes in compliance with all applicable laws and regulations.
+You may use V1 Consortium services only for legitimate compliance and screening purposes in accordance with all applicable laws and regulations.
 
 ### 5.2 Prohibited Activities
 You agree not to:
 * Use the service for any illegal or unauthorized purpose
-* Violate any federal, state, or local transportation regulations
+* Violate any federal, state, or local employment or privacy laws
 * Share account credentials with unauthorized persons
-* Attempt to gain unauthorized access to our systems
+* Attempt to gain unauthorized access to our systems or other users' data
 * Upload malicious code or engage in activities that could harm our infrastructure
-* Use the service to harass, abuse, or harm others
+* Use the service to discriminate against or harm employees or applicants
 * Interfere with or disrupt the service or servers
-* Create false or misleading compliance reports
+* Create false or misleading compliance reports or documentation
 
-### 5.3 DOT and Regulatory Compliance
-You are solely responsible for ensuring your operations comply with all applicable DOT regulations, including but not limited to:
-* Hours of Service rules
-* Drug and alcohol testing requirements
-* Vehicle inspection and maintenance standards
-* Driver qualification requirements
-* Operating authority compliance
+### 5.3 Regulatory Compliance
+You are solely responsible for ensuring your compliance programs meet all applicable regulations, including but not limited to:
+* DOT Part 40 drug and alcohol testing requirements
+* FMCSA regulations for commercial drivers
+* Fair Credit Reporting Act (FCRA) requirements
+* Equal Employment Opportunity (EEO) laws
+* State and local employment regulations
+* HIPAA privacy requirements
 
 ---
 
 ## 6. Data and Privacy
 
 ### 6.1 Your Data
-You retain ownership of all data you input into FleetOps ("Customer Data"). You grant us a limited license to use Customer Data solely to provide our services.
+You retain ownership of all data you provide to V1 Consortium ("Customer Data"). You grant us a limited license to use Customer Data solely to provide our services and comply with legal requirements.
 
 ### 6.2 Platform Data
 We own all data generated by our platform, including analytics, insights, and aggregated information, provided such data does not identify you or your organization.

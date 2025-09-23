@@ -1,81 +1,123 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on MOVsm</title>
-    <link>https://www.carecron.com/tags/</link>
-    <description>Recent content in Tags on MOVsm</description>
+    <title>Tags on V1 Consortium - Compliance &amp; Screening Services</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on V1 Consortium - Compliance &amp; Screening Services</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Jul 2025 16:06:52 -0400</lastBuildDate>
-    <atom:link href="https://www.carecron.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Compliance</title>
-      <link>https://www.carecron.com/tags/compliance/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/compliance/</guid>
+      <link>http://localhost:1313/tags/compliance/</link>
+      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/compliance/</guid>
       <description></description>
     </item>
     <item>
       <title>Dot</title>
-      <link>https://www.carecron.com/tags/dot/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/dot/</guid>
+      <link>http://localhost:1313/tags/dot/</link>
+      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/dot/</guid>
       <description></description>
     </item>
     <item>
-      <title>Eld</title>
-      <link>https://www.carecron.com/tags/eld/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/eld/</guid>
+      <title>Drug Testing</title>
+      <link>http://localhost:1313/tags/drug-testing/</link>
+      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/drug-testing/</guid>
       <description></description>
     </item>
     <item>
-      <title>Hos</title>
-      <link>https://www.carecron.com/tags/hos/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/hos/</guid>
+      <title>Part 40</title>
+      <link>http://localhost:1313/tags/part-40/</link>
+      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/part-40/</guid>
       <description></description>
     </item>
     <item>
-      <title>Hours-of-Service</title>
-      <link>https://www.carecron.com/tags/hours-of-service/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/hours-of-service/</guid>
+      <title>Transportation</title>
+      <link>http://localhost:1313/tags/transportation/</link>
+      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/transportation/</guid>
       <description></description>
     </item>
     <item>
-      <title>Trucking-Regulations</title>
-      <link>https://www.carecron.com/tags/trucking-regulations/</link>
-      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/trucking-regulations/</guid>
+      <title>Driver Qualification</title>
+      <link>http://localhost:1313/tags/driver-qualification/</link>
+      <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/driver-qualification/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fleet Safety</title>
+      <link>http://localhost:1313/tags/fleet-safety/</link>
+      <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/fleet-safety/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MVR</title>
+      <link>http://localhost:1313/tags/mvr/</link>
+      <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mvr/</guid>
       <description></description>
     </item>
     <item>
       <title>Interstate-Commerce</title>
-      <link>https://www.carecron.com/tags/interstate-commerce/</link>
+      <link>http://localhost:1313/tags/interstate-commerce/</link>
       <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/interstate-commerce/</guid>
+      <guid>http://localhost:1313/tags/interstate-commerce/</guid>
       <description></description>
     </item>
     <item>
       <title>Trucking-Registration</title>
-      <link>https://www.carecron.com/tags/trucking-registration/</link>
+      <link>http://localhost:1313/tags/trucking-registration/</link>
       <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/trucking-registration/</guid>
+      <guid>http://localhost:1313/tags/trucking-registration/</guid>
       <description></description>
     </item>
     <item>
       <title>Ucr</title>
-      <link>https://www.carecron.com/tags/ucr/</link>
+      <link>http://localhost:1313/tags/ucr/</link>
       <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/ucr/</guid>
+      <guid>http://localhost:1313/tags/ucr/</guid>
       <description></description>
     </item>
     <item>
       <title>Unified-Carrier-Registration</title>
-      <link>https://www.carecron.com/tags/unified-carrier-registration/</link>
+      <link>http://localhost:1313/tags/unified-carrier-registration/</link>
       <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://www.carecron.com/tags/unified-carrier-registration/</guid>
+      <guid>http://localhost:1313/tags/unified-carrier-registration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>http://localhost:1313/tags/hugo/</link>
+      <pubDate>Sun, 23 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Optimization</title>
+      <link>http://localhost:1313/tags/optimization/</link>
+      <pubDate>Sun, 23 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/optimization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Performance</title>
+      <link>http://localhost:1313/tags/performance/</link>
+      <pubDate>Sun, 23 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/performance/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Seo</title>
+      <link>http://localhost:1313/tags/seo/</link>
+      <pubDate>Sun, 23 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/seo/</guid>
       <description></description>
     </item>
   </channel>

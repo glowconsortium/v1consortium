@@ -2,119 +2,167 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.carecron.com/blog/</loc>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/compliance/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/dot/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/dot-compliance/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/dot-drug-testing-guide/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/drug-testing/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/drug-testing/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/part-40/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/transportation/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/driver-qualification/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/categories/</loc>
+    <loc>http://localhost:1313/categories/fleet-safety/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/categories/compliance/</loc>
+    <loc>http://localhost:1313/tags/fleet-safety/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/compliance/</loc>
+    <loc>http://localhost:1313/tags/mvr/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/dot/</loc>
+    <loc>http://localhost:1313/categories/mvr-monitoring/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/eld/</loc>
+    <loc>http://localhost:1313/blog/hours-of-service-explained/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/hos/</loc>
+    <loc>http://localhost:1313/categories/compliance/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/blog/hours-of-service-explained/</loc>
+    <loc>http://localhost:1313/tags/interstate-commerce/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/hours-of-service/</loc>
+    <loc>http://localhost:1313/categories/registration/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/categories/regulations/</loc>
+    <loc>http://localhost:1313/tags/trucking-registration/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/</loc>
+    <loc>http://localhost:1313/tags/ucr/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/trucking-regulations/</loc>
+    <loc>http://localhost:1313/blog/ucr-registration-guide/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/interstate-commerce/</loc>
+    <loc>http://localhost:1313/tags/unified-carrier-registration/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/categories/registration/</loc>
+    <loc>http://localhost:1313/jobs/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/trucking-registration/</loc>
+    <loc>http://localhost:1313/jobs/product-manager/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/ucr/</loc>
+    <loc>http://localhost:1313/jobs/senior-frontend-developer/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/blog/ucr-registration-guide/</loc>
+    <loc>http://localhost:1313/tags/hugo/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/tags/unified-carrier-registration/</loc>
+    <loc>http://localhost:1313/tags/optimization/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/jobs/</loc>
+    <loc>http://localhost:1313/blog/optimizing-hugo-performance/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/jobs/product-manager/</loc>
+    <loc>http://localhost:1313/categories/performance/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/jobs/senior-frontend-developer/</loc>
+    <loc>http://localhost:1313/tags/performance/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/6/</loc>
-  </url><url>
-    <loc>https://www.carecron.com/company/</loc>
+    <loc>http://localhost:1313/tags/seo/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/features/ai-system/</loc>
+    <loc>http://localhost:1313/6/</loc>
+  </url><url>
+    <loc>http://localhost:1313/company/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/features/compliance/</loc>
+    <loc>http://localhost:1313/features/ai-system/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/contact/</loc>
+    <loc>http://localhost:1313/features/background-checks/</loc>
+  </url><url>
+    <loc>http://localhost:1313/features/compliance/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/download-driver-application/</loc>
+    <loc>http://localhost:1313/jobs/compliance-manager/</loc>
+  </url><url>
+    <loc>http://localhost:1313/contact/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/features/security/</loc>
+    <loc>http://localhost:1313/features/dot-physicals/</loc>
+  </url><url>
+    <loc>http://localhost:1313/download-driver-application/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/features/</loc>
+    <loc>http://localhost:1313/jobs/drug-testing-coordinator/</loc>
+  </url><url>
+    <loc>http://localhost:1313/features/drug-testing/</loc>
+  </url><url>
+    <loc>http://localhost:1313/features/security/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/features/management-system/</loc>
+    <loc>http://localhost:1313/features/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/pricing/</loc>
+    <loc>http://localhost:1313/features/management-system/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/get-started/</loc>
+    <loc>http://localhost:1313/get-started/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/careers/</loc>
+    <loc>http://localhost:1313/careers/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/license/</loc>
+    <loc>http://localhost:1313/license/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/page/</loc>
+    <loc>http://localhost:1313/features/mvr-monitoring/</loc>
   </url><url>
-    <loc>https://www.carecron.com/privacy/</loc>
+    <loc>http://localhost:1313/page/</loc>
+  </url><url>
+    <loc>http://localhost:1313/privacy/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/sign-in/</loc>
+    <loc>http://localhost:1313/sign-in/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url><url>
-    <loc>https://www.carecron.com/terms/</loc>
+    <loc>http://localhost:1313/terms/</loc>
+    <lastmod>2025-07-06T16:06:52-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/pricing/</loc>
     <lastmod>2025-07-06T16:06:52-04:00</lastmod>
   </url>
 </urlset>

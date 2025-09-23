@@ -1,6 +1,6 @@
-baseURL = "https://www.carecron.com"
+baseURL = "https://www.v1consortium.com"
 languageCode = "en-us"
-title = "MOVsm"
+title = "V1 Consortium - Compliance & Screening Services"
 
 # Theme Config
 theme = "hugo-saasify-theme"
@@ -25,8 +25,8 @@ paginate = 6
 paginatePath = "page"
 
 [params]
-  description = ""
-  author = "Samuel Abasah"
+  description = "Comprehensive compliance and screening services for DOT and non-DOT clients. Drug testing, MVR monitoring, DOT physicals, and background checks."
+  author = "V1 Consortium"
   
   # Google Analytics ID (e.g., "G-XXXXXXXXXX")
   # googleAnalytics = "G-XXXXXXXXXX"
@@ -35,8 +35,8 @@ paginatePath = "page"
   # Global CTA Configuration
   [params.cta]
     enable = true
-    title = "Ready to share the experience?"
-    description = "Join companies already using our application to manage their resources."
+    title = "Ready to ensure compliance?"
+    description = "Join companies already using our platform to manage their compliance and screening programs."
     gradient_from = "#2563eb"  # Indigo-600
     gradient_to = "#7c3aed"    # Purple-600
     gradient_angle = 30
@@ -49,12 +49,9 @@ paginatePath = "page"
   
   # Social Media Links
   [params.social]
-    linkedin = "https://linkedin.com/in/chaomingli"
-    twitter = "https://twitter.com/lichaoming"
-    youtube = "https://youtube.com/@chaomingli"
-    facebook = "https://facebook.com/lichaoming"
-    instagram = "https://instagram.com/lichaoming"
-    github = "https://github.com/chaoming"
+    linkedin = "https://linkedin.com/company/v1consortium"
+    twitter = "https://twitter.com/v1consortium"
+    facebook = "https://facebook.com/v1consortium"
   
   # Footer Configuration
   [params.footer]
@@ -109,7 +106,7 @@ paginatePath = "page"
   [params.blog]
     enable = true
     title = "Latest Articles"
-    subtitle = "Learn more about web development and best practices"
+    subtitle = "Stay informed about compliance regulations and industry best practices"
     
     # Blog CTA configuration
     [params.blog.cta]
@@ -181,11 +178,10 @@ paginatePath = "page"
     [menu.main.params]
       has_submenu = true
       submenu = [
-        { name = "Security", url = "/features/security/" },
-        { name = "Management System", url = "/features/management-system/" },
-        { name = "Compliance Experience", url = "/features/compliance/" },
-        { name = "AI & Automation", url = "/features/ai-system/" }
-
+        { name = "Drug Testing", url = "/features/drug-testing/" },
+        { name = "MVR Monitoring", url = "/features/mvr-monitoring/" },
+        { name = "DOT Physicals", url = "/features/dot-physicals/" },
+        { name = "Background Checks", url = "/features/background-checks/" }
       ]
   [[menu.main]]
     name = "Pricing"
@@ -208,20 +204,20 @@ paginatePath = "page"
 
   # Footer Column 1 Menu
   [[menu.footer_column_1]]
-    name = "Security"
-    url = "/features/security/"
+    name = "Drug Testing"
+    url = "/features/drug-testing/"
     weight = 1
   [[menu.footer_column_1]]
-    name = "Management System"
-    url = "/features/management-system/"
+    name = "MVR Monitoring"
+    url = "/features/mvr-monitoring/"
     weight = 2
   [[menu.footer_column_1]]
-    name = "Compliance Experience"
-    url = "/features/compliance/"
+    name = "DOT Physicals"
+    url = "/features/dot-physicals/"
     weight = 3
   [[menu.footer_column_1]]
-    name = "AI & Automation"
-    url = "/features/ai-system/"
+    name = "Background Checks"
+    url = "/features/background-checks/"
     weight = 4
 
   # Footer Column 2 Menu

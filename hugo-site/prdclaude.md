@@ -1,103 +1,118 @@
-# FleetOps - Fleet Management System
+# V1 Consortium - Compliance & Screening Services Platform
 ## Product Requirements Document
 
 **Version:** 1.0  
-**Date:** April 23, 2025  
+**Date:** September 23, 2025  
 **Author:** Claude
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-This Product Requirements Document (PRD) outlines the functional and non-functional requirements for FleetOps, a comprehensive fleet management SaaS platform built with SvelteKit, TypeScript, and Supabase. The system enables organizations to manage carriers, trucks, trailers, drivers, and dispatchers with various user roles and subscription tiers.
+This Product Requirements Document (PRD) outlines the functional and non-functional requirements for V1 Consortium, a comprehensive compliance and screening services SaaS platform built with SvelteKit, TypeScript, and Supabase. The system enables organizations to manage drug testing, Motor Vehicle Record (MVR) checks, DOT physicals, and other compliance screening services for both DOT and non-DOT clients.
 
 ### 1.2 Scope
-FleetOps will provide a complete solution for transportation and logistics companies to manage their fleet operations, including carrier management, equipment tracking, driver assignment, trip recording, and performance analytics. The system will support both internal administrative users and external customer organizations with different subscription tiers.
+V1 Consortium will provide a complete solution for transportation companies, healthcare facilities, construction companies, and other organizations requiring employee screening and compliance management. The platform will manage drug testing programs, MVR monitoring, DOT physical scheduling, background checks, and compliance reporting with various user roles and subscription tiers.
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
-- **SU** - Super User
-- **BOL** - Bill of Lading
-- **ELD** - Electronic Logging Device
-- **Carrier** - A transportation company that owns and operates trucks
-- **Equipment** - A truck, trailer, or truck-trailer combination used for transportation
-- **Lane** - A table that defines operational routes for equipment with timing specifications
-- **Trip** - A single transportation journey from origin to destination
-- **Geopoint** - A geographic coordinate (latitude and longitude)
+- **DOT** - Department of Transportation
+- **MVR** - Motor Vehicle Record
+- **DER** - Designated Employer Representative
+- **MRO** - Medical Review Officer
+- **SAP** - Substance Abuse Professional
+- **TPA** - Third Party Administrator
+- **C/TPA** - Consortium/Third Party Administrator
+- **FMCSA** - Federal Motor Carrier Safety Administration
+- **CFR** - Code of Federal Regulations
+- **DOT Physical** - Department of Transportation Medical Examination
+- **Random Pool** - Group of employees subject to random drug testing
 
 ## 2. Product Overview
 
 ### 2.1 Product Perspective
-FleetOps is a new web-based SaaS application designed to serve the transportation and logistics industry. It will operate as a standalone system with potential integrations with external systems like email and ELD APIs.
+V1 Consortium is a new web-based SaaS application designed to serve as a comprehensive Third Party Administrator (TPA) for compliance and screening services. It operates as a standalone system with integrations to testing laboratories, MVR providers, medical examination facilities, and regulatory reporting systems.
 
 ### 2.2 Product Features
-- Organization management (internal, external, machines)
-- User management with role-based access control
-- Carrier and equipment management
-- Lane and trip management
-- Subscription and feature access control
-- Document management
-- In-app messaging
-- Analytics and reporting
-- Mobile-optimized driver interface
+- Consortium management for DOT and non-DOT clients
+- Drug and alcohol testing program administration
+- MVR monitoring and reporting
+- DOT physical scheduling and tracking
+- Background check coordination
+- Compliance reporting and dashboard
+- Client and employee management
+- Violation tracking and follow-up
+- Random testing pool management
+- Educational resources and training
+- Mobile-optimized interface for field operations
 
 ### 2.3 User Classes and Characteristics
 
 #### 2.3.1 Internal Users
-- **Internal Super User (internal_su)**: System administrators with full access to all features and organizations
-- **Internal User (internal_user)**: Support staff with restricted administrative access
+- **Internal Super User (internal_su)**: System administrators with full access to all features and client organizations
+- **Internal Administrator (internal_admin)**: Staff managing client accounts and compliance programs
+- **Internal Support (internal_support)**: Customer service representatives providing client support
 
 #### 2.3.2 External Users
-- **External Super User (external_su)**: Organization administrators with full access to their organization
-- **External Manager (external_manager)**: Manages carriers and overall operations
-- **External Dispatcher (external_dispatcher)**: Assigns drivers and manages trips
-- **External Driver (external_driver)**: Performs trips and updates status
-- **External Carrier Owner (external_carrier_owner)**: Owns and manages carriers
+- **Client Administrator (client_admin)**: Organization administrators managing their compliance programs
+- **DER (Designated Employer Representative)**: Manages drug testing programs and compliance
+- **Safety Manager (safety_manager)**: Oversees safety programs and compliance reporting
+- **HR Manager (hr_manager)**: Manages employee records and screening requirements
+- **Employee (employee)**: Individual subject to testing and compliance requirements
 
-#### 2.3.3 Machine Users
-- Automated services and integrations (placeholder for future expansion)
+#### 2.3.3 Provider Users
+- **MRO (Medical Review Officer)**: Reviews and validates drug test results
+- **SAP (Substance Abuse Professional)**: Provides evaluation and treatment recommendations
+- **Medical Examiner (medical_examiner)**: Conducts DOT physical examinations
 
 ### 2.4 Operating Environment
 - Web browsers (Chrome, Firefox, Safari, Edge)
-- Mobile devices (responsive design with mobile-optimized views for drivers)
+- Mobile devices (responsive design with mobile-optimized views)
 - Backend: SvelteKit server with Supabase
 - Database: PostgreSQL via Supabase
 
 ### 2.5 Design and Implementation Constraints
 - Built with SvelteKit and TypeScript
 - Utilizes Supabase for database, authentication, and storage
+- HIPAA compliant design for medical information
+- DOT regulatory compliance requirements
 - Responsive design to support desktop and mobile devices
 - RESTful API architecture
 
 ### 2.6 Assumptions and Dependencies
 - Reliable internet connectivity for users
 - Supabase services availability
-- Modern web browser support
+- Third-party integrations for testing labs and MVR providers
+- Compliance with federal and state regulations
 
 ## 3. Specific Requirements
 
 ### 3.1 Organization Management
 
 #### 3.1.1 Organization Types
-- **Internal**: Administrative organization for system management
-- **External**: Customer organizations using the system to manage their fleet
-- **Machines**: Service integrations and automated processes (placeholder)
+- **Internal**: V1 Consortium administrative organization
+- **Client**: Customer organizations using compliance services
+- **Provider**: Testing facilities, labs, and medical examiners
 
 #### 3.1.2 Organization Profile
-- Name
-- Type (internal, external, machines)
+- Company name
+- Type (internal, client, provider)
+- Industry classification
+- DOT/Non-DOT status
 - Contact information
-- Address
-- Logo
-- Subscription details (for external organizations)
-- Feature entitlements
+- Physical address
+- USDOT number (if applicable)
+- MC number (if applicable)
+- Subscription details
+- Compliance requirements
 - Created date
 - Status (active, inactive, trial)
 
 #### 3.1.3 Organization Management Functions
-- Create, read, update, delete (CRUD) operations for organizations
+- CRUD operations for organizations
 - Activate/deactivate organizations
 - Manage subscription status
-- Assign features based on subscription tier
-- Monitor usage against subscription limits
+- Assign compliance programs
+- Monitor regulatory requirements
+- Generate compliance certificates
 
 ### 3.2 User Management
 
@@ -106,9 +121,11 @@ FleetOps is a new web-based SaaS application designed to serve the transportatio
 - Email
 - Password (securely stored)
 - Full name
+- Title/Role
 - Contact information
 - Organization affiliation
-- Role
+- User role
+- Certifications
 - Status (active, inactive)
 - Profile picture
 - Created date
@@ -116,426 +133,456 @@ FleetOps is a new web-based SaaS application designed to serve the transportatio
 
 #### 3.2.2 User Roles and Permissions
 - **Internal Super User (internal_su)**
-  - Manage all organizations
-  - Create/manage internal users
-  - Manage all subscription tiers
+  - Manage all client organizations
   - Configure system settings
-  - Generate trial periods and promo codes
-  - Access all analytics and reports
+  - Generate reports across all clients
+  - Manage subscription tiers
+  - Access all compliance data
 
-- **Internal User (internal_user)**
-  - View organizations and users
-  - Provide support to external organizations
-  - Generate reports
+- **Internal Administrator (internal_admin)**
+  - Manage assigned client accounts
+  - Configure compliance programs
+  - Generate client reports
+  - Provide client support
+
+- **Internal Support (internal_support)**
+  - View client information
+  - Provide customer support
+  - Generate basic reports
   - Limited administrative capabilities
 
-- **External Super User (external_su)**
+- **Client Administrator (client_admin)**
   - Manage organization profile
-  - Invite and manage users within their organization
-  - Assign roles to users
-  - Access all features available to their subscription tier
-  - View organization-wide analytics
+  - Invite and manage users
+  - Configure compliance programs
+  - Access organization reports
+  - Manage employee roster
 
-- **External Manager (external_manager)**
-  - Manage carriers assigned to them
-  - View analytics for their carriers
-  - Create and manage channels
+- **DER (Designated Employer Representative)**
+  - Manage drug testing programs
+  - Review test results
+  - Handle compliance violations
+  - Generate testing reports
+  - Coordinate with MRO
 
-- **External Dispatcher (external_dispatcher)**
-  - Assign drivers to trips
-  - Monitor trip progress
-  - Update trip status
+- **Safety Manager (safety_manager)**
+  - Monitor compliance status
+  - Generate safety reports
+  - Manage training programs
+  - Track violations and corrective actions
 
-- **External Driver (external_driver)**
-  - View assigned trips
-  - Update trip status
-  - Upload trip documents
-  - View rate sheets
+- **HR Manager (hr_manager)**
+  - Manage employee records
+  - Schedule testing and physicals
+  - Track compliance requirements
+  - Generate HR reports
 
-- **External Carrier Owner (external_carrier_owner)**
-  - Manage specific carriers
-  - View carrier analytics
-  - Manage carrier integrations
+- **Employee (employee)**
+  - View personal compliance status
+  - Schedule appointments
+  - Access training materials
+  - Update personal information
 
 #### 3.2.3 User Management Functions
-- Registration request workflow
-- User approval process
-- User invitation system
-- Role assignment
-- Password reset
+- Registration and approval workflow
+- Role assignment and permissions
+- Password reset and security
 - Account activation/deactivation
 - User profile management
+- Training and certification tracking
 
 ### 3.3 Subscription Management
 
 #### 3.3.1 Subscription Tiers
-- **Free**
-  - 3 users
-  - 1 carrier
-  - 2 trucks
-  - 2 trailers
-  - 2 features (configurable)
-  - Limited storage
+- **Starter**
+  - Up to 25 employees
+  - Basic drug testing program
+  - MVR monitoring
+  - Basic reporting
+  - Email support
 
-- **Bronze**
-  - 10 users
-  - 5 carriers
-  - 10 trucks
-  - 10 trailers
-  - 5 features (configurable)
-  - Moderate storage
+- **Professional**
+  - Up to 100 employees
+  - Full drug testing program
+  - MVR monitoring
+  - DOT physical tracking
+  - Advanced reporting
+  - Phone support
 
-- **Silver**
-  - 50 users
-  - 20 carriers
-  - 50 trucks
-  - 50 trailers
-  - More features (configurable)
-  - Larger storage
+- **Enterprise**
+  - Up to 500 employees
+  - All compliance services
+  - Custom reporting
+  - Priority support
+  - Training modules
 
-- **Platinum**
-  - Unlimited users
-  - Unlimited carriers
-  - Unlimited trucks
-  - Unlimited trailers
-  - All features
-  - Maximum storage
+- **Custom**
+  - Unlimited employees
+  - Full service management
+  - Dedicated account manager
+  - Custom integrations
+  - On-site support
 
-#### 3.3.2 Trial Management
-- Configurable trial periods (days)
-- Promo code generation
-- Automatic trial expiration notifications
-- Trial-to-paid conversion workflow
-
-#### 3.3.3 Subscription Management Functions
-- Subscribe/upgrade/downgrade subscription
-- Track usage against subscription limits
-- Process payments (online)
-- Record manual payments (offline)
+#### 3.3.2 Subscription Management Functions
+- Subscribe/upgrade/downgrade plans
+- Track usage against limits
+- Process payments
 - Generate invoices
-- Send payment reminders
-- Manage subscription renewal
+- Manage renewal cycles
+- Custom pricing negotiations
 
-### 3.4 Carrier Management
+### 3.4 Drug Testing Program Management
 
-#### 3.4.1 Carrier Profile
-- Name
-- MC/DOT number
-- Contact information
-- Address
-- Status (active, inactive)
-- Associated organization
-- Assigned manager
-- Integration settings (email, ELD)
-- Created date
+#### 3.4.1 Testing Types
+- Pre-employment testing
+- Random testing
+- Post-accident testing
+- Reasonable suspicion testing
+- Return-to-duty testing
+- Follow-up testing
 
-#### 3.4.2 Carrier Management Functions
-- CRUD operations for carriers
-- Assign managers to carriers
-- Configure carrier integrations
-- View carrier analytics
-- Manage carrier documentation
+#### 3.4.2 Testing Programs
+- DOT drug testing (5-panel)
+- DOT alcohol testing
+- Non-DOT drug testing (customizable panels)
+- Non-DOT alcohol testing
+- Expanded drug panels
 
-### 3.5 Equipment Management
+#### 3.4.3 Random Pool Management
+- Employee pool creation and management
+- Random selection algorithms
+- Testing frequency configuration
+- Pool balancing and optimization
+- Quarterly reporting
 
-#### 3.5.1 Equipment Types
-- Truck
-- Trailer
-- Equipment wrapper (truck + trailer + driver + dispatcher combination)
+#### 3.4.4 Drug Testing Functions
+- Schedule and coordinate testing
+- Manage testing locations
+- Track test results
+- MRO review coordination
+- Violation reporting
+- Return-to-duty process management
+- Generate DOT reporting forms
 
-#### 3.5.2 Equipment Profile
-- Type (truck, trailer)
-- Identification number
-- Make/model
-- Year
-- VIN
-- License plate
-- Status (active, inactive, maintenance)
-- Associated carrier
-- Assigned driver (for trucks)
-- Assigned dispatcher
-- Created date
+### 3.5 MVR Monitoring
 
-#### 3.5.3 Equipment Management Functions
-- CRUD operations for equipment
-- Assign drivers to trucks
-- Assign dispatchers to equipment
-- Track equipment status
-- Manage equipment documentation
-- Record maintenance events
-- Track expenses
+#### 3.5.1 MVR Services
+- Initial MVR pulls
+- Continuous monitoring
+- Violation alerts
+- Driver qualification files
+- State-specific requirements
 
-### 3.6 Lane and Trip Management
+#### 3.5.2 MVR Management Functions
+- Automated MVR ordering
+- Violation detection and alerts
+- Driver disqualification tracking
+- Compliance reporting
+- Integration with state DMV systems
 
-#### 3.6.1 Lane Definition
-- Name
-- Description
-- Route information
-- Weekly timeframe
-- Associated equipment
-- Notes/comments
-- Status (active, inactive)
+### 3.6 DOT Physical Management
 
-#### 3.6.2 Trip Profile
-- Associated lane
-- Start location (city, state, geopoint)
-- End location (city, state, geopoint)
-- Start date/time
-- End date/time
-- Status (pending, in progress, completed, cancelled)
-- Associated truck
-- Associated driver
-- Associated dispatcher
-- Broker information
-- Amount/payment details
-- Notes
-- Documents (BOL, lumber, etc.)
+#### 3.6.1 Physical Examination Services
+- DOT medical examinations
+- Medical certificate tracking
+- Exemption management
+- Medical review processes
 
-#### 3.6.3 Lane and Trip Management Functions
-- CRUD operations for lanes
-- CRUD operations for trips
-- Route planning
-- Trip status updates
-- Document upload
-- Trip analytics
+#### 3.6.2 DOT Physical Functions
+- Schedule examinations
+- Track medical certificates
+- Monitor expiration dates
+- Generate renewal reminders
+- Manage medical exemptions
+- Coordinate with certified medical examiners
 
-### 3.7 Document Management
+### 3.7 Background Check Services
 
-#### 3.7.1 Document Types
-- BOL (Bill of Lading)
-- Proof of delivery
-- Insurance documents
-- Vehicle registration
-- Driver's license
-- Maintenance records
-- Expense receipts
-- Rate sheets
+#### 3.7.1 Background Check Types
+- Criminal history checks
+- Employment verification
+- Reference checks
+- Education verification
+- Professional license verification
+- Credit checks (where permitted)
 
-#### 3.7.2 Document Management Functions
-- Upload/download documents
-- Document categorization
-- Document search
-- Storage quota management based on subscription tier
-- Document sharing between users
+#### 3.7.2 Background Check Functions
+- Order and track background checks
+- Receive and review results
+- Manage adverse action processes
+- Store and organize reports
+- Generate compliance documentation
 
-### 3.8 Messaging and Communication
+### 3.8 Compliance Management
 
-#### 3.8.1 Messaging Types
-- Direct messages between users
-- Channel messages (group conversations)
-- System notifications
+#### 3.8.1 Compliance Programs
+- DOT compliance programs
+- Non-DOT workplace policies
+- Industry-specific requirements
+- State and local regulations
 
-#### 3.8.2 Messaging Functions
-- Send/receive direct messages
-- Create and manage channels
-- Invite users to channels
-- Notification preferences
-- Message moderation (for internal users)
-- Message search
+#### 3.8.2 Compliance Functions
+- Track compliance status
+- Generate violation reports
+- Manage corrective actions
+- Monitor regulatory changes
+- Provide compliance alerts
+- Generate audit reports
 
-### 3.9 Analytics and Reporting
+### 3.9 Reporting and Analytics
 
-#### 3.9.1 Analytics Types
-- Equipment performance metrics
-- Driver performance metrics
-- Carrier performance metrics
-- Trip analytics
-- Financial analytics
-- Subscription usage analytics
+#### 3.9.1 Report Types
+- Drug testing summary reports
+- Random testing reports
+- MVR violation reports
+- Compliance status reports
+- DOT annual reports
+- Custom analytics dashboards
 
 #### 3.9.2 Reporting Functions
 - Generate predefined reports
 - Create custom reports
-- Export reports (CSV, PDF)
+- Export reports (PDF, Excel)
 - Schedule automated reports
 - Dashboard visualizations
+- Regulatory filing assistance
 
-### 3.10 Mobile-Optimized Driver Interface
+### 3.10 Document Management
 
-#### 3.10.1 Driver Dashboard
-- View assigned trips
-- View past trips
-- View ongoing trips
-- Update trip status
-- View rate sheets
-- Upload documents (BOL, etc.)
-- Messaging access
+#### 3.10.1 Document Types
+- Test results and lab reports
+- MVR reports
+- DOT medical certificates
+- Training certificates
+- Compliance documentation
+- Policy documents
 
-#### 3.10.2 Driver-Specific Functions
-- Trip navigation assistance
-- Quick status updates
-- Document scanning/upload
-- Driver checklist
+#### 3.10.2 Document Management Functions
+- Upload and store documents
+- Organize by category and employee
+- Secure document access
+- Retention policy management
+- Document search and retrieval
+- Audit trail maintenance
 
-### 3.11 Integration Capabilities
+### 3.11 Communication and Notifications
 
-#### 3.11.1 Integration Types
-- Email integration
-- ELD API integration
-- Future integrations (placeholder)
+#### 3.11.1 Notification Types
+- Testing notifications
+- Compliance alerts
+- Violation notifications
+- Renewal reminders
+- Regulatory updates
 
-#### 3.11.2 Integration Functions
-- Configure integration settings
-- Authenticate with external systems
-- Sync data between systems
-- Monitor integration status
+#### 3.11.2 Communication Functions
+- Email notifications
+- SMS alerts
+- In-app messaging
+- Notification preferences
+- Escalation procedures
+- Automated reminders
+
+### 3.12 Mobile Interface
+
+#### 3.12.1 Mobile Features
+- Employee portal access
+- Testing scheduling
+- Compliance status viewing
+- Document upload
+- Notification management
+
+#### 3.12.2 Mobile Functions
+- Responsive design
+- Mobile-optimized workflows
+- Offline capability for critical functions
+- GPS location services
+- Camera integration for documents
+
+### 3.13 Integration Capabilities
+
+#### 3.13.1 Integration Types
+- Laboratory information systems
+- MVR provider APIs
+- Medical examiner systems
+- FMCSA Clearinghouse
+- HR management systems
+- Payroll systems
+
+#### 3.13.2 Integration Functions
+- Real-time data synchronization
+- Automated result importing
+- Regulatory reporting automation
+- Third-party system connectivity
+- API management
 
 ## 4. Feature Entitlement Matrix
 
-| Feature | Free | Bronze | Silver | Platinum |
-|---------|------|--------|--------|----------|
-| Organization Management | ✓ | ✓ | ✓ | ✓ |
-| User Management | ✓ (3 users) | ✓ (10 users) | ✓ (50 users) | ✓ (Unlimited) |
-| Carrier Management | ✓ (1 carrier) | ✓ (5 carriers) | ✓ (20 carriers) | ✓ (Unlimited) |
-| Equipment Management | ✓ (2 trucks, 2 trailers) | ✓ (10 trucks, 10 trailers) | ✓ (50 trucks, 50 trailers) | ✓ (Unlimited) |
-| Lane Management | ✓ | ✓ | ✓ | ✓ |
-| Trip Management | ✓ | ✓ | ✓ | ✓ |
+| Feature | Starter | Professional | Enterprise | Custom |
+|---------|---------|-------------|------------|--------|
+| Employee Limit | 25 | 100 | 500 | Unlimited |
+| Drug Testing | Basic | Full Program | Full Program | Full Program |
+| Alcohol Testing | ✗ | ✓ | ✓ | ✓ |
+| MVR Monitoring | ✓ | ✓ | ✓ | ✓ |
+| DOT Physicals | ✗ | ✓ | ✓ | ✓ |
+| Background Checks | ✗ | ✗ | ✓ | ✓ |
+| Random Pool Management | ✓ | ✓ | ✓ | ✓ |
 | Basic Reporting | ✓ | ✓ | ✓ | ✓ |
 | Advanced Analytics | ✗ | ✓ | ✓ | ✓ |
-| Document Management | ✓ (Limited storage) | ✓ (Moderate storage) | ✓ (Large storage) | ✓ (Maximum storage) |
-| Messaging | ✓ | ✓ | ✓ | ✓ |
-| Channels | ✗ | ✓ (Limited) | ✓ | ✓ |
-| Mobile Driver Interface | ✓ | ✓ | ✓ | ✓ |
-| Email Integration | ✗ | ✓ | ✓ | ✓ |
-| ELD Integration | ✗ | ✗ | ✓ | ✓ |
-| Custom Features | ✓ (2 max) | ✓ (5 max) | ✓ (10 max) | ✓ (All) |
+| Custom Reports | ✗ | ✗ | ✓ | ✓ |
+| Training Modules | ✗ | ✗ | ✓ | ✓ |
+| API Access | ✗ | ✗ | ✓ | ✓ |
+| Dedicated Support | ✗ | ✗ | ✗ | ✓ |
 
 ## 5. Non-Functional Requirements
 
-### 5.1 Performance
-- Page load time < 2 seconds for standard operations
-- Support for 1000+ concurrent users
-- Database query response time < 500ms
-- Real-time updates for messaging and status changes
-
-### 5.2 Security
-- Role-based access control
+### 5.1 Security and Compliance
+- HIPAA compliance for medical information
+- SOC 2 Type II compliance
 - Data encryption in transit and at rest
-- Secure authentication and authorization
-- Session management
-- Regular security audits
-- GDPR compliance
+- Role-based access control
+- Audit trail for all actions
+- Secure authentication (MFA)
+- Regular security assessments
 
-### 5.3 Reliability
-- System uptime > 99.9%
-- Data backup and recovery procedures
-- Error handling and logging
-- Graceful degradation under high load
+### 5.2 Performance
+- Page load time < 2 seconds
+- Support for 5000+ concurrent users
+- Database response time < 500ms
+- 99.9% system uptime
+- Automated backup and recovery
+
+### 5.3 Regulatory Compliance
+- DOT Part 40 compliance
+- FMCSA regulations adherence
+- State-specific requirements
+- Industry standards compliance
+- Regular regulatory updates
 
 ### 5.4 Usability
 - Intuitive user interface
-- Responsive design for all devices
-- Consistent design language
 - Accessibility compliance (WCAG 2.1)
+- Mobile-responsive design
 - Multi-language support
+- User training resources
 
 ### 5.5 Scalability
-- Horizontal scaling for increased load
-- Database sharding capabilities
+- Horizontal scaling capabilities
+- Database optimization
 - Efficient resource utilization
+- Load balancing
 - Caching strategies
 
 ## 6. User Flows
 
-### 6.1 User Registration and Onboarding
-1. External user requests account with subscription type
-2. System captures organization and user details
-3. Internal user reviews and approves request
-4. System creates organization and super user account
-5. External super user receives welcome email
-6. External super user completes organization profile
-7. External super user invites additional users
+### 6.1 Client Onboarding
+1. Client requests services and selects subscription
+2. V1 Consortium creates client organization
+3. Client administrator receives access credentials
+4. Client completes organization profile and compliance setup
+5. Employees are enrolled in compliance programs
+6. Testing and monitoring begins
 
-### 6.2 Carrier and Equipment Setup
-1. External super user creates carrier
-2. External super user adds trucks and trailers
-3. External super user assigns managers to carriers
-4. External super user or manager adds drivers
-5. Dispatchers assign drivers to trucks
+### 6.2 Drug Testing Process
+1. System generates random selection or scheduled test
+2. Employee receives testing notification
+3. Employee reports to testing facility
+4. Test is conducted and results sent to lab
+5. MRO reviews results if necessary
+6. Results are reported to DER
+7. Appropriate follow-up actions taken
 
-### 6.3 Trip Management
-1. Dispatcher creates lane for equipment
-2. Dispatcher creates trip within lane
-3. Driver receives trip assignment
-4. Driver updates trip status
-5. Driver uploads documents
-6. Dispatcher reviews completed trip
-7. System updates analytics
+### 6.3 MVR Monitoring
+1. System automatically orders MVR for employee
+2. MVR results are received and analyzed
+3. Violations are flagged and reported
+4. DER is notified of disqualifying violations
+5. Corrective actions are coordinated
+6. Compliance status is updated
 
-### 6.4 Subscription Management
-1. External organization selects subscription tier
-2. System provisions features based on tier
-3. System monitors usage against limits
-4. System notifies when approaching limits
-5. External organization manages payment
-6. System renews or modifies subscription
+### 6.4 DOT Physical Process
+1. Employee physical expiration is monitored
+2. Renewal reminders are sent
+3. Physical appointment is scheduled
+4. Examination is conducted by certified examiner
+5. Medical certificate is issued and tracked
+6. Compliance status is updated
 
 ## 7. Technical Requirements
 
 ### 7.1 Frontend
 - SvelteKit with TypeScript
-- Responsive design
+- Responsive design framework
 - Progressive Web App capabilities
 - Modern UI/UX principles
+- Accessibility features
 
 ### 7.2 Backend
 - SvelteKit server routes
 - TypeScript
 - RESTful API design
-- Proper error handling
+- Microservices architecture
+- Proper error handling and logging
 
 ### 7.3 Database
 - PostgreSQL via Supabase
-- Efficient schema design
-- Proper indexing
-- Data validation
+- HIPAA-compliant data storage
+- Efficient indexing strategy
+- Data retention policies
+- Backup and recovery procedures
 
 ### 7.4 Authentication and Authorization
-- Supabase Auth
-- JWT-based authentication
+- Supabase Auth with MFA
 - Role-based access control
-- Multi-factor authentication (optional)
+- JWT-based authentication
+- Session management
+- Audit logging
 
 ### 7.5 Storage
 - Supabase Storage
-- Efficient document storage and retrieval
-- Storage quota management
+- Document versioning
+- Secure file handling
+- Storage encryption
+- Retention management
 
-### 7.6 Realtime Features
-- Supabase Realtime
-- WebSocket connections for messaging
-- Real-time status updates
+### 7.6 Integrations
+- Laboratory API connections
+- MVR provider integrations
+- FMCSA Clearinghouse API
+- Third-party system APIs
+- Webhook support
 
 ## 8. Future Considerations
 
-### 8.1 Potential Future Features
-- AI-driven route optimization
-- Predictive maintenance
-- Advanced analytics dashboard
-- Mobile app for drivers
-- Fuel management system
-- Integration with accounting software
-- Inventory management
-- Customer portal
+### 8.1 Potential Enhancements
+- AI-powered compliance predictions
+- Advanced analytics and reporting
+- Mobile applications for iOS/Android
+- Blockchain for document verification
+- IoT integration for workplace monitoring
+- Telemedicine integration
+- Wearable device monitoring
 
-### 8.2 Scalability Considerations
-- Multi-region deployment
-- Content delivery network integration
-- Database sharding strategy
-- Microservices architecture evolution
+### 8.2 Regulatory Adaptations
+- New DOT regulations
+- State-specific requirements
+- International compliance standards
+- Industry-specific regulations
+- Technology advancement integration
 
 ## 9. Appendices
 
 ### 9.1 Glossary
-- **Carrier**: A transportation company that owns and operates trucks
-- **Equipment**: A truck, trailer, or truck-trailer combination used for transportation
-- **Lane**: A table that defines operational routes for equipment with timing specifications
-- **Trip**: A single transportation journey from origin to destination
-- **BOL**: Bill of Lading, a document acknowledging receipt of cargo for shipment
-- **ELD**: Electronic Logging Device, used to record driver's hours of service
+- **TPA**: Third Party Administrator - manages compliance programs for multiple employers
+- **DER**: Designated Employer Representative - manages drug and alcohol programs
+- **MRO**: Medical Review Officer - physician who reviews drug test results
+- **SAP**: Substance Abuse Professional - evaluates employees who violate drug policies
+- **DOT**: Department of Transportation - federal agency regulating transportation safety
+- **MVR**: Motor Vehicle Record - driving history report
+- **Clearinghouse**: FMCSA database of drug and alcohol violations
 
-### 9.2 References
-- Transport industry standards and regulations
-- Supabase documentation
-- SvelteKit documentation
-- TypeScript documentation
+### 9.2 Regulatory References
+- 49 CFR Part 40 - DOT drug and alcohol testing procedures
+- 49 CFR Part 382 - FMCSA drug and alcohol regulations
+- HIPAA Privacy Rule
+- Fair Credit Reporting Act (FCRA)
+- State-specific transportation regulations

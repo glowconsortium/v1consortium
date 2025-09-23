@@ -5,9 +5,9 @@ layout: "simple"
 
 ## Introduction
 
-At FleetOps, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our fleet management platform and services.
+At V1 Consortium, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our compliance and screening services platform.
 
-This policy applies to all users of FleetOps, including fleet managers, drivers, dispatchers, and other authorized personnel within your organization.
+This policy applies to all users of V1 Consortium services, including employers, HR managers, DERs, employees, and other authorized personnel within your organization. We are committed to protecting sensitive medical and personal information in accordance with HIPAA and other applicable privacy laws.
 
 ---
 
@@ -17,23 +17,46 @@ This policy applies to all users of FleetOps, including fleet managers, drivers,
 
 * **Account Information**: Name, email address, phone number, job title, and company affiliation
 * **Billing Information**: Payment details, billing address, and tax identification numbers
-* **Fleet Data**: Vehicle information, driver details, carrier data, and operational records
-* **Location Data**: GPS coordinates, route information, and geofencing data
-* **Communication Records**: Messages sent through our platform, support communications, and call logs
+* **Employee Data**: Employee names, contact information, job classifications, and identification numbers
+* **Medical Information**: DOT physical results, medical certificates, and health-related data
+* **Testing Records**: Drug and alcohol test results, chain of custody information, and related documentation
+
+### Sensitive Information (HIPAA Protected)
+
+* **Medical Records**: DOT medical examination results, medical certificates, and exemption documentation
+* **Drug Testing Results**: Laboratory results, MRO reviews, and violation records
+* **Health Information**: Medical history relevant to DOT qualifications and fitness for duty
 
 ### Automatically Collected Information
 
 * **Device Information**: IP addresses, browser type, device identifiers, and operating system
 * **Usage Analytics**: Platform usage patterns, feature utilization, and performance metrics
-* **Vehicle Telemetry**: Engine diagnostics, fuel consumption, mileage, and maintenance data
+* **System Logs**: Access logs, security events, and platform performance data
 * **Cookies and Tracking**: Session data, preferences, and website interaction tracking
 
 ### Compliance and Regulatory Data
 
 * **DOT Information**: USDOT numbers, MC numbers, and operating authority details
-* **Driver Records**: CDL information, Hours of Service logs, and qualification files
-* **Inspection Records**: Vehicle inspection reports and compliance documentation
-* **Tax Records**: IFTA data, IRP information, and UCR registration details
+* **Driver Records**: CDL information, MVR reports, and driver qualification files
+* **Background Checks**: Criminal history, employment verification, and reference check results
+* **Compliance Records**: Training certificates, violation records, and corrective action documentation
+
+---
+
+## HIPAA Compliance
+
+### Protected Health Information (PHI)
+
+As a healthcare clearinghouse and business associate, V1 Consortium is committed to HIPAA compliance:
+
+* **Medical Privacy**: All medical information is treated as Protected Health Information (PHI)
+* **Access Controls**: Strict access controls limit PHI access to authorized personnel only
+* **Encryption**: All PHI is encrypted in transit and at rest
+* **Audit Trails**: Comprehensive logging of all PHI access and modifications
+
+### Business Associate Agreements
+
+We maintain Business Associate Agreements with covered entities and implement appropriate safeguards for PHI handling.
 
 ---
 
@@ -42,12 +65,13 @@ This policy applies to all users of FleetOps, including fleet managers, drivers,
 We use the collected information for:
 
 * **Service Delivery**  
-  Providing and maintaining our fleet management platform and related services
+  Providing and maintaining our compliance and screening services platform
 * **Compliance Management**  
-  Ensuring regulatory compliance and generating required reports for DOT, IFTA, and other agencies
-* **Safety and Security**  
-  Monitoring driver safety, vehicle security, and operational risk management
-* **Analytics and Optimization**  
+  Ensuring regulatory compliance and generating required reports for DOT, FMCSA, and other agencies
+* **Medical Review**  
+  Coordinating with MROs and medical examiners for proper medical review processes
+* **Testing Coordination**  
+  Managing drug and alcohol testing programs and laboratory coordination  
   Analyzing fleet performance, route optimization, and operational efficiency improvements
 * **Communication**  
   Sending operational updates, compliance alerts, and important service notifications

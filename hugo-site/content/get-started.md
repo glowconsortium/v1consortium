@@ -1,17 +1,17 @@
 ---
-title: "Get Started with FleetOps"
+title: "Get Started with V1 Consortium"
 layout: "simple"
-description: "Start your fleet management transformation today. Request access to FleetOps and see how we can streamline your operations."
+description: "Start your compliance transformation today. Request access to V1 Consortium and see how we can streamline your compliance and screening programs."
 ---
 
 <div class="bg-gradient-to-b from-blue-50 to-white py-16">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h1 class="text-4xl font-bold text-gray-900 mb-4">
-        Get Started with FleetOps
+        Get Started with V1 Consortium
       </h1>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Ready to transform your fleet operations? Complete the form below and our team will get you set up with a customized FleetOps solution.
+        Ready to transform your compliance programs? Complete the form below and our team will get you set up with a customized compliance and screening solution.
       </p>
     </div>
     <!-- Benefits Section -->
@@ -23,7 +23,7 @@ description: "Start your fleet management transformation today. Request access t
           </svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-2">Quick Setup</h3>
-        <p class="text-gray-600">Get up and running in 24-48 hours with guided onboarding</p>
+        <p class="text-gray-600">Get up and running in 48-72 hours with guided onboarding</p>
       </div>
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -32,7 +32,7 @@ description: "Start your fleet management transformation today. Request access t
           </svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-2">Free Trial</h3>
-        <p class="text-gray-600">30-day trial with full access to all features and support</p>
+        <p class="text-gray-600">30-day trial with full access to all compliance features</p>
       </div>
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -40,13 +40,13 @@ description: "Start your fleet management transformation today. Request access t
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Dedicated Support</h3>
-        <p class="text-gray-600">Personal onboarding specialist and 24/7 technical support</p>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Expert Support</h3>
+        <p class="text-gray-600">Dedicated compliance specialist and ongoing expert guidance</p>
       </div>
     </div>
     <!-- Main Form -->
     <div class="bg-white rounded-lg shadow-lg p-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Request Your FleetOps Account</h2> 
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Request Your V1 Consortium Account</h2> 
       <form action="https://formspree.io/f/placeholder-form-id" method="POST" class="space-y-6">
         <!-- Company Information -->
         <div class="grid md:grid-cols-2 gap-6">
@@ -64,28 +64,27 @@ description: "Start your fleet management transformation today. Request access t
             >
           </div>   
           <div>
-            <label for="fleet-size" class="block text-sm font-medium text-gray-700 mb-1">
-              Fleet Size *
+            <label for="employee-count" class="block text-sm font-medium text-gray-700 mb-1">
+              Employee Count *
             </label>
             <select 
-              id="fleet-size" 
-              name="fleet_size" 
+              id="employee-count" 
+              name="employee_count" 
               required
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="">Select fleet size</option>
-              <option value="1-5">1-5 vehicles</option>
-              <option value="6-25">6-25 vehicles</option>
-              <option value="26-100">26-100 vehicles</option>
-              <option value="101-500">101-500 vehicles</option>
-              <option value="500+">500+ vehicles</option>
+              <option value="">Select employee count</option>
+              <option value="1-25">1-25 employees</option>
+              <option value="26-100">26-100 employees</option>
+              <option value="101-500">101-500 employees</option>
+              <option value="500+">500+ employees</option>
             </select>
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <label for="operation-type" class="block text-sm font-medium text-gray-700 mb-1">
-              Operation Type *
+              Industry Type *
             </label>
             <select 
               id="operation-type" 
@@ -93,25 +92,25 @@ description: "Start your fleet management transformation today. Request access t
               required
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="">Select operation type</option>
-              <option value="motor-carrier">Motor Carrier</option>
-              <option value="private-fleet">Private Fleet</option>
-              <option value="owner-operator">Owner-Operator</option>
-              <option value="logistics-company">Logistics Company</option>
-              <option value="freight-broker">Freight Broker</option>
+              <option value="">Select industry type</option>
+              <option value="transportation">Transportation/Trucking</option>
+              <option value="construction">Construction</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="utilities">Utilities</option>
               <option value="other">Other</option>
             </select>
           </div>
           <div>
-            <label for="mc-number" class="block text-sm font-medium text-gray-700 mb-1">
-              MC Number
+            <label for="dot-number" class="block text-sm font-medium text-gray-700 mb-1">
+              DOT Number
             </label>
             <input 
               type="text" 
-              id="mc-number" 
-              name="mc_number"
+              id="dot-number" 
+              name="dot_number"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              placeholder="MC-123456 (if applicable)"
+              placeholder="DOT-123456 (if applicable)"
             >
           </div>
         </div>
