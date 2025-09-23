@@ -11,6 +11,9 @@ importers:
       '@inlang/paraglide-js':
         specifier: ^2.2.0
         version: 2.2.0
+      '@movsm/v1-consortium-web-pkg':
+        specifier: ^0.0.2
+        version: 0.0.2(svelte@5.38.2)(tailwindcss@4.1.12)
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -448,6 +451,11 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
+  '@movsm/v1-consortium-web-pkg@0.0.2':
+    resolution: {integrity: sha512-5/LKAoQYTDHc0HhzUGso7Tdj5EuCrqdW5VoIK+1LmdDDeMp9tzqDxl+orSDrBsoY1lG3jZwH+rbZ3pjKT3nDVw==}
+    peerDependencies:
+      svelte: ^5.0.0
+
   '@neoconfetti/react@1.0.0':
     resolution: {integrity: sha512-klcSooChXXOzIm+SE5IISIAn3bYzYfPjbX7D7HoqZL84oAfgREeSg5vSIaSFH+DaGzzvImTyWe1OyrJ67vik4A==}
 
@@ -576,6 +584,11 @@ packages:
 
   '@skeletonlabs/skeleton-svelte@1.5.0':
     resolution: {integrity: sha512-EOt3GLXjjZxKG1iOW6nMu/5NHZScp3G/EkD5OsmYgjYVKkAm4Fecsf2CudOXIAKILa+bBUkyCKlGkKoDpZ7tlg==}
+    peerDependencies:
+      svelte: ^5.20.0
+
+  '@skeletonlabs/skeleton-svelte@1.5.1':
+    resolution: {integrity: sha512-XYvIy0CPYYIGUV6TjGpUrjSkTJcuWxGqT7aKK+zXuMjVUGqNLAWrHabITRgWHvAlQwlo5V10pKxwphrQeunqWA==}
     peerDependencies:
       svelte: ^5.20.0
 
@@ -1133,6 +1146,9 @@ packages:
 
   axios@1.11.0:
     resolution: {integrity: sha512-1Lx3WLFQWm3ooKDYZD1eXmoGO9fxYQjrycfHFC8P0sCfQVXyROp0p9PFWBehewBOdCwHc+f/b8I0fMto5eSfwA==}
+
+  axios@1.12.2:
+    resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -2739,6 +2755,16 @@ snapshots:
       '@types/react': 19.1.8
       react: 19.1.1
 
+  '@movsm/v1-consortium-web-pkg@0.0.2(svelte@5.38.2)(tailwindcss@4.1.12)':
+    dependencies:
+      '@skeletonlabs/skeleton': 3.2.0(tailwindcss@4.1.12)
+      '@skeletonlabs/skeleton-svelte': 1.5.1(svelte@5.38.2)
+      axios: 1.12.2
+      svelte: 5.38.2
+    transitivePeerDependencies:
+      - debug
+      - tailwindcss
+
   '@neoconfetti/react@1.0.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -2822,6 +2848,27 @@ snapshots:
   '@sinclair/typebox@0.31.28': {}
 
   '@skeletonlabs/skeleton-svelte@1.5.0(svelte@5.38.2)':
+    dependencies:
+      '@zag-js/accordion': 1.21.7
+      '@zag-js/avatar': 1.21.7
+      '@zag-js/combobox': 1.21.7
+      '@zag-js/dialog': 1.21.7
+      '@zag-js/file-upload': 1.21.7
+      '@zag-js/pagination': 1.21.7
+      '@zag-js/popover': 1.21.7
+      '@zag-js/progress': 1.21.7
+      '@zag-js/radio-group': 1.21.7
+      '@zag-js/rating-group': 1.21.7
+      '@zag-js/slider': 1.21.7
+      '@zag-js/svelte': 1.21.7(svelte@5.38.2)
+      '@zag-js/switch': 1.21.7
+      '@zag-js/tabs': 1.21.7
+      '@zag-js/tags-input': 1.21.7
+      '@zag-js/toast': 1.21.7
+      '@zag-js/tooltip': 1.21.7
+      svelte: 5.38.2
+
+  '@skeletonlabs/skeleton-svelte@1.5.1(svelte@5.38.2)':
     dependencies:
       '@zag-js/accordion': 1.21.7
       '@zag-js/avatar': 1.21.7
@@ -3572,6 +3619,14 @@ snapshots:
   axe-core@4.10.3: {}
 
   axios@1.11.0:
+    dependencies:
+      follow-redirects: 1.15.11
+      form-data: 4.0.4
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.12.2:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.4

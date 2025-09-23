@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/index.js';
+	// import { Button } from '$lib/components/ui/index.js';
 	import { authStore } from '$lib/stores/auth.js';
 </script>
 

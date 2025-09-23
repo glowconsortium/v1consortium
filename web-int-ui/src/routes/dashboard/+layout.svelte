@@ -7,6 +7,47 @@
 
 	let { children } = $props();
 
+		let sidebarItems: SidebarItem[] = [
+		{
+			label: 'Dashboard',
+			href: '/dashboard',
+			icon: '📊'
+		},
+		{
+			label: 'Members',
+			href: '/dashboard/members',
+			icon: '👥'
+		},
+		{
+			label: 'Results',
+			href: '/dashboard/results',
+			icon: '📁'
+		},
+
+		{
+			label: 'Orders',
+			href: '/dashboard/orders',
+			icon: '💊'
+		},
+
+		{
+			label: 'Integrations',
+			href: '/dashboard/integrations',
+			icon: '🔌'
+		},
+
+				{
+			label: 'Invitations',
+			href: '/dashboard/invitations',
+			icon: '🔗'
+		},
+		{
+			label: 'Settings',
+			href: '/dashboard/settings',
+			icon: '⚙️'
+		}
+	];
+
 	// Load onboarding state when component mounts
 	// onMount(async () => {
 	// 	await onboardingStore.loadOnboardingState();
