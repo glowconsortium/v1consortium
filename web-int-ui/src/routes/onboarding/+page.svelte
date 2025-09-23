@@ -5,7 +5,7 @@
     import { OnboardingStep, InvitedOnboardingStep, type OnboardingState, type OnboardingProgress, UserType, OnboardingType, type InvitedOnboardingState } from '$lib/types/onboarding.js';
 
     // Import your UI library components
-    import { Button, Alert, Spinner, Card } from '$lib/components';
+    import { Button, Alert, Spinner, Card } from '@movsm/v1-consortium-web-pkg';
 
     const { subscribe, progress, loading, error } = onboardingStore;
     

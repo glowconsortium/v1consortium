@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { invitationStore, invitations, loading, error } from '$lib/stores/invitation';
-	import { currentOrganization } from '$lib/stores/organization';
-	import type { Invitation } from '$lib/types/invitation';
-	import { Alert, Button, Card, Table, Modal, Select } from '$lib/components/ui';
-	import { toaster } from '$lib/utils/toaster';
+	import { invitationStore, invitations, loading, error } from '@movsm/v1-consortium-web-pkg';
+	import { currentOrganization } from '@movsm/v1-consortium-web-pkg';
+	import type { Invitation } from '@movsm/v1-consortium-web-pkg';
+	import { Alert, Button, Card, Table, Modal, Select } from '@movsm/v1-consortium-web-pkg';
+	import { toaster } from '@movsm/v1-consortium-web-pkg';
 
 	let showInviteModal = false;
 	let inviteEmail = '';

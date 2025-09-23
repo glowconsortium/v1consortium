@@ -1,6 +1,6 @@
 {
 	"name": "@movsm/v1-consortium-web-pkg",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",
@@ -30,7 +30,12 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js"
-		}
+		},
+		"./stores": "./dist/stores.js",
+		"./ui": "./dist/ui.js",
+		"./utils": "./dist/utils.js",
+		"./types": "./dist/types.js",
+		"./api": "./dist/api.js"
 	},
 	"peerDependencies": {
 		"svelte": "^5.0.0"

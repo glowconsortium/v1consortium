@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Button, Input, Alert } from '$lib/components/ui/index.js';
-	import { validateEmail, validateRequired, validatePassword, validateConfirmPassword } from '$lib/utils/validation.js';
-	import type { RegisterRequest } from '$lib';
-	import { consortium_api_auth_v1_SignupReq } from '$lib/backendapi/generated-backendapi';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
+	import { Button, Input, Alert } from '@movsm/v1-consortium-web-pkg';
+	import { validateEmail, validateRequired, validatePassword, validateConfirmPassword } from '@movsm/v1-consortium-web-pkg';
+	import type { RegisterRequest } from '@movsm/v1-consortium-web-pkg';
+	import { consortium_api_auth_v1_SignupReq } from '@movsm/v1-consortium-web-pkg';
 	import StripePayment from './StripePayment.svelte';
 
 	// State management

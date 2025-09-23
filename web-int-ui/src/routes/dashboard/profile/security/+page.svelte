@@ -1,13 +1,13 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { authService } from '$lib/api/auth.js';
-    import Button from '$lib/components/ui/Button.svelte';
-    import Card from '$lib/components/ui/Card.svelte';
-    import Icon from '$lib/components/ui/Icon.svelte';
-    import Badge from '$lib/components/ui/Badge.svelte';
-    import Toggle from '$lib/components/ui/Toggle.svelte';
-    import type { v2oneglobe_api_profile_v1_SecuritySettings } from '$lib/backendapi/generated-backendapi';
-	import { toaster } from '$lib/utils/toaster';
+    import { authService } from '@movsm/v1-consortium-web-pkg';
+    import { Button } from '@movsm/v1-consortium-web-pkg';
+    import { Card } from '@movsm/v1-consortium-web-pkg';
+    import { Icon } from '@movsm/v1-consortium-web-pkg';
+    import { Badge } from '@movsm/v1-consortium-web-pkg';
+    import { Toggle } from '@movsm/v1-consortium-web-pkg';
+    import type { v2oneglobe_api_profile_v1_SecuritySettings } from '@movsm/v1-consortium-web-pkg';
+	import { toaster } from '@movsm/v1-consortium-web-pkg';
 
     // Runes for reactive state
     let loading = $state(false);

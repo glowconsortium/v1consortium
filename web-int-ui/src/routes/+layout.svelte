@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { authStore } from '$lib/stores/auth.js';
-	import { apiClient } from '$lib/api/client.js';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
 	import '../app.css';
-	import { PUBLIC_API_URL } from '$env/static/public';
-	import { toaster } from '$lib/utils/toaster.js';
+	import { toaster } from '@movsm/v1-consortium-web-pkg';
 	import {Toaster} from '@skeletonlabs/skeleton-svelte'
-	import { ErrorBoundary } from '$lib/components/ui';
+	import { ErrorBoundary } from '@movsm/v1-consortium-web-pkg';
 	import { browser } from '$app/environment';
 
 	let { children } = $props();
