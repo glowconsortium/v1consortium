@@ -1,6 +1,6 @@
 {
-	"name": "web-pkg",
-	"version": "0.0.1",
+	"name": "v1-consortium-web-pkg",
+	"version": "0.0.2",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",
@@ -12,7 +12,8 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run"
+		"test": "npm run test:unit -- --run",
+		"generate:backendapi-axios": "pnpm exec openapi -i backendapi.json -o src/lib/backendapi/generated-backendapi --client axios"
 	},
 	"files": [
 		"dist",
@@ -79,6 +80,7 @@
 	},
 	"dependencies": {
 		"@skeletonlabs/skeleton": "^3.2.0",
-		"@skeletonlabs/skeleton-svelte": "^1.5.1"
+		"@skeletonlabs/skeleton-svelte": "^1.5.1",
+		"axios": "^1.12.2"
 	}
 }
