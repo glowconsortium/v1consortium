@@ -12,8 +12,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
       '@movsm/v1-consortium-web-pkg':
-        specifier: ^0.0.2
-        version: 0.0.2(svelte@5.38.2)(tailwindcss@4.1.12)
+        specifier: ^0.0.3
+        version: 0.0.3(svelte@5.38.2)(tailwindcss@4.1.12)
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -451,8 +451,8 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@movsm/v1-consortium-web-pkg@0.0.2':
-    resolution: {integrity: sha512-5/LKAoQYTDHc0HhzUGso7Tdj5EuCrqdW5VoIK+1LmdDDeMp9tzqDxl+orSDrBsoY1lG3jZwH+rbZ3pjKT3nDVw==}
+  '@movsm/v1-consortium-web-pkg@0.0.3':
+    resolution: {integrity: sha512-e8pVf5eFqvHA9Wq0iUEeUr/TooVdU1qm3WJmPSCqk85FxEXLmny+Vfr8I7j3KbxPuHJHvVnH9AS9RqEPWYsG5A==}
     peerDependencies:
       svelte: ^5.0.0
 
@@ -2755,7 +2755,7 @@ snapshots:
       '@types/react': 19.1.8
       react: 19.1.1
 
-  '@movsm/v1-consortium-web-pkg@0.0.2(svelte@5.38.2)(tailwindcss@4.1.12)':
+  '@movsm/v1-consortium-web-pkg@0.0.3(svelte@5.38.2)(tailwindcss@4.1.12)':
     dependencies:
       '@skeletonlabs/skeleton': 3.2.0(tailwindcss@4.1.12)
       '@skeletonlabs/skeleton-svelte': 1.5.1(svelte@5.38.2)

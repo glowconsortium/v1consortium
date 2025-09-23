@@ -1,69 +1,9 @@
 <script lang="ts">
-	// import { onMount } from 'svelte';
-	// import { goto } from '$app/navigation';
-	// import { authStore } from '$lib/stores/auth.js';
-	// import { Button, Input, Alert } from '$lib/components/ui/index.js';
-	// import { validateEmail, validateRequired } from '$lib/utils/validation.js';
-
-	// let email = $state('');
-	// let password = $state('');
-	// let rememberMe = $state(false);
-	// let errors = $state<Record<string, string>>({});
-	// let isSubmitting = $state(false);
-	// let showPassword = $state(false);
-
-	// // Redirect if already authenticated
-	// $effect(() => {
-	// 	if ($authStore.isAuthenticated) {
-	// 		goto('/dashboard');
-	// 	}
-	// });
-
-	// function validateForm(): boolean {
-	// 	const newErrors: Record<string, string> = {};
-
-	// 	// Email validation
-	// 	const emailError = validateRequired(email, 'Email');
-	// 	if (emailError) {
-	// 		newErrors.email = emailError;
-	// 	} else if (!validateEmail(email)) {
-	// 		newErrors.email = 'Please enter a valid email address';
-	// 	}
-
-	// 	// Password validation
-	// 	const passwordError = validateRequired(password, 'Password');
-	// 	if (passwordError) {
-	// 		newErrors.password = passwordError;
-	// 	}
-
-	// 	errors = newErrors;
-	// 	return Object.keys(newErrors).length === 0;
-	// }
-
-	// async function handleSubmit() {
-	// 	if (!validateForm()) return;
-
-	// 	isSubmitting = true;
-	// 	authStore.clearError();
-
-	// 	try {
-	// 		await authStore.login(email, password);
-	// 		goto('/onboarding');
-	// 	} catch (error) {
-	// 		// Error is handled by the store
-	// 	} finally {
-	// 		isSubmitting = false;
-	// 	}
-	// }
-
-	// function togglePasswordVisibility() {
-	// 	showPassword = !showPassword;
-	// }
 
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Button, Input, Alert } from '$lib/components/ui/index.js';
-	import { validateEmail, validateRequired } from '$lib/utils/validation.js';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
+	import { Button, Input, Alert } from '@movsm/v1-consortium-web-pkg';
+	import { validateEmail, validateRequired } from '@movsm/v1-consortium-web-pkg';
 
 	let email = $state('');
 	let password = $state('');
