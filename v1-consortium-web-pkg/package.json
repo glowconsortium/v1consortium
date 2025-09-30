@@ -84,6 +84,7 @@
 		]
 	},
 	"dependencies": {
+		"@auth0/auth0-spa-js": "^2.4.1",
 		"@skeletonlabs/skeleton": "^3.2.0",
 		"@skeletonlabs/skeleton-svelte": "^1.5.1",
 		"axios": "^1.12.2"

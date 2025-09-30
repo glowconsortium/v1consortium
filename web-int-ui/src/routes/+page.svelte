@@ -1,7 +1,6 @@
 <script lang="ts">
-	// import { Button } from '$lib/components/ui/index.js';
-	import { authStore } from '@movsm/v1-consortium-web-pkg';
-	import { Button } from '@movsm/v1-consortium-web-pkg';
+	import { authStore } from '@movsm/v1-consortium-web-pkg/stores';
+	import { Button } from '@movsm/v1-consortium-web-pkg/ui';
 </script>
 
 <svelte:head>
@@ -61,35 +60,11 @@
 					</p>
 				</div>
 				
-				<div>
-					<h4 class="font-semibold text-on-surface-token mb-4">Services</h4>
-					<ul class="space-y-2 text-sm text-surface-500-400-token">
-						<li><a href="/services/drug-testing" class="hover:text-primary-500">Drug & Alcohol Testing</a></li>
-						<li><a href="/services/dot-physicals" class="hover:text-primary-500">DOT Physicals</a></li>
-						<li><a href="/services/mvr" class="hover:text-primary-500">Motor Vehicle Records</a></li>
-						<li><a href="/services/random-testing" class="hover:text-primary-500">Random Testing Programs</a></li>
-					</ul>
-				</div>
+
 				
-				<div>
-					<h4 class="font-semibold text-on-surface-token mb-4">Resources</h4>
-					<ul class="space-y-2 text-sm text-surface-500-400-token">
-						<li><a href="/compliance-guide" class="hover:text-primary-500">Compliance Guide</a></li>
-						<li><a href="/fmcsa-requirements" class="hover:text-primary-500">FMCSA Requirements</a></li>
-						<li><a href="/api-docs" class="hover:text-primary-500">API Documentation</a></li>
-						<li><a href="/support" class="hover:text-primary-500">Support Center</a></li>
-					</ul>
-				</div>
+
 				
-				<div>
-					<h4 class="font-semibold text-on-surface-token mb-4">Company</h4>
-					<ul class="space-y-2 text-sm text-surface-500-400-token">
-						<li><a href="/about" class="hover:text-primary-500">About Us</a></li>
-						<li><a href="/pricing" class="hover:text-primary-500">Pricing</a></li>
-						<li><a href="/privacy" class="hover:text-primary-500">Privacy Policy</a></li>
-						<li><a href="/terms" class="hover:text-primary-500">Terms of Service</a></li>
-					</ul>
-				</div>
+
 			</div>
 			
 			<div class="border-t border-surface-300-600-token mt-8 pt-8 text-center text-sm text-surface-500-400-token">

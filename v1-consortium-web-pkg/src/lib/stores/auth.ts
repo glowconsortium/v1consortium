@@ -1,14 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
-import { AuthService } from '../backendapi/generated-backendapi/index.js';
-import { tokenManager } from '../utils/tokenManager.js';
-import type { 
-    User, 
-    LoginRequest, 
-    RegisterRequest, 
-    LoginResponse, 
-    RegisterResponse 
-} from '../types/auth.js';
+import { auth0Store, type Auth0Config, type LoginOptions, type LogoutOptions } from '../authproviders/auth0/auth0auth.js';
+import type { User } from '@auth0/auth0-spa-js';
 
 interface AuthState {
     user: User | null;
@@ -38,21 +31,24 @@ function createAuthStore() {
         subscribe,
         
         // Initialize auth state on app start
-        async initialize() {
+        async initialize(config: Auth0Config) {
             if (!browser) return;
 
             update((state: AuthState) => ({ ...state, isLoading: true }));
 
             try {
-                const tokens = tokenManager.getTokens();
+                // Initialize Auth0
+                await auth0Store.init(config);
                 
-                if (tokens?.accessToken && !tokenManager.isTokenExpired()) {
-                    // Try to get current user with existing token
-                    await this.getCurrentUser();
-                }
+                // Sync state with auth0Store
+                this.syncWithAuth0Store();
+                
             } catch (error) {
                 console.warn('Failed to initialize auth state:', error);
-                tokenManager.clearTokens();
+                update((state: AuthState) => ({ 
+                    ...state, 
+                    error: error instanceof Error ? error.message : 'Initialization failed'
+                }));
             } finally {
                 update((state: AuthState) => ({ 
                     ...state, 
@@ -62,46 +58,27 @@ function createAuthStore() {
             }
         },
 
-        // Login user
-        async login(email: string, password: string): Promise<LoginResponse> {
+        // Sync local state with auth0Store state
+        syncWithAuth0Store() {
+            update((state: AuthState) => ({
+                ...state,
+                user: auth0Store.user,
+                isAuthenticated: auth0Store.isAuthenticated,
+                isLoading: auth0Store.isLoading,
+                error: auth0Store.error
+            }));
+        },
+
+        // Login user (Auth0 uses redirect-based login)
+        async login(options: LoginOptions = {}): Promise<void> {
             update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
 
             try {
-                const loginRequest: LoginRequest = { email, password };
-                const response = await AuthService.postApiPublicV1Login(loginRequest);
-
-                if (response.data?.accessToken) {
-                    // Store tokens
-                    tokenManager.setTokens({
-                        accessToken: response.data.accessToken,
-                        refreshToken: response.data.refreshToken,
-                        expiresAt: Date.now() + (60 * 60 * 1000), // Default 1 hour
-                        tokenType: 'Bearer'
-                    });
-
-                    // Create user object from response
-                    const user: User = {
-                        id: response.data.userId || '',
-                        email: email,
-                        name: email.split('@')[0], // Fallback name
-                        role: response.data.role,
-                        carrierId: response.data.carrierId
-                    };
-
-                    update((state: AuthState) => ({
-                        ...state,
-                        user,
-                        isAuthenticated: true,
-                        isLoading: false,
-                        error: null
-                    }));
-
-                    return response;
-                } else {
-                    throw new Error(response.message || 'Login failed');
-                }
+                await auth0Store.login(options);
+                // Note: After successful login, user will be redirected back to the app
+                // and the auth state will be updated through the initialization process
             } catch (error: any) {
-                const errorMessage = error.message || 'Login failed. Please check your credentials.';
+                const errorMessage = error.message || 'Login failed';
                 update((state: AuthState) => ({
                     ...state,
                     isLoading: false,
@@ -113,85 +90,18 @@ function createAuthStore() {
             }
         },
 
-        // Register new user
-        async register(email: string, password: string, name?: string, companyData?: any): Promise<RegisterResponse> {
-            update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
-
-            try {
-                const registerRequest: RegisterRequest = {
-                    email,
-                    password,
-                    name,
-                    ...companyData
-                };
-                
-                const response = await AuthService.postApiPublicV1Signup(registerRequest);
-
-                if (response.data?.success) {
-                    // If signup returns tokens, log the user in automatically
-                    if (response.data.accessToken) {
-                        tokenManager.setTokens({
-                            accessToken: response.data.accessToken,
-                            refreshToken: response.data.refreshToken,
-                            expiresAt: Date.now() + (60 * 60 * 1000),
-                            tokenType: 'Bearer'
-                        });
-
-                        const user: User = {
-                            id: response.data.userId || '',
-                            email: email,
-                            name: name || email.split('@')[0],
-                            carrierId: response.data.carrierId
-                        };
-
-                        update((state: AuthState) => ({
-                            ...state,
-                            user,
-                            isAuthenticated: true,
-                            isLoading: false,
-                            error: null
-                        }));
-                    } else {
-                        // Registration successful but no auto-login
-                        update((state: AuthState) => ({
-                            ...state,
-                            isLoading: false,
-                            error: null
-                        }));
-                    }
-
-                    return response;
-                } else {
-                    throw new Error(response.message || 'Registration failed');
-                }
-            } catch (error: any) {
-                const errorMessage = error.message || 'Registration failed. Please try again.';
-                update((state: AuthState) => ({
-                    ...state,
-                    isLoading: false,
-                    error: errorMessage
-                }));
-                throw error;
-            }
-        },
-
         // Logout user
-        async logout(): Promise<void> {
+        async logout(options: LogoutOptions = {}): Promise<void> {
             update((state: AuthState) => ({ ...state, isLoading: true }));
 
             try {
-                // Call logout endpoint if we have a token
-                const tokens = tokenManager.getTokens();
-                if (tokens?.refreshToken) {
-                    await AuthService.postApiPublicV1Logout({
-                        refreshToken: tokens.refreshToken
-                    });
-                }
+                await auth0Store.logout(options);
+                // Auth0 will handle the logout and redirect
+                // Local state will be cleared by the auth0Store
+                this.syncWithAuth0Store();
             } catch (error) {
-                console.warn('Logout API call failed:', error);
-            } finally {
-                // Always clear local state regardless of API call result
-                tokenManager.clearTokens();
+                console.warn('Logout failed:', error);
+                // Even if logout fails, clear local state
                 update((state: AuthState) => ({
                     ...state,
                     user: null,
@@ -205,27 +115,9 @@ function createAuthStore() {
         // Refresh session
         async refreshSession(): Promise<boolean> {
             try {
-                const tokens = tokenManager.getTokens();
-                if (!tokens?.refreshToken) {
-                    throw new Error('No refresh token available');
-                }
-
-                const response = await AuthService.postApiPublicV1Refresh({
-                    refreshToken: tokens.refreshToken
-                });
-
-                if (response.data?.accessToken) {
-                    tokenManager.setTokens({
-                        accessToken: response.data.accessToken,
-                        refreshToken: response.data.refreshToken || tokens.refreshToken,
-                        expiresAt: Date.now() + (60 * 60 * 1000),
-                        tokenType: 'Bearer'
-                    });
-
-                    return true;
-                } else {
-                    throw new Error('Failed to refresh token');
-                }
+                await auth0Store.refreshToken();
+                this.syncWithAuth0Store();
+                return true;
             } catch (error) {
                 console.warn('Token refresh failed:', error);
                 await this.logout();
@@ -233,78 +125,46 @@ function createAuthStore() {
             }
         },
 
-        // Get current user
-        async getCurrentUser(): Promise<User | null> {
+        // Get access token
+        async getAccessToken(): Promise<string | null> {
             try {
-                const tokens = tokenManager.getTokens();
-                if (!tokens?.accessToken) {
-                    throw new Error('No access token available');
-                }
-
-                // This would call a profile endpoint to get user details
-                // For now, we'll use stored user data or create minimal user from token
-                // If we don't have user data, we might need to implement a getCurrentUser API call
-                // For now, return null and let the user re-authenticate
-                return null;
+                return await auth0Store.getAccessToken();
             } catch (error) {
-                console.warn('Failed to get current user:', error);
+                console.warn('Failed to get access token:', error);
                 return null;
             }
         },
 
-        // Verify email
-        async verifyEmail(token: string): Promise<void> {
-            update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
-
+        // Get ID token
+        async getIdToken(): Promise<string | null> {
             try {
-                const response = await AuthService.postApiPublicV1VerifyEmail({ token });
-                
-                if (response.data?.success) {
-                    update((state: AuthState) => ({
-                        ...state,
-                        isLoading: false,
-                        error: null
-                    }));
-                } else {
-                    throw new Error(response.message || 'Email verification failed');
-                }
-            } catch (error: any) {
-                const errorMessage = error.message || 'Email verification failed';
-                update((state: AuthState) => ({
-                    ...state,
-                    isLoading: false,
-                    error: errorMessage
-                }));
-                throw error;
+                return await auth0Store.getIdToken() || null;
+            } catch (error) {
+                console.warn('Failed to get ID token:', error);
+                return null;
             }
         },
 
-        // Reset password
-        async resetPassword(email: string): Promise<void> {
-            update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
-
-            try {
-                const response = await AuthService.postApiPublicV1ResetPassword({ email });
-                
-                update((state: AuthState) => ({
-                    ...state,
-                    isLoading: false,
-                    error: null
-                }));
-            } catch (error: any) {
-                const errorMessage = error.message || 'Password reset failed';
-                update((state: AuthState) => ({
-                    ...state,
-                    isLoading: false,
-                    error: errorMessage
-                }));
-                throw error;
-            }
+        // Get current user (Auth0 manages this internally)
+        async getCurrentUser(): Promise<User | null> {
+            this.syncWithAuth0Store();
+            return auth0Store.user;
         },
 
         // Clear error
         clearError(): void {
+            auth0Store.clearError();
             update((state: AuthState) => ({ ...state, error: null }));
+        },
+
+        // Check if user has role
+        hasRole(role: string): boolean {
+            return auth0Store.hasRole(role);
+        },
+
+        // Check if user has permission
+        hasPermission(permission: string): boolean {
+            return auth0Store.hasPermission(permission);
         }
     };
 }
@@ -318,7 +178,5 @@ export const currentUser = derived(_authStore, $auth => $auth.user);
 export const authError = derived(_authStore, $auth => $auth.error);
 export const authLoading = derived(_authStore, $auth => $auth.isLoading);
 
-// Initialize auth state when the module loads (client-side only)
-if (browser) {
-    authStore.initialize();
-}
+// Note: Initialize auth state manually by calling authStore.initialize(config) 
+// where config is your Auth0 configuration object

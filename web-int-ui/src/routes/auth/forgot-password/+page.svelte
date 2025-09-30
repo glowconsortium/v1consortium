@@ -38,7 +38,7 @@
 		authStore.clearError();
 
 		try {
-			await authStore.forgotPassword(email);
+			//await authStore.forgotPassword(email);
 			isSubmitted = true;
 		} catch (error) {
 			// Error is handled by the store
