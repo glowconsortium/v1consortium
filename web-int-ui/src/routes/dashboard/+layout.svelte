@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Header, Sidebar } from '$lib/components/navigation/index.js';
-	import { Spinner } from '$lib/components/ui/index.js';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
+	import { Header, Sidebar } from '@movsm/v1-consortium-web-pkg';
+	import { Spinner } from '@movsm/v1-consortium-web-pkg';
 
 	let { children } = $props();
 

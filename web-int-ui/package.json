@@ -62,7 +62,7 @@
 	},
 	"dependencies": {
 		"@inlang/paraglide-js": "^2.2.0",
-		"@movsm/v1-consortium-web-pkg": "^0.0.3",
+		"@movsm/v1-consortium-web-pkg": "^0.0.4",
 		"axios": "^1.11.0",
 		"form-data": "^4.0.4",
 		"lucide-svelte": "^0.534.0",

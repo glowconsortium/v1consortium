@@ -4,7 +4,7 @@
 	import { Button, Input, Alert } from '@movsm/v1-consortium-web-pkg';
 	import { validateEmail, validateRequired, validatePassword, validateConfirmPassword } from '@movsm/v1-consortium-web-pkg';
 	import type { RegisterRequest } from '@movsm/v1-consortium-web-pkg';
-	import { consortium_api_auth_v1_SignupReq } from '@movsm/v1-consortium-web-pkg';
+	// import { consortium_api_auth_v1_SignupReq } from '@movsm/v1-consortium-web-pkg';
 	import StripePayment from './StripePayment.svelte';
 
 	// State management
@@ -153,7 +153,7 @@
 				password,
 				firstName,
 				lastName,
-				accountType: accountType === 'company'? consortium_api_auth_v1_SignupReq.accountType.COMPANY : consortium_api_auth_v1_SignupReq.accountType.INDIVIDUAL,
+				// accountType: accountType === 'company'? consortium_api_auth_v1_SignupReq.accountType.COMPANY : consortium_api_auth_v1_SignupReq.accountType.INDIVIDUAL,
 				addressLine1,
 				city,
 				state: addressstate,
@@ -174,7 +174,7 @@
 					...(customerId && { customerId })
 				}),
 				stripePaymentMethodId: paymentMethodId,
-				subscriptionPlan:selectedPlan === 'basic' ?  consortium_api_auth_v1_SignupReq.subscriptionPlan.BASIC : consortium_api_auth_v1_SignupReq.subscriptionPlan.PREMIUM
+				// subscriptionPlan:selectedPlan === 'basic' ?  consortium_api_auth_v1_SignupReq.subscriptionPlan.BASIC : consortium_api_auth_v1_SignupReq.subscriptionPlan.PREMIUM
 			};
 
 			const result = await authStore.register(email, password, `${firstName} ${lastName}`.trim(), signupData);
