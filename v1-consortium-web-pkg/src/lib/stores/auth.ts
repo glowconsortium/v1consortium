@@ -26,6 +26,7 @@ const _authStore = writable<AuthState>(initialState);
 // Create a custom store with methods
 function createAuthStore() {
     const { subscribe, set, update } = _authStore;
+    let stateUpdateInterval: NodeJS.Timeout | null = null;
 
     return {
         subscribe,
@@ -43,8 +44,16 @@ function createAuthStore() {
                 // Sync state with auth0Store
                 this.syncWithAuth0Store();
                 
+                // Set up periodic state sync to catch auth0Store changes
+                if (stateUpdateInterval) {
+                    clearInterval(stateUpdateInterval);
+                }
+                stateUpdateInterval = setInterval(() => {
+                    this.syncWithAuth0Store();
+                }, 1000);
+                
             } catch (error) {
-                console.warn('Failed to initialize auth state:', error);
+                console.error('Failed to initialize auth state:', error);
                 update((state: AuthState) => ({ 
                     ...state, 
                     error: error instanceof Error ? error.message : 'Initialization failed'
@@ -74,11 +83,17 @@ function createAuthStore() {
             update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
 
             try {
+                // Ensure Auth0 is initialized before attempting login
+                if (!auth0Store.isInitialized) {
+                    throw new Error('Auth0 client not initialized. Please call initialize() first.');
+                }
+
                 await auth0Store.login(options);
-                // Note: After successful login, user will be redirected back to the app
-                // and the auth state will be updated through the initialization process
+                // Note: After successful login, user will be redirected to Auth0
+                // and then back to the callback URL
             } catch (error: any) {
                 const errorMessage = error.message || 'Login failed';
+                console.error('Login error:', error);
                 update((state: AuthState) => ({
                     ...state,
                     isLoading: false,

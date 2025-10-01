@@ -1,104 +1,104 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { authService } from '@movsm/v1-consortium-web-pkg';
-    import { Button } from '@movsm/v1-consortium-web-pkg';
-    import { Card } from '@movsm/v1-consortium-web-pkg';
-    import { Icon } from '@movsm/v1-consortium-web-pkg';
-    import { Badge } from '@movsm/v1-consortium-web-pkg';
-    import { Toggle } from '@movsm/v1-consortium-web-pkg';
-    import type { v2oneglobe_api_profile_v1_SecuritySettings } from '@movsm/v1-consortium-web-pkg';
-	import { toaster } from '@movsm/v1-consortium-web-pkg';
+    // import { onMount } from 'svelte';
+    // import { authService } from '@movsm/v1-consortium-web-pkg';
+    // import { Button } from '@movsm/v1-consortium-web-pkg';
+    // import { Card } from '@movsm/v1-consortium-web-pkg';
+    // import { Icon } from '@movsm/v1-consortium-web-pkg';
+    // import { Badge } from '@movsm/v1-consortium-web-pkg';
+    // import { Toggle } from '@movsm/v1-consortium-web-pkg';
+    // import type { v2oneglobe_api_profile_v1_SecuritySettings } from '@movsm/v1-consortium-web-pkg';
+	// import { toaster } from '@movsm/v1-consortium-web-pkg';
 
-    // Runes for reactive state
-    let loading = $state(false);
-    let error = $state('');
-    let success = $state('');
-    let securitySettings: v2oneglobe_api_profile_v1_SecuritySettings | null = $state(null);
+    // // Runes for reactive state
+    // let loading = $state(false);
+    // let error = $state('');
+    // let success = $state('');
+    // let securitySettings: v2oneglobe_api_profile_v1_SecuritySettings | null = $state(null);
 
-    onMount(async () => {
-        await loadSecuritySettings();
-    });
+    // onMount(async () => {
+    //     await loadSecuritySettings();
+    // });
 
-    async function loadSecuritySettings() {
-        try {
-            loading = true;
-            const response = await authService.getSecuritySettings();
-            // Fix: Access nested data structure and provide defaults
-            securitySettings = response.data?.security || response.data?.security || {
-                two_factor_enabled: false,
-                email_notifications: true,
-                security_alerts: true,
-                session_timeout_minutes: 1440, // 24 hours
-                allow_multiple_sessions: true,
-                require_password_for_actions: false
-            };
-            console.log('Security settings loaded:', securitySettings);
-        } catch (err: any) {
-            console.error('Failed to load security settings:', err);
-            error = err.message || 'Failed to load security settings';
-            // Set default settings on error
-            securitySettings = {
-                two_factor_enabled: false,
-                email_notifications: true,
-                security_alerts: true,
-                session_timeout_minutes: 1440,
-                allow_multiple_sessions: true,
-                require_password_for_actions: false
-            };
-        } finally {
-            loading = false;
-        }
-    }
+    // async function loadSecuritySettings() {
+    //     try {
+    //         loading = true;
+    //         const response = await authService.getSecuritySettings();
+    //         // Fix: Access nested data structure and provide defaults
+    //         securitySettings = response.data?.security || response.data?.security || {
+    //             two_factor_enabled: false,
+    //             email_notifications: true,
+    //             security_alerts: true,
+    //             session_timeout_minutes: 1440, // 24 hours
+    //             allow_multiple_sessions: true,
+    //             require_password_for_actions: false
+    //         };
+    //         console.log('Security settings loaded:', securitySettings);
+    //     } catch (err: any) {
+    //         console.error('Failed to load security settings:', err);
+    //         error = err.message || 'Failed to load security settings';
+    //         // Set default settings on error
+    //         securitySettings = {
+    //             two_factor_enabled: false,
+    //             email_notifications: true,
+    //             security_alerts: true,
+    //             session_timeout_minutes: 1440,
+    //             allow_multiple_sessions: true,
+    //             require_password_for_actions: false
+    //         };
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function updateSecuritySettings(updates: Partial<v2oneglobe_api_profile_v1_SecuritySettings>) {
-        try {
-            loading = true;
-            error = '';
+    // async function updateSecuritySettings(updates: Partial<v2oneglobe_api_profile_v1_SecuritySettings>) {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.updateSecuritySettings(updates);
-            success = 'Security settings updated successfully';
+    //         await authService.updateSecuritySettings(updates);
+    //         success = 'Security settings updated successfully';
             
-            // Update local state
-            securitySettings = { ...securitySettings, ...updates };
-        } catch (err: any) {
-            console.error('Failed to update security settings:', err);
-            error = err.message || 'Failed to update security settings';
-        } finally {
-            loading = false;
-        }
-    }
+    //         // Update local state
+    //         securitySettings = { ...securitySettings, ...updates };
+    //     } catch (err: any) {
+    //         console.error('Failed to update security settings:', err);
+    //         error = err.message || 'Failed to update security settings';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    // Helper function to convert minutes to readable format
-    function getTimeoutLabel(minutes: number): string {
-        if (minutes === 0) return 'Never';
-        if (minutes < 60) return `${minutes} minutes`;
-        if (minutes < 1440) return `${Math.floor(minutes / 60)} hours`;
-        return `${Math.floor(minutes / 1440)} days`;
-    }
+    // // Helper function to convert minutes to readable format
+    // function getTimeoutLabel(minutes: number): string {
+    //     if (minutes === 0) return 'Never';
+    //     if (minutes < 60) return `${minutes} minutes`;
+    //     if (minutes < 1440) return `${Math.floor(minutes / 60)} hours`;
+    //     return `${Math.floor(minutes / 1440)} days`;
+    // }
 
-    // Helper function to get timeout options
-    function getTimeoutOptions() {
-        return [
-            { value: 0, label: 'Never' },
-            { value: 60, label: '1 hour' },
-            { value: 240, label: '4 hours' },
-            { value: 480, label: '8 hours' },
-            { value: 1440, label: '24 hours' },
-            { value: 10080, label: '7 days' }
-        ];
-    }
+    // // Helper function to get timeout options
+    // function getTimeoutOptions() {
+    //     return [
+    //         { value: 0, label: 'Never' },
+    //         { value: 60, label: '1 hour' },
+    //         { value: 240, label: '4 hours' },
+    //         { value: 480, label: '8 hours' },
+    //         { value: 1440, label: '24 hours' },
+    //         { value: 10080, label: '7 days' }
+    //     ];
+    // }
 
-    // Clear messages after 5 seconds
-    $effect(() => {
-        if (error || success) {
-            const timer = setTimeout(() => {
-                error = '';
-                success = '';
-            }, 5000);
+    // // Clear messages after 5 seconds
+    // $effect(() => {
+    //     if (error || success) {
+    //         const timer = setTimeout(() => {
+    //             error = '';
+    //             success = '';
+    //         }, 5000);
             
-            return () => clearTimeout(timer);
-        }
-    });
+    //         return () => clearTimeout(timer);
+    //     }
+    // });
 </script>
 
 <svelte:head>
