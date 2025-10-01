@@ -55,7 +55,7 @@
 	// 	return new Date(dateString).toLocaleDateString();
 	// }
 </script>
-
+<!-- 
 <div class="space-y-6">
 	<div class="flex justify-between items-center">
 		<h1 class="h2">Team Invitations</h1>
@@ -161,4 +161,4 @@
 	</form>
 		{/snippet}
 
-</Modal> 
+</Modal>  -->

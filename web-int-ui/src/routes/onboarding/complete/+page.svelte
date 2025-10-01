@@ -1,35 +1,35 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { onboardingStore } from '$lib/stores/onboardingStore.js';
-    import { goto } from '$app/navigation';
+    // import { onMount } from 'svelte';
+    // import { onboardingStore } from '$lib/stores/onboardingStore.js';
+    // import { goto } from '$app/navigation';
 
-    let countdown = $state(5);
-    let autoRedirect = $state(true);
+    // let countdown = $state(5);
+    // let autoRedirect = $state(true);
     
-    onMount(() => {
-        const interval = setInterval(() => {
-            if (autoRedirect && countdown > 0) {
-                countdown--;
-            } else if (autoRedirect && countdown === 0) {
-                goto('/dashboard');
-            }
-        }, 1000);
+    // onMount(() => {
+    //     const interval = setInterval(() => {
+    //         if (autoRedirect && countdown > 0) {
+    //             countdown--;
+    //         } else if (autoRedirect && countdown === 0) {
+    //             goto('/dashboard');
+    //         }
+    //     }, 1000);
         
-        return () => clearInterval(interval);
-    });
+    //     return () => clearInterval(interval);
+    // });
     
-    function goToDashboard() {
-        goto('/dashboard');
-    }
+    // function goToDashboard() {
+    //     goto('/dashboard');
+    // }
     
 
     
-    function cancelAutoRedirect() {
-        autoRedirect = false;
-    }
+    // function cancelAutoRedirect() {
+    //     autoRedirect = false;
+    // }
 </script>
 
-<div class="max-w-2xl mx-auto px-4 py-8 text-center">
+<!-- <div class="max-w-2xl mx-auto px-4 py-8 text-center">
     <div class="space-y-8">
         <div class="w-20 h-20 mx-auto text-emerald-500 dark:text-emerald-400 animate-[scale_0.5s_ease-in-out]">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
@@ -115,7 +115,7 @@
             </div>
         {/if}
     </div>
-</div>
+</div> -->
 
 <style>
     @keyframes scale {

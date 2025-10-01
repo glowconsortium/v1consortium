@@ -105,8 +105,7 @@
     <title>Security Settings - FormApp</title>
 </svelte:head>
 
-<div class="max-w-4xl mx-auto space-y-6">
-    <!-- Header -->
+<!-- <div class="max-w-4xl mx-auto space-y-6">
     <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
             Security Settings
@@ -116,7 +115,6 @@
         </p>
     </div>
 
-    <!-- Toast Messages -->
     {#if error}
     {toaster.create({
         type: 'error',
@@ -131,14 +129,12 @@
         })}
     {/if}
 
-    <!-- Loading State -->
     {#if loading && !securitySettings}
         <div class="flex items-center justify-center py-12">
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>
     {:else}
         <div class="space-y-6">
-            <!-- Two-Factor Authentication -->
             <Card>
                 <div class="flex items-center justify-between mb-6">
                     <div>
@@ -209,7 +205,6 @@
                 </div>
             </Card>
 
-            <!-- Login Security -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Login Security
@@ -266,7 +261,6 @@
                 </div>
             </Card>
 
-            <!-- Security Actions -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Security Actions
@@ -293,7 +287,6 @@
                 </div>
             </Card>
 
-            <!-- Account Monitoring -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Account Monitoring
@@ -320,7 +313,6 @@
                 </div>
             </Card>
 
-            <!-- Security Information -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Current Security Status
@@ -359,7 +351,6 @@
                         </div>
                     </div>
 
-                    <!-- Security Tips -->
                     <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                         <h4 class="text-blue-800 dark:text-blue-400 font-medium mb-2">
                             Security Recommendations
@@ -395,4 +386,4 @@
             </Card>
         </div>
     {/if}
-</div>
+</div> -->
