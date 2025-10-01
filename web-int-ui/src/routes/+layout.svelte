@@ -17,9 +17,9 @@
 				// Set API client base URL
 				// Initialize auth store
 					await authStore.initialize({
-					domain: PUBLIC_AUTH0_DOMAIN || 'your-domain.auth0.com', // Replace with your Auth0 domain
-					clientId: PUBLIC_AUTH0_CLIENT_ID || 'your-client-id', // Replace with your Auth0 client ID
-					audience: PUBLIC_AUTH0_AUDIENCE || 'your-api-audience', // Replace with your API audience (optional)
+					domain: PUBLIC_AUTH0_DOMAIN , // Replace with your Auth0 domain
+					clientId: PUBLIC_AUTH0_CLIENT_ID , // Replace with your Auth0 client ID
+					audience: PUBLIC_AUTH0_AUDIENCE , // Replace with your API audience (optional)
 					scope: 'openid profile email',
 					redirectUri: `${window.location.origin}/auth/callback`
 				});

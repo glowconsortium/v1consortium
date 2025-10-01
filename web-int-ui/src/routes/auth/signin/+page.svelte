@@ -6,17 +6,17 @@
 	onMount(async () => {
 		// Initialize Auth0 if not already done
 		if (!$isAuthenticated) {
-			try {
-				await authStore.initialize({
-					domain: 'your-domain.auth0.com', // Replace with your Auth0 domain
-					clientId: 'your-client-id', // Replace with your Auth0 client ID
-					audience: 'your-api-audience', // Replace with your API audience (optional)
-					scope: 'openid profile email',
-					redirectUri: `${window.location.origin}/auth/callback`
-				});
-			} catch (error) {
-				console.error('Auth initialization failed:', error);
-			}
+			// try {
+			// 	await authStore.initialize({
+			// 		domain: 'your-domain.auth0.com', // Replace with your Auth0 domain
+			// 		clientId: 'your-client-id', // Replace with your Auth0 client ID
+			// 		audience: 'your-api-audience', // Replace with your API audience (optional)
+			// 		scope: 'openid profile email',
+			// 		redirectUri: `${window.location.origin}/auth/callback`
+			// 	});
+			// } catch (error) {
+			// 	console.error('Auth initialization failed:', error);
+			// }
 		}
 
 		// Redirect if already authenticated
