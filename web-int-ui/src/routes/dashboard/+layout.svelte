@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { authStore } from '@movsm/v1-consortium-web-pkg';
-	import { Header, Sidebar } from '@movsm/v1-consortium-web-pkg';
+	import { Header, Sidebar, type SidebarItem } from '@movsm/v1-consortium-web-pkg';
 	import { Spinner } from '@movsm/v1-consortium-web-pkg';
 
 	let { children } = $props();

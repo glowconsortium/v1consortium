@@ -26,11 +26,11 @@ interface TokenOptions {
 }
 
 class Auth0Store {
-  private client: Auth0Client | null = $state(null);
-  public isAuthenticated = $state(false);
-  public isLoading = $state(true);
-  public user: User | null = $state(null);
-  public error: string | null = $state(null);
+  private client: Auth0Client | null = null;
+  public isAuthenticated = false;
+  public isLoading = true;
+  public user: User | null = null;
+  public error: string | null = null;
 
   async init(config: Auth0Config): Promise<void> {
     try {

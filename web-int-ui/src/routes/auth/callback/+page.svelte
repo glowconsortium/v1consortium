@@ -3,6 +3,7 @@
   import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+	import { PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
   let processing = true;
   let errorMessage = '';
@@ -11,9 +12,9 @@
     try {
       // Initialize Auth0 to handle the callback
       await authStore.initialize({
-        domain: 'your-domain.auth0.com', // Replace with your Auth0 domain
-        clientId: 'your-client-id', // Replace with your Auth0 client ID
-        audience: 'your-api-audience', // Replace with your API audience (optional)
+        domain: PUBLIC_AUTH0_DOMAIN || 'your-domain.auth0.com', // Replace with your Auth0 domain
+        clientId: PUBLIC_AUTH0_CLIENT_ID || 'your-client-id', // Replace with your Auth0 client ID
+        audience: PUBLIC_AUTH0_AUDIENCE || 'your-api-audience', // Replace with your API audience (optional)
         scope: 'openid profile email',
         redirectUri: `${window.location.origin}/auth/callback`
       });
