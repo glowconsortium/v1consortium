@@ -1,0 +1,110 @@
+services:
+  v1consortium-internal-api:
+    build:
+      dockerfile: /home/kobdev/v1consortium/manifest/docker/Dockerfile
+      context: .
+    develop:
+      watch:
+        - action: rebuild
+          path: /home/kobdev/v1consortium/manifest/docker/Dockerfile
+        - action: rebuild
+          path: /home/kobdev/v1consortium/internal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+
+  web-int-ui:
+    command: bash -c "npm install -g pnpm && pnpm i --force && pnpm dev --host 0.0.0.0"
+    env_file:
+      - .env
+    # develop:
+    #   watch:
+    #     - action: restart
+    #       path: ./web-int-ui/src
+    expose:
+      - 5173
+    image: node:22.12.0
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./web-int-ui:/web-int-ui:cached
+    working_dir: /web-int-ui/
+
+  
+  nginx:
+    image: nginx:1
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - ./.local/nginx:/etc/nginx/conf.d
+
+  
+  postgres:
+    image: postgres:15.8
+    environment:
+      POSTGRES_PASSWORD: "password"
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test:
+        ["CMD-SHELL", "PGPASSWORD=password pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - ./.local/postgres:/var/lib/postgresql/data
+      - ./.local/tmp:/tmp/local
+
+  # kms:
+  #   environment:
+  #     KMS_REGION: ${AWS_DEFAULT_REGION}
+  #     PORT: 4566
+  #   expose:
+  #     - 4566
+  #   image: nsmithuk/local-kms:latest
+  #   ports:
+  #     - 4566:4566
+  #     - 4599:4566
+  #   volumes:
+  #     - ./.local/kms/data/:/data/
+  #     - ./.local/kms/seed.yaml:/init/seed.yaml
+
+  # s3:
+  #   image: adobe/s3mock:latest
+  #   environment:
+  #     - initialBuckets=tesseral-user-content
+  #     - root=containers3root
+  #     - retainFilesOnExit=true
+  #   ports:
+  #     - 9090:9090
+  #   volumes:
+  #     - ./.local/s3:/containers3root
+
+
+  # ses:
+  #   build:
+  #     dockerfile: ./.local/ses/Dockerfile
+  #     context: .
+  #   environment:
+  #     AWS_SES_ACCOUNT: ${AWS_SES_ACCOUNT}
+  #     SMTP_TRANSPORT: ${SMTP_TRANSPORT}
+  #   working_dir: /srv/www/dist
+  #   ports:
+  #     - 8005:8005
+  #   volumes:
+  #     - ./.local/ses/output:/output
+
+
+

@@ -3,35 +3,53 @@
   import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-	import { PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
+	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
   let processing = true;
   let errorMessage = '';
 
   onMount(async () => {
     try {
+      console.log('Callback page mounted, URL:', window.location.href);
+      
+      // Check if we have Auth0 configuration
+      if (!PUBLIC_AUTH0_DOMAIN || !PUBLIC_AUTH0_CLIENT_ID) {
+        throw new Error('Auth0 configuration missing. Please check your environment variables.');
+      }
+
       // Initialize Auth0 to handle the callback
       await authStore.initialize({
-        domain: PUBLIC_AUTH0_DOMAIN || 'your-domain.auth0.com', // Replace with your Auth0 domain
-        clientId: PUBLIC_AUTH0_CLIENT_ID || 'your-client-id', // Replace with your Auth0 client ID
-        audience: PUBLIC_AUTH0_AUDIENCE || 'your-api-audience', // Replace with your API audience (optional)
+        domain: PUBLIC_AUTH0_DOMAIN,
+        clientId: PUBLIC_AUTH0_CLIENT_ID,
+        audience: PUBLIC_AUTH0_AUDIENCE,
         scope: 'openid profile email',
         redirectUri: `${window.location.origin}/auth/callback`
       });
 
+      console.log('Auth0 initialized in callback');
+
       // Wait for auth state to be determined
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      console.log('Auth state after initialization:', {
+        isAuthenticated: $isAuthenticated,
+        error: $authError,
+        loading: $authLoading
+      });
 
       if ($isAuthenticated) {
         // Get the intended destination from URL params or default to dashboard
         const returnTo = $page.url.searchParams.get('returnTo') || '/dashboard';
+        console.log('User authenticated, redirecting to:', returnTo);
         goto(returnTo);
       } else if ($authError) {
+        console.error('Authentication error:', $authError);
         errorMessage = $authError;
         processing = false;
       } else {
         // If not authenticated and no error, redirect to signin
-        goto('/signin');
+        console.log('Not authenticated, redirecting to signin');
+        goto('/auth/signin');
       }
     } catch (error) {
       console.error('Callback processing failed:', error);
@@ -41,7 +59,7 @@
   });
 
   function handleRetry() {
-    goto('/signin');
+    goto('/auth/signin');
   }
 </script>
 

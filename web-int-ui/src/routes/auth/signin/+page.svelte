@@ -2,15 +2,17 @@
 	import { onMount } from 'svelte';
 	import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
 	import { goto } from '$app/navigation';
-	import {Button} from '@movsm/v1-consortium-web-pkg';
+	import { Button } from '@movsm/v1-consortium-web-pkg';
+	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
+
 	onMount(async () => {
 		// Initialize Auth0 if not already done
 		if (!$isAuthenticated) {
 			try {
 				await authStore.initialize({
-					domain: 'your-domain.auth0.com', // Replace with your Auth0 domain
-					clientId: 'your-client-id', // Replace with your Auth0 client ID
-					audience: 'your-api-audience', // Replace with your API audience (optional)
+					domain: PUBLIC_AUTH0_DOMAIN,
+					clientId: PUBLIC_AUTH0_CLIENT_ID,
+					audience: PUBLIC_AUTH0_AUDIENCE,
 					scope: 'openid profile email',
 					redirectUri: `${window.location.origin}/auth/callback`
 				});
@@ -27,9 +29,11 @@
 
 	async function handleLogin() {
 		try {
+			console.log('Starting login process...');
 			await authStore.login({
 				redirectUri: `${window.location.origin}/auth/callback`
 			});
+			console.log('Login method completed - user should be redirected to Auth0');
 		} catch (error) {
 			console.error('Login failed:', error);
 		}

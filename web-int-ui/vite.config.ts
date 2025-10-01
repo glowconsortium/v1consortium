@@ -14,6 +14,15 @@ export default defineConfig({
 			outdir: './src/lib/paraglide'
 		})
 	],
+	server: {
+		host: 'intapp.v1consortium.app',
+		allowedHosts: [
+			'intapp.v1consortium.app',
+			'web-int-ui',
+			'localhost',
+			'127.0.0.1'
+		]
+	},
 	test: {
 		projects: [
 			{
