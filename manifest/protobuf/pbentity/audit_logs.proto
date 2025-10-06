@@ -1,0 +1,28 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package v1consortium.backend;
+
+option go_package = "v1consortium.backend";
+
+import "google/protobuf/timestamp.proto";
+
+message AuditLogs {
+    string                    Id                = 1;  //
+    string                    OrganizationId    = 2;  //
+    string                    UserId            = 3;  //
+    string                    Action            = 4;  //
+    string                    EntityType        = 5;  //
+    string                    EntityId          = 6;  //
+    string                    OldValues         = 7;  //
+    string                    NewValues         = 8;  //
+    string                    IpAddress         = 9;  //
+    string                    UserAgent         = 10; //
+    string                    RequestId         = 11; //
+    bool                      RetentionRequired = 12; //
+    bool                      HipaaLog          = 13; //
+    google.protobuf.Timestamp CreatedAt         = 14; //
+}

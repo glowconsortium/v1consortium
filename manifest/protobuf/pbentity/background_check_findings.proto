@@ -1,0 +1,27 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package v1consortium.backend;
+
+option go_package = "v1consortium.backend";
+
+import "google/protobuf/timestamp.proto";
+
+message BackgroundCheckFindings {
+    string                    Id                               = 1;  //
+    string                    BackgroundCheckId                = 2;  //
+    string                    FindingType                      = 3;  //
+    string                    Severity                         = 4;  //
+    string                    Description                      = 5;  //
+    google.protobuf.Timestamp DateOfRecord                     = 6;  //
+    string                    Jurisdiction                     = 7;  //
+    string                    CaseNumber                       = 8;  //
+    string                    Disposition                      = 9;  //
+    bool                      JobRelated                       = 10; //
+    bool                      Disqualifying                    = 11; //
+    bool                      RequiresIndividualizedAssessment = 12; //
+    google.protobuf.Timestamp CreatedAt                        = 13; //
+}

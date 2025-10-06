@@ -1,0 +1,250 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+option go_package = "services/v1";
+
+import "google/protobuf/timestamp.proto";
+import "pbentity/temporal_workflows.proto";
+
+// Workflow Management Messages
+message StartWorkflowRequest {
+  string organization_id = 1;
+  string workflow_type = 2; // "drug_test_order", "mvr_monitoring", "random_selection", etc.
+  string entity_type = 3; // "drug_test", "mvr_report", "random_selection", etc.
+  string entity_id = 4; // ID of the related entity
+  map<string, string> input_data = 5; // Input parameters for the workflow
+  string started_by = 6;
+  google.protobuf.Timestamp scheduled_at = 7; // Optional: schedule for future execution
+}
+
+message StartWorkflowResponse {
+  v1consortium.backend.TemporalWorkflows workflow = 1;
+  string workflow_execution_id = 2;
+}
+
+message GetWorkflowRequest {
+  string workflow_id = 1;
+}
+
+message GetWorkflowResponse {
+  v1consortium.backend.TemporalWorkflows workflow = 1;
+}
+
+message ListWorkflowsRequest {
+  string organization_id = 1;
+  string workflow_type = 2; // Optional: filter by type
+  string status = 3; // Optional: filter by status
+  string entity_type = 4; // Optional: filter by entity type
+  string entity_id = 5; // Optional: filter by specific entity
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListWorkflowsResponse {
+  repeated v1consortium.backend.TemporalWorkflows workflows = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message UpdateWorkflowRequest {
+  string workflow_id = 1;
+  string status = 2; // "running", "completed", "failed", "cancelled"
+  map<string, string> output_data = 3; // Output/result data
+  string error_message = 4; // If status is "failed"
+  int32 retry_count = 5;
+  google.protobuf.Timestamp completed_at = 6;
+}
+
+message UpdateWorkflowResponse {
+  v1consortium.backend.TemporalWorkflows workflow = 1;
+}
+
+message CancelWorkflowRequest {
+  string workflow_id = 1;
+  string cancelled_by = 2;
+  string cancellation_reason = 3;
+}
+
+message CancelWorkflowResponse {
+  string message = 1;
+}
+
+message RetryWorkflowRequest {
+  string workflow_id = 1;
+  string retried_by = 2;
+  map<string, string> updated_input_data = 3; // Optional: update input data
+}
+
+message RetryWorkflowResponse {
+  v1consortium.backend.TemporalWorkflows new_workflow = 1;
+  string new_workflow_execution_id = 2;
+}
+
+// Specific Workflow Types
+
+// Drug Test Ordering Workflow
+message StartDrugTestOrderWorkflowRequest {
+  string drug_test_id = 1;
+  string provider = 2; // "quest", "labcorp", etc.
+  string facility_preference = 3;
+  bool rush_order = 4;
+  map<string, string> provider_config = 5;
+}
+
+message StartDrugTestOrderWorkflowResponse {
+  string workflow_id = 1;
+  string workflow_execution_id = 2;
+  string external_order_id = 3;
+}
+
+// MVR Monitoring Workflow
+message StartMVRMonitoringWorkflowRequest {
+  string user_id = 1;
+  string organization_id = 2;
+  string monitoring_frequency = 3; // "monthly", "quarterly", "annual"
+  string provider = 4; // "mvr_com", "hireright", etc.
+  map<string, string> provider_config = 5;
+}
+
+message StartMVRMonitoringWorkflowResponse {
+  string workflow_id = 1;
+  string workflow_execution_id = 2;
+}
+
+// Random Selection Workflow
+message StartRandomSelectionWorkflowRequest {
+  string pool_id = 1;
+  string selection_period = 2; // "Q1 2025", "January 2025"
+  int32 target_count = 3; // Number of people to select
+  string algorithm = 4; // "weighted", "simple_random", "stratified"
+  google.protobuf.Timestamp execute_at = 5; // When to execute the selection
+}
+
+message StartRandomSelectionWorkflowResponse {
+  string workflow_id = 1;
+  string workflow_execution_id = 2;
+}
+
+// Background Check Workflow
+message StartBackgroundCheckWorkflowRequest {
+  string background_check_id = 1;
+  string provider = 2; // "sterling", "hireright", "checkr"
+  repeated string check_types = 3; // Types of checks to perform
+  map<string, string> provider_config = 4;
+}
+
+message StartBackgroundCheckWorkflowResponse {
+  string workflow_id = 1;
+  string workflow_execution_id = 2;
+  string external_order_id = 3;
+}
+
+// Notification Workflow
+message StartNotificationWorkflowRequest {
+  string notification_id = 1;
+  string channel = 2; // "email", "sms", "phone"
+  int32 max_retries = 3;
+  int32 retry_delay_minutes = 4;
+  google.protobuf.Timestamp send_at = 5; // When to send
+}
+
+message StartNotificationWorkflowResponse {
+  string workflow_id = 1;
+  string workflow_execution_id = 2;
+}
+
+// Workflow Analytics Messages
+message GetWorkflowAnalyticsRequest {
+  string organization_id = 1;
+  string workflow_type = 2; // Optional: filter by type
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+}
+
+message WorkflowTypeStats {
+  string workflow_type = 1;
+  int32 total_workflows = 2;
+  int32 completed_workflows = 3;
+  int32 failed_workflows = 4;
+  int32 running_workflows = 5;
+  float average_duration_minutes = 6;
+  float success_rate = 7;
+}
+
+message GetWorkflowAnalyticsResponse {
+  int32 total_workflows = 1;
+  int32 completed_workflows = 2;
+  int32 failed_workflows = 3;
+  int32 running_workflows = 4;
+  float overall_success_rate = 5;
+  float average_duration_minutes = 6;
+  repeated WorkflowTypeStats type_stats = 7;
+}
+
+// Workflow Monitoring Messages
+message GetFailedWorkflowsRequest {
+  string organization_id = 1;
+  string workflow_type = 2; // Optional: filter by type
+  google.protobuf.Timestamp failed_after = 3; // Optional: show failures after this date
+  int32 page = 4;
+  int32 page_size = 5;
+}
+
+message FailedWorkflow {
+  v1consortium.backend.TemporalWorkflows workflow = 1;
+  string error_summary = 2;
+  bool can_retry = 3;
+  int32 retry_count = 4;
+  google.protobuf.Timestamp last_retry_at = 5;
+}
+
+message GetFailedWorkflowsResponse {
+  repeated FailedWorkflow failed_workflows = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message GetRunningWorkflowsRequest {
+  string organization_id = 1;
+  string workflow_type = 2; // Optional: filter by type
+  int32 running_longer_than_minutes = 3; // Optional: show workflows running longer than X minutes
+}
+
+message RunningWorkflow {
+  v1consortium.backend.TemporalWorkflows workflow = 1;
+  int32 running_duration_minutes = 2;
+  string current_activity = 3;
+  google.protobuf.Timestamp estimated_completion = 4;
+}
+
+message GetRunningWorkflowsResponse {
+  repeated RunningWorkflow running_workflows = 1;
+}
+
+// Workflow Service Definition
+service WorkflowService {
+  // Generic Workflow Management
+  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse);
+  rpc GetWorkflow(GetWorkflowRequest) returns (GetWorkflowResponse);
+  rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse);
+  rpc UpdateWorkflow(UpdateWorkflowRequest) returns (UpdateWorkflowResponse);
+  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse);
+  rpc RetryWorkflow(RetryWorkflowRequest) returns (RetryWorkflowResponse);
+  
+  // Specific Workflow Types
+  rpc StartDrugTestOrderWorkflow(StartDrugTestOrderWorkflowRequest) returns (StartDrugTestOrderWorkflowResponse);
+  rpc StartMVRMonitoringWorkflow(StartMVRMonitoringWorkflowRequest) returns (StartMVRMonitoringWorkflowResponse);
+  rpc StartRandomSelectionWorkflow(StartRandomSelectionWorkflowRequest) returns (StartRandomSelectionWorkflowResponse);
+  rpc StartBackgroundCheckWorkflow(StartBackgroundCheckWorkflowRequest) returns (StartBackgroundCheckWorkflowResponse);
+  rpc StartNotificationWorkflow(StartNotificationWorkflowRequest) returns (StartNotificationWorkflowResponse);
+  
+  // Workflow Analytics and Monitoring
+  rpc GetWorkflowAnalytics(GetWorkflowAnalyticsRequest) returns (GetWorkflowAnalyticsResponse);
+  rpc GetFailedWorkflows(GetFailedWorkflowsRequest) returns (GetFailedWorkflowsResponse);
+  rpc GetRunningWorkflows(GetRunningWorkflowsRequest) returns (GetRunningWorkflowsResponse);
+}

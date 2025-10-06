@@ -1,0 +1,245 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+option go_package = "services/v1";
+
+import "google/protobuf/timestamp.proto";
+import "pbentity/documents.proto";
+
+// Document Management Messages
+message UploadDocumentRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: for user-specific documents
+  string document_type = 3; // "test_result", "medical_certificate", "training_record", etc.
+  string title = 4;
+  string description = 5;
+  string filename = 6;
+  string content_type = 7; // MIME type
+  bytes file_data = 8;
+  string related_entity_type = 9; // "drug_test", "mvr_report", "dot_physical", etc.
+  string related_entity_id = 10; // ID of related entity
+  bool is_hipaa_protected = 11;
+  string confidentiality_level = 12; // "public", "internal", "confidential", "restricted"
+  google.protobuf.Timestamp auto_delete_at = 13; // Optional: automatic deletion date
+}
+
+message UploadDocumentResponse {
+  v1consortium.backend.Documents document = 1;
+  string upload_url = 2; // If using signed URLs for upload
+}
+
+message GetDocumentRequest {
+  string document_id = 1;
+  bool include_content = 2; // Whether to include file content in response
+}
+
+message GetDocumentResponse {
+  v1consortium.backend.Documents document = 1;
+  bytes file_data = 2; // Only included if include_content is true
+  string download_url = 3; // Signed URL for download
+}
+
+message ListDocumentsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string document_type = 3; // Optional: filter by type
+  string related_entity_type = 4; // Optional: filter by related entity type
+  string related_entity_id = 5; // Optional: filter by specific related entity
+  string confidentiality_level = 6; // Optional: filter by confidentiality
+  bool hipaa_protected_only = 7; // Optional: show only HIPAA protected docs
+  google.protobuf.Timestamp uploaded_after = 8; // Optional: date filter
+  google.protobuf.Timestamp uploaded_before = 9; // Optional: date filter
+  int32 page = 10;
+  int32 page_size = 11;
+  string search = 12; // Optional: search in title/description
+}
+
+message ListDocumentsResponse {
+  repeated v1consortium.backend.Documents documents = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message UpdateDocumentRequest {
+  string document_id = 1;
+  string title = 2;
+  string description = 3;
+  string confidentiality_level = 4;
+  google.protobuf.Timestamp auto_delete_at = 5;
+  map<string, string> metadata = 6; // Additional metadata
+}
+
+message UpdateDocumentResponse {
+  v1consortium.backend.Documents document = 1;
+}
+
+message DeleteDocumentRequest {
+  string document_id = 1;
+  string deleted_by = 2;
+  string deletion_reason = 3;
+}
+
+message DeleteDocumentResponse {
+  string message = 1;
+}
+
+message GetDocumentVersionsRequest {
+  string document_id = 1;
+}
+
+message GetDocumentVersionsResponse {
+  repeated v1consortium.backend.Documents versions = 1;
+}
+
+// Document Sharing Messages
+message ShareDocumentRequest {
+  string document_id = 1;
+  repeated string share_with_user_ids = 2;
+  string permission_level = 3; // "view", "download", "edit"
+  google.protobuf.Timestamp expires_at = 4; // Optional: share expiration
+  string shared_by = 5;
+  string message = 6; // Optional: message to recipients
+}
+
+message ShareDocumentResponse {
+  string share_id = 1;
+  string message = 2;
+}
+
+message GetSharedDocumentsRequest {
+  string user_id = 1;
+  bool shared_with_me = 2; // true for docs shared with user, false for docs user shared
+  string permission_level = 3; // Optional: filter by permission level
+}
+
+message SharedDocument {
+  string share_id = 1;
+  v1consortium.backend.Documents document = 2;
+  string shared_by = 3;
+  string shared_with = 4;
+  string permission_level = 5;
+  google.protobuf.Timestamp shared_at = 6;
+  google.protobuf.Timestamp expires_at = 7;
+  bool is_active = 8;
+}
+
+message GetSharedDocumentsResponse {
+  repeated SharedDocument shared_documents = 1;
+}
+
+message RevokeDocumentShareRequest {
+  string share_id = 1;
+  string revoked_by = 2;
+}
+
+message RevokeDocumentShareResponse {
+  string message = 1;
+}
+
+// Document Search Messages
+message SearchDocumentsRequest {
+  string organization_id = 1;
+  string query = 2; // Search query
+  repeated string document_types = 3; // Optional: limit to specific types
+  repeated string confidentiality_levels = 4; // Optional: limit by confidentiality
+  string user_id = 5; // Optional: limit to user's documents
+  google.protobuf.Timestamp date_from = 6; // Optional: date range
+  google.protobuf.Timestamp date_to = 7; // Optional: date range
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message SearchDocumentsResponse {
+  repeated v1consortium.backend.Documents documents = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  map<string, string> search_highlights = 5; // document_id -> highlighted text
+}
+
+// Document Analytics Messages
+message GetDocumentAnalyticsRequest {
+  string organization_id = 1;
+  google.protobuf.Timestamp start_date = 2;
+  google.protobuf.Timestamp end_date = 3;
+  string document_type = 4; // Optional: filter by type
+}
+
+message DocumentTypeStats {
+  string document_type = 1;
+  int32 total_documents = 2;
+  int64 total_size_bytes = 3;
+  int32 downloads = 4;
+  int32 shares = 5;
+}
+
+message GetDocumentAnalyticsResponse {
+  int32 total_documents = 1;
+  int64 total_storage_bytes = 2;
+  int32 documents_uploaded = 3; // In the specified period
+  int32 documents_downloaded = 4; // In the specified period
+  int32 documents_shared = 5; // In the specified period
+  repeated DocumentTypeStats type_stats = 6;
+  int32 hipaa_protected_documents = 7;
+}
+
+// Document Compliance Messages
+message GetDocumentRetentionStatusRequest {
+  string organization_id = 1;
+  string document_type = 2; // Optional: filter by type
+}
+
+message DocumentRetentionInfo {
+  string document_id = 1;
+  string title = 2;
+  string document_type = 3;
+  google.protobuf.Timestamp uploaded_at = 4;
+  google.protobuf.Timestamp auto_delete_at = 5;
+  int32 days_until_deletion = 6;
+  bool retention_policy_applied = 7;
+}
+
+message GetDocumentRetentionStatusResponse {
+  repeated DocumentRetentionInfo retention_info = 1;
+  int32 documents_scheduled_for_deletion = 2;
+}
+
+message ApplyRetentionPolicyRequest {
+  string organization_id = 1;
+  string document_type = 2; // Optional: apply to specific type
+  int32 retention_days = 3; // Days to retain documents
+  bool force_apply = 4; // Apply even if documents already have auto_delete_at
+}
+
+message ApplyRetentionPolicyResponse {
+  int32 documents_updated = 1;
+  string message = 2;
+}
+
+// Document Service Definition
+service DocumentService {
+  // Document Management
+  rpc UploadDocument(UploadDocumentRequest) returns (UploadDocumentResponse);
+  rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse);
+  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse);
+  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse);
+  rpc DeleteDocument(DeleteDocumentRequest) returns (DeleteDocumentResponse);
+  rpc GetDocumentVersions(GetDocumentVersionsRequest) returns (GetDocumentVersionsResponse);
+  
+  // Document Sharing
+  rpc ShareDocument(ShareDocumentRequest) returns (ShareDocumentResponse);
+  rpc GetSharedDocuments(GetSharedDocumentsRequest) returns (GetSharedDocumentsResponse);
+  rpc RevokeDocumentShare(RevokeDocumentShareRequest) returns (RevokeDocumentShareResponse);
+  
+  // Document Search
+  rpc SearchDocuments(SearchDocumentsRequest) returns (SearchDocumentsResponse);
+  
+  // Document Analytics
+  rpc GetDocumentAnalytics(GetDocumentAnalyticsRequest) returns (GetDocumentAnalyticsResponse);
+  
+  // Document Compliance
+  rpc GetDocumentRetentionStatus(GetDocumentRetentionStatusRequest) returns (GetDocumentRetentionStatusResponse);
+  rpc ApplyRetentionPolicy(ApplyRetentionPolicyRequest) returns (ApplyRetentionPolicyResponse);
+}

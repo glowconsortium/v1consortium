@@ -3,11 +3,7 @@ package cmd
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
-
-	"v1consortium/internal/controller/hello"
 )
 
 var (
@@ -16,17 +12,18 @@ var (
 		Usage: "main",
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
-			s := g.Server()
+			// s := g.Server()
 
-			// Setup internal routes.
-			SetupInternalRoutes(ctx, s)
+			// // Setup internal routes.
+			// SetupInternalRoutes(ctx, s)
 
-			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Bind(
-					hello.NewV1(),
-				)
-			})
+			// s.Group("/", func(group *ghttp.RouterGroup) {
+			// 	group.Middleware(ghttp.MiddlewareHandlerResponse)
+			// 	group.Bind(
+			// 		hello.NewV1(),
+			// 	)
+			// })
+			s := setupRpcRoutes(ctx)
 			s.Run()
 			return nil
 		},

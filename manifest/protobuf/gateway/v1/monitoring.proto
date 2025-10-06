@@ -1,0 +1,235 @@
+syntax = "proto3";
+
+package v1consortium.gateway;
+
+option go_package = "gateway/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Metrics Collection Messages
+message RequestMetric {
+  string request_id = 1;
+  string method = 2;
+  string path = 3;
+  int32 status_code = 4;
+  int64 duration_ms = 5;
+  int64 request_size_bytes = 6;
+  int64 response_size_bytes = 7;
+  string user_id = 8;
+  string organization_id = 9;
+  string service = 10;
+  google.protobuf.Timestamp timestamp = 11;
+  string error_type = 12; // If there was an error
+  string user_agent = 13;
+  string ip_address = 14;
+}
+
+message RecordMetricRequest {
+  RequestMetric metric = 1;
+}
+
+message RecordMetricResponse {
+  string message = 1;
+}
+
+// Metrics Query Messages
+message GetMetricsRequest {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  string service = 3; // Optional: filter by service
+  string organization_id = 4; // Optional: filter by organization
+  string user_id = 5; // Optional: filter by user
+  string path = 6; // Optional: filter by API path
+  repeated int32 status_codes = 7; // Optional: filter by status codes
+  string aggregation_interval = 8; // "1m", "5m", "1h", "1d"
+}
+
+message MetricsSummary {
+  int64 total_requests = 1;
+  int64 successful_requests = 2; // 2xx status codes
+  int64 client_errors = 3; // 4xx status codes
+  int64 server_errors = 4; // 5xx status codes
+  float average_response_time_ms = 5;
+  float p50_response_time_ms = 6;
+  float p95_response_time_ms = 7;
+  float p99_response_time_ms = 8;
+  int64 total_bytes_transferred = 9;
+  float requests_per_second = 10;
+}
+
+message GetMetricsResponse {
+  MetricsSummary summary = 1;
+  repeated TimeSeriesPoint time_series = 2;
+  repeated EndpointMetric endpoint_metrics = 3;
+  repeated ServiceMetric service_metrics = 4;
+}
+
+message TimeSeriesPoint {
+  google.protobuf.Timestamp timestamp = 1;
+  int64 request_count = 2;
+  float average_response_time_ms = 3;
+  int64 error_count = 4;
+}
+
+message EndpointMetric {
+  string path = 1;
+  string method = 2;
+  int64 request_count = 3;
+  float average_response_time_ms = 4;
+  int64 error_count = 5;
+  float error_rate = 6;
+}
+
+message ServiceMetric {
+  string service_name = 1;
+  int64 request_count = 2;
+  float average_response_time_ms = 3;
+  int64 error_count = 4;
+  float error_rate = 5;
+  bool healthy = 6;
+}
+
+// Health and Status Messages
+message GetGatewayStatusRequest {
+  // Empty request
+}
+
+message ServiceStatus {
+  string service_name = 1;
+  bool healthy = 2;
+  string status = 3; // "healthy", "degraded", "unhealthy", "unknown"
+  google.protobuf.Timestamp last_check = 4;
+  int64 response_time_ms = 5;
+  string error_message = 6;
+}
+
+message GetGatewayStatusResponse {
+  string gateway_status = 1; // "healthy", "degraded", "unhealthy"
+  google.protobuf.Timestamp timestamp = 2;
+  string version = 3;
+  int64 uptime_seconds = 4;
+  repeated ServiceStatus services = 5;
+  GatewayMetrics gateway_metrics = 6;
+}
+
+message GatewayMetrics {
+  int64 total_requests_today = 1;
+  int64 active_connections = 2;
+  float cpu_usage_percent = 3;
+  float memory_usage_percent = 4;
+  int64 requests_per_minute = 5;
+  float average_response_time_ms = 6;
+  int64 error_count_today = 7;
+}
+
+// Error Tracking Messages
+message RecordErrorRequest {
+  string request_id = 1;
+  string error_type = 2; // "authentication", "authorization", "validation", "service_unavailable", etc.
+  string error_message = 3;
+  string service = 4;
+  string method = 5;
+  string user_id = 6;
+  string organization_id = 7;
+  map<string, string> context = 8; // Additional error context
+  google.protobuf.Timestamp timestamp = 9;
+}
+
+message RecordErrorResponse {
+  string error_id = 1;
+  string message = 2;
+}
+
+message GetErrorStatsRequest {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  string service = 3; // Optional: filter by service
+  string error_type = 4; // Optional: filter by error type
+  string organization_id = 5; // Optional: filter by organization
+}
+
+message ErrorStats {
+  string error_type = 1;
+  int64 count = 2;
+  string last_occurrence = 3;
+  repeated string affected_services = 4;
+}
+
+message GetErrorStatsResponse {
+  repeated ErrorStats error_stats = 1;
+  int64 total_errors = 2;
+  string most_common_error = 3;
+}
+
+// Performance Monitoring Messages
+message GetPerformanceStatsRequest {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  string service = 3; // Optional: filter by service
+  string endpoint = 4; // Optional: filter by endpoint
+}
+
+message PerformanceStats {
+  string service = 1;
+  string endpoint = 2;
+  int64 request_count = 3;
+  float min_response_time_ms = 4;
+  float max_response_time_ms = 5;
+  float avg_response_time_ms = 6;
+  float p50_response_time_ms = 7;
+  float p95_response_time_ms = 8;
+  float p99_response_time_ms = 9;
+  int64 timeout_count = 10;
+  float throughput_rps = 11; // Requests per second
+}
+
+message GetPerformanceStatsResponse {
+  repeated PerformanceStats performance_stats = 1;
+  PerformanceStats overall_stats = 2;
+}
+
+// Rate Limit Monitoring Messages
+message GetRateLimitStatsRequest {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  string user_id = 3; // Optional: filter by user
+  string organization_id = 4; // Optional: filter by organization
+  string endpoint = 5; // Optional: filter by endpoint
+}
+
+message RateLimitStats {
+  string identifier = 1; // User ID, IP, or organization ID
+  string identifier_type = 2; // "user", "ip", "organization"
+  string endpoint = 3;
+  int64 total_requests = 4;
+  int64 rejected_requests = 5;
+  float rejection_rate = 6;
+  google.protobuf.Timestamp last_rejection = 7;
+}
+
+message GetRateLimitStatsResponse {
+  repeated RateLimitStats rate_limit_stats = 1;
+  int64 total_requests = 2;
+  int64 total_rejections = 3;
+  float overall_rejection_rate = 4;
+}
+
+// Monitoring Service Definition
+service MonitoringService {
+  // Metrics Collection and Retrieval
+  rpc RecordMetric(RecordMetricRequest) returns (RecordMetricResponse);
+  rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse);
+  
+  // Health and Status
+  rpc GetGatewayStatus(GetGatewayStatusRequest) returns (GetGatewayStatusResponse);
+  
+  // Error Tracking
+  rpc RecordError(RecordErrorRequest) returns (RecordErrorResponse);
+  rpc GetErrorStats(GetErrorStatsRequest) returns (GetErrorStatsResponse);
+  
+  // Performance Monitoring
+  rpc GetPerformanceStats(GetPerformanceStatsRequest) returns (GetPerformanceStatsResponse);
+  
+  // Rate Limit Monitoring
+  rpc GetRateLimitStats(GetRateLimitStatsRequest) returns (GetRateLimitStatsResponse);
+}

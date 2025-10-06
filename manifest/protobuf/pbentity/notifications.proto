@@ -1,0 +1,36 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package v1consortium.backend;
+
+option go_package = "v1consortium.backend";
+
+import "google/protobuf/timestamp.proto";
+
+message Notifications {
+    string                    Id                = 1;  //
+    string                    OrganizationId    = 2;  //
+    string                    UserId            = 3;  //
+    string                    Title             = 4;  //
+    string                    Message           = 5;  //
+    string                    NotificationType  = 6;  //
+    string                    Priority          = 7;  //
+    google.protobuf.Timestamp SentAt            = 8;  //
+    google.protobuf.Timestamp DeliveredAt       = 9;  //
+    google.protobuf.Timestamp ReadAt            = 10; //
+    string                    EmailAddress      = 11; //
+    string                    PhoneNumber       = 12; //
+    string                    ExternalMessageId = 13; //
+    string                    TestId            = 14; //
+    string                    MvrReportId       = 15; //
+    string                    PhysicalId        = 16; //
+    string                    WorkflowId        = 17; //
+    int32                     DeliveryAttempts  = 18; //
+    google.protobuf.Timestamp LastAttemptAt     = 19; //
+    string                    DeliveryError     = 20; //
+    google.protobuf.Timestamp CreatedAt         = 21; //
+    google.protobuf.Timestamp UpdatedAt         = 22; //
+}

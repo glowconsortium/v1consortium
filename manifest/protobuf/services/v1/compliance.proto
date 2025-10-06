@@ -1,0 +1,265 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+option go_package = "services/v1";
+
+import "google/protobuf/timestamp.proto";
+import "pbentity/compliance_status.proto";
+import "pbentity/certificates.proto";
+import "pbentity/saved_reports.proto";
+
+// Compliance Status Management
+message GetComplianceStatusRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: get compliance for specific user
+}
+
+message ComplianceMetrics {
+  float overall_compliance_percentage = 1;
+  float drug_testing_compliance = 2;
+  float mvr_compliance = 3;
+  float dot_physical_compliance = 4;
+  float background_check_compliance = 5;
+  int32 compliant_employees = 6;
+  int32 non_compliant_employees = 7;
+  int32 pending_requirements = 8;
+  google.protobuf.Timestamp last_calculated = 9;
+}
+
+message GetComplianceStatusResponse {
+  v1consortium.backend.ComplianceStatus status = 1;
+  ComplianceMetrics metrics = 2;
+}
+
+message UpdateComplianceStatusRequest {
+  string user_id = 1;
+  string organization_id = 2;
+  bool force_recalculation = 3;
+}
+
+message UpdateComplianceStatusResponse {
+  v1consortium.backend.ComplianceStatus status = 1;
+  ComplianceMetrics updated_metrics = 2;
+}
+
+message ListComplianceStatusRequest {
+  string organization_id = 1;
+  string compliance_type = 2; // Optional: filter by specific compliance area
+  bool non_compliant_only = 3; // Optional: show only non-compliant employees
+  int32 page = 4;
+  int32 page_size = 5;
+}
+
+message ListComplianceStatusResponse {
+  repeated v1consortium.backend.ComplianceStatus statuses = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+  ComplianceMetrics organization_metrics = 5;
+}
+
+// Certificate Management
+message GenerateComplianceCertificateRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: certificate for specific user
+  string certificate_type = 3; // "consortium_membership", "drug_test_completion", "compliance_summary"
+  map<string, string> custom_fields = 4; // Additional data for certificate
+}
+
+message GenerateComplianceCertificateResponse {
+  v1consortium.backend.Certificates certificate = 1;
+  string download_url = 2;
+}
+
+message GetCertificateRequest {
+  string certificate_id = 1;
+}
+
+message GetCertificateResponse {
+  v1consortium.backend.Certificates certificate = 1;
+  string download_url = 2;
+}
+
+message ListCertificatesRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string certificate_type = 3; // Optional: filter by type
+  bool valid_only = 4; // Optional: show only non-expired certificates
+  int32 page = 5;
+  int32 page_size = 6;
+}
+
+message ListCertificatesResponse {
+  repeated v1consortium.backend.Certificates certificates = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message RevokeCertificateRequest {
+  string certificate_id = 1;
+  string revoked_by = 2;
+  string revocation_reason = 3;
+}
+
+message RevokeCertificateResponse {
+  string message = 1;
+}
+
+// Reporting Messages
+message GenerateComplianceReportRequest {
+  string organization_id = 1;
+  string report_type = 2; // "compliance_summary", "drug_testing_report", "mvr_summary", "dot_annual_report"
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  string format = 5; // "pdf", "csv", "xlsx"
+  repeated string include_sections = 6; // Sections to include in report
+  map<string, string> filters = 7; // Additional filtering criteria
+}
+
+message GenerateComplianceReportResponse {
+  v1consortium.backend.SavedReports report = 1;
+  string download_url = 2;
+}
+
+message GetSavedReportRequest {
+  string report_id = 1;
+}
+
+message GetSavedReportResponse {
+  v1consortium.backend.SavedReports report = 1;
+  string download_url = 2;
+}
+
+message ListSavedReportsRequest {
+  string organization_id = 1;
+  string report_type = 2; // Optional: filter by report type
+  string generated_by = 3; // Optional: filter by generator
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  int32 page = 6;
+  int32 page_size = 7;
+}
+
+message ListSavedReportsResponse {
+  repeated v1consortium.backend.SavedReports reports = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message DeleteSavedReportRequest {
+  string report_id = 1;
+  string deleted_by = 2;
+}
+
+message DeleteSavedReportResponse {
+  string message = 1;
+}
+
+// Compliance Monitoring Messages
+message GetComplianceAlertsRequest {
+  string organization_id = 1;
+  string alert_type = 2; // Optional: "expiring", "overdue", "violations"
+  int32 days_ahead = 3; // For expiring alerts
+}
+
+message ComplianceAlert {
+  string alert_id = 1;
+  string alert_type = 2; // "drug_test_overdue", "mvr_expired", "physical_expiring", etc.
+  string user_id = 3;
+  string user_name = 4;
+  string description = 5;
+  string severity = 6; // "low", "medium", "high", "critical"
+  google.protobuf.Timestamp due_date = 7;
+  int32 days_overdue = 8;
+  string action_required = 9;
+}
+
+message GetComplianceAlertsResponse {
+  repeated ComplianceAlert alerts = 1;
+  int32 total_alerts = 2;
+  int32 critical_alerts = 3;
+}
+
+message GetComplianceAnalyticsRequest {
+  string organization_id = 1;
+  google.protobuf.Timestamp start_date = 2;
+  google.protobuf.Timestamp end_date = 3;
+  string analytics_type = 4; // "overview", "trends", "violations", "costs"
+}
+
+message ComplianceTrend {
+  google.protobuf.Timestamp date = 1;
+  float compliance_percentage = 2;
+  int32 compliant_employees = 3;
+  int32 total_employees = 4;
+}
+
+message GetComplianceAnalyticsResponse {
+  ComplianceMetrics current_metrics = 1;
+  repeated ComplianceTrend trends = 2;
+  int32 total_violations = 3;
+  int32 resolved_violations = 4;
+  float total_compliance_cost = 5;
+  float average_cost_per_employee = 6;
+  map<string, int32> compliance_by_type = 7; // compliance type -> employee count
+}
+
+// Audit and Tracking Messages
+message GetComplianceAuditTrailRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by specific user
+  string compliance_type = 3; // Optional: filter by compliance area
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  int32 page = 6;
+  int32 page_size = 7;
+}
+
+message ComplianceAuditEntry {
+  string audit_id = 1;
+  string user_id = 2;
+  string user_name = 3;
+  string action = 4; // "test_completed", "certificate_generated", "violation_added"
+  string compliance_type = 5;
+  string description = 6;
+  google.protobuf.Timestamp timestamp = 7;
+  string performed_by = 8;
+  map<string, string> details = 9;
+}
+
+message GetComplianceAuditTrailResponse {
+  repeated ComplianceAuditEntry entries = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// Compliance Service Definition
+service ComplianceService {
+  // Compliance Status Management
+  rpc GetComplianceStatus(GetComplianceStatusRequest) returns (GetComplianceStatusResponse);
+  rpc UpdateComplianceStatus(UpdateComplianceStatusRequest) returns (UpdateComplianceStatusResponse);
+  rpc ListComplianceStatus(ListComplianceStatusRequest) returns (ListComplianceStatusResponse);
+  
+  // Certificate Management
+  rpc GenerateComplianceCertificate(GenerateComplianceCertificateRequest) returns (GenerateComplianceCertificateResponse);
+  rpc GetCertificate(GetCertificateRequest) returns (GetCertificateResponse);
+  rpc ListCertificates(ListCertificatesRequest) returns (ListCertificatesResponse);
+  rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
+  
+  // Reporting
+  rpc GenerateComplianceReport(GenerateComplianceReportRequest) returns (GenerateComplianceReportResponse);
+  rpc GetSavedReport(GetSavedReportRequest) returns (GetSavedReportResponse);
+  rpc ListSavedReports(ListSavedReportsRequest) returns (ListSavedReportsResponse);
+  rpc DeleteSavedReport(DeleteSavedReportRequest) returns (DeleteSavedReportResponse);
+  
+  // Compliance Monitoring
+  rpc GetComplianceAlerts(GetComplianceAlertsRequest) returns (GetComplianceAlertsResponse);
+  rpc GetComplianceAnalytics(GetComplianceAnalyticsRequest) returns (GetComplianceAnalyticsResponse);
+  
+  // Audit and Tracking
+  rpc GetComplianceAuditTrail(GetComplianceAuditTrailRequest) returns (GetComplianceAuditTrailResponse);
+}

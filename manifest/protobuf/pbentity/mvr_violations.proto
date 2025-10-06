@@ -1,0 +1,31 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package v1consortium.backend;
+
+option go_package = "v1consortium.backend";
+
+import "google/protobuf/timestamp.proto";
+
+message MvrViolations {
+    string                    Id                           = 1;  //
+    string                    MvrReportId                  = 2;  //
+    google.protobuf.Timestamp ViolationDate                = 3;  //
+    string                    ViolationCode                = 4;  //
+    string                    ViolationDescription         = 5;  //
+    string                    ViolationType                = 6;  //
+    string                    Severity                     = 7;  //
+    google.protobuf.Timestamp ConvictionDate               = 8;  //
+    string                    FineAmount                   = 9;  //
+    int32                     Points                       = 10; //
+    string                    State                        = 11; //
+    string                    CourtName                    = 12; //
+    string                    CaseNumber                   = 13; //
+    bool                      Disqualifying                = 14; //
+    bool                      RequiresEmployerNotification = 15; //
+    bool                      AffectsCdl                   = 16; //
+    google.protobuf.Timestamp CreatedAt                    = 17; //
+}

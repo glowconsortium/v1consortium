@@ -1,0 +1,248 @@
+syntax = "proto3";
+
+package v1consortium.gateway;
+
+option go_package = "gateway/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// HTTP Method enumeration
+enum HttpMethod {
+  HTTP_METHOD_UNSPECIFIED = 0;
+  GET = 1;
+  POST = 2;
+  PUT = 3;
+  DELETE = 4;
+  PATCH = 5;
+  OPTIONS = 6;
+  HEAD = 7;
+}
+
+// Route Configuration
+message RouteConfig {
+  string route_id = 1;
+  string path_pattern = 2; // e.g., "/api/v1/organizations/{id}"
+  HttpMethod method = 3;
+  string target_service = 4; // Target microservice
+  string target_method = 5; // Target gRPC method
+  repeated string required_permissions = 6;
+  bool requires_authentication = 7;
+  RateLimitConfig rate_limit = 8;
+  CacheConfig cache = 9;
+  repeated MiddlewareConfig middleware = 10;
+  bool is_public = 11; // Public endpoints don't require auth
+}
+
+// Rate Limiting Configuration
+message RateLimitConfig {
+  bool enabled = 1;
+  int32 requests_per_minute = 2;
+  int32 requests_per_hour = 3;
+  int32 requests_per_day = 4;
+  string rate_limit_type = 5; // "user", "ip", "organization"
+  int32 burst_limit = 6; // Allow burst of requests
+}
+
+// Cache Configuration
+message CacheConfig {
+  bool enabled = 1;
+  int32 ttl_seconds = 2; // Time to live
+  repeated string cache_keys = 3; // Keys to cache by (user_id, org_id, etc.)
+  bool vary_by_user = 4; // Cache per user
+  bool vary_by_organization = 5; // Cache per organization
+}
+
+// Middleware Configuration
+message MiddlewareConfig {
+  string name = 1; // "auth", "rate_limit", "cors", "logging", "validation"
+  int32 priority = 2; // Execution order
+  map<string, string> config = 3; // Middleware-specific configuration
+  bool enabled = 4;
+}
+
+// API Version Configuration
+message ApiVersion {
+  string version = 1; // "v1", "v2", etc.
+  string base_path = 2; // "/api/v1"
+  bool is_default = 3;
+  bool deprecated = 4;
+  google.protobuf.Timestamp deprecation_date = 5;
+  google.protobuf.Timestamp sunset_date = 6;
+  repeated RouteConfig routes = 7;
+}
+
+// Service Configuration
+message ServiceConfig {
+  string service_name = 1;
+  string service_address = 2;
+  int32 service_port = 3;
+  bool load_balancing_enabled = 4;
+  string load_balancer_strategy = 5; // "round_robin", "least_connections", "weighted"
+  HealthCheckConfig health_check = 6;
+  CircuitBreakerConfig circuit_breaker = 7;
+  TimeoutConfig timeout = 8;
+  RetryConfig retry = 9;
+}
+
+// Health Check Configuration
+message HealthCheckConfig {
+  bool enabled = 1;
+  int32 interval_seconds = 2;
+  int32 timeout_seconds = 3;
+  string health_check_path = 4; // gRPC method for health checks
+  int32 unhealthy_threshold = 5; // Failures before marking unhealthy
+  int32 healthy_threshold = 6; // Successes before marking healthy
+}
+
+// Circuit Breaker Configuration
+message CircuitBreakerConfig {
+  bool enabled = 1;
+  int32 failure_threshold = 2; // Failures before opening circuit
+  int32 timeout_seconds = 3; // Time before attempting to close
+  int32 success_threshold = 4; // Successes needed to close circuit
+}
+
+// Timeout Configuration
+message TimeoutConfig {
+  int32 request_timeout_seconds = 1;
+  int32 connection_timeout_seconds = 2;
+  int32 idle_timeout_seconds = 3;
+}
+
+// Retry Configuration
+message RetryConfig {
+  bool enabled = 1;
+  int32 max_retries = 2;
+  int32 base_delay_ms = 3; // Base delay between retries
+  int32 max_delay_ms = 4; // Maximum delay between retries
+  string backoff_strategy = 5; // "linear", "exponential", "fixed"
+  repeated int32 retryable_status_codes = 6; // HTTP status codes to retry
+}
+
+// Gateway Configuration Messages
+message GetGatewayConfigRequest {
+  string version = 1; // Optional: specific API version
+}
+
+message GatewayConfig {
+  repeated ApiVersion api_versions = 1;
+  repeated ServiceConfig services = 2;
+  GlobalConfig global_config = 3;
+}
+
+message GlobalConfig {
+  string default_api_version = 1;
+  CorsConfig cors = 2;
+  SecurityConfig security = 3;
+  LoggingConfig logging = 4;
+  MetricsConfig metrics = 5;
+}
+
+// CORS Configuration
+message CorsConfig {
+  bool enabled = 1;
+  repeated string allowed_origins = 2;
+  repeated string allowed_methods = 3;
+  repeated string allowed_headers = 4;
+  repeated string exposed_headers = 5;
+  bool allow_credentials = 6;
+  int32 max_age_seconds = 7;
+}
+
+// Security Configuration
+message SecurityConfig {
+  bool enforce_https = 1;
+  bool validate_jwt_signature = 2;
+  repeated string trusted_jwt_issuers = 3;
+  bool require_api_key = 4;
+  string api_key_header = 5;
+  bool enable_ip_filtering = 6;
+  repeated string allowed_ip_ranges = 7;
+}
+
+// Logging Configuration
+message LoggingConfig {
+  string log_level = 1; // "debug", "info", "warn", "error"
+  bool log_requests = 2;
+  bool log_responses = 3;
+  bool log_request_body = 4;
+  bool log_response_body = 5;
+  repeated string sensitive_headers = 6; // Headers to redact
+  repeated string sensitive_fields = 7; // JSON fields to redact
+}
+
+// Metrics Configuration
+message MetricsConfig {
+  bool enabled = 1;
+  string metrics_endpoint = 2; // "/metrics"
+  bool collect_detailed_metrics = 3;
+  repeated string custom_metrics = 4;
+}
+
+message GetGatewayConfigResponse {
+  GatewayConfig config = 1;
+}
+
+message UpdateGatewayConfigRequest {
+  GatewayConfig config = 1;
+  string updated_by = 2;
+}
+
+message UpdateGatewayConfigResponse {
+  string message = 1;
+  google.protobuf.Timestamp updated_at = 2;
+}
+
+// Route Management Messages
+message AddRouteRequest {
+  string api_version = 1;
+  RouteConfig route = 2;
+  string added_by = 3;
+}
+
+message AddRouteResponse {
+  string message = 1;
+}
+
+message RemoveRouteRequest {
+  string api_version = 1;
+  string route_id = 2;
+  string removed_by = 3;
+}
+
+message RemoveRouteResponse {
+  string message = 1;
+}
+
+message UpdateRouteRequest {
+  string api_version = 1;
+  RouteConfig route = 2;
+  string updated_by = 3;
+}
+
+message UpdateRouteResponse {
+  string message = 1;
+}
+
+message ListRoutesRequest {
+  string api_version = 1; // Optional: filter by version
+  string service = 2; // Optional: filter by service
+  bool public_only = 3; // Optional: show only public routes
+}
+
+message ListRoutesResponse {
+  repeated RouteConfig routes = 1;
+}
+
+// Configuration Service Definition
+service ConfigurationService {
+  // Gateway Configuration
+  rpc GetGatewayConfig(GetGatewayConfigRequest) returns (GetGatewayConfigResponse);
+  rpc UpdateGatewayConfig(UpdateGatewayConfigRequest) returns (UpdateGatewayConfigResponse);
+  
+  // Route Management
+  rpc AddRoute(AddRouteRequest) returns (AddRouteResponse);
+  rpc RemoveRoute(RemoveRouteRequest) returns (RemoveRouteResponse);
+  rpc UpdateRoute(UpdateRouteRequest) returns (UpdateRouteResponse);
+  rpc ListRoutes(ListRoutesRequest) returns (ListRoutesResponse);
+}

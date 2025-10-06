@@ -1,0 +1,244 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+option go_package = "services/v1";
+
+import "google/protobuf/timestamp.proto";
+import "pbentity/testing_programs.proto";
+import "pbentity/drug_alcohol_tests.proto";
+import "pbentity/random_testing_pools.proto";
+import "pbentity/pool_memberships.proto";
+import "pbentity/random_selections.proto";
+import "pbentity/random_selection_members.proto";
+
+// Testing Program Management
+message CreateTestingProgramRequest {
+  string organization_id = 1;
+  string name = 2;
+  bool is_dot_program = 3;
+  string drug_panel_type = 4; // "5_panel", "10_panel", "custom"
+  bool alcohol_testing_enabled = 5;
+  bool random_testing_enabled = 6;
+  string random_testing_rate = 7; // "25%", "50%", etc.
+  string testing_frequency = 8; // "quarterly", "monthly", "annual"
+}
+
+message CreateTestingProgramResponse {
+  v1consortium.backend.TestingPrograms program = 1;
+}
+
+message GetTestingProgramRequest {
+  string program_id = 1;
+}
+
+message GetTestingProgramResponse {
+  v1consortium.backend.TestingPrograms program = 1;
+}
+
+message ListTestingProgramsRequest {
+  string organization_id = 1;
+  bool is_dot_program = 2;
+  bool is_active = 3;
+}
+
+message ListTestingProgramsResponse {
+  repeated v1consortium.backend.TestingPrograms programs = 1;
+}
+
+// Drug Test Management
+message OrderDrugTestRequest {
+  string organization_id = 1;
+  string user_id = 2;
+  string program_id = 3;
+  string test_type = 4; // "pre_employment", "random", "post_accident", etc.
+  string test_category = 5; // "drug", "alcohol", "both"
+  bool is_dot_test = 6;
+  google.protobuf.Timestamp due_date = 7;
+  string ordered_by = 8;
+  string reason = 9;
+  string facility_preference = 10;
+}
+
+message OrderDrugTestResponse {
+  v1consortium.backend.DrugAlcoholTests test = 1;
+  string external_order_id = 2;
+  string facility_name = 3;
+  string facility_address = 4;
+  string confirmation_code = 5;
+}
+
+message GetDrugTestRequest {
+  string test_id = 1;
+}
+
+message GetDrugTestResponse {
+  v1consortium.backend.DrugAlcoholTests test = 1;
+}
+
+message UpdateDrugTestRequest {
+  string test_id = 1;
+  string status = 2; // "ordered", "in_progress", "completed", "cancelled"
+  string result = 3; // "negative", "positive", "dilute", "invalid", "pending"
+  google.protobuf.Timestamp collection_date = 4;
+  google.protobuf.Timestamp result_date = 5;
+  string mro_reviewed_by = 6;
+  google.protobuf.Timestamp mro_review_date = 7;
+  string lab_results = 8; // JSON string
+  string notes = 9;
+}
+
+message UpdateDrugTestResponse {
+  v1consortium.backend.DrugAlcoholTests test = 1;
+}
+
+message ListDrugTestsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string program_id = 3; // Optional: filter by program
+  string test_type = 4; // Optional: filter by test type
+  string status = 5; // Optional: filter by status
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListDrugTestsResponse {
+  repeated v1consortium.backend.DrugAlcoholTests tests = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// Random Testing Management
+message CreateRandomPoolRequest {
+  string organization_id = 1;
+  string program_id = 2;
+  string name = 3;
+  string pool_type = 4; // "dot_drug", "dot_alcohol", "non_dot_drug", etc.
+  string selection_frequency = 5; // "quarterly", "monthly"
+  string target_percentage = 6; // "25%", "10%", etc.
+  bool is_active = 7;
+}
+
+message CreateRandomPoolResponse {
+  v1consortium.backend.RandomTestingPools pool = 1;
+}
+
+message AddUsersToPoolRequest {
+  string pool_id = 1;
+  repeated string user_ids = 2;
+  string added_by = 3;
+}
+
+message AddUsersToPoolResponse {
+  repeated v1consortium.backend.PoolMemberships memberships = 1;
+}
+
+message RemoveUsersFromPoolRequest {
+  string pool_id = 1;
+  repeated string user_ids = 2;
+  string removed_by = 3;
+  string reason = 4;
+}
+
+message RemoveUsersFromPoolResponse {
+  string message = 1;
+}
+
+message GetRandomPoolRequest {
+  string pool_id = 1;
+}
+
+message GetRandomPoolResponse {
+  v1consortium.backend.RandomTestingPools pool = 1;
+  repeated v1consortium.backend.PoolMemberships members = 2;
+}
+
+message ListRandomPoolsRequest {
+  string organization_id = 1;
+  string program_id = 2;
+  bool is_active = 3;
+}
+
+message ListRandomPoolsResponse {
+  repeated v1consortium.backend.RandomTestingPools pools = 1;
+}
+
+// Random Selection Management
+message ConductRandomSelectionRequest {
+  string pool_id = 1;
+  int32 number_to_select = 2;
+  string conducted_by = 3;
+  string selection_period = 4; // "Q1 2025", "January 2025", etc.
+  string algorithm = 5; // "weighted", "simple_random", "stratified"
+}
+
+message ConductRandomSelectionResponse {
+  v1consortium.backend.RandomSelections selection = 1;
+  repeated v1consortium.backend.RandomSelectionMembers selected_members = 2;
+  repeated string selected_user_ids = 3;
+}
+
+message GetRandomSelectionRequest {
+  string selection_id = 1;
+}
+
+message GetRandomSelectionResponse {
+  v1consortium.backend.RandomSelections selection = 1;
+  repeated v1consortium.backend.RandomSelectionMembers members = 2;
+}
+
+message ListRandomSelectionsRequest {
+  string organization_id = 1;
+  string pool_id = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  int32 page = 5;
+  int32 page_size = 6;
+}
+
+message ListRandomSelectionsResponse {
+  repeated v1consortium.backend.RandomSelections selections = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message ValidateRandomSelectionRequest {
+  string selection_id = 1;
+  string validated_by = 2;
+  string notes = 3;
+}
+
+message ValidateRandomSelectionResponse {
+  string message = 1;
+}
+
+// Drug Testing Service Definition
+service DrugTestingService {
+  // Testing Program Management
+  rpc CreateTestingProgram(CreateTestingProgramRequest) returns (CreateTestingProgramResponse);
+  rpc GetTestingProgram(GetTestingProgramRequest) returns (GetTestingProgramResponse);
+  rpc ListTestingPrograms(ListTestingProgramsRequest) returns (ListTestingProgramsResponse);
+  
+  // Drug Test Management
+  rpc OrderDrugTest(OrderDrugTestRequest) returns (OrderDrugTestResponse);
+  rpc GetDrugTest(GetDrugTestRequest) returns (GetDrugTestResponse);
+  rpc UpdateDrugTest(UpdateDrugTestRequest) returns (UpdateDrugTestResponse);
+  rpc ListDrugTests(ListDrugTestsRequest) returns (ListDrugTestsResponse);
+  
+  // Random Testing Pool Management
+  rpc CreateRandomPool(CreateRandomPoolRequest) returns (CreateRandomPoolResponse);
+  rpc AddUsersToPool(AddUsersToPoolRequest) returns (AddUsersToPoolResponse);
+  rpc RemoveUsersFromPool(RemoveUsersFromPoolRequest) returns (RemoveUsersFromPoolResponse);
+  rpc GetRandomPool(GetRandomPoolRequest) returns (GetRandomPoolResponse);
+  rpc ListRandomPools(ListRandomPoolsRequest) returns (ListRandomPoolsResponse);
+  
+  // Random Selection Management
+  rpc ConductRandomSelection(ConductRandomSelectionRequest) returns (ConductRandomSelectionResponse);
+  rpc GetRandomSelection(GetRandomSelectionRequest) returns (GetRandomSelectionResponse);
+  rpc ListRandomSelections(ListRandomSelectionsRequest) returns (ListRandomSelectionsResponse);
+  rpc ValidateRandomSelection(ValidateRandomSelectionRequest) returns (ValidateRandomSelectionResponse);
+}
