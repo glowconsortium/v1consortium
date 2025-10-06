@@ -1,0 +1,179 @@
+syntax = "proto3";
+
+package v1consortium.gateway;
+
+option go_package = "gateway/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+// Common API Gateway Messages
+message ApiRequest {
+  string request_id = 1;
+  string method = 2; // HTTP method: GET, POST, PUT, DELETE
+  string path = 3; // API endpoint path
+  map<string, string> headers = 4;
+  map<string, string> query_params = 5;
+  google.protobuf.Any body = 6; // Request body
+  string user_id = 7; // Authenticated user ID
+  string organization_id = 8; // User's organization
+  string session_id = 9; // Session identifier
+  google.protobuf.Timestamp timestamp = 10;
+}
+
+message ApiResponse {
+  string request_id = 1;
+  int32 status_code = 2;
+  map<string, string> headers = 3;
+  google.protobuf.Any body = 4; // Response body
+  repeated string errors = 5;
+  string message = 6;
+  google.protobuf.Timestamp timestamp = 7;
+  int64 processing_time_ms = 8;
+}
+
+// Authentication/Authorization Messages
+message AuthContext {
+  string user_id = 1;
+  string organization_id = 2;
+  string role = 3;
+  repeated string permissions = 4;
+  string session_id = 5;
+  bool mfa_verified = 6;
+  google.protobuf.Timestamp expires_at = 7;
+}
+
+message AuthenticateRequest {
+  string access_token = 1;
+  string required_permission = 2; // Optional: check specific permission
+  string resource_id = 3; // Optional: resource-specific permission
+}
+
+message AuthenticateResponse {
+  bool authenticated = 1;
+  bool authorized = 2;
+  AuthContext auth_context = 3;
+  string error_message = 4;
+}
+
+// Rate Limiting Messages
+message RateLimitRequest {
+  string identifier = 1; // User ID, IP, or API key
+  string endpoint = 2;
+  string rate_limit_type = 3; // "user", "ip", "api_key", "organization"
+}
+
+message RateLimitResponse {
+  bool allowed = 1;
+  int32 remaining_requests = 2;
+  google.protobuf.Timestamp reset_time = 3;
+  int32 retry_after_seconds = 4;
+}
+
+// Request Validation Messages
+message ValidateRequestRequest {
+  string service = 1; // Target service name
+  string method = 2; // Target method name
+  google.protobuf.Any request_body = 3;
+}
+
+message ValidateRequestResponse {
+  bool valid = 1;
+  repeated string validation_errors = 2;
+}
+
+// Service Discovery Messages
+message ServiceHealthRequest {
+  string service_name = 1;
+}
+
+message ServiceHealthResponse {
+  string service_name = 1;
+  bool healthy = 2;
+  string status = 3; // "healthy", "degraded", "unhealthy"
+  string version = 4;
+  google.protobuf.Timestamp last_check = 5;
+  map<string, string> metadata = 6;
+}
+
+message ListServicesRequest {
+  bool healthy_only = 1;
+}
+
+message ServiceInfo {
+  string service_name = 1;
+  string address = 2;
+  int32 port = 3;
+  bool healthy = 4;
+  string version = 5;
+  repeated string endpoints = 6;
+}
+
+message ListServicesResponse {
+  repeated ServiceInfo services = 1;
+}
+
+// Request Routing Messages
+message RouteRequest {
+  ApiRequest request = 1;
+  AuthContext auth_context = 2;
+}
+
+message RouteResponse {
+  string target_service = 1;
+  string target_method = 2;
+  google.protobuf.Any transformed_request = 3;
+  map<string, string> routing_metadata = 4;
+}
+
+// Audit and Logging Messages
+message LogApiRequestRequest {
+  ApiRequest request = 1;
+  ApiResponse response = 2;
+  AuthContext auth_context = 3;
+  int64 processing_time_ms = 4;
+  string error_details = 5;
+}
+
+message LogApiRequestResponse {
+  string log_id = 1;
+  string message = 2;
+}
+
+// Circuit Breaker Messages
+message CircuitBreakerStatusRequest {
+  string service_name = 1;
+}
+
+message CircuitBreakerStatusResponse {
+  string service_name = 1;
+  string state = 2; // "closed", "open", "half_open"
+  int32 failure_count = 3;
+  google.protobuf.Timestamp last_failure = 4;
+  google.protobuf.Timestamp next_attempt = 5;
+}
+
+// Gateway Service Definition
+service GatewayService {
+  // Authentication and Authorization
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse);
+  
+  // Rate Limiting
+  rpc CheckRateLimit(RateLimitRequest) returns (RateLimitResponse);
+  
+  // Request Validation
+  rpc ValidateRequest(ValidateRequestRequest) returns (ValidateRequestResponse);
+  
+  // Service Discovery
+  rpc GetServiceHealth(ServiceHealthRequest) returns (ServiceHealthResponse);
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse);
+  
+  // Request Routing
+  rpc Route(RouteRequest) returns (RouteResponse);
+  
+  // Audit and Logging
+  rpc LogApiRequest(LogApiRequestRequest) returns (LogApiRequestResponse);
+  
+  // Circuit Breaker
+  rpc GetCircuitBreakerStatus(CircuitBreakerStatusRequest) returns (CircuitBreakerStatusResponse);
+}

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
+	import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import { Button } from '@movsm/v1-consortium-web-pkg';
+	import { page } from '$app/stores';
 	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
 	onMount(async () => {
@@ -30,7 +31,9 @@
 	async function handleLogin() {
 		try {
 			console.log('Starting login process...');
+			const returnTo = $page?.url?.searchParams?.get('returnTo') || '/dashboard';
 			await authStore.login({
+				appState: { returnTo },
 				redirectUri: `${window.location.origin}/auth/callback`
 			});
 			console.log('Login method completed - user should be redirected to Auth0');

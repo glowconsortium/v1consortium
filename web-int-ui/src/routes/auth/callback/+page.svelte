@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
+  import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
@@ -11,13 +11,12 @@
   onMount(async () => {
     try {
       console.log('Callback page mounted, URL:', window.location.href);
-      
-      // Check if we have Auth0 configuration
+
       if (!PUBLIC_AUTH0_DOMAIN || !PUBLIC_AUTH0_CLIENT_ID) {
         throw new Error('Auth0 configuration missing. Please check your environment variables.');
       }
 
-      // Initialize Auth0 to handle the callback
+      // Initialize Auth0 (this will handle redirect if code/state are present)
       await authStore.initialize({
         domain: PUBLIC_AUTH0_DOMAIN,
         clientId: PUBLIC_AUTH0_CLIENT_ID,
@@ -26,31 +25,25 @@
         redirectUri: `${window.location.origin}/auth/callback`
       });
 
-      console.log('Auth0 initialized in callback');
-
-      // Wait for auth state to be determined
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      console.log('Auth state after initialization:', {
-        isAuthenticated: $isAuthenticated,
-        error: $authError,
-        loading: $authLoading
-      });
+      // Prefer appState.returnTo from Auth0 callback, fallback to URL param, then dashboard
+      const appState = authStore.getAppState?.();
+      const returnTo = (appState && appState.returnTo) || $page.url.searchParams.get('returnTo') || '/dashboard';
 
       if ($isAuthenticated) {
-        // Get the intended destination from URL params or default to dashboard
-        const returnTo = $page.url.searchParams.get('returnTo') || '/dashboard';
         console.log('User authenticated, redirecting to:', returnTo);
         goto(returnTo);
-      } else if ($authError) {
+        return;
+      }
+
+      if ($authError) {
         console.error('Authentication error:', $authError);
         errorMessage = $authError;
         processing = false;
-      } else {
-        // If not authenticated and no error, redirect to signin
-        console.log('Not authenticated, redirecting to signin');
-        goto('/auth/signin');
+        return;
       }
+
+      console.log('Not authenticated, redirecting to signin');
+      goto('/auth/signin');
     } catch (error) {
       console.error('Callback processing failed:', error);
       errorMessage = error instanceof Error ? error.message : 'Authentication failed';

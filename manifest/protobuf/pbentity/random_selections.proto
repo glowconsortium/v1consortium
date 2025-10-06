@@ -1,0 +1,25 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package v1consortium.backend;
+
+option go_package = "v1consortium.backend";
+
+import "google/protobuf/timestamp.proto";
+
+message RandomSelections {
+    string                    Id                 = 1;  //
+    string                    PoolId             = 2;  //
+    google.protobuf.Timestamp SelectionDate      = 3;  //
+    string                    SelectionPeriod    = 4;  //
+    int32                     TotalPoolSize      = 5;  //
+    int32                     RequiredSelections = 6;  //
+    string                    SelectionAlgorithm = 7;  //
+    string                    SelectionSeed      = 8;  //
+    string                    Notes              = 9;  //
+    google.protobuf.Timestamp CreatedAt          = 10; //
+    string                    CreatedBy          = 11; //
+}

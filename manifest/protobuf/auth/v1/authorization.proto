@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package v1consortium.auth;
+
+option go_package = "auth/v1";
+
+// Role definitions matching the database schema
+enum UserRole {
+  USER_ROLE_UNSPECIFIED = 0;
+  
+  // Internal Users
+  INTERNAL_SU = 1;          // Internal Super User
+  INTERNAL_ADMIN = 2;       // Internal Administrator  
+  INTERNAL_SUPPORT = 3;     // Internal Support
+  
+  // External Users
+  CLIENT_ADMIN = 4;         // Client Administrator
+  DER = 5;                  // Designated Employer Representative
+  SAFETY_MANAGER = 6;       // Safety Manager
+  HR_MANAGER = 7;           // HR Manager
+  EMPLOYEE = 8;             // Employee
+  
+  // Provider Users
+  MRO = 9;                  // Medical Review Officer
+  SAP = 10;                 // Substance Abuse Professional
+  MEDICAL_EXAMINER = 11;    // Medical Examiner
+}
+
+// Organization types
+enum OrganizationType {
+  ORGANIZATION_TYPE_UNSPECIFIED = 0;
+  INTERNAL = 1;     // V1 Consortium administrative organization
+  CLIENT = 2;       // Customer organizations using compliance services
+  PROVIDER = 3;     // Testing facilities, labs, and medical examiners
+}
+
+// Permission definitions
+enum Permission {
+  PERMISSION_UNSPECIFIED = 0;
+  
+  // System Administration (Internal only)
+  SYSTEM_ADMIN = 1;
+  MANAGE_ALL_ORGANIZATIONS = 2;
+  MANAGE_SUBSCRIPTIONS = 3;
+  VIEW_SYSTEM_AUDIT_LOGS = 4;
+  
+  // Organization Management
+  MANAGE_ORGANIZATION = 10;
+  VIEW_ORGANIZATION = 11;
+  UPDATE_ORGANIZATION_SETTINGS = 12;
+  
+  // User Management
+  MANAGE_USERS = 20;
+  INVITE_USERS = 21;
+  DEACTIVATE_USERS = 22;
+  VIEW_USER_PROFILES = 23;
+  UPDATE_USER_PROFILES = 24;
+  
+  // Drug & Alcohol Testing
+  MANAGE_TESTING_PROGRAMS = 30;
+  ORDER_DRUG_TESTS = 31;
+  VIEW_TEST_RESULTS = 32;
+  MANAGE_RANDOM_POOLS = 33;
+  CONDUCT_RANDOM_SELECTIONS = 34;
+  APPROVE_TEST_RESULTS = 35;
+  
+  // MVR Management
+  ORDER_MVR_REPORTS = 40;
+  VIEW_MVR_REPORTS = 41;
+  MANAGE_MVR_MONITORING = 42;
+  
+  // DOT Physicals
+  SCHEDULE_DOT_PHYSICALS = 50;
+  VIEW_MEDICAL_CERTIFICATES = 51;
+  MANAGE_MEDICAL_EXAMINERS = 52;
+  CONDUCT_DOT_PHYSICALS = 53;
+  
+  // Background Checks
+  ORDER_BACKGROUND_CHECKS = 60;
+  VIEW_BACKGROUND_REPORTS = 61;
+  MANAGE_ADVERSE_ACTIONS = 62;
+  
+  // Documents & Certificates
+  DOWNLOAD_CERTIFICATES = 70;
+  MANAGE_DOCUMENTS = 71;
+  VIEW_COMPLIANCE_REPORTS = 72;
+  GENERATE_REPORTS = 73;
+  
+  // Compliance Management
+  VIEW_COMPLIANCE_STATUS = 80;
+  MANAGE_COMPLIANCE_PROGRAMS = 81;
+  
+  // Notifications
+  MANAGE_NOTIFICATIONS = 90;
+  SEND_NOTIFICATIONS = 91;
+  
+  // Audit & Logs
+  VIEW_AUDIT_LOGS = 100;
+  VIEW_ORGANIZATION_AUDIT_LOGS = 101;
+}
+
+// Permission check request
+message HasPermissionRequest {
+  string user_id = 1;
+  Permission permission = 2;
+  string organization_id = 3; // Optional: for organization-specific permissions
+  string resource_id = 4;     // Optional: for resource-specific permissions
+}
+
+message HasPermissionResponse {
+  bool has_permission = 1;
+  string reason = 2;
+}
+
+// Role management messages
+message AssignRoleRequest {
+  string user_id = 1;
+  UserRole role = 2;
+  string organization_id = 3;
+  string assigned_by = 4;
+}
+
+message AssignRoleResponse {
+  string message = 1;
+}
+
+message RemoveRoleRequest {
+  string user_id = 1;
+  UserRole role = 2;
+  string organization_id = 3;
+  string removed_by = 4;
+}
+
+message RemoveRoleResponse {
+  string message = 1;
+}
+
+message GetUserRolesRequest {
+  string user_id = 1;
+  string organization_id = 2; // Optional: filter by organization
+}
+
+message GetUserRolesResponse {
+  repeated UserRole roles = 1;
+  repeated Permission permissions = 2;
+}
+
+message GetRolePermissionsRequest {
+  UserRole role = 1;
+}
+
+message GetRolePermissionsResponse {
+  repeated Permission permissions = 1;
+}
+
+// Authorization service
+service AuthorizationService {
+  // Permission Checks
+  rpc HasPermission(HasPermissionRequest) returns (HasPermissionResponse);
+  
+  // Role Management
+  rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+  rpc RemoveRole(RemoveRoleRequest) returns (RemoveRoleResponse);
+  rpc GetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse);
+  rpc GetRolePermissions(GetRolePermissionsRequest) returns (GetRolePermissionsResponse);
+}

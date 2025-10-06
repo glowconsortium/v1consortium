@@ -1,0 +1,251 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+option go_package = "services/v1";
+
+import "google/protobuf/timestamp.proto";
+import "pbentity/organizations.proto";
+import "pbentity/user_profiles.proto";
+import "pbentity/organization_subscriptions.proto";
+import "pbentity/subscription_plans.proto";
+
+// Organization Management Messages
+message CreateOrganizationRequest {
+  string name = 1;
+  string type = 2; // "internal", "client", "provider"
+  string usdot_number = 3;
+  string mc_number = 4;
+  string industry = 5;
+  bool is_dot_regulated = 6;
+  string address_line1 = 7;
+  string address_line2 = 8;
+  string city = 9;
+  string state = 10;
+  string zip_code = 11;
+  string country = 12;
+  string phone = 13;
+  string email = 14;
+  string website = 15;
+  string tax_id = 16;
+  string settings = 17; // JSON string
+}
+
+message CreateOrganizationResponse {
+  v1consortium.backend.Organizations organization = 1;
+}
+
+message GetOrganizationRequest {
+  string organization_id = 1;
+}
+
+message GetOrganizationResponse {
+  v1consortium.backend.Organizations organization = 1;
+}
+
+message UpdateOrganizationRequest {
+  string organization_id = 1;
+  string name = 2;
+  string usdot_number = 3;
+  string mc_number = 4;
+  string industry = 5;
+  bool is_dot_regulated = 6;
+  string address_line1 = 7;
+  string address_line2 = 8;
+  string city = 9;
+  string state = 10;
+  string zip_code = 11;
+  string country = 12;
+  string phone = 13;
+  string email = 14;
+  string website = 15;
+  string settings = 16; // JSON string
+}
+
+message UpdateOrganizationResponse {
+  v1consortium.backend.Organizations organization = 1;
+}
+
+message ListOrganizationsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string type = 3; // Filter by organization type
+  bool is_active = 4;
+  string search = 5; // Search by name, email, etc.
+}
+
+message ListOrganizationsResponse {
+  repeated v1consortium.backend.Organizations organizations = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message DeactivateOrganizationRequest {
+  string organization_id = 1;
+  string reason = 2;
+}
+
+message DeactivateOrganizationResponse {
+  string message = 1;
+}
+
+// User Management Messages
+message CreateUserRequest {
+  string organization_id = 1;
+  string role = 2;
+  string employee_id = 3;
+  string first_name = 4;
+  string last_name = 5;
+  string email = 6;
+  string phone = 7;
+  google.protobuf.Timestamp date_of_birth = 8;
+  string ssn_last_four = 9;
+  google.protobuf.Timestamp hire_date = 10;
+  bool requires_dot_testing = 11;
+  bool requires_non_dot_testing = 12;
+  string cdl_number = 13;
+  string cdl_state = 14;
+  google.protobuf.Timestamp cdl_expiration_date = 15;
+  string job_title = 16;
+  string department = 17;
+  string supervisor_id = 18;
+  string emergency_contact_name = 19;
+  string emergency_contact_phone = 20;
+  string emergency_contact_relationship = 21;
+}
+
+message CreateUserResponse {
+  v1consortium.backend.UserProfiles user = 1;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserResponse {
+  v1consortium.backend.UserProfiles user = 1;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  string role = 2;
+  string employee_id = 3;
+  string first_name = 4;
+  string last_name = 5;
+  string email = 6;
+  string phone = 7;
+  google.protobuf.Timestamp date_of_birth = 8;
+  string ssn_last_four = 9;
+  google.protobuf.Timestamp hire_date = 10;
+  google.protobuf.Timestamp termination_date = 11;
+  bool is_active = 12;
+  bool requires_dot_testing = 13;
+  bool requires_non_dot_testing = 14;
+  string cdl_number = 15;
+  string cdl_state = 16;
+  google.protobuf.Timestamp cdl_expiration_date = 17;
+  string job_title = 18;
+  string department = 19;
+  string supervisor_id = 20;
+  string emergency_contact_name = 21;
+  string emergency_contact_phone = 22;
+  string emergency_contact_relationship = 23;
+}
+
+message UpdateUserResponse {
+  v1consortium.backend.UserProfiles user = 1;
+}
+
+message ListUsersRequest {
+  string organization_id = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+  string role = 4; // Filter by role
+  bool is_active = 5;
+  string search = 6; // Search by name, email, employee_id
+  bool requires_dot_testing = 7;
+  string department = 8;
+}
+
+message ListUsersResponse {
+  repeated v1consortium.backend.UserProfiles users = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message DeactivateUserRequest {
+  string user_id = 1;
+  google.protobuf.Timestamp termination_date = 2;
+  string reason = 3;
+}
+
+message DeactivateUserResponse {
+  string message = 1;
+}
+
+// Subscription Management Messages
+message CreateSubscriptionRequest {
+  string organization_id = 1;
+  string plan_id = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  string stripe_subscription_id = 5;
+  string stripe_customer_id = 6;
+}
+
+message CreateSubscriptionResponse {
+  v1consortium.backend.OrganizationSubscriptions subscription = 1;
+}
+
+message GetSubscriptionRequest {
+  string organization_id = 1;
+}
+
+message GetSubscriptionResponse {
+  v1consortium.backend.OrganizationSubscriptions subscription = 1;
+  v1consortium.backend.SubscriptionPlans plan = 2;
+}
+
+message UpdateSubscriptionRequest {
+  string subscription_id = 1;
+  string plan_id = 2;
+  google.protobuf.Timestamp end_date = 3;
+  string status = 4;
+}
+
+message UpdateSubscriptionResponse {
+  v1consortium.backend.OrganizationSubscriptions subscription = 1;
+}
+
+message ListSubscriptionPlansRequest {
+  bool is_active = 1;
+}
+
+message ListSubscriptionPlansResponse {
+  repeated v1consortium.backend.SubscriptionPlans plans = 1;
+}
+
+// Organization Service Definition
+service OrganizationService {
+  // Organization Management
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse);
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse);
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse);
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse);
+  rpc DeactivateOrganization(DeactivateOrganizationRequest) returns (DeactivateOrganizationResponse);
+  
+  // User Management
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc DeactivateUser(DeactivateUserRequest) returns (DeactivateUserResponse);
+  
+  // Subscription Management
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
+  rpc ListSubscriptionPlans(ListSubscriptionPlansRequest) returns (ListSubscriptionPlansResponse);
+}

@@ -1,71 +1,71 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { onboardingStore } from '$lib/stores/onboardingStore.js';
-    import { goto } from '$app/navigation';
-    import type { TutorialStep } from '$lib/types/onboarding.js';
+    // import { onMount } from 'svelte';
+    // import { onboardingStore } from '$lib/stores/onboardingStore.js';
+    // import { goto } from '$app/navigation';
+    // import type { TutorialStep } from '$lib/types/onboarding.js';
 
-    // Example UI components, replace with your actual imports
-    import Button from '$lib/components/ui/Button.svelte';
-    import Spinner from '$lib/components/ui/Spinner.svelte';
-    import Alert from '$lib/components/ui/Alert.svelte';
-    import Card from '$lib/components/ui/Card.svelte';
+    // // Example UI components, replace with your actual imports
+    // import Button from '$lib/components/ui/Button.svelte';
+    // import Spinner from '$lib/components/ui/Spinner.svelte';
+    // import Alert from '$lib/components/ui/Alert.svelte';
+    // import Card from '$lib/components/ui/Card.svelte';
 
-    const { tutorialSteps, loading, error, clearError } = onboardingStore;
-    let currentStepIndex = $state(0);
-    let currentState = $state($onboardingStore);
+    // const { tutorialSteps, loading, error, clearError } = onboardingStore;
+    // let currentStepIndex = $state(0);
+    // let currentState = $state($onboardingStore);
 
-    onMount(() => {
-        if (!currentState?.organizationData?.id || !currentState?.selectedPlan) {
-            goto('/onboarding/plans');
-            return;
-        }
-    });
+    // onMount(() => {
+    //     if (!currentState?.organizationData?.id || !currentState?.selectedPlan) {
+    //         goto('/onboarding/plans');
+    //         return;
+    //     }
+    // });
 
-    $effect(() => {
-        const allCompleted = $tutorialSteps.every(step => step.isCompleted);
-        if (allCompleted) {
-            completeTutorial();
-        }
-    });
+    // $effect(() => {
+    //     const allCompleted = $tutorialSteps.every(step => step.isCompleted);
+    //     if (allCompleted) {
+    //         completeTutorial();
+    //     }
+    // });
 
-    async function completeTutorial() {
-        clearError();
-        try {
-            await onboardingStore.completeTutorial();
-            goto('/onboarding/complete');
-        } catch (error: any) {
-            console.error('Failed to complete tutorial:', error);
-        }
-    }
+    // async function completeTutorial() {
+    //     clearError();
+    //     try {
+    //         await onboardingStore.completeTutorial();
+    //         goto('/onboarding/complete');
+    //     } catch (error: any) {
+    //         console.error('Failed to complete tutorial:', error);
+    //     }
+    // }
 
-    function nextStep() {
-        if (currentStepIndex < $tutorialSteps.length - 1) {
-            currentStepIndex++;
-        }
-    }
+    // function nextStep() {
+    //     if (currentStepIndex < $tutorialSteps.length - 1) {
+    //         currentStepIndex++;
+    //     }
+    // }
 
-    function prevStep() {
-        if (currentStepIndex > 0) {
-            currentStepIndex--;
-        }
-    }
+    // function prevStep() {
+    //     if (currentStepIndex > 0) {
+    //         currentStepIndex--;
+    //     }
+    // }
 
-    function handleStepAction(step: TutorialStep) {
-        if (step.action?.type === 'navigate') {
-            goto(`${step.action.target}`);
-        }
-    }
+    // function handleStepAction(step: TutorialStep) {
+    //     if (step.action?.type === 'navigate') {
+    //         goto(`${step.action.target}`);
+    //     }
+    // }
 
-    function handleBack() {
-        goto('/onboarding/plans');
-    }
+    // function handleBack() {
+    //     goto('/onboarding/plans');
+    // }
 </script>
 
 <svelte:head>
     <title>Quick Tutorial - FormApp Onboarding</title>
 </svelte:head>
 
-<div class="max-w-5xl mx-auto py-8">
+<!-- <div class="max-w-5xl mx-auto py-8">
     <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">Quick Tutorial</h1>
         <p class="text-gray-500 text-lg">Learn the basics of FormApp in just a few minutes</p>
@@ -163,4 +163,4 @@
             </Button>
         </div>
     {/if}
-</div>
+</div> -->

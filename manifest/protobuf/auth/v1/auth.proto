@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package v1consortium.auth;
+
+option go_package = "auth/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Authentication Request and Response Messages
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  bool remember_me = 3;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  google.protobuf.Timestamp expires_at = 3;
+  UserSession user = 4;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string organization_id = 5;
+  string role = 6;
+  string invitation_token = 7;
+}
+
+message RegisterResponse {
+  string user_id = 1;
+  string message = 2;
+  bool requires_verification = 3;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message LogoutRequest {
+  string access_token = 1;
+}
+
+message LogoutResponse {
+  string message = 1;
+}
+
+message ForgotPasswordRequest {
+  string email = 1;
+}
+
+message ForgotPasswordResponse {
+  string message = 1;
+}
+
+message ResetPasswordRequest {
+  string token = 1;
+  string new_password = 2;
+}
+
+message ResetPasswordResponse {
+  string message = 1;
+}
+
+message VerifyEmailRequest {
+  string token = 1;
+}
+
+message VerifyEmailResponse {
+  string message = 1;
+}
+
+message ChangePasswordRequest {
+  string current_password = 1;
+  string new_password = 2;
+}
+
+message ChangePasswordResponse {
+  string message = 1;
+}
+
+// MFA Messages
+message EnableMFARequest {
+  string user_id = 1;
+  string method = 2; // "totp", "sms", "email"
+}
+
+message EnableMFAResponse {
+  string secret = 1;
+  string qr_code = 2;
+  repeated string backup_codes = 3;
+}
+
+message VerifyMFARequest {
+  string user_id = 1;
+  string code = 2;
+  string method = 3;
+}
+
+message VerifyMFAResponse {
+  bool verified = 1;
+  string message = 2;
+}
+
+message DisableMFARequest {
+  string user_id = 1;
+  string password = 2;
+}
+
+message DisableMFAResponse {
+  string message = 1;
+}
+
+// Session and User Information
+message UserSession {
+  string user_id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string organization_id = 5;
+  string organization_name = 6;
+  string role = 7;
+  repeated string permissions = 8;
+  bool mfa_enabled = 9;
+  bool email_verified = 10;
+  google.protobuf.Timestamp last_login = 11;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserResponse {
+  UserSession user = 1;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone = 4;
+}
+
+message UpdateUserResponse {
+  UserSession user = 1;
+}
+
+// Permission and Role Management
+message CheckPermissionRequest {
+  string user_id = 1;
+  string permission = 2;
+  string resource_id = 3;
+}
+
+message CheckPermissionResponse {
+  bool allowed = 1;
+  string reason = 2;
+}
+
+message GetUserPermissionsRequest {
+  string user_id = 1;
+}
+
+message GetUserPermissionsResponse {
+  repeated string permissions = 1;
+  string role = 2;
+}
+
+// Authentication Service Definition
+service AuthService {
+  // Authentication Operations
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+  
+  // Password Management
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse);
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  
+  // Email Verification
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+  
+  // Multi-Factor Authentication
+  rpc EnableMFA(EnableMFARequest) returns (EnableMFAResponse);
+  rpc VerifyMFA(VerifyMFARequest) returns (VerifyMFAResponse);
+  rpc DisableMFA(DisableMFARequest) returns (DisableMFAResponse);
+  
+  // User Management
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  
+  // Authorization
+  rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse);
+  rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse);
+}
