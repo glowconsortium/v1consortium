@@ -132,3 +132,7 @@ func (*Controller) RevokeToken(ctx context.Context, req *v1.RevokeTokenRequest) 
 func (*Controller) CleanupExpiredTokens(ctx context.Context, req *v1.CleanupExpiredTokensRequest) (res *v1.CleanupExpiredTokensResponse, err error) {
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }
+
+func (*Controller) RegisterUser(ctx context.Context, req *v1.RegisterRequest) (res *v1.RegisterResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}

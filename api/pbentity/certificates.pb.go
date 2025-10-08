@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/certificates.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -267,7 +267,7 @@ var File_pbentity_certificates_proto protoreflect.FileDescriptor
 
 const file_pbentity_certificates_proto_rawDesc = "" +
 	"\n" +
-	"\x1bpbentity/certificates.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\b\n" +
+	"\x1bpbentity/certificates.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\b\n" +
 	"\fCertificates\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -296,7 +296,7 @@ const file_pbentity_certificates_proto_rawDesc = "" +
 	"\tRevokedBy\x18\x16 \x01(\tR\tRevokedBy\x12*\n" +
 	"\x10RevocationReason\x18\x17 \x01(\tR\x10RevocationReason\x128\n" +
 	"\tCreatedAt\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_certificates_proto_rawDescOnce sync.Once
@@ -312,17 +312,17 @@ func file_pbentity_certificates_proto_rawDescGZIP() []byte {
 
 var file_pbentity_certificates_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_certificates_proto_goTypes = []any{
-	(*Certificates)(nil),          // 0: v1consortium.backend.Certificates
+	(*Certificates)(nil),          // 0: pbentity.Certificates
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_certificates_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.Certificates.IssueDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.Certificates.ExpirationDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.Certificates.SignatureTimestamp:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.Certificates.LastDownloadedAt:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.Certificates.RevokedAt:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.Certificates.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 6: v1consortium.backend.Certificates.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.Certificates.IssueDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.Certificates.ExpirationDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.Certificates.SignatureTimestamp:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.Certificates.LastDownloadedAt:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.Certificates.RevokedAt:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.Certificates.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 6: pbentity.Certificates.UpdatedAt:type_name -> google.protobuf.Timestamp
 	7, // [7:7] is the sub-list for method output_type
 	7, // [7:7] is the sub-list for method input_type
 	7, // [7:7] is the sub-list for extension type_name

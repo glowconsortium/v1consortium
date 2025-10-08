@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/random_selection_members.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -106,13 +106,13 @@ var File_pbentity_random_selection_members_proto protoreflect.FileDescriptor
 
 const file_pbentity_random_selection_members_proto_rawDesc = "" +
 	"\n" +
-	"'pbentity/random_selection_members.proto\x12\x14v1consortium.backend\"\xa2\x01\n" +
+	"'pbentity/random_selection_members.proto\x12\bpbentity\"\xa2\x01\n" +
 	"\x16RandomSelectionMembers\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12 \n" +
 	"\vSelectionId\x18\x02 \x01(\tR\vSelectionId\x12\x16\n" +
 	"\x06UserId\x18\x03 \x01(\tR\x06UserId\x12\x16\n" +
 	"\x06TestId\x18\x04 \x01(\tR\x06TestId\x12&\n" +
-	"\x0eSelectionOrder\x18\x05 \x01(\x05R\x0eSelectionOrderB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\x0eSelectionOrder\x18\x05 \x01(\x05R\x0eSelectionOrderB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_random_selection_members_proto_rawDescOnce sync.Once
@@ -128,7 +128,7 @@ func file_pbentity_random_selection_members_proto_rawDescGZIP() []byte {
 
 var file_pbentity_random_selection_members_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_random_selection_members_proto_goTypes = []any{
-	(*RandomSelectionMembers)(nil), // 0: v1consortium.backend.RandomSelectionMembers
+	(*RandomSelectionMembers)(nil), // 0: pbentity.RandomSelectionMembers
 }
 var file_pbentity_random_selection_members_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

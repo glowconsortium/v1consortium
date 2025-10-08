@@ -1380,7 +1380,7 @@ var File_gateway_v1_gateway_proto protoreflect.FileDescriptor
 
 const file_gateway_v1_gateway_proto_rawDesc = "" +
 	"\n" +
-	"\x18gateway/v1/gateway.proto\x12\x14v1consortium.gateway\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x19google/protobuf/any.proto\"\xb7\x04\n" +
+	"\x18gateway/v1/gateway.proto\x12\x14v1consortium.gateway\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb7\x04\n" +
 	"\n" +
 	"ApiRequest\x12\x1d\n" +
 	"\n" +

@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/organization_subscriptions.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -155,7 +155,7 @@ var File_pbentity_organization_subscriptions_proto protoreflect.FileDescriptor
 
 const file_pbentity_organization_subscriptions_proto_rawDesc = "" +
 	"\n" +
-	")pbentity/organization_subscriptions.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe5\x03\n" +
+	")pbentity/organization_subscriptions.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe5\x03\n" +
 	"\x19OrganizationSubscriptions\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -168,7 +168,7 @@ const file_pbentity_organization_subscriptions_proto_rawDesc = "" +
 	"\x10StripeCustomerId\x18\t \x01(\tR\x10StripeCustomerId\x128\n" +
 	"\tCreatedAt\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_organization_subscriptions_proto_rawDescOnce sync.Once
@@ -184,14 +184,14 @@ func file_pbentity_organization_subscriptions_proto_rawDescGZIP() []byte {
 
 var file_pbentity_organization_subscriptions_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_organization_subscriptions_proto_goTypes = []any{
-	(*OrganizationSubscriptions)(nil), // 0: v1consortium.backend.OrganizationSubscriptions
+	(*OrganizationSubscriptions)(nil), // 0: pbentity.OrganizationSubscriptions
 	(*timestamppb.Timestamp)(nil),     // 1: google.protobuf.Timestamp
 }
 var file_pbentity_organization_subscriptions_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.OrganizationSubscriptions.StartDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.OrganizationSubscriptions.EndDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.OrganizationSubscriptions.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.OrganizationSubscriptions.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.OrganizationSubscriptions.StartDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.OrganizationSubscriptions.EndDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.OrganizationSubscriptions.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.OrganizationSubscriptions.UpdatedAt:type_name -> google.protobuf.Timestamp
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

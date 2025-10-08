@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/testing_programs.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -163,7 +163,7 @@ var File_pbentity_testing_programs_proto protoreflect.FileDescriptor
 
 const file_pbentity_testing_programs_proto_rawDesc = "" +
 	"\n" +
-	"\x1fpbentity/testing_programs.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x03\n" +
+	"\x1fpbentity/testing_programs.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x03\n" +
 	"\x0fTestingPrograms\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x12\n" +
@@ -177,7 +177,7 @@ const file_pbentity_testing_programs_proto_rawDesc = "" +
 	"\bIsActive\x18\n" +
 	" \x01(\bR\bIsActive\x128\n" +
 	"\tCreatedAt\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_testing_programs_proto_rawDescOnce sync.Once
@@ -193,12 +193,12 @@ func file_pbentity_testing_programs_proto_rawDescGZIP() []byte {
 
 var file_pbentity_testing_programs_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_testing_programs_proto_goTypes = []any{
-	(*TestingPrograms)(nil),       // 0: v1consortium.backend.TestingPrograms
+	(*TestingPrograms)(nil),       // 0: pbentity.TestingPrograms
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_testing_programs_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.TestingPrograms.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.TestingPrograms.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.TestingPrograms.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.TestingPrograms.UpdatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

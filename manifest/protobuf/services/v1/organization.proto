@@ -2,13 +2,14 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "pbentity/organizations.proto";
-import "pbentity/user_profiles.proto";
 import "pbentity/organization_subscriptions.proto";
+import "pbentity/organizations.proto";
 import "pbentity/subscription_plans.proto";
+import "pbentity/user_profiles.proto";
+
+option go_package = "services/v1";
 
 // Organization Management Messages
 message CreateOrganizationRequest {
@@ -32,7 +33,7 @@ message CreateOrganizationRequest {
 }
 
 message CreateOrganizationResponse {
-  v1consortium.backend.Organizations organization = 1;
+  pbentity.Organizations organization = 1;
 }
 
 message GetOrganizationRequest {
@@ -40,7 +41,7 @@ message GetOrganizationRequest {
 }
 
 message GetOrganizationResponse {
-  v1consortium.backend.Organizations organization = 1;
+  pbentity.Organizations organization = 1;
 }
 
 message UpdateOrganizationRequest {
@@ -63,7 +64,7 @@ message UpdateOrganizationRequest {
 }
 
 message UpdateOrganizationResponse {
-  v1consortium.backend.Organizations organization = 1;
+  pbentity.Organizations organization = 1;
 }
 
 message ListOrganizationsRequest {
@@ -75,7 +76,7 @@ message ListOrganizationsRequest {
 }
 
 message ListOrganizationsResponse {
-  repeated v1consortium.backend.Organizations organizations = 1;
+  repeated pbentity.Organizations organizations = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -116,7 +117,7 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
-  v1consortium.backend.UserProfiles user = 1;
+  pbentity.UserProfiles user = 1;
 }
 
 message GetUserRequest {
@@ -124,7 +125,7 @@ message GetUserRequest {
 }
 
 message GetUserResponse {
-  v1consortium.backend.UserProfiles user = 1;
+  pbentity.UserProfiles user = 1;
 }
 
 message UpdateUserRequest {
@@ -154,7 +155,7 @@ message UpdateUserRequest {
 }
 
 message UpdateUserResponse {
-  v1consortium.backend.UserProfiles user = 1;
+  pbentity.UserProfiles user = 1;
 }
 
 message ListUsersRequest {
@@ -169,7 +170,7 @@ message ListUsersRequest {
 }
 
 message ListUsersResponse {
-  repeated v1consortium.backend.UserProfiles users = 1;
+  repeated pbentity.UserProfiles users = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -196,7 +197,7 @@ message CreateSubscriptionRequest {
 }
 
 message CreateSubscriptionResponse {
-  v1consortium.backend.OrganizationSubscriptions subscription = 1;
+  pbentity.OrganizationSubscriptions subscription = 1;
 }
 
 message GetSubscriptionRequest {
@@ -204,8 +205,8 @@ message GetSubscriptionRequest {
 }
 
 message GetSubscriptionResponse {
-  v1consortium.backend.OrganizationSubscriptions subscription = 1;
-  v1consortium.backend.SubscriptionPlans plan = 2;
+  pbentity.OrganizationSubscriptions subscription = 1;
+  pbentity.SubscriptionPlans plan = 2;
 }
 
 message UpdateSubscriptionRequest {
@@ -216,7 +217,7 @@ message UpdateSubscriptionRequest {
 }
 
 message UpdateSubscriptionResponse {
-  v1consortium.backend.OrganizationSubscriptions subscription = 1;
+  pbentity.OrganizationSubscriptions subscription = 1;
 }
 
 message ListSubscriptionPlansRequest {
@@ -224,28 +225,91 @@ message ListSubscriptionPlansRequest {
 }
 
 message ListSubscriptionPlansResponse {
-  repeated v1consortium.backend.SubscriptionPlans plans = 1;
+  repeated pbentity.SubscriptionPlans plans = 1;
 }
 
 // Organization Service Definition
 service OrganizationService {
   // Organization Management
-  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse);
-  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse);
-  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse);
-  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse);
-  rpc DeactivateOrganization(DeactivateOrganizationRequest) returns (DeactivateOrganizationResponse);
-  
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations"
+      body: "*"
+    };
+  }
+
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}"};
+  }
+
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/organizations/{organization_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations"};
+  }
+
+  rpc DeactivateOrganization(DeactivateOrganizationRequest) returns (DeactivateOrganizationResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/organizations/{organization_id}"
+      body: "*"
+    };
+  }
+
   // User Management
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
-  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
-  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
-  rpc DeactivateUser(DeactivateUserRequest) returns (DeactivateUserResponse);
-  
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/users"
+      body: "*"
+    };
+  }
+
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}"};
+  }
+
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/users"};
+  }
+
+  rpc DeactivateUser(DeactivateUserRequest) returns (DeactivateUserResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/users/{user_id}"
+      body: "*"
+    };
+  }
+
   // Subscription Management
-  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
-  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
-  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
-  rpc ListSubscriptionPlans(ListSubscriptionPlansRequest) returns (ListSubscriptionPlansResponse);
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/subscriptions"
+      body: "*"
+    };
+  }
+
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/subscriptions"};
+  }
+
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/subscriptions/{subscription_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListSubscriptionPlans(ListSubscriptionPlansRequest) returns (ListSubscriptionPlansResponse) {
+    option (google.api.http) = {get: "/api/v1/subscription-plans"};
+  }
 }

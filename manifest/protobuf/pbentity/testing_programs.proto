@@ -4,23 +4,23 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message TestingPrograms {
-    string                    Id                    = 1;  //
-    string                    OrganizationId        = 2;  //
-    string                    Name                  = 3;  //
-    bool                      IsDotProgram          = 4;  //
-    string                    DrugPanelType         = 5;  //
-    bool                      AlcoholTestingEnabled = 6;  //
-    bool                      RandomTestingEnabled  = 7;  //
-    string                    RandomTestingRate     = 8;  //
-    string                    TestingFrequency      = 9;  //
-    bool                      IsActive              = 10; //
-    google.protobuf.Timestamp CreatedAt             = 11; //
-    google.protobuf.Timestamp UpdatedAt             = 12; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string Name = 3; //
+  bool IsDotProgram = 4; //
+  string DrugPanelType = 5; //
+  bool AlcoholTestingEnabled = 6; //
+  bool RandomTestingEnabled = 7; //
+  string RandomTestingRate = 8; //
+  string TestingFrequency = 9; //
+  bool IsActive = 10; //
+  google.protobuf.Timestamp CreatedAt = 11; //
+  google.protobuf.Timestamp UpdatedAt = 12; //
 }

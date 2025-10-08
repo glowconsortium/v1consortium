@@ -4,39 +4,39 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message DotPhysicals {
-    string                    Id                        = 1;  //
-    string                    OrganizationId            = 2;  //
-    string                    UserId                    = 3;  //
-    string                    Status                    = 4;  //
-    google.protobuf.Timestamp ScheduledDate             = 5;  //
-    string                    ScheduledBy               = 6;  //
-    string                    ExaminerId                = 7;  //
-    string                    ExaminerName              = 8;  //
-    string                    ExaminerLicenseNumber     = 9;  //
-    string                    ExaminerRegistryNumber    = 10; //
-    string                    ClinicName                = 11; //
-    string                    ClinicAddress             = 12; //
-    string                    ClinicPhone               = 13; //
-    google.protobuf.Timestamp ExaminationDate           = 14; //
-    string                    CertificateNumber         = 15; //
-    google.protobuf.Timestamp CertificateIssueDate      = 16; //
-    google.protobuf.Timestamp CertificateExpirationDate = 17; //
-    string                    MedicalQualification      = 18; //
-    string                    Restrictions              = 19; //
-    string                    Exemptions                = 20; //
-    bool                      RequiresMonitoring        = 21; //
-    string                    MonitoringRequirements    = 22; //
-    google.protobuf.Timestamp NextRequiredDate          = 23; //
-    string                    CertificateUrl            = 24; //
-    google.protobuf.Timestamp CertificateUploadedAt     = 25; //
-    string                    Notes                     = 26; //
-    google.protobuf.Timestamp CreatedAt                 = 27; //
-    google.protobuf.Timestamp UpdatedAt                 = 28; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string Status = 4; //
+  google.protobuf.Timestamp ScheduledDate = 5; //
+  string ScheduledBy = 6; //
+  string ExaminerId = 7; //
+  string ExaminerName = 8; //
+  string ExaminerLicenseNumber = 9; //
+  string ExaminerRegistryNumber = 10; //
+  string ClinicName = 11; //
+  string ClinicAddress = 12; //
+  string ClinicPhone = 13; //
+  google.protobuf.Timestamp ExaminationDate = 14; //
+  string CertificateNumber = 15; //
+  google.protobuf.Timestamp CertificateIssueDate = 16; //
+  google.protobuf.Timestamp CertificateExpirationDate = 17; //
+  string MedicalQualification = 18; //
+  string Restrictions = 19; //
+  string Exemptions = 20; //
+  bool RequiresMonitoring = 21; //
+  string MonitoringRequirements = 22; //
+  google.protobuf.Timestamp NextRequiredDate = 23; //
+  string CertificateUrl = 24; //
+  google.protobuf.Timestamp CertificateUploadedAt = 25; //
+  string Notes = 26; //
+  google.protobuf.Timestamp CreatedAt = 27; //
+  google.protobuf.Timestamp UpdatedAt = 28; //
 }

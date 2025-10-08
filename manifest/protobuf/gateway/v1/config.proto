@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package v1consortium.gateway;
 
-option go_package = "gateway/v1";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "gateway/v1";
 
 // HTTP Method enumeration
 enum HttpMethod {
@@ -239,7 +239,7 @@ service ConfigurationService {
   // Gateway Configuration
   rpc GetGatewayConfig(GetGatewayConfigRequest) returns (GetGatewayConfigResponse);
   rpc UpdateGatewayConfig(UpdateGatewayConfigRequest) returns (UpdateGatewayConfigResponse);
-  
+
   // Route Management
   rpc AddRoute(AddRouteRequest) returns (AddRouteResponse);
   rpc RemoveRoute(RemoveRouteRequest) returns (RemoveRouteResponse);

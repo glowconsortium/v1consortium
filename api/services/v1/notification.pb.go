@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -151,9 +151,9 @@ func (x *SendNotificationRequest) GetAdditionalRecipients() []string {
 }
 
 type SendNotificationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Notification  *v1consortium_backend.Notifications `protobuf:"bytes,1,opt,name=notification,proto3" json:"notification,omitempty"`
-	Message       string                              `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Notification  *pbentity.Notifications `protobuf:"bytes,1,opt,name=notification,proto3" json:"notification,omitempty"`
+	Message       string                  `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -188,7 +188,7 @@ func (*SendNotificationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_notification_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *SendNotificationResponse) GetNotification() *v1consortium_backend.Notifications {
+func (x *SendNotificationResponse) GetNotification() *pbentity.Notifications {
 	if x != nil {
 		return x.Notification
 	}
@@ -247,8 +247,8 @@ func (x *GetNotificationRequest) GetNotificationId() string {
 }
 
 type GetNotificationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Notification  *v1consortium_backend.Notifications `protobuf:"bytes,1,opt,name=notification,proto3" json:"notification,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Notification  *pbentity.Notifications `protobuf:"bytes,1,opt,name=notification,proto3" json:"notification,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -283,7 +283,7 @@ func (*GetNotificationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_notification_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetNotificationResponse) GetNotification() *v1consortium_backend.Notifications {
+func (x *GetNotificationResponse) GetNotification() *pbentity.Notifications {
 	if x != nil {
 		return x.Notification
 	}
@@ -415,12 +415,12 @@ func (x *ListNotificationsRequest) GetPageSize() int32 {
 }
 
 type ListNotificationsResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Notifications []*v1consortium_backend.Notifications `protobuf:"bytes,1,rep,name=notifications,proto3" json:"notifications,omitempty"`
-	TotalCount    int32                                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	UnreadCount   int32                                 `protobuf:"varint,3,opt,name=unread_count,json=unreadCount,proto3" json:"unread_count,omitempty"`
-	Page          int32                                 `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                 `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Notifications []*pbentity.Notifications `protobuf:"bytes,1,rep,name=notifications,proto3" json:"notifications,omitempty"`
+	TotalCount    int32                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	UnreadCount   int32                     `protobuf:"varint,3,opt,name=unread_count,json=unreadCount,proto3" json:"unread_count,omitempty"`
+	Page          int32                     `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                     `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -455,7 +455,7 @@ func (*ListNotificationsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_notification_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListNotificationsResponse) GetNotifications() []*v1consortium_backend.Notifications {
+func (x *ListNotificationsResponse) GetNotifications() []*pbentity.Notifications {
 	if x != nil {
 		return x.Notifications
 	}
@@ -2527,7 +2527,7 @@ var File_services_v1_notification_proto protoreflect.FileDescriptor
 
 const file_services_v1_notification_proto_rawDesc = "" +
 	"\n" +
-	"\x1eservices/v1/notification.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cpbentity/notifications.proto\"\xb1\x04\n" +
+	"\x1eservices/v1/notification.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cpbentity/notifications.proto\"\xb1\x04\n" +
 	"\x17SendNotificationRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12+\n" +
@@ -2544,14 +2544,14 @@ const file_services_v1_notification_proto_rawDesc = "" +
 	"\x15additional_recipients\x18\v \x03(\tR\x14additionalRecipients\x1a?\n" +
 	"\x11TemplateDataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"}\n" +
-	"\x18SendNotificationResponse\x12G\n" +
-	"\fnotification\x18\x01 \x01(\v2#.v1consortium.backend.NotificationsR\fnotification\x12\x18\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"q\n" +
+	"\x18SendNotificationResponse\x12;\n" +
+	"\fnotification\x18\x01 \x01(\v2\x17.pbentity.NotificationsR\fnotification\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"A\n" +
 	"\x16GetNotificationRequest\x12'\n" +
-	"\x0fnotification_id\x18\x01 \x01(\tR\x0enotificationId\"b\n" +
-	"\x17GetNotificationResponse\x12G\n" +
-	"\fnotification\x18\x01 \x01(\v2#.v1consortium.backend.NotificationsR\fnotification\"\x9b\x03\n" +
+	"\x0fnotification_id\x18\x01 \x01(\tR\x0enotificationId\"V\n" +
+	"\x17GetNotificationResponse\x12;\n" +
+	"\fnotification\x18\x01 \x01(\v2\x17.pbentity.NotificationsR\fnotification\"\x9b\x03\n" +
 	"\x18ListNotificationsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12+\n" +
@@ -2566,9 +2566,9 @@ const file_services_v1_notification_proto_rawDesc = "" +
 	"unreadOnly\x12\x12\n" +
 	"\x04page\x18\n" +
 	" \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\v \x01(\x05R\bpageSize\"\xdb\x01\n" +
-	"\x19ListNotificationsResponse\x12I\n" +
-	"\rnotifications\x18\x01 \x03(\v2#.v1consortium.backend.NotificationsR\rnotifications\x12\x1f\n" +
+	"\tpage_size\x18\v \x01(\x05R\bpageSize\"\xcf\x01\n" +
+	"\x19ListNotificationsResponse\x12=\n" +
+	"\rnotifications\x18\x01 \x03(\v2\x17.pbentity.NotificationsR\rnotifications\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12!\n" +
 	"\funread_count\x18\x03 \x01(\x05R\vunreadCount\x12\x12\n" +
@@ -2750,24 +2750,24 @@ const file_services_v1_notification_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"h\n" +
 	" GetNotificationAnalyticsResponse\x12D\n" +
-	"\ametrics\x18\x01 \x01(\v2*.v1consortium.services.NotificationMetricsR\ametrics2\xb3\x11\n" +
-	"\x13NotificationService\x12s\n" +
-	"\x10SendNotification\x12..v1consortium.services.SendNotificationRequest\x1a/.v1consortium.services.SendNotificationResponse\x12p\n" +
-	"\x0fGetNotification\x12-.v1consortium.services.GetNotificationRequest\x1a..v1consortium.services.GetNotificationResponse\x12v\n" +
-	"\x11ListNotifications\x12/.v1consortium.services.ListNotificationsRequest\x1a0.v1consortium.services.ListNotificationsResponse\x12\x7f\n" +
-	"\x14MarkNotificationRead\x122.v1consortium.services.MarkNotificationReadRequest\x1a3.v1consortium.services.MarkNotificationReadResponse\x12\x8b\x01\n" +
-	"\x18MarkAllNotificationsRead\x126.v1consortium.services.MarkAllNotificationsReadRequest\x1a7.v1consortium.services.MarkAllNotificationsReadResponse\x12\x91\x01\n" +
-	"\x1aCreateNotificationTemplate\x128.v1consortium.services.CreateNotificationTemplateRequest\x1a9.v1consortium.services.CreateNotificationTemplateResponse\x12\x88\x01\n" +
-	"\x17GetNotificationTemplate\x125.v1consortium.services.GetNotificationTemplateRequest\x1a6.v1consortium.services.GetNotificationTemplateResponse\x12\x8e\x01\n" +
-	"\x19ListNotificationTemplates\x127.v1consortium.services.ListNotificationTemplatesRequest\x1a8.v1consortium.services.ListNotificationTemplatesResponse\x12\x91\x01\n" +
-	"\x1aUpdateNotificationTemplate\x128.v1consortium.services.UpdateNotificationTemplateRequest\x1a9.v1consortium.services.UpdateNotificationTemplateResponse\x12\x91\x01\n" +
-	"\x1aGetNotificationPreferences\x128.v1consortium.services.GetNotificationPreferencesRequest\x1a9.v1consortium.services.GetNotificationPreferencesResponse\x12\x9a\x01\n" +
-	"\x1dUpdateNotificationPreferences\x12;.v1consortium.services.UpdateNotificationPreferencesRequest\x1a<.v1consortium.services.UpdateNotificationPreferencesResponse\x12\x7f\n" +
-	"\x14SendBulkNotification\x122.v1consortium.services.SendBulkNotificationRequest\x1a3.v1consortium.services.SendBulkNotificationResponse\x12\x7f\n" +
-	"\x14ScheduleNotification\x122.v1consortium.services.ScheduleNotificationRequest\x1a3.v1consortium.services.ScheduleNotificationResponse\x12\x91\x01\n" +
-	"\x1aListScheduledNotifications\x128.v1consortium.services.ListScheduledNotificationsRequest\x1a9.v1consortium.services.ListScheduledNotificationsResponse\x12\x94\x01\n" +
-	"\x1bCancelScheduledNotification\x129.v1consortium.services.CancelScheduledNotificationRequest\x1a:.v1consortium.services.CancelScheduledNotificationResponse\x12\x8b\x01\n" +
-	"\x18GetNotificationAnalytics\x126.v1consortium.services.GetNotificationAnalyticsRequest\x1a7.v1consortium.services.GetNotificationAnalyticsResponseB\rZ\vservices/v1b\x06proto3"
+	"\ametrics\x18\x01 \x01(\v2*.v1consortium.services.NotificationMetricsR\ametrics2\xe8\x18\n" +
+	"\x13NotificationService\x12\x95\x01\n" +
+	"\x10SendNotification\x12..v1consortium.services.SendNotificationRequest\x1a/.v1consortium.services.SendNotificationResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/notifications\x12\xa1\x01\n" +
+	"\x0fGetNotification\x12-.v1consortium.services.GetNotificationRequest\x1a..v1consortium.services.GetNotificationResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/notifications/{notification_id}\x12\xa5\x01\n" +
+	"\x11ListNotifications\x12/.v1consortium.services.ListNotificationsRequest\x1a0.v1consortium.services.ListNotificationsResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/users/{user_id}/notifications\x12\xb8\x01\n" +
+	"\x14MarkNotificationRead\x122.v1consortium.services.MarkNotificationReadRequest\x1a3.v1consortium.services.MarkNotificationReadResponse\"7\x82\xd3\xe4\x93\x021:\x01*\x1a,/api/v1/notifications/{notification_id}/read\x12\xcb\x01\n" +
+	"\x18MarkAllNotificationsRead\x126.v1consortium.services.MarkAllNotificationsReadRequest\x1a7.v1consortium.services.MarkAllNotificationsReadResponse\">\x82\xd3\xe4\x93\x028:\x01*\x1a3/api/v1/users/{user_id}/notifications/mark-all-read\x12\xdc\x01\n" +
+	"\x1aCreateNotificationTemplate\x128.v1consortium.services.CreateNotificationTemplateRequest\x1a9.v1consortium.services.CreateNotificationTemplateResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/organizations/{organization_id}/notification-templates\x12\xbe\x01\n" +
+	"\x17GetNotificationTemplate\x125.v1consortium.services.GetNotificationTemplateRequest\x1a6.v1consortium.services.GetNotificationTemplateResponse\"4\x82\xd3\xe4\x93\x02.\x12,/api/v1/notification-templates/{template_id}\x12\xd6\x01\n" +
+	"\x19ListNotificationTemplates\x127.v1consortium.services.ListNotificationTemplatesRequest\x1a8.v1consortium.services.ListNotificationTemplatesResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/notification-templates\x12\xca\x01\n" +
+	"\x1aUpdateNotificationTemplate\x128.v1consortium.services.UpdateNotificationTemplateRequest\x1a9.v1consortium.services.UpdateNotificationTemplateResponse\"7\x82\xd3\xe4\x93\x021:\x01*\x1a,/api/v1/notification-templates/{template_id}\x12\xcb\x01\n" +
+	"\x1aGetNotificationPreferences\x128.v1consortium.services.GetNotificationPreferencesRequest\x1a9.v1consortium.services.GetNotificationPreferencesResponse\"8\x82\xd3\xe4\x93\x022\x120/api/v1/users/{user_id}/notification-preferences\x12\xd7\x01\n" +
+	"\x1dUpdateNotificationPreferences\x12;.v1consortium.services.UpdateNotificationPreferencesRequest\x1a<.v1consortium.services.UpdateNotificationPreferencesResponse\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/api/v1/users/{user_id}/notification-preferences\x12\xc6\x01\n" +
+	"\x14SendBulkNotification\x122.v1consortium.services.SendBulkNotificationRequest\x1a3.v1consortium.services.SendBulkNotificationResponse\"E\x82\xd3\xe4\x93\x02?:\x01*\":/api/v1/organizations/{organization_id}/notifications/bulk\x12\xaa\x01\n" +
+	"\x14ScheduleNotification\x122.v1consortium.services.ScheduleNotificationRequest\x1a3.v1consortium.services.ScheduleNotificationResponse\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v1/notifications/schedule\x12\xda\x01\n" +
+	"\x1aListScheduledNotifications\x128.v1consortium.services.ListScheduledNotificationsRequest\x1a9.v1consortium.services.ListScheduledNotificationsResponse\"G\x82\xd3\xe4\x93\x02A\x12?/api/v1/organizations/{organization_id}/notifications/scheduled\x12\xcc\x01\n" +
+	"\x1bCancelScheduledNotification\x129.v1consortium.services.CancelScheduledNotificationRequest\x1a:.v1consortium.services.CancelScheduledNotificationResponse\"6\x82\xd3\xe4\x93\x020*./api/v1/notifications/scheduled/{scheduled_id}\x12\xd3\x01\n" +
+	"\x18GetNotificationAnalytics\x126.v1consortium.services.GetNotificationAnalyticsRequest\x1a7.v1consortium.services.GetNotificationAnalyticsResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/notification-analyticsB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_notification_proto_rawDescOnce sync.Once
@@ -2826,16 +2826,16 @@ var file_services_v1_notification_proto_goTypes = []any{
 	nil,                                           // 40: v1consortium.services.NotificationMetrics.ByChannelEntry
 	nil,                                           // 41: v1consortium.services.NotificationMetrics.ByTypeEntry
 	(*timestamppb.Timestamp)(nil),                 // 42: google.protobuf.Timestamp
-	(*v1consortium_backend.Notifications)(nil),    // 43: v1consortium.backend.Notifications
+	(*pbentity.Notifications)(nil),                // 43: pbentity.Notifications
 }
 var file_services_v1_notification_proto_depIdxs = []int32{
 	37, // 0: v1consortium.services.SendNotificationRequest.template_data:type_name -> v1consortium.services.SendNotificationRequest.TemplateDataEntry
 	42, // 1: v1consortium.services.SendNotificationRequest.scheduled_for:type_name -> google.protobuf.Timestamp
-	43, // 2: v1consortium.services.SendNotificationResponse.notification:type_name -> v1consortium.backend.Notifications
-	43, // 3: v1consortium.services.GetNotificationResponse.notification:type_name -> v1consortium.backend.Notifications
+	43, // 2: v1consortium.services.SendNotificationResponse.notification:type_name -> pbentity.Notifications
+	43, // 3: v1consortium.services.GetNotificationResponse.notification:type_name -> pbentity.Notifications
 	42, // 4: v1consortium.services.ListNotificationsRequest.start_date:type_name -> google.protobuf.Timestamp
 	42, // 5: v1consortium.services.ListNotificationsRequest.end_date:type_name -> google.protobuf.Timestamp
-	43, // 6: v1consortium.services.ListNotificationsResponse.notifications:type_name -> v1consortium.backend.Notifications
+	43, // 6: v1consortium.services.ListNotificationsResponse.notifications:type_name -> pbentity.Notifications
 	42, // 7: v1consortium.services.NotificationTemplate.created_at:type_name -> google.protobuf.Timestamp
 	42, // 8: v1consortium.services.NotificationTemplate.updated_at:type_name -> google.protobuf.Timestamp
 	13, // 9: v1consortium.services.GetNotificationTemplateResponse.template:type_name -> v1consortium.services.NotificationTemplate

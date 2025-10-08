@@ -11,6 +11,7 @@ import (
 	sync "sync"
 	unsafe "unsafe"
 
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1723,7 +1724,7 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\x11v1consortium.auth\x1a\x1fgoogle/protobuf/timestamp.proto\"a\n" +
+	"\x12auth/v1/auth.proto\x12\x11v1consortium.auth\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15google/api/http.proto\x1a\x1cgoogle/api/annotations.proto\"a\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
@@ -1838,25 +1839,25 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\"R\n" +
 	"\x1aGetUserPermissionsResponse\x12 \n" +
 	"\vpermissions\x18\x01 \x03(\tR\vpermissions\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role2\x83\v\n" +
-	"\vAuthService\x12J\n" +
-	"\x05Login\x12\x1f.v1consortium.auth.LoginRequest\x1a .v1consortium.auth.LoginResponse\x12S\n" +
-	"\bRegister\x12\".v1consortium.auth.RegisterRequest\x1a#.v1consortium.auth.RegisterResponse\x12_\n" +
-	"\fRefreshToken\x12&.v1consortium.auth.RefreshTokenRequest\x1a'.v1consortium.auth.RefreshTokenResponse\x12M\n" +
-	"\x06Logout\x12 .v1consortium.auth.LogoutRequest\x1a!.v1consortium.auth.LogoutResponse\x12e\n" +
-	"\x0eForgotPassword\x12(.v1consortium.auth.ForgotPasswordRequest\x1a).v1consortium.auth.ForgotPasswordResponse\x12b\n" +
-	"\rResetPassword\x12'.v1consortium.auth.ResetPasswordRequest\x1a(.v1consortium.auth.ResetPasswordResponse\x12e\n" +
-	"\x0eChangePassword\x12(.v1consortium.auth.ChangePasswordRequest\x1a).v1consortium.auth.ChangePasswordResponse\x12\\\n" +
-	"\vVerifyEmail\x12%.v1consortium.auth.VerifyEmailRequest\x1a&.v1consortium.auth.VerifyEmailResponse\x12V\n" +
-	"\tEnableMFA\x12#.v1consortium.auth.EnableMFARequest\x1a$.v1consortium.auth.EnableMFAResponse\x12V\n" +
-	"\tVerifyMFA\x12#.v1consortium.auth.VerifyMFARequest\x1a$.v1consortium.auth.VerifyMFAResponse\x12Y\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role2\xc1\x0f\n" +
+	"\vAuthService\x12i\n" +
+	"\x05Login\x12\x1f.v1consortium.auth.LoginRequest\x1a .v1consortium.auth.LoginResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/api/v1/auth/login\x12y\n" +
+	"\fRegisterUser\x12\".v1consortium.auth.RegisterRequest\x1a#.v1consortium.auth.RegisterResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/register\x12\x80\x01\n" +
+	"\fRefreshToken\x12&.v1consortium.auth.RefreshTokenRequest\x1a'.v1consortium.auth.RefreshTokenResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/auth/refresh\x12m\n" +
+	"\x06Logout\x12 .v1consortium.auth.LogoutRequest\x1a!.v1consortium.auth.LogoutResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/api/v1/auth/logout\x12\x8e\x01\n" +
+	"\x0eForgotPassword\x12(.v1consortium.auth.ForgotPasswordRequest\x1a).v1consortium.auth.ForgotPasswordResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/v1/auth/forgot-password\x12\x8a\x01\n" +
+	"\rResetPassword\x12'.v1consortium.auth.ResetPasswordRequest\x1a(.v1consortium.auth.ResetPasswordResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/v1/auth/reset-password\x12\x8e\x01\n" +
+	"\x0eChangePassword\x12(.v1consortium.auth.ChangePasswordRequest\x1a).v1consortium.auth.ChangePasswordResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/v1/auth/change-password\x12\x82\x01\n" +
+	"\vVerifyEmail\x12%.v1consortium.auth.VerifyEmailRequest\x1a&.v1consortium.auth.VerifyEmailResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/api/v1/auth/verify-email\x12z\n" +
+	"\tEnableMFA\x12#.v1consortium.auth.EnableMFARequest\x1a$.v1consortium.auth.EnableMFAResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v1/auth/mfa/enable\x12z\n" +
+	"\tVerifyMFA\x12#.v1consortium.auth.VerifyMFARequest\x1a$.v1consortium.auth.VerifyMFAResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v1/auth/mfa/verify\x12v\n" +
 	"\n" +
-	"DisableMFA\x12$.v1consortium.auth.DisableMFARequest\x1a%.v1consortium.auth.DisableMFAResponse\x12P\n" +
-	"\aGetUser\x12!.v1consortium.auth.GetUserRequest\x1a\".v1consortium.auth.GetUserResponse\x12Y\n" +
+	"DisableMFA\x12$.v1consortium.auth.DisableMFARequest\x1a%.v1consortium.auth.DisableMFAResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01**\x10/api/v1/auth/mfa\x12v\n" +
+	"\aGetUser\x12!.v1consortium.auth.GetUserRequest\x1a\".v1consortium.auth.GetUserResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/auth/users/{user_id}\x12\x82\x01\n" +
 	"\n" +
-	"UpdateUser\x12$.v1consortium.auth.UpdateUserRequest\x1a%.v1consortium.auth.UpdateUserResponse\x12h\n" +
-	"\x0fCheckPermission\x12).v1consortium.auth.CheckPermissionRequest\x1a*.v1consortium.auth.CheckPermissionResponse\x12q\n" +
-	"\x12GetUserPermissions\x12,.v1consortium.auth.GetUserPermissionsRequest\x1a-.v1consortium.auth.GetUserPermissionsResponseB\tZ\aauth/v1b\x06proto3"
+	"UpdateUser\x12$.v1consortium.auth.UpdateUserRequest\x1a%.v1consortium.auth.UpdateUserResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/v1/auth/users/{user_id}\x12\x92\x01\n" +
+	"\x0fCheckPermission\x12).v1consortium.auth.CheckPermissionRequest\x1a*.v1consortium.auth.CheckPermissionResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v1/auth/check-permission\x12\xa3\x01\n" +
+	"\x12GetUserPermissions\x12,.v1consortium.auth.GetUserPermissionsRequest\x1a-.v1consortium.auth.GetUserPermissionsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/auth/users/{user_id}/permissionsB\tZ\aauth/v1b\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once
@@ -1913,7 +1914,7 @@ var file_auth_v1_auth_proto_depIdxs = []int32{
 	22, // 4: v1consortium.auth.GetUserResponse.user:type_name -> v1consortium.auth.UserSession
 	22, // 5: v1consortium.auth.UpdateUserResponse.user:type_name -> v1consortium.auth.UserSession
 	0,  // 6: v1consortium.auth.AuthService.Login:input_type -> v1consortium.auth.LoginRequest
-	2,  // 7: v1consortium.auth.AuthService.Register:input_type -> v1consortium.auth.RegisterRequest
+	2,  // 7: v1consortium.auth.AuthService.RegisterUser:input_type -> v1consortium.auth.RegisterRequest
 	4,  // 8: v1consortium.auth.AuthService.RefreshToken:input_type -> v1consortium.auth.RefreshTokenRequest
 	6,  // 9: v1consortium.auth.AuthService.Logout:input_type -> v1consortium.auth.LogoutRequest
 	8,  // 10: v1consortium.auth.AuthService.ForgotPassword:input_type -> v1consortium.auth.ForgotPasswordRequest
@@ -1928,7 +1929,7 @@ var file_auth_v1_auth_proto_depIdxs = []int32{
 	27, // 19: v1consortium.auth.AuthService.CheckPermission:input_type -> v1consortium.auth.CheckPermissionRequest
 	29, // 20: v1consortium.auth.AuthService.GetUserPermissions:input_type -> v1consortium.auth.GetUserPermissionsRequest
 	1,  // 21: v1consortium.auth.AuthService.Login:output_type -> v1consortium.auth.LoginResponse
-	3,  // 22: v1consortium.auth.AuthService.Register:output_type -> v1consortium.auth.RegisterResponse
+	3,  // 22: v1consortium.auth.AuthService.RegisterUser:output_type -> v1consortium.auth.RegisterResponse
 	5,  // 23: v1consortium.auth.AuthService.RefreshToken:output_type -> v1consortium.auth.RefreshTokenResponse
 	7,  // 24: v1consortium.auth.AuthService.Logout:output_type -> v1consortium.auth.LogoutResponse
 	9,  // 25: v1consortium.auth.AuthService.ForgotPassword:output_type -> v1consortium.auth.ForgotPasswordResponse

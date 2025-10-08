@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/drug_alcohol_tests.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -331,7 +331,7 @@ var File_pbentity_drug_alcohol_tests_proto protoreflect.FileDescriptor
 
 const file_pbentity_drug_alcohol_tests_proto_rawDesc = "" +
 	"\n" +
-	"!pbentity/drug_alcohol_tests.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf0\n" +
+	"!pbentity/drug_alcohol_tests.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf0\n" +
 	"\n" +
 	"\x10DrugAlcoholTests\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
@@ -369,7 +369,7 @@ const file_pbentity_drug_alcohol_tests_proto_rawDesc = "" +
 	"\x15FollowUpTestsRequired\x18\x1e \x01(\x05R\x15FollowUpTestsRequired\x12\x14\n" +
 	"\x05Notes\x18\x1f \x01(\tR\x05Notes\x128\n" +
 	"\tCreatedAt\x18  \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18! \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18! \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_drug_alcohol_tests_proto_rawDescOnce sync.Once
@@ -385,18 +385,18 @@ func file_pbentity_drug_alcohol_tests_proto_rawDescGZIP() []byte {
 
 var file_pbentity_drug_alcohol_tests_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_drug_alcohol_tests_proto_goTypes = []any{
-	(*DrugAlcoholTests)(nil),      // 0: v1consortium.backend.DrugAlcoholTests
+	(*DrugAlcoholTests)(nil),      // 0: pbentity.DrugAlcoholTests
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_drug_alcohol_tests_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.DrugAlcoholTests.OrderedDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.DrugAlcoholTests.DueDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.DrugAlcoholTests.CollectionDate:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.DrugAlcoholTests.ResultDate:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.DrugAlcoholTests.ResultReceivedDate:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.DrugAlcoholTests.MroReviewDate:type_name -> google.protobuf.Timestamp
-	1, // 6: v1consortium.backend.DrugAlcoholTests.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 7: v1consortium.backend.DrugAlcoholTests.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.DrugAlcoholTests.OrderedDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.DrugAlcoholTests.DueDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.DrugAlcoholTests.CollectionDate:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.DrugAlcoholTests.ResultDate:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.DrugAlcoholTests.ResultReceivedDate:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.DrugAlcoholTests.MroReviewDate:type_name -> google.protobuf.Timestamp
+	1, // 6: pbentity.DrugAlcoholTests.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 7: pbentity.DrugAlcoholTests.UpdatedAt:type_name -> google.protobuf.Timestamp
 	8, // [8:8] is the sub-list for method output_type
 	8, // [8:8] is the sub-list for method input_type
 	8, // [8:8] is the sub-list for extension type_name

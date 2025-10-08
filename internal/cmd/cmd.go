@@ -14,8 +14,8 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			// s := g.Server()
 
-			// // Setup internal routes.
-			// SetupInternalRoutes(ctx, s)
+			// // Setup internal start data.
+			SetupInternalStartupData(ctx)
 
 			// s.Group("/", func(group *ghttp.RouterGroup) {
 			// 	group.Middleware(ghttp.MiddlewareHandlerResponse)

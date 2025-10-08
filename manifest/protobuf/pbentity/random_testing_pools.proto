@@ -4,19 +4,19 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message RandomTestingPools {
-    string                    Id             = 1; //
-    string                    OrganizationId = 2; //
-    string                    ProgramId      = 3; //
-    string                    Name           = 4; //
-    string                    Description    = 5; //
-    bool                      IsActive       = 6; //
-    google.protobuf.Timestamp CreatedAt      = 7; //
-    google.protobuf.Timestamp UpdatedAt      = 8; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string ProgramId = 3; //
+  string Name = 4; //
+  string Description = 5; //
+  bool IsActive = 6; //
+  google.protobuf.Timestamp CreatedAt = 7; //
+  google.protobuf.Timestamp UpdatedAt = 8; //
 }

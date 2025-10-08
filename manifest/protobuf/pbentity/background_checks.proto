@@ -4,32 +4,32 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message BackgroundChecks {
-    string                    Id                        = 1;  //
-    string                    OrganizationId            = 2;  //
-    string                    UserId                    = 3;  //
-    string                    CheckType                 = 4;  //
-    string                    Status                    = 5;  //
-    google.protobuf.Timestamp OrderedDate               = 6;  //
-    string                    OrderedBy                 = 7;  //
-    string                    ExternalOrderId           = 8;  //
-    string                    ProviderName              = 9;  //
-    google.protobuf.Timestamp CompletedDate             = 10; //
-    google.protobuf.Timestamp ReportDate                = 11; //
-    string                    OverallResult             = 12; //
-    bool                      RequiresReview            = 13; //
-    bool                      AdverseActionRequired     = 14; //
-    bool                      FcraDisclosureSent        = 15; //
-    bool                      FcraAuthorizationReceived = 16; //
-    bool                      PreAdverseActionSent      = 17; //
-    bool                      AdverseActionSent         = 18; //
-    string                    Notes                     = 19; //
-    google.protobuf.Timestamp CreatedAt                 = 20; //
-    google.protobuf.Timestamp UpdatedAt                 = 21; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string CheckType = 4; //
+  string Status = 5; //
+  google.protobuf.Timestamp OrderedDate = 6; //
+  string OrderedBy = 7; //
+  string ExternalOrderId = 8; //
+  string ProviderName = 9; //
+  google.protobuf.Timestamp CompletedDate = 10; //
+  google.protobuf.Timestamp ReportDate = 11; //
+  string OverallResult = 12; //
+  bool RequiresReview = 13; //
+  bool AdverseActionRequired = 14; //
+  bool FcraDisclosureSent = 15; //
+  bool FcraAuthorizationReceived = 16; //
+  bool PreAdverseActionSent = 17; //
+  bool AdverseActionSent = 18; //
+  string Notes = 19; //
+  google.protobuf.Timestamp CreatedAt = 20; //
+  google.protobuf.Timestamp UpdatedAt = 21; //
 }

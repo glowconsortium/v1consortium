@@ -4,44 +4,44 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message DrugAlcoholTests {
-    string                    Id                       = 1;  //
-    string                    OrganizationId           = 2;  //
-    string                    UserId                   = 3;  //
-    string                    ProgramId                = 4;  //
-    string                    SelectionId              = 5;  //
-    string                    TestType                 = 6;  //
-    string                    TestCategory             = 7;  //
-    string                    Status                   = 8;  //
-    string                    Result                   = 9;  //
-    bool                      IsDotTest                = 10; //
-    google.protobuf.Timestamp OrderedDate              = 11; //
-    string                    OrderedBy                = 12; //
-    google.protobuf.Timestamp DueDate                  = 13; //
-    string                    ExternalOrderId          = 14; //
-    string                    ExternalFacilityId       = 15; //
-    string                    FacilityName             = 16; //
-    string                    FacilityAddress          = 17; //
-    google.protobuf.Timestamp CollectionDate           = 18; //
-    string                    CollectedBy              = 19; //
-    string                    LabId                    = 20; //
-    string                    LabAccessionNumber       = 21; //
-    google.protobuf.Timestamp ResultDate               = 22; //
-    google.protobuf.Timestamp ResultReceivedDate       = 23; //
-    bool                      MroReviewRequired        = 24; //
-    string                    MroId                    = 25; //
-    google.protobuf.Timestamp MroReviewDate            = 26; //
-    string                    MroNotes                 = 27; //
-    bool                      RequiresImmediateRemoval = 28; //
-    bool                      ReturnToDutyRequired     = 29; //
-    int32                     FollowUpTestsRequired    = 30; //
-    string                    Notes                    = 31; //
-    google.protobuf.Timestamp CreatedAt                = 32; //
-    google.protobuf.Timestamp UpdatedAt                = 33; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string ProgramId = 4; //
+  string SelectionId = 5; //
+  string TestType = 6; //
+  string TestCategory = 7; //
+  string Status = 8; //
+  string Result = 9; //
+  bool IsDotTest = 10; //
+  google.protobuf.Timestamp OrderedDate = 11; //
+  string OrderedBy = 12; //
+  google.protobuf.Timestamp DueDate = 13; //
+  string ExternalOrderId = 14; //
+  string ExternalFacilityId = 15; //
+  string FacilityName = 16; //
+  string FacilityAddress = 17; //
+  google.protobuf.Timestamp CollectionDate = 18; //
+  string CollectedBy = 19; //
+  string LabId = 20; //
+  string LabAccessionNumber = 21; //
+  google.protobuf.Timestamp ResultDate = 22; //
+  google.protobuf.Timestamp ResultReceivedDate = 23; //
+  bool MroReviewRequired = 24; //
+  string MroId = 25; //
+  google.protobuf.Timestamp MroReviewDate = 26; //
+  string MroNotes = 27; //
+  bool RequiresImmediateRemoval = 28; //
+  bool ReturnToDutyRequired = 29; //
+  int32 FollowUpTestsRequired = 30; //
+  string Notes = 31; //
+  google.protobuf.Timestamp CreatedAt = 32; //
+  google.protobuf.Timestamp UpdatedAt = 33; //
 }

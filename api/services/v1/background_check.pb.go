@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -135,12 +135,12 @@ func (x *OrderBackgroundCheckRequest) GetSearchParameters() map[string]string {
 }
 
 type OrderBackgroundCheckResponse struct {
-	state               protoimpl.MessageState                 `protogen:"open.v1"`
-	BackgroundCheck     *v1consortium_backend.BackgroundChecks `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
-	ExternalOrderId     string                                 `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
-	ConfirmationCode    string                                 `protobuf:"bytes,3,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
-	EstimatedCompletion *timestamppb.Timestamp                 `protobuf:"bytes,4,opt,name=estimated_completion,json=estimatedCompletion,proto3" json:"estimated_completion,omitempty"`
-	EstimatedCost       float32                                `protobuf:"fixed32,5,opt,name=estimated_cost,json=estimatedCost,proto3" json:"estimated_cost,omitempty"`
+	state               protoimpl.MessageState     `protogen:"open.v1"`
+	BackgroundCheck     *pbentity.BackgroundChecks `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
+	ExternalOrderId     string                     `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
+	ConfirmationCode    string                     `protobuf:"bytes,3,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
+	EstimatedCompletion *timestamppb.Timestamp     `protobuf:"bytes,4,opt,name=estimated_completion,json=estimatedCompletion,proto3" json:"estimated_completion,omitempty"`
+	EstimatedCost       float32                    `protobuf:"fixed32,5,opt,name=estimated_cost,json=estimatedCost,proto3" json:"estimated_cost,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -175,7 +175,7 @@ func (*OrderBackgroundCheckResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *OrderBackgroundCheckResponse) GetBackgroundCheck() *v1consortium_backend.BackgroundChecks {
+func (x *OrderBackgroundCheckResponse) GetBackgroundCheck() *pbentity.BackgroundChecks {
 	if x != nil {
 		return x.BackgroundCheck
 	}
@@ -255,9 +255,9 @@ func (x *GetBackgroundCheckRequest) GetBackgroundCheckId() string {
 }
 
 type GetBackgroundCheckResponse struct {
-	state           protoimpl.MessageState                          `protogen:"open.v1"`
-	BackgroundCheck *v1consortium_backend.BackgroundChecks          `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
-	Findings        []*v1consortium_backend.BackgroundCheckFindings `protobuf:"bytes,2,rep,name=findings,proto3" json:"findings,omitempty"`
+	state           protoimpl.MessageState              `protogen:"open.v1"`
+	BackgroundCheck *pbentity.BackgroundChecks          `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
+	Findings        []*pbentity.BackgroundCheckFindings `protobuf:"bytes,2,rep,name=findings,proto3" json:"findings,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -292,14 +292,14 @@ func (*GetBackgroundCheckResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetBackgroundCheckResponse) GetBackgroundCheck() *v1consortium_backend.BackgroundChecks {
+func (x *GetBackgroundCheckResponse) GetBackgroundCheck() *pbentity.BackgroundChecks {
 	if x != nil {
 		return x.BackgroundCheck
 	}
 	return nil
 }
 
-func (x *GetBackgroundCheckResponse) GetFindings() []*v1consortium_backend.BackgroundCheckFindings {
+func (x *GetBackgroundCheckResponse) GetFindings() []*pbentity.BackgroundCheckFindings {
 	if x != nil {
 		return x.Findings
 	}
@@ -399,8 +399,8 @@ func (x *UpdateBackgroundCheckRequest) GetTotalCost() float32 {
 }
 
 type UpdateBackgroundCheckResponse struct {
-	state           protoimpl.MessageState                 `protogen:"open.v1"`
-	BackgroundCheck *v1consortium_backend.BackgroundChecks `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
+	state           protoimpl.MessageState     `protogen:"open.v1"`
+	BackgroundCheck *pbentity.BackgroundChecks `protobuf:"bytes,1,opt,name=background_check,json=backgroundCheck,proto3" json:"background_check,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -435,7 +435,7 @@ func (*UpdateBackgroundCheckResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateBackgroundCheckResponse) GetBackgroundCheck() *v1consortium_backend.BackgroundChecks {
+func (x *UpdateBackgroundCheckResponse) GetBackgroundCheck() *pbentity.BackgroundChecks {
 	if x != nil {
 		return x.BackgroundCheck
 	}
@@ -551,11 +551,11 @@ func (x *ListBackgroundChecksRequest) GetPageSize() int32 {
 }
 
 type ListBackgroundChecksResponse struct {
-	state            protoimpl.MessageState                   `protogen:"open.v1"`
-	BackgroundChecks []*v1consortium_backend.BackgroundChecks `protobuf:"bytes,1,rep,name=background_checks,json=backgroundChecks,proto3" json:"background_checks,omitempty"`
-	TotalCount       int32                                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page             int32                                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize         int32                                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state            protoimpl.MessageState       `protogen:"open.v1"`
+	BackgroundChecks []*pbentity.BackgroundChecks `protobuf:"bytes,1,rep,name=background_checks,json=backgroundChecks,proto3" json:"background_checks,omitempty"`
+	TotalCount       int32                        `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page             int32                        `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize         int32                        `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -590,7 +590,7 @@ func (*ListBackgroundChecksResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ListBackgroundChecksResponse) GetBackgroundChecks() []*v1consortium_backend.BackgroundChecks {
+func (x *ListBackgroundChecksResponse) GetBackgroundChecks() []*pbentity.BackgroundChecks {
 	if x != nil {
 		return x.BackgroundChecks
 	}
@@ -744,8 +744,8 @@ func (x *AddFindingRequest) GetRawData() string {
 }
 
 type AddFindingResponse struct {
-	state         protoimpl.MessageState                        `protogen:"open.v1"`
-	Finding       *v1consortium_backend.BackgroundCheckFindings `protobuf:"bytes,1,opt,name=finding,proto3" json:"finding,omitempty"`
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Finding       *pbentity.BackgroundCheckFindings `protobuf:"bytes,1,opt,name=finding,proto3" json:"finding,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -780,7 +780,7 @@ func (*AddFindingResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *AddFindingResponse) GetFinding() *v1consortium_backend.BackgroundCheckFindings {
+func (x *AddFindingResponse) GetFinding() *pbentity.BackgroundCheckFindings {
 	if x != nil {
 		return x.Finding
 	}
@@ -880,8 +880,8 @@ func (x *UpdateFindingRequest) GetJobRelated() bool {
 }
 
 type UpdateFindingResponse struct {
-	state         protoimpl.MessageState                        `protogen:"open.v1"`
-	Finding       *v1consortium_backend.BackgroundCheckFindings `protobuf:"bytes,1,opt,name=finding,proto3" json:"finding,omitempty"`
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Finding       *pbentity.BackgroundCheckFindings `protobuf:"bytes,1,opt,name=finding,proto3" json:"finding,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -916,7 +916,7 @@ func (*UpdateFindingResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpdateFindingResponse) GetFinding() *v1consortium_backend.BackgroundCheckFindings {
+func (x *UpdateFindingResponse) GetFinding() *pbentity.BackgroundCheckFindings {
 	if x != nil {
 		return x.Finding
 	}
@@ -1032,11 +1032,11 @@ func (x *ListFindingsRequest) GetPageSize() int32 {
 }
 
 type ListFindingsResponse struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	Findings      []*v1consortium_backend.BackgroundCheckFindings `protobuf:"bytes,1,rep,name=findings,proto3" json:"findings,omitempty"`
-	TotalCount    int32                                           `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                           `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                           `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Findings      []*pbentity.BackgroundCheckFindings `protobuf:"bytes,1,rep,name=findings,proto3" json:"findings,omitempty"`
+	TotalCount    int32                               `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                               `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                               `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1071,7 +1071,7 @@ func (*ListFindingsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_background_check_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ListFindingsResponse) GetFindings() []*v1consortium_backend.BackgroundCheckFindings {
+func (x *ListFindingsResponse) GetFindings() []*pbentity.BackgroundCheckFindings {
 	if x != nil {
 		return x.Findings
 	}
@@ -2146,7 +2146,7 @@ var File_services_v1_background_check_proto protoreflect.FileDescriptor
 
 const file_services_v1_background_check_proto_rawDesc = "" +
 	"\n" +
-	"\"services/v1/background_check.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a pbentity/background_checks.proto\x1a(pbentity/background_check_findings.proto\"\xdb\x03\n" +
+	"\"services/v1/background_check.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(pbentity/background_check_findings.proto\x1a pbentity/background_checks.proto\"\xdb\x03\n" +
 	"\x1bOrderBackgroundCheckRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1f\n" +
@@ -2161,18 +2161,18 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"\x11search_parameters\x18\t \x03(\v2H.v1consortium.services.OrderBackgroundCheckRequest.SearchParametersEntryR\x10searchParameters\x1aC\n" +
 	"\x15SearchParametersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc0\x02\n" +
-	"\x1cOrderBackgroundCheckResponse\x12Q\n" +
-	"\x10background_check\x18\x01 \x01(\v2&.v1consortium.backend.BackgroundChecksR\x0fbackgroundCheck\x12*\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xb4\x02\n" +
+	"\x1cOrderBackgroundCheckResponse\x12E\n" +
+	"\x10background_check\x18\x01 \x01(\v2\x1a.pbentity.BackgroundChecksR\x0fbackgroundCheck\x12*\n" +
 	"\x11external_order_id\x18\x02 \x01(\tR\x0fexternalOrderId\x12+\n" +
 	"\x11confirmation_code\x18\x03 \x01(\tR\x10confirmationCode\x12M\n" +
 	"\x14estimated_completion\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x13estimatedCompletion\x12%\n" +
 	"\x0eestimated_cost\x18\x05 \x01(\x02R\restimatedCost\"K\n" +
 	"\x19GetBackgroundCheckRequest\x12.\n" +
-	"\x13background_check_id\x18\x01 \x01(\tR\x11backgroundCheckId\"\xba\x01\n" +
-	"\x1aGetBackgroundCheckResponse\x12Q\n" +
-	"\x10background_check\x18\x01 \x01(\v2&.v1consortium.backend.BackgroundChecksR\x0fbackgroundCheck\x12I\n" +
-	"\bfindings\x18\x02 \x03(\v2-.v1consortium.backend.BackgroundCheckFindingsR\bfindings\"\xbb\x02\n" +
+	"\x13background_check_id\x18\x01 \x01(\tR\x11backgroundCheckId\"\xa2\x01\n" +
+	"\x1aGetBackgroundCheckResponse\x12E\n" +
+	"\x10background_check\x18\x01 \x01(\v2\x1a.pbentity.BackgroundChecksR\x0fbackgroundCheck\x12=\n" +
+	"\bfindings\x18\x02 \x03(\v2!.pbentity.BackgroundCheckFindingsR\bfindings\"\xbb\x02\n" +
 	"\x1cUpdateBackgroundCheckRequest\x12.\n" +
 	"\x13background_check_id\x18\x01 \x01(\tR\x11backgroundCheckId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12C\n" +
@@ -2181,9 +2181,9 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"\x12provider_reference\x18\x05 \x01(\tR\x11providerReference\x12\x19\n" +
 	"\braw_data\x18\x06 \x01(\tR\arawData\x12\x1d\n" +
 	"\n" +
-	"total_cost\x18\a \x01(\x02R\ttotalCost\"r\n" +
-	"\x1dUpdateBackgroundCheckResponse\x12Q\n" +
-	"\x10background_check\x18\x01 \x01(\v2&.v1consortium.backend.BackgroundChecksR\x0fbackgroundCheck\"\xe0\x02\n" +
+	"total_cost\x18\a \x01(\x02R\ttotalCost\"f\n" +
+	"\x1dUpdateBackgroundCheckResponse\x12E\n" +
+	"\x10background_check\x18\x01 \x01(\v2\x1a.pbentity.BackgroundChecksR\x0fbackgroundCheck\"\xe0\x02\n" +
 	"\x1bListBackgroundChecksRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
@@ -2195,9 +2195,9 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"start_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xc5\x01\n" +
-	"\x1cListBackgroundChecksResponse\x12S\n" +
-	"\x11background_checks\x18\x01 \x03(\v2&.v1consortium.backend.BackgroundChecksR\x10backgroundChecks\x12\x1f\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xb9\x01\n" +
+	"\x1cListBackgroundChecksResponse\x12G\n" +
+	"\x11background_checks\x18\x01 \x03(\v2\x1a.pbentity.BackgroundChecksR\x10backgroundChecks\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2216,9 +2216,9 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"jobRelated\x12'\n" +
 	"\x0frequires_review\x18\n" +
 	" \x01(\bR\x0erequiresReview\x12\x19\n" +
-	"\braw_data\x18\v \x01(\tR\arawData\"]\n" +
-	"\x12AddFindingResponse\x12G\n" +
-	"\afinding\x18\x01 \x01(\v2-.v1consortium.backend.BackgroundCheckFindingsR\afinding\"\xa5\x02\n" +
+	"\braw_data\x18\v \x01(\tR\arawData\"Q\n" +
+	"\x12AddFindingResponse\x12;\n" +
+	"\afinding\x18\x01 \x01(\v2!.pbentity.BackgroundCheckFindingsR\afinding\"\xa5\x02\n" +
 	"\x14UpdateFindingRequest\x12\x1d\n" +
 	"\n" +
 	"finding_id\x18\x01 \x01(\tR\tfindingId\x12#\n" +
@@ -2230,9 +2230,9 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"reviewDate\x12!\n" +
 	"\freview_notes\x18\x06 \x01(\tR\vreviewNotes\x12\x1f\n" +
 	"\vjob_related\x18\a \x01(\bR\n" +
-	"jobRelated\"`\n" +
-	"\x15UpdateFindingResponse\x12G\n" +
-	"\afinding\x18\x01 \x01(\v2-.v1consortium.backend.BackgroundCheckFindingsR\afinding\"\xc5\x02\n" +
+	"jobRelated\"T\n" +
+	"\x15UpdateFindingResponse\x12;\n" +
+	"\afinding\x18\x01 \x01(\v2!.pbentity.BackgroundCheckFindingsR\afinding\"\xc5\x02\n" +
 	"\x13ListFindingsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12.\n" +
 	"\x13background_check_id\x18\x02 \x01(\tR\x11backgroundCheckId\x12\x17\n" +
@@ -2242,9 +2242,9 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"\rreview_status\x18\x06 \x01(\tR\freviewStatus\x12'\n" +
 	"\x0frequires_review\x18\a \x01(\bR\x0erequiresReview\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xb3\x01\n" +
-	"\x14ListFindingsResponse\x12I\n" +
-	"\bfindings\x18\x01 \x03(\v2-.v1consortium.backend.BackgroundCheckFindingsR\bfindings\x12\x1f\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xa7\x01\n" +
+	"\x14ListFindingsResponse\x12=\n" +
+	"\bfindings\x18\x01 \x03(\v2!.pbentity.BackgroundCheckFindingsR\bfindings\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2331,22 +2331,22 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"\x1daverage_completion_time_hours\x18\t \x01(\x02R\x1aaverageCompletionTimeHours\x12\x1d\n" +
 	"\n" +
 	"total_cost\x18\n" +
-	" \x01(\x02R\ttotalCost2\xdb\f\n" +
-	"\x16BackgroundCheckService\x12\x7f\n" +
-	"\x14OrderBackgroundCheck\x122.v1consortium.services.OrderBackgroundCheckRequest\x1a3.v1consortium.services.OrderBackgroundCheckResponse\x12y\n" +
-	"\x12GetBackgroundCheck\x120.v1consortium.services.GetBackgroundCheckRequest\x1a1.v1consortium.services.GetBackgroundCheckResponse\x12\x82\x01\n" +
-	"\x15UpdateBackgroundCheck\x123.v1consortium.services.UpdateBackgroundCheckRequest\x1a4.v1consortium.services.UpdateBackgroundCheckResponse\x12\x7f\n" +
-	"\x14ListBackgroundChecks\x122.v1consortium.services.ListBackgroundChecksRequest\x1a3.v1consortium.services.ListBackgroundChecksResponse\x12a\n" +
+	" \x01(\x02R\ttotalCost2\xeb\x13\n" +
+	"\x16BackgroundCheckService\x12\xc5\x01\n" +
+	"\x14OrderBackgroundCheck\x122.v1consortium.services.OrderBackgroundCheckRequest\x1a3.v1consortium.services.OrderBackgroundCheckResponse\"D\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v1/organizations/{organization_id}/background-checks\x12\xb2\x01\n" +
+	"\x12GetBackgroundCheck\x120.v1consortium.services.GetBackgroundCheckRequest\x1a1.v1consortium.services.GetBackgroundCheckResponse\"7\x82\xd3\xe4\x93\x021\x12//api/v1/background-checks/{background_check_id}\x12\xbe\x01\n" +
+	"\x15UpdateBackgroundCheck\x123.v1consortium.services.UpdateBackgroundCheckRequest\x1a4.v1consortium.services.UpdateBackgroundCheckResponse\":\x82\xd3\xe4\x93\x024:\x01*\x1a//api/v1/background-checks/{background_check_id}\x12\xc2\x01\n" +
+	"\x14ListBackgroundChecks\x122.v1consortium.services.ListBackgroundChecksRequest\x1a3.v1consortium.services.ListBackgroundChecksResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/background-checks\x12\xa6\x01\n" +
 	"\n" +
-	"AddFinding\x12(.v1consortium.services.AddFindingRequest\x1a).v1consortium.services.AddFindingResponse\x12j\n" +
-	"\rUpdateFinding\x12+.v1consortium.services.UpdateFindingRequest\x1a,.v1consortium.services.UpdateFindingResponse\x12g\n" +
-	"\fListFindings\x12*.v1consortium.services.ListFindingsRequest\x1a+.v1consortium.services.ListFindingsResponse\x12\x82\x01\n" +
-	"\x15InitiateAdverseAction\x123.v1consortium.services.InitiateAdverseActionRequest\x1a4.v1consortium.services.InitiateAdverseActionResponse\x12j\n" +
-	"\rHandleDispute\x12+.v1consortium.services.HandleDisputeRequest\x1a,.v1consortium.services.HandleDisputeResponse\x12\x85\x01\n" +
-	"\x16GetAdverseActionStatus\x124.v1consortium.services.GetAdverseActionStatusRequest\x1a5.v1consortium.services.GetAdverseActionStatusResponse\x12\x7f\n" +
-	"\x14GetAvailablePackages\x122.v1consortium.services.GetAvailablePackagesRequest\x1a3.v1consortium.services.GetAvailablePackagesResponse\x12v\n" +
-	"\x11GetProviderStatus\x12/.v1consortium.services.GetProviderStatusRequest\x1a0.v1consortium.services.GetProviderStatusResponse\x12\x94\x01\n" +
-	"\x1bGetBackgroundCheckAnalytics\x129.v1consortium.services.GetBackgroundCheckAnalyticsRequest\x1a:.v1consortium.services.GetBackgroundCheckAnalyticsResponseB\rZ\vservices/v1b\x06proto3"
+	"AddFinding\x12(.v1consortium.services.AddFindingRequest\x1a).v1consortium.services.AddFindingResponse\"C\x82\xd3\xe4\x93\x02=:\x01*\"8/api/v1/background-checks/{background_check_id}/findings\x12\xa5\x01\n" +
+	"\rUpdateFinding\x12+.v1consortium.services.UpdateFindingRequest\x1a,.v1consortium.services.UpdateFindingResponse\"9\x82\xd3\xe4\x93\x023:\x01*\x1a./api/v1/background-check-findings/{finding_id}\x12\xa9\x01\n" +
+	"\fListFindings\x12*.v1consortium.services.ListFindingsRequest\x1a+.v1consortium.services.ListFindingsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/background-checks/{background_check_id}/findings\x12\xcd\x01\n" +
+	"\x15InitiateAdverseAction\x123.v1consortium.services.InitiateAdverseActionRequest\x1a4.v1consortium.services.InitiateAdverseActionResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/background-checks/{background_check_id}/adverse-action\x12\xae\x01\n" +
+	"\rHandleDispute\x12+.v1consortium.services.HandleDisputeRequest\x1a,.v1consortium.services.HandleDisputeResponse\"B\x82\xd3\xe4\x93\x02<:\x01*\"7/api/v1/background-checks/{background_check_id}/dispute\x12\xd4\x01\n" +
+	"\x16GetAdverseActionStatus\x124.v1consortium.services.GetAdverseActionStatusRequest\x1a5.v1consortium.services.GetAdverseActionStatusResponse\"M\x82\xd3\xe4\x93\x02G\x12E/api/v1/background-checks/{background_check_id}/adverse-action-status\x12\xca\x01\n" +
+	"\x14GetAvailablePackages\x122.v1consortium.services.GetAvailablePackagesRequest\x1a3.v1consortium.services.GetAvailablePackagesResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/background-check-packages\x12\xc8\x01\n" +
+	"\x11GetProviderStatus\x12/.v1consortium.services.GetProviderStatusRequest\x1a0.v1consortium.services.GetProviderStatusResponse\"P\x82\xd3\xe4\x93\x02J\x12H/api/v1/organizations/{organization_id}/background-check-provider-status\x12\xe0\x01\n" +
+	"\x1bGetBackgroundCheckAnalytics\x129.v1consortium.services.GetBackgroundCheckAnalyticsRequest\x1a:.v1consortium.services.GetBackgroundCheckAnalyticsResponse\"J\x82\xd3\xe4\x93\x02D\x12B/api/v1/organizations/{organization_id}/background-check-analyticsB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_background_check_proto_rawDescOnce sync.Once
@@ -2392,27 +2392,27 @@ var file_services_v1_background_check_proto_goTypes = []any{
 	(*GetBackgroundCheckAnalyticsRequest)(nil),  // 27: v1consortium.services.GetBackgroundCheckAnalyticsRequest
 	(*FindingSummary)(nil),                      // 28: v1consortium.services.FindingSummary
 	(*GetBackgroundCheckAnalyticsResponse)(nil), // 29: v1consortium.services.GetBackgroundCheckAnalyticsResponse
-	nil, // 30: v1consortium.services.OrderBackgroundCheckRequest.SearchParametersEntry
-	(*v1consortium_backend.BackgroundChecks)(nil),        // 31: v1consortium.backend.BackgroundChecks
-	(*timestamppb.Timestamp)(nil),                        // 32: google.protobuf.Timestamp
-	(*v1consortium_backend.BackgroundCheckFindings)(nil), // 33: v1consortium.backend.BackgroundCheckFindings
+	nil,                                      // 30: v1consortium.services.OrderBackgroundCheckRequest.SearchParametersEntry
+	(*pbentity.BackgroundChecks)(nil),        // 31: pbentity.BackgroundChecks
+	(*timestamppb.Timestamp)(nil),            // 32: google.protobuf.Timestamp
+	(*pbentity.BackgroundCheckFindings)(nil), // 33: pbentity.BackgroundCheckFindings
 }
 var file_services_v1_background_check_proto_depIdxs = []int32{
 	30, // 0: v1consortium.services.OrderBackgroundCheckRequest.search_parameters:type_name -> v1consortium.services.OrderBackgroundCheckRequest.SearchParametersEntry
-	31, // 1: v1consortium.services.OrderBackgroundCheckResponse.background_check:type_name -> v1consortium.backend.BackgroundChecks
+	31, // 1: v1consortium.services.OrderBackgroundCheckResponse.background_check:type_name -> pbentity.BackgroundChecks
 	32, // 2: v1consortium.services.OrderBackgroundCheckResponse.estimated_completion:type_name -> google.protobuf.Timestamp
-	31, // 3: v1consortium.services.GetBackgroundCheckResponse.background_check:type_name -> v1consortium.backend.BackgroundChecks
-	33, // 4: v1consortium.services.GetBackgroundCheckResponse.findings:type_name -> v1consortium.backend.BackgroundCheckFindings
+	31, // 3: v1consortium.services.GetBackgroundCheckResponse.background_check:type_name -> pbentity.BackgroundChecks
+	33, // 4: v1consortium.services.GetBackgroundCheckResponse.findings:type_name -> pbentity.BackgroundCheckFindings
 	32, // 5: v1consortium.services.UpdateBackgroundCheckRequest.completion_date:type_name -> google.protobuf.Timestamp
-	31, // 6: v1consortium.services.UpdateBackgroundCheckResponse.background_check:type_name -> v1consortium.backend.BackgroundChecks
+	31, // 6: v1consortium.services.UpdateBackgroundCheckResponse.background_check:type_name -> pbentity.BackgroundChecks
 	32, // 7: v1consortium.services.ListBackgroundChecksRequest.start_date:type_name -> google.protobuf.Timestamp
 	32, // 8: v1consortium.services.ListBackgroundChecksRequest.end_date:type_name -> google.protobuf.Timestamp
-	31, // 9: v1consortium.services.ListBackgroundChecksResponse.background_checks:type_name -> v1consortium.backend.BackgroundChecks
+	31, // 9: v1consortium.services.ListBackgroundChecksResponse.background_checks:type_name -> pbentity.BackgroundChecks
 	32, // 10: v1consortium.services.AddFindingRequest.incident_date:type_name -> google.protobuf.Timestamp
-	33, // 11: v1consortium.services.AddFindingResponse.finding:type_name -> v1consortium.backend.BackgroundCheckFindings
+	33, // 11: v1consortium.services.AddFindingResponse.finding:type_name -> pbentity.BackgroundCheckFindings
 	32, // 12: v1consortium.services.UpdateFindingRequest.review_date:type_name -> google.protobuf.Timestamp
-	33, // 13: v1consortium.services.UpdateFindingResponse.finding:type_name -> v1consortium.backend.BackgroundCheckFindings
-	33, // 14: v1consortium.services.ListFindingsResponse.findings:type_name -> v1consortium.backend.BackgroundCheckFindings
+	33, // 13: v1consortium.services.UpdateFindingResponse.finding:type_name -> pbentity.BackgroundCheckFindings
+	33, // 14: v1consortium.services.ListFindingsResponse.findings:type_name -> pbentity.BackgroundCheckFindings
 	32, // 15: v1consortium.services.InitiateAdverseActionResponse.notice_sent_at:type_name -> google.protobuf.Timestamp
 	32, // 16: v1consortium.services.InitiateAdverseActionResponse.dispute_deadline:type_name -> google.protobuf.Timestamp
 	32, // 17: v1consortium.services.AdverseActionStatus.initiated_at:type_name -> google.protobuf.Timestamp

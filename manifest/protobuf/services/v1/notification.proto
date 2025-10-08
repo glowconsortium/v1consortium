@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/notifications.proto";
+
+option go_package = "services/v1";
 
 // Notification Management Messages
 message SendNotificationRequest {
@@ -23,7 +24,7 @@ message SendNotificationRequest {
 }
 
 message SendNotificationResponse {
-  v1consortium.backend.Notifications notification = 1;
+  pbentity.Notifications notification = 1;
   string message = 2;
 }
 
@@ -32,7 +33,7 @@ message GetNotificationRequest {
 }
 
 message GetNotificationResponse {
-  v1consortium.backend.Notifications notification = 1;
+  pbentity.Notifications notification = 1;
 }
 
 message ListNotificationsRequest {
@@ -50,7 +51,7 @@ message ListNotificationsRequest {
 }
 
 message ListNotificationsResponse {
-  repeated v1consortium.backend.Notifications notifications = 1;
+  repeated pbentity.Notifications notifications = 1;
   int32 total_count = 2;
   int32 unread_count = 3;
   int32 page = 4;
@@ -272,30 +273,96 @@ message GetNotificationAnalyticsResponse {
 // Notification Service Definition
 service NotificationService {
   // Basic Notification Management
-  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
-  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
-  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
-  rpc MarkNotificationRead(MarkNotificationReadRequest) returns (MarkNotificationReadResponse);
-  rpc MarkAllNotificationsRead(MarkAllNotificationsReadRequest) returns (MarkAllNotificationsReadResponse);
-  
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notifications"
+      body: "*"
+    };
+  }
+
+  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {get: "/api/v1/notifications/{notification_id}"};
+  }
+
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/notifications"};
+  }
+
+  rpc MarkNotificationRead(MarkNotificationReadRequest) returns (MarkNotificationReadResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/notifications/{notification_id}/read"
+      body: "*"
+    };
+  }
+
+  rpc MarkAllNotificationsRead(MarkAllNotificationsReadRequest) returns (MarkAllNotificationsReadResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}/notifications/mark-all-read"
+      body: "*"
+    };
+  }
+
   // Template Management
-  rpc CreateNotificationTemplate(CreateNotificationTemplateRequest) returns (CreateNotificationTemplateResponse);
-  rpc GetNotificationTemplate(GetNotificationTemplateRequest) returns (GetNotificationTemplateResponse);
-  rpc ListNotificationTemplates(ListNotificationTemplatesRequest) returns (ListNotificationTemplatesResponse);
-  rpc UpdateNotificationTemplate(UpdateNotificationTemplateRequest) returns (UpdateNotificationTemplateResponse);
-  
+  rpc CreateNotificationTemplate(CreateNotificationTemplateRequest) returns (CreateNotificationTemplateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/notification-templates"
+      body: "*"
+    };
+  }
+
+  rpc GetNotificationTemplate(GetNotificationTemplateRequest) returns (GetNotificationTemplateResponse) {
+    option (google.api.http) = {get: "/api/v1/notification-templates/{template_id}"};
+  }
+
+  rpc ListNotificationTemplates(ListNotificationTemplatesRequest) returns (ListNotificationTemplatesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notification-templates"};
+  }
+
+  rpc UpdateNotificationTemplate(UpdateNotificationTemplateRequest) returns (UpdateNotificationTemplateResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/notification-templates/{template_id}"
+      body: "*"
+    };
+  }
+
   // Preference Management
-  rpc GetNotificationPreferences(GetNotificationPreferencesRequest) returns (GetNotificationPreferencesResponse);
-  rpc UpdateNotificationPreferences(UpdateNotificationPreferencesRequest) returns (UpdateNotificationPreferencesResponse);
-  
+  rpc GetNotificationPreferences(GetNotificationPreferencesRequest) returns (GetNotificationPreferencesResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/notification-preferences"};
+  }
+
+  rpc UpdateNotificationPreferences(UpdateNotificationPreferencesRequest) returns (UpdateNotificationPreferencesResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}/notification-preferences"
+      body: "*"
+    };
+  }
+
   // Bulk Operations
-  rpc SendBulkNotification(SendBulkNotificationRequest) returns (SendBulkNotificationResponse);
-  
+  rpc SendBulkNotification(SendBulkNotificationRequest) returns (SendBulkNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/notifications/bulk"
+      body: "*"
+    };
+  }
+
   // Scheduled Notifications
-  rpc ScheduleNotification(ScheduleNotificationRequest) returns (ScheduleNotificationResponse);
-  rpc ListScheduledNotifications(ListScheduledNotificationsRequest) returns (ListScheduledNotificationsResponse);
-  rpc CancelScheduledNotification(CancelScheduledNotificationRequest) returns (CancelScheduledNotificationResponse);
-  
+  rpc ScheduleNotification(ScheduleNotificationRequest) returns (ScheduleNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notifications/schedule"
+      body: "*"
+    };
+  }
+
+  rpc ListScheduledNotifications(ListScheduledNotificationsRequest) returns (ListScheduledNotificationsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notifications/scheduled"};
+  }
+
+  rpc CancelScheduledNotification(CancelScheduledNotificationRequest) returns (CancelScheduledNotificationResponse) {
+    option (google.api.http) = {delete: "/api/v1/notifications/scheduled/{scheduled_id}"};
+  }
+
   // Analytics
-  rpc GetNotificationAnalytics(GetNotificationAnalyticsRequest) returns (GetNotificationAnalyticsResponse);
+  rpc GetNotificationAnalytics(GetNotificationAnalyticsRequest) returns (GetNotificationAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notification-analytics"};
+  }
 }

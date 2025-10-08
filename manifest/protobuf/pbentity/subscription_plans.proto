@@ -4,21 +4,21 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message SubscriptionPlans {
-    string                    Id           = 1;  //
-    string                    Name         = 2;  //
-    string                    Tier         = 3;  //
-    string                    Description  = 4;  //
-    int32                     MaxEmployees = 5;  //
-    string                    AnnualPrice  = 6;  //
-    string                    Features     = 7;  //
-    bool                      IsActive     = 8;  //
-    google.protobuf.Timestamp CreatedAt    = 9;  //
-    google.protobuf.Timestamp UpdatedAt    = 10; //
+  string Id = 1; //
+  string Name = 2; //
+  string Tier = 3; //
+  string Description = 4; //
+  int32 MaxEmployees = 5; //
+  string AnnualPrice = 6; //
+  string Features = 7; //
+  bool IsActive = 8; //
+  google.protobuf.Timestamp CreatedAt = 9; //
+  google.protobuf.Timestamp UpdatedAt = 10; //
 }

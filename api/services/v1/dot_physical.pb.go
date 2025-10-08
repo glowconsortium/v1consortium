@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -127,12 +127,12 @@ func (x *ScheduleDOTPhysicalRequest) GetSpecialRequirements() string {
 }
 
 type ScheduleDOTPhysicalResponse struct {
-	state                   protoimpl.MessageState             `protogen:"open.v1"`
-	Physical                *v1consortium_backend.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
-	AppointmentConfirmation string                             `protobuf:"bytes,2,opt,name=appointment_confirmation,json=appointmentConfirmation,proto3" json:"appointment_confirmation,omitempty"`
-	ExaminerName            string                             `protobuf:"bytes,3,opt,name=examiner_name,json=examinerName,proto3" json:"examiner_name,omitempty"`
-	FacilityName            string                             `protobuf:"bytes,4,opt,name=facility_name,json=facilityName,proto3" json:"facility_name,omitempty"`
-	FacilityAddress         string                             `protobuf:"bytes,5,opt,name=facility_address,json=facilityAddress,proto3" json:"facility_address,omitempty"`
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	Physical                *pbentity.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
+	AppointmentConfirmation string                 `protobuf:"bytes,2,opt,name=appointment_confirmation,json=appointmentConfirmation,proto3" json:"appointment_confirmation,omitempty"`
+	ExaminerName            string                 `protobuf:"bytes,3,opt,name=examiner_name,json=examinerName,proto3" json:"examiner_name,omitempty"`
+	FacilityName            string                 `protobuf:"bytes,4,opt,name=facility_name,json=facilityName,proto3" json:"facility_name,omitempty"`
+	FacilityAddress         string                 `protobuf:"bytes,5,opt,name=facility_address,json=facilityAddress,proto3" json:"facility_address,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -167,7 +167,7 @@ func (*ScheduleDOTPhysicalResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_dot_physical_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ScheduleDOTPhysicalResponse) GetPhysical() *v1consortium_backend.DotPhysicals {
+func (x *ScheduleDOTPhysicalResponse) GetPhysical() *pbentity.DotPhysicals {
 	if x != nil {
 		return x.Physical
 	}
@@ -247,8 +247,8 @@ func (x *GetDOTPhysicalRequest) GetPhysicalId() string {
 }
 
 type GetDOTPhysicalResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Physical      *v1consortium_backend.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Physical      *pbentity.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -283,7 +283,7 @@ func (*GetDOTPhysicalResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_dot_physical_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetDOTPhysicalResponse) GetPhysical() *v1consortium_backend.DotPhysicals {
+func (x *GetDOTPhysicalResponse) GetPhysical() *pbentity.DotPhysicals {
 	if x != nil {
 		return x.Physical
 	}
@@ -431,8 +431,8 @@ func (x *UpdateDOTPhysicalRequest) GetExemptionExpiration() *timestamppb.Timesta
 }
 
 type UpdateDOTPhysicalResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Physical      *v1consortium_backend.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Physical      *pbentity.DotPhysicals `protobuf:"bytes,1,opt,name=physical,proto3" json:"physical,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -467,7 +467,7 @@ func (*UpdateDOTPhysicalResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_dot_physical_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateDOTPhysicalResponse) GetPhysical() *v1consortium_backend.DotPhysicals {
+func (x *UpdateDOTPhysicalResponse) GetPhysical() *pbentity.DotPhysicals {
 	if x != nil {
 		return x.Physical
 	}
@@ -583,11 +583,11 @@ func (x *ListDOTPhysicalsRequest) GetPageSize() int32 {
 }
 
 type ListDOTPhysicalsResponse struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Physicals     []*v1consortium_backend.DotPhysicals `protobuf:"bytes,1,rep,name=physicals,proto3" json:"physicals,omitempty"`
-	TotalCount    int32                                `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Physicals     []*pbentity.DotPhysicals `protobuf:"bytes,1,rep,name=physicals,proto3" json:"physicals,omitempty"`
+	TotalCount    int32                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -622,7 +622,7 @@ func (*ListDOTPhysicalsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_dot_physical_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ListDOTPhysicalsResponse) GetPhysicals() []*v1consortium_backend.DotPhysicals {
+func (x *ListDOTPhysicalsResponse) GetPhysicals() []*pbentity.DotPhysicals {
 	if x != nil {
 		return x.Physicals
 	}
@@ -1825,7 +1825,7 @@ var File_services_v1_dot_physical_proto protoreflect.FileDescriptor
 
 const file_services_v1_dot_physical_proto_rawDesc = "" +
 	"\n" +
-	"\x1eservices/v1/dot_physical.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cpbentity/dot_physicals.proto\"\x83\x03\n" +
+	"\x1eservices/v1/dot_physical.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cpbentity/dot_physicals.proto\"\x83\x03\n" +
 	"\x1aScheduleDOTPhysicalRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12.\n" +
@@ -1834,18 +1834,18 @@ const file_services_v1_dot_physical_proto_rawDesc = "" +
 	"\x10examination_type\x18\x05 \x01(\tR\x0fexaminationType\x12!\n" +
 	"\fscheduled_by\x18\x06 \x01(\tR\vscheduledBy\x12/\n" +
 	"\x13facility_preference\x18\a \x01(\tR\x12facilityPreference\x121\n" +
-	"\x14special_requirements\x18\b \x01(\tR\x13specialRequirements\"\x8d\x02\n" +
-	"\x1bScheduleDOTPhysicalResponse\x12>\n" +
-	"\bphysical\x18\x01 \x01(\v2\".v1consortium.backend.DotPhysicalsR\bphysical\x129\n" +
+	"\x14special_requirements\x18\b \x01(\tR\x13specialRequirements\"\x81\x02\n" +
+	"\x1bScheduleDOTPhysicalResponse\x122\n" +
+	"\bphysical\x18\x01 \x01(\v2\x16.pbentity.DotPhysicalsR\bphysical\x129\n" +
 	"\x18appointment_confirmation\x18\x02 \x01(\tR\x17appointmentConfirmation\x12#\n" +
 	"\rexaminer_name\x18\x03 \x01(\tR\fexaminerName\x12#\n" +
 	"\rfacility_name\x18\x04 \x01(\tR\ffacilityName\x12)\n" +
 	"\x10facility_address\x18\x05 \x01(\tR\x0ffacilityAddress\"8\n" +
 	"\x15GetDOTPhysicalRequest\x12\x1f\n" +
 	"\vphysical_id\x18\x01 \x01(\tR\n" +
-	"physicalId\"X\n" +
-	"\x16GetDOTPhysicalResponse\x12>\n" +
-	"\bphysical\x18\x01 \x01(\v2\".v1consortium.backend.DotPhysicalsR\bphysical\"\xd5\x05\n" +
+	"physicalId\"L\n" +
+	"\x16GetDOTPhysicalResponse\x122\n" +
+	"\bphysical\x18\x01 \x01(\v2\x16.pbentity.DotPhysicalsR\bphysical\"\xd5\x05\n" +
 	"\x18UpdateDOTPhysicalRequest\x12\x1f\n" +
 	"\vphysical_id\x18\x01 \x01(\tR\n" +
 	"physicalId\x12\x16\n" +
@@ -1861,9 +1861,9 @@ const file_services_v1_dot_physical_proto_rawDesc = "" +
 	" \x01(\bR\x12requiresMonitoring\x127\n" +
 	"\x17monitoring_requirements\x18\v \x01(\tR\x16monitoringRequirements\x12%\n" +
 	"\x0eexemption_type\x18\f \x01(\tR\rexemptionType\x12M\n" +
-	"\x14exemption_expiration\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x13exemptionExpiration\"[\n" +
-	"\x19UpdateDOTPhysicalResponse\x12>\n" +
-	"\bphysical\x18\x01 \x01(\v2\".v1consortium.backend.DotPhysicalsR\bphysical\"\xf9\x02\n" +
+	"\x14exemption_expiration\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x13exemptionExpiration\"O\n" +
+	"\x19UpdateDOTPhysicalResponse\x122\n" +
+	"\bphysical\x18\x01 \x01(\v2\x16.pbentity.DotPhysicalsR\bphysical\"\xf9\x02\n" +
 	"\x17ListDOTPhysicalsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12.\n" +
@@ -1874,9 +1874,9 @@ const file_services_v1_dot_physical_proto_rawDesc = "" +
 	"start_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xae\x01\n" +
-	"\x18ListDOTPhysicalsResponse\x12@\n" +
-	"\tphysicals\x18\x01 \x03(\v2\".v1consortium.backend.DotPhysicalsR\tphysicals\x12\x1f\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xa2\x01\n" +
+	"\x18ListDOTPhysicalsResponse\x124\n" +
+	"\tphysicals\x18\x01 \x03(\v2\x16.pbentity.DotPhysicalsR\tphysicals\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -1981,19 +1981,19 @@ const file_services_v1_dot_physical_proto_rawDesc = "" +
 	"smsEnabled\x127\n" +
 	"\x17notification_recipients\x18\x05 \x03(\tR\x16notificationRecipients\"9\n" +
 	"\x1dSetExpirationReminderResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x81\v\n" +
-	"\x12DOTPhysicalService\x12|\n" +
-	"\x13ScheduleDOTPhysical\x121.v1consortium.services.ScheduleDOTPhysicalRequest\x1a2.v1consortium.services.ScheduleDOTPhysicalResponse\x12m\n" +
-	"\x0eGetDOTPhysical\x12,.v1consortium.services.GetDOTPhysicalRequest\x1a-.v1consortium.services.GetDOTPhysicalResponse\x12v\n" +
-	"\x11UpdateDOTPhysical\x12/.v1consortium.services.UpdateDOTPhysicalRequest\x1a0.v1consortium.services.UpdateDOTPhysicalResponse\x12s\n" +
-	"\x10ListDOTPhysicals\x12..v1consortium.services.ListDOTPhysicalsRequest\x1a/.v1consortium.services.ListDOTPhysicalsResponse\x12\x88\x01\n" +
-	"\x17RegisterMedicalExaminer\x125.v1consortium.services.RegisterMedicalExaminerRequest\x1a6.v1consortium.services.RegisterMedicalExaminerResponse\x12y\n" +
-	"\x12GetMedicalExaminer\x120.v1consortium.services.GetMedicalExaminerRequest\x1a1.v1consortium.services.GetMedicalExaminerResponse\x12\x7f\n" +
-	"\x14ListMedicalExaminers\x122.v1consortium.services.ListMedicalExaminersRequest\x1a3.v1consortium.services.ListMedicalExaminersResponse\x12|\n" +
-	"\x13GenerateCertificate\x121.v1consortium.services.GenerateCertificateRequest\x1a2.v1consortium.services.GenerateCertificateResponse\x12|\n" +
-	"\x13ValidateCertificate\x121.v1consortium.services.ValidateCertificateRequest\x1a2.v1consortium.services.ValidateCertificateResponse\x12\x88\x01\n" +
-	"\x17GetExpiringCertificates\x125.v1consortium.services.GetExpiringCertificatesRequest\x1a6.v1consortium.services.GetExpiringCertificatesResponse\x12\x82\x01\n" +
-	"\x15SetExpirationReminder\x123.v1consortium.services.SetExpirationReminderRequest\x1a4.v1consortium.services.SetExpirationReminderResponseB\rZ\vservices/v1b\x06proto3"
+	"\amessage\x18\x01 \x01(\tR\amessage2\x9a\x10\n" +
+	"\x12DOTPhysicalService\x12\xbe\x01\n" +
+	"\x13ScheduleDOTPhysical\x121.v1consortium.services.ScheduleDOTPhysicalRequest\x1a2.v1consortium.services.ScheduleDOTPhysicalResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/api/v1/organizations/{organization_id}/dot-physicals\x12\x9a\x01\n" +
+	"\x0eGetDOTPhysical\x12,.v1consortium.services.GetDOTPhysicalRequest\x1a-.v1consortium.services.GetDOTPhysicalResponse\"+\x82\xd3\xe4\x93\x02%\x12#/api/v1/dot-physicals/{physical_id}\x12\xa6\x01\n" +
+	"\x11UpdateDOTPhysical\x12/.v1consortium.services.UpdateDOTPhysicalRequest\x1a0.v1consortium.services.UpdateDOTPhysicalResponse\".\x82\xd3\xe4\x93\x02(:\x01*\x1a#/api/v1/dot-physicals/{physical_id}\x12\xb2\x01\n" +
+	"\x10ListDOTPhysicals\x12..v1consortium.services.ListDOTPhysicalsRequest\x1a/.v1consortium.services.ListDOTPhysicalsResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/dot-physicals\x12\xce\x01\n" +
+	"\x17RegisterMedicalExaminer\x125.v1consortium.services.RegisterMedicalExaminerRequest\x1a6.v1consortium.services.RegisterMedicalExaminerResponse\"D\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v1/organizations/{organization_id}/medical-examiners\x12\xaa\x01\n" +
+	"\x12GetMedicalExaminer\x120.v1consortium.services.GetMedicalExaminerRequest\x1a1.v1consortium.services.GetMedicalExaminerResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/medical-examiners/{examiner_id}\x12\xc2\x01\n" +
+	"\x14ListMedicalExaminers\x122.v1consortium.services.ListMedicalExaminersRequest\x1a3.v1consortium.services.ListMedicalExaminersResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/medical-examiners\x12\xb8\x01\n" +
+	"\x13GenerateCertificate\x121.v1consortium.services.GenerateCertificateRequest\x1a2.v1consortium.services.GenerateCertificateResponse\":\x82\xd3\xe4\x93\x024:\x01*\"//api/v1/dot-physicals/{physical_id}/certificate\x12\xaa\x01\n" +
+	"\x13ValidateCertificate\x121.v1consortium.services.ValidateCertificateRequest\x1a2.v1consortium.services.ValidateCertificateResponse\",\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v1/dot-certificates/validate\x12\xd3\x01\n" +
+	"\x17GetExpiringCertificates\x125.v1consortium.services.GetExpiringCertificatesRequest\x1a6.v1consortium.services.GetExpiringCertificatesResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/dot-certificates/expiring\x12\xc6\x01\n" +
+	"\x15SetExpirationReminder\x123.v1consortium.services.SetExpirationReminderRequest\x1a4.v1consortium.services.SetExpirationReminderResponse\"B\x82\xd3\xe4\x93\x02<:\x01*\"7/api/v1/dot-physicals/{physical_id}/expiration-reminderB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_dot_physical_proto_rawDescOnce sync.Once
@@ -2009,45 +2009,45 @@ func file_services_v1_dot_physical_proto_rawDescGZIP() []byte {
 
 var file_services_v1_dot_physical_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_services_v1_dot_physical_proto_goTypes = []any{
-	(*ScheduleDOTPhysicalRequest)(nil),        // 0: v1consortium.services.ScheduleDOTPhysicalRequest
-	(*ScheduleDOTPhysicalResponse)(nil),       // 1: v1consortium.services.ScheduleDOTPhysicalResponse
-	(*GetDOTPhysicalRequest)(nil),             // 2: v1consortium.services.GetDOTPhysicalRequest
-	(*GetDOTPhysicalResponse)(nil),            // 3: v1consortium.services.GetDOTPhysicalResponse
-	(*UpdateDOTPhysicalRequest)(nil),          // 4: v1consortium.services.UpdateDOTPhysicalRequest
-	(*UpdateDOTPhysicalResponse)(nil),         // 5: v1consortium.services.UpdateDOTPhysicalResponse
-	(*ListDOTPhysicalsRequest)(nil),           // 6: v1consortium.services.ListDOTPhysicalsRequest
-	(*ListDOTPhysicalsResponse)(nil),          // 7: v1consortium.services.ListDOTPhysicalsResponse
-	(*RegisterMedicalExaminerRequest)(nil),    // 8: v1consortium.services.RegisterMedicalExaminerRequest
-	(*RegisterMedicalExaminerResponse)(nil),   // 9: v1consortium.services.RegisterMedicalExaminerResponse
-	(*GetMedicalExaminerRequest)(nil),         // 10: v1consortium.services.GetMedicalExaminerRequest
-	(*MedicalExaminerInfo)(nil),               // 11: v1consortium.services.MedicalExaminerInfo
-	(*GetMedicalExaminerResponse)(nil),        // 12: v1consortium.services.GetMedicalExaminerResponse
-	(*ListMedicalExaminersRequest)(nil),       // 13: v1consortium.services.ListMedicalExaminersRequest
-	(*ListMedicalExaminersResponse)(nil),      // 14: v1consortium.services.ListMedicalExaminersResponse
-	(*GenerateCertificateRequest)(nil),        // 15: v1consortium.services.GenerateCertificateRequest
-	(*GenerateCertificateResponse)(nil),       // 16: v1consortium.services.GenerateCertificateResponse
-	(*ValidateCertificateRequest)(nil),        // 17: v1consortium.services.ValidateCertificateRequest
-	(*ValidateCertificateResponse)(nil),       // 18: v1consortium.services.ValidateCertificateResponse
-	(*GetExpiringCertificatesRequest)(nil),    // 19: v1consortium.services.GetExpiringCertificatesRequest
-	(*ExpiringCertificate)(nil),               // 20: v1consortium.services.ExpiringCertificate
-	(*GetExpiringCertificatesResponse)(nil),   // 21: v1consortium.services.GetExpiringCertificatesResponse
-	(*SetExpirationReminderRequest)(nil),      // 22: v1consortium.services.SetExpirationReminderRequest
-	(*SetExpirationReminderResponse)(nil),     // 23: v1consortium.services.SetExpirationReminderResponse
-	(*timestamppb.Timestamp)(nil),             // 24: google.protobuf.Timestamp
-	(*v1consortium_backend.DotPhysicals)(nil), // 25: v1consortium.backend.DotPhysicals
+	(*ScheduleDOTPhysicalRequest)(nil),      // 0: v1consortium.services.ScheduleDOTPhysicalRequest
+	(*ScheduleDOTPhysicalResponse)(nil),     // 1: v1consortium.services.ScheduleDOTPhysicalResponse
+	(*GetDOTPhysicalRequest)(nil),           // 2: v1consortium.services.GetDOTPhysicalRequest
+	(*GetDOTPhysicalResponse)(nil),          // 3: v1consortium.services.GetDOTPhysicalResponse
+	(*UpdateDOTPhysicalRequest)(nil),        // 4: v1consortium.services.UpdateDOTPhysicalRequest
+	(*UpdateDOTPhysicalResponse)(nil),       // 5: v1consortium.services.UpdateDOTPhysicalResponse
+	(*ListDOTPhysicalsRequest)(nil),         // 6: v1consortium.services.ListDOTPhysicalsRequest
+	(*ListDOTPhysicalsResponse)(nil),        // 7: v1consortium.services.ListDOTPhysicalsResponse
+	(*RegisterMedicalExaminerRequest)(nil),  // 8: v1consortium.services.RegisterMedicalExaminerRequest
+	(*RegisterMedicalExaminerResponse)(nil), // 9: v1consortium.services.RegisterMedicalExaminerResponse
+	(*GetMedicalExaminerRequest)(nil),       // 10: v1consortium.services.GetMedicalExaminerRequest
+	(*MedicalExaminerInfo)(nil),             // 11: v1consortium.services.MedicalExaminerInfo
+	(*GetMedicalExaminerResponse)(nil),      // 12: v1consortium.services.GetMedicalExaminerResponse
+	(*ListMedicalExaminersRequest)(nil),     // 13: v1consortium.services.ListMedicalExaminersRequest
+	(*ListMedicalExaminersResponse)(nil),    // 14: v1consortium.services.ListMedicalExaminersResponse
+	(*GenerateCertificateRequest)(nil),      // 15: v1consortium.services.GenerateCertificateRequest
+	(*GenerateCertificateResponse)(nil),     // 16: v1consortium.services.GenerateCertificateResponse
+	(*ValidateCertificateRequest)(nil),      // 17: v1consortium.services.ValidateCertificateRequest
+	(*ValidateCertificateResponse)(nil),     // 18: v1consortium.services.ValidateCertificateResponse
+	(*GetExpiringCertificatesRequest)(nil),  // 19: v1consortium.services.GetExpiringCertificatesRequest
+	(*ExpiringCertificate)(nil),             // 20: v1consortium.services.ExpiringCertificate
+	(*GetExpiringCertificatesResponse)(nil), // 21: v1consortium.services.GetExpiringCertificatesResponse
+	(*SetExpirationReminderRequest)(nil),    // 22: v1consortium.services.SetExpirationReminderRequest
+	(*SetExpirationReminderResponse)(nil),   // 23: v1consortium.services.SetExpirationReminderResponse
+	(*timestamppb.Timestamp)(nil),           // 24: google.protobuf.Timestamp
+	(*pbentity.DotPhysicals)(nil),           // 25: pbentity.DotPhysicals
 }
 var file_services_v1_dot_physical_proto_depIdxs = []int32{
 	24, // 0: v1consortium.services.ScheduleDOTPhysicalRequest.preferred_date:type_name -> google.protobuf.Timestamp
-	25, // 1: v1consortium.services.ScheduleDOTPhysicalResponse.physical:type_name -> v1consortium.backend.DotPhysicals
-	25, // 2: v1consortium.services.GetDOTPhysicalResponse.physical:type_name -> v1consortium.backend.DotPhysicals
+	25, // 1: v1consortium.services.ScheduleDOTPhysicalResponse.physical:type_name -> pbentity.DotPhysicals
+	25, // 2: v1consortium.services.GetDOTPhysicalResponse.physical:type_name -> pbentity.DotPhysicals
 	24, // 3: v1consortium.services.UpdateDOTPhysicalRequest.examination_date:type_name -> google.protobuf.Timestamp
 	24, // 4: v1consortium.services.UpdateDOTPhysicalRequest.certificate_issue_date:type_name -> google.protobuf.Timestamp
 	24, // 5: v1consortium.services.UpdateDOTPhysicalRequest.certificate_expiration_date:type_name -> google.protobuf.Timestamp
 	24, // 6: v1consortium.services.UpdateDOTPhysicalRequest.exemption_expiration:type_name -> google.protobuf.Timestamp
-	25, // 7: v1consortium.services.UpdateDOTPhysicalResponse.physical:type_name -> v1consortium.backend.DotPhysicals
+	25, // 7: v1consortium.services.UpdateDOTPhysicalResponse.physical:type_name -> pbentity.DotPhysicals
 	24, // 8: v1consortium.services.ListDOTPhysicalsRequest.start_date:type_name -> google.protobuf.Timestamp
 	24, // 9: v1consortium.services.ListDOTPhysicalsRequest.end_date:type_name -> google.protobuf.Timestamp
-	25, // 10: v1consortium.services.ListDOTPhysicalsResponse.physicals:type_name -> v1consortium.backend.DotPhysicals
+	25, // 10: v1consortium.services.ListDOTPhysicalsResponse.physicals:type_name -> pbentity.DotPhysicals
 	24, // 11: v1consortium.services.RegisterMedicalExaminerRequest.license_expiration:type_name -> google.protobuf.Timestamp
 	24, // 12: v1consortium.services.RegisterMedicalExaminerRequest.certification_expiration:type_name -> google.protobuf.Timestamp
 	24, // 13: v1consortium.services.MedicalExaminerInfo.license_expiration:type_name -> google.protobuf.Timestamp

@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -187,9 +187,9 @@ func (x *ComplianceMetrics) GetLastCalculated() *timestamppb.Timestamp {
 }
 
 type GetComplianceStatusResponse struct {
-	state         protoimpl.MessageState                 `protogen:"open.v1"`
-	Status        *v1consortium_backend.ComplianceStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	Metrics       *ComplianceMetrics                     `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Status        *pbentity.ComplianceStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Metrics       *ComplianceMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -224,7 +224,7 @@ func (*GetComplianceStatusResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetComplianceStatusResponse) GetStatus() *v1consortium_backend.ComplianceStatus {
+func (x *GetComplianceStatusResponse) GetStatus() *pbentity.ComplianceStatus {
 	if x != nil {
 		return x.Status
 	}
@@ -299,9 +299,9 @@ func (x *UpdateComplianceStatusRequest) GetForceRecalculation() bool {
 }
 
 type UpdateComplianceStatusResponse struct {
-	state          protoimpl.MessageState                 `protogen:"open.v1"`
-	Status         *v1consortium_backend.ComplianceStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	UpdatedMetrics *ComplianceMetrics                     `protobuf:"bytes,2,opt,name=updated_metrics,json=updatedMetrics,proto3" json:"updated_metrics,omitempty"`
+	state          protoimpl.MessageState     `protogen:"open.v1"`
+	Status         *pbentity.ComplianceStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	UpdatedMetrics *ComplianceMetrics         `protobuf:"bytes,2,opt,name=updated_metrics,json=updatedMetrics,proto3" json:"updated_metrics,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -336,7 +336,7 @@ func (*UpdateComplianceStatusResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdateComplianceStatusResponse) GetStatus() *v1consortium_backend.ComplianceStatus {
+func (x *UpdateComplianceStatusResponse) GetStatus() *pbentity.ComplianceStatus {
 	if x != nil {
 		return x.Status
 	}
@@ -427,12 +427,12 @@ func (x *ListComplianceStatusRequest) GetPageSize() int32 {
 }
 
 type ListComplianceStatusResponse struct {
-	state               protoimpl.MessageState                   `protogen:"open.v1"`
-	Statuses            []*v1consortium_backend.ComplianceStatus `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
-	TotalCount          int32                                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page                int32                                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize            int32                                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	OrganizationMetrics *ComplianceMetrics                       `protobuf:"bytes,5,opt,name=organization_metrics,json=organizationMetrics,proto3" json:"organization_metrics,omitempty"`
+	state               protoimpl.MessageState       `protogen:"open.v1"`
+	Statuses            []*pbentity.ComplianceStatus `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
+	TotalCount          int32                        `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page                int32                        `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize            int32                        `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	OrganizationMetrics *ComplianceMetrics           `protobuf:"bytes,5,opt,name=organization_metrics,json=organizationMetrics,proto3" json:"organization_metrics,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -467,7 +467,7 @@ func (*ListComplianceStatusResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ListComplianceStatusResponse) GetStatuses() []*v1consortium_backend.ComplianceStatus {
+func (x *ListComplianceStatusResponse) GetStatuses() []*pbentity.ComplianceStatus {
 	if x != nil {
 		return x.Statuses
 	}
@@ -572,9 +572,9 @@ func (x *GenerateComplianceCertificateRequest) GetCustomFields() map[string]stri
 }
 
 type GenerateComplianceCertificateResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Certificate   *v1consortium_backend.Certificates `protobuf:"bytes,1,opt,name=certificate,proto3" json:"certificate,omitempty"`
-	DownloadUrl   string                             `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Certificate   *pbentity.Certificates `protobuf:"bytes,1,opt,name=certificate,proto3" json:"certificate,omitempty"`
+	DownloadUrl   string                 `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -609,7 +609,7 @@ func (*GenerateComplianceCertificateResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GenerateComplianceCertificateResponse) GetCertificate() *v1consortium_backend.Certificates {
+func (x *GenerateComplianceCertificateResponse) GetCertificate() *pbentity.Certificates {
 	if x != nil {
 		return x.Certificate
 	}
@@ -668,9 +668,9 @@ func (x *GetCertificateRequest) GetCertificateId() string {
 }
 
 type GetCertificateResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Certificate   *v1consortium_backend.Certificates `protobuf:"bytes,1,opt,name=certificate,proto3" json:"certificate,omitempty"`
-	DownloadUrl   string                             `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Certificate   *pbentity.Certificates `protobuf:"bytes,1,opt,name=certificate,proto3" json:"certificate,omitempty"`
+	DownloadUrl   string                 `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -705,7 +705,7 @@ func (*GetCertificateResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetCertificateResponse) GetCertificate() *v1consortium_backend.Certificates {
+func (x *GetCertificateResponse) GetCertificate() *pbentity.Certificates {
 	if x != nil {
 		return x.Certificate
 	}
@@ -804,11 +804,11 @@ func (x *ListCertificatesRequest) GetPageSize() int32 {
 }
 
 type ListCertificatesResponse struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Certificates  []*v1consortium_backend.Certificates `protobuf:"bytes,1,rep,name=certificates,proto3" json:"certificates,omitempty"`
-	TotalCount    int32                                `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Certificates  []*pbentity.Certificates `protobuf:"bytes,1,rep,name=certificates,proto3" json:"certificates,omitempty"`
+	TotalCount    int32                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -843,7 +843,7 @@ func (*ListCertificatesResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *ListCertificatesResponse) GetCertificates() []*v1consortium_backend.Certificates {
+func (x *ListCertificatesResponse) GetCertificates() []*pbentity.Certificates {
 	if x != nil {
 		return x.Certificates
 	}
@@ -1069,9 +1069,9 @@ func (x *GenerateComplianceReportRequest) GetFilters() map[string]string {
 }
 
 type GenerateComplianceReportResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Report        *v1consortium_backend.SavedReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
-	DownloadUrl   string                             `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Report        *pbentity.SavedReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
+	DownloadUrl   string                 `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1106,7 +1106,7 @@ func (*GenerateComplianceReportResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *GenerateComplianceReportResponse) GetReport() *v1consortium_backend.SavedReports {
+func (x *GenerateComplianceReportResponse) GetReport() *pbentity.SavedReports {
 	if x != nil {
 		return x.Report
 	}
@@ -1165,9 +1165,9 @@ func (x *GetSavedReportRequest) GetReportId() string {
 }
 
 type GetSavedReportResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Report        *v1consortium_backend.SavedReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
-	DownloadUrl   string                             `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Report        *pbentity.SavedReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
+	DownloadUrl   string                 `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1202,7 +1202,7 @@ func (*GetSavedReportResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *GetSavedReportResponse) GetReport() *v1consortium_backend.SavedReports {
+func (x *GetSavedReportResponse) GetReport() *pbentity.SavedReports {
 	if x != nil {
 		return x.Report
 	}
@@ -1309,11 +1309,11 @@ func (x *ListSavedReportsRequest) GetPageSize() int32 {
 }
 
 type ListSavedReportsResponse struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Reports       []*v1consortium_backend.SavedReports `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
-	TotalCount    int32                                `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Reports       []*pbentity.SavedReports `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
+	TotalCount    int32                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1348,7 +1348,7 @@ func (*ListSavedReportsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_compliance_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *ListSavedReportsResponse) GetReports() []*v1consortium_backend.SavedReports {
+func (x *ListSavedReportsResponse) GetReports() []*pbentity.SavedReports {
 	if x != nil {
 		return x.Reports
 	}
@@ -2202,7 +2202,7 @@ var File_services_v1_compliance_proto protoreflect.FileDescriptor
 
 const file_services_v1_compliance_proto_rawDesc = "" +
 	"\n" +
-	"\x1cservices/v1/compliance.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a pbentity/compliance_status.proto\x1a\x1bpbentity/certificates.proto\x1a\x1cpbentity/saved_reports.proto\"^\n" +
+	"\x1cservices/v1/compliance.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bpbentity/certificates.proto\x1a pbentity/compliance_status.proto\x1a\x1cpbentity/saved_reports.proto\"^\n" +
 	"\x1aGetComplianceStatusRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\"\x8f\x04\n" +
@@ -2215,25 +2215,25 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\x13compliant_employees\x18\x06 \x01(\x05R\x12compliantEmployees\x126\n" +
 	"\x17non_compliant_employees\x18\a \x01(\x05R\x15nonCompliantEmployees\x121\n" +
 	"\x14pending_requirements\x18\b \x01(\x05R\x13pendingRequirements\x12C\n" +
-	"\x0flast_calculated\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\x0elastCalculated\"\xa1\x01\n" +
-	"\x1bGetComplianceStatusResponse\x12>\n" +
-	"\x06status\x18\x01 \x01(\v2&.v1consortium.backend.ComplianceStatusR\x06status\x12B\n" +
+	"\x0flast_calculated\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\x0elastCalculated\"\x95\x01\n" +
+	"\x1bGetComplianceStatusResponse\x122\n" +
+	"\x06status\x18\x01 \x01(\v2\x1a.pbentity.ComplianceStatusR\x06status\x12B\n" +
 	"\ametrics\x18\x02 \x01(\v2(.v1consortium.services.ComplianceMetricsR\ametrics\"\x92\x01\n" +
 	"\x1dUpdateComplianceStatusRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12'\n" +
 	"\x0forganization_id\x18\x02 \x01(\tR\x0eorganizationId\x12/\n" +
-	"\x13force_recalculation\x18\x03 \x01(\bR\x12forceRecalculation\"\xb3\x01\n" +
-	"\x1eUpdateComplianceStatusResponse\x12>\n" +
-	"\x06status\x18\x01 \x01(\v2&.v1consortium.backend.ComplianceStatusR\x06status\x12Q\n" +
+	"\x13force_recalculation\x18\x03 \x01(\bR\x12forceRecalculation\"\xa7\x01\n" +
+	"\x1eUpdateComplianceStatusResponse\x122\n" +
+	"\x06status\x18\x01 \x01(\v2\x1a.pbentity.ComplianceStatusR\x06status\x12Q\n" +
 	"\x0fupdated_metrics\x18\x02 \x01(\v2(.v1consortium.services.ComplianceMetricsR\x0eupdatedMetrics\"\xce\x01\n" +
 	"\x1bListComplianceStatusRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12'\n" +
 	"\x0fcompliance_type\x18\x02 \x01(\tR\x0ecomplianceType\x12,\n" +
 	"\x12non_compliant_only\x18\x03 \x01(\bR\x10nonCompliantOnly\x12\x12\n" +
 	"\x04page\x18\x04 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\"\x91\x02\n" +
-	"\x1cListComplianceStatusResponse\x12B\n" +
-	"\bstatuses\x18\x01 \x03(\v2&.v1consortium.backend.ComplianceStatusR\bstatuses\x12\x1f\n" +
+	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\"\x85\x02\n" +
+	"\x1cListComplianceStatusResponse\x126\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1a.pbentity.ComplianceStatusR\bstatuses\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2246,14 +2246,14 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\rcustom_fields\x18\x04 \x03(\v2M.v1consortium.services.GenerateComplianceCertificateRequest.CustomFieldsEntryR\fcustomFields\x1a?\n" +
 	"\x11CustomFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x90\x01\n" +
-	"%GenerateComplianceCertificateResponse\x12D\n" +
-	"\vcertificate\x18\x01 \x01(\v2\".v1consortium.backend.CertificatesR\vcertificate\x12!\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x84\x01\n" +
+	"%GenerateComplianceCertificateResponse\x128\n" +
+	"\vcertificate\x18\x01 \x01(\v2\x16.pbentity.CertificatesR\vcertificate\x12!\n" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\">\n" +
 	"\x15GetCertificateRequest\x12%\n" +
-	"\x0ecertificate_id\x18\x01 \x01(\tR\rcertificateId\"\x81\x01\n" +
-	"\x16GetCertificateResponse\x12D\n" +
-	"\vcertificate\x18\x01 \x01(\v2\".v1consortium.backend.CertificatesR\vcertificate\x12!\n" +
+	"\x0ecertificate_id\x18\x01 \x01(\tR\rcertificateId\"u\n" +
+	"\x16GetCertificateResponse\x128\n" +
+	"\vcertificate\x18\x01 \x01(\v2\x16.pbentity.CertificatesR\vcertificate\x12!\n" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\"\xd6\x01\n" +
 	"\x17ListCertificatesRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
@@ -2262,9 +2262,9 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\n" +
 	"valid_only\x18\x04 \x01(\bR\tvalidOnly\x12\x12\n" +
 	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x06 \x01(\x05R\bpageSize\"\xb4\x01\n" +
-	"\x18ListCertificatesResponse\x12F\n" +
-	"\fcertificates\x18\x01 \x03(\v2\".v1consortium.backend.CertificatesR\fcertificates\x12\x1f\n" +
+	"\tpage_size\x18\x06 \x01(\x05R\bpageSize\"\xa8\x01\n" +
+	"\x18ListCertificatesResponse\x12:\n" +
+	"\fcertificates\x18\x01 \x03(\v2\x16.pbentity.CertificatesR\fcertificates\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2288,14 +2288,14 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\afilters\x18\a \x03(\v2C.v1consortium.services.GenerateComplianceReportRequest.FiltersEntryR\afilters\x1a:\n" +
 	"\fFiltersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x81\x01\n" +
-	" GenerateComplianceReportResponse\x12:\n" +
-	"\x06report\x18\x01 \x01(\v2\".v1consortium.backend.SavedReportsR\x06report\x12!\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"u\n" +
+	" GenerateComplianceReportResponse\x12.\n" +
+	"\x06report\x18\x01 \x01(\v2\x16.pbentity.SavedReportsR\x06report\x12!\n" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\"4\n" +
 	"\x15GetSavedReportRequest\x12\x1b\n" +
-	"\treport_id\x18\x01 \x01(\tR\breportId\"w\n" +
-	"\x16GetSavedReportResponse\x12:\n" +
-	"\x06report\x18\x01 \x01(\v2\".v1consortium.backend.SavedReportsR\x06report\x12!\n" +
+	"\treport_id\x18\x01 \x01(\tR\breportId\"k\n" +
+	"\x16GetSavedReportResponse\x12.\n" +
+	"\x06report\x18\x01 \x01(\v2\x16.pbentity.SavedReportsR\x06report\x12!\n" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\"\xa9\x02\n" +
 	"\x17ListSavedReportsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x1f\n" +
@@ -2306,9 +2306,9 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"start_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\a \x01(\x05R\bpageSize\"\xaa\x01\n" +
-	"\x18ListSavedReportsResponse\x12<\n" +
-	"\areports\x18\x01 \x03(\v2\".v1consortium.backend.SavedReportsR\areports\x12\x1f\n" +
+	"\tpage_size\x18\a \x01(\x05R\bpageSize\"\x9e\x01\n" +
+	"\x18ListSavedReportsResponse\x120\n" +
+	"\areports\x18\x01 \x03(\v2\x16.pbentity.SavedReportsR\areports\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2389,22 +2389,22 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x04 \x01(\x05R\bpageSize2\x8e\x0e\n" +
-	"\x11ComplianceService\x12|\n" +
-	"\x13GetComplianceStatus\x121.v1consortium.services.GetComplianceStatusRequest\x1a2.v1consortium.services.GetComplianceStatusResponse\x12\x85\x01\n" +
-	"\x16UpdateComplianceStatus\x124.v1consortium.services.UpdateComplianceStatusRequest\x1a5.v1consortium.services.UpdateComplianceStatusResponse\x12\x7f\n" +
-	"\x14ListComplianceStatus\x122.v1consortium.services.ListComplianceStatusRequest\x1a3.v1consortium.services.ListComplianceStatusResponse\x12\x9a\x01\n" +
-	"\x1dGenerateComplianceCertificate\x12;.v1consortium.services.GenerateComplianceCertificateRequest\x1a<.v1consortium.services.GenerateComplianceCertificateResponse\x12m\n" +
-	"\x0eGetCertificate\x12,.v1consortium.services.GetCertificateRequest\x1a-.v1consortium.services.GetCertificateResponse\x12s\n" +
-	"\x10ListCertificates\x12..v1consortium.services.ListCertificatesRequest\x1a/.v1consortium.services.ListCertificatesResponse\x12v\n" +
-	"\x11RevokeCertificate\x12/.v1consortium.services.RevokeCertificateRequest\x1a0.v1consortium.services.RevokeCertificateResponse\x12\x8b\x01\n" +
-	"\x18GenerateComplianceReport\x126.v1consortium.services.GenerateComplianceReportRequest\x1a7.v1consortium.services.GenerateComplianceReportResponse\x12m\n" +
-	"\x0eGetSavedReport\x12,.v1consortium.services.GetSavedReportRequest\x1a-.v1consortium.services.GetSavedReportResponse\x12s\n" +
-	"\x10ListSavedReports\x12..v1consortium.services.ListSavedReportsRequest\x1a/.v1consortium.services.ListSavedReportsResponse\x12v\n" +
-	"\x11DeleteSavedReport\x12/.v1consortium.services.DeleteSavedReportRequest\x1a0.v1consortium.services.DeleteSavedReportResponse\x12|\n" +
-	"\x13GetComplianceAlerts\x121.v1consortium.services.GetComplianceAlertsRequest\x1a2.v1consortium.services.GetComplianceAlertsResponse\x12\x85\x01\n" +
-	"\x16GetComplianceAnalytics\x124.v1consortium.services.GetComplianceAnalyticsRequest\x1a5.v1consortium.services.GetComplianceAnalyticsResponse\x12\x88\x01\n" +
-	"\x17GetComplianceAuditTrail\x125.v1consortium.services.GetComplianceAuditTrailRequest\x1a6.v1consortium.services.GetComplianceAuditTrailResponseB\rZ\vservices/v1b\x06proto3"
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize2\xbe\x14\n" +
+	"\x11ComplianceService\x12\xaf\x01\n" +
+	"\x13GetComplianceStatus\x121.v1consortium.services.GetComplianceStatusRequest\x1a2.v1consortium.services.GetComplianceStatusResponse\"1\x82\xd3\xe4\x93\x02+\x12)/api/v1/users/{user_id}/compliance-status\x12\xbb\x01\n" +
+	"\x16UpdateComplianceStatus\x124.v1consortium.services.UpdateComplianceStatusRequest\x1a5.v1consortium.services.UpdateComplianceStatusResponse\"4\x82\xd3\xe4\x93\x02.:\x01*\x1a)/api/v1/users/{user_id}/compliance-status\x12\xc2\x01\n" +
+	"\x14ListComplianceStatus\x122.v1consortium.services.ListComplianceStatusRequest\x1a3.v1consortium.services.ListComplianceStatusResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/compliance-status\x12\xdb\x01\n" +
+	"\x1dGenerateComplianceCertificate\x12;.v1consortium.services.GenerateComplianceCertificateRequest\x1a<.v1consortium.services.GenerateComplianceCertificateResponse\"?\x82\xd3\xe4\x93\x029:\x01*\"4/api/v1/organizations/{organization_id}/certificates\x12\x9c\x01\n" +
+	"\x0eGetCertificate\x12,.v1consortium.services.GetCertificateRequest\x1a-.v1consortium.services.GetCertificateResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/certificates/{certificate_id}\x12\xb1\x01\n" +
+	"\x10ListCertificates\x12..v1consortium.services.ListCertificatesRequest\x1a/.v1consortium.services.ListCertificatesResponse\"<\x82\xd3\xe4\x93\x026\x124/api/v1/organizations/{organization_id}/certificates\x12\xa8\x01\n" +
+	"\x11RevokeCertificate\x12/.v1consortium.services.RevokeCertificateRequest\x1a0.v1consortium.services.RevokeCertificateResponse\"0\x82\xd3\xe4\x93\x02*:\x01**%/api/v1/certificates/{certificate_id}\x12\xd2\x01\n" +
+	"\x18GenerateComplianceReport\x126.v1consortium.services.GenerateComplianceReportRequest\x1a7.v1consortium.services.GenerateComplianceReportResponse\"E\x82\xd3\xe4\x93\x02?:\x01*\":/api/v1/organizations/{organization_id}/compliance-reports\x12\x92\x01\n" +
+	"\x0eGetSavedReport\x12,.v1consortium.services.GetSavedReportRequest\x1a-.v1consortium.services.GetSavedReportResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/reports/{report_id}\x12\xac\x01\n" +
+	"\x10ListSavedReports\x12..v1consortium.services.ListSavedReportsRequest\x1a/.v1consortium.services.ListSavedReportsResponse\"7\x82\xd3\xe4\x93\x021\x12//api/v1/organizations/{organization_id}/reports\x12\x9b\x01\n" +
+	"\x11DeleteSavedReport\x12/.v1consortium.services.DeleteSavedReportRequest\x1a0.v1consortium.services.DeleteSavedReportResponse\"#\x82\xd3\xe4\x93\x02\x1d*\x1b/api/v1/reports/{report_id}\x12\xbf\x01\n" +
+	"\x13GetComplianceAlerts\x121.v1consortium.services.GetComplianceAlertsRequest\x1a2.v1consortium.services.GetComplianceAlertsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/compliance-alerts\x12\xcb\x01\n" +
+	"\x16GetComplianceAnalytics\x124.v1consortium.services.GetComplianceAnalyticsRequest\x1a5.v1consortium.services.GetComplianceAnalyticsResponse\"D\x82\xd3\xe4\x93\x02>\x12</api/v1/organizations/{organization_id}/compliance-analytics\x12\xd0\x01\n" +
+	"\x17GetComplianceAuditTrail\x125.v1consortium.services.GetComplianceAuditTrailRequest\x1a6.v1consortium.services.GetComplianceAuditTrailResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/compliance-audit-trailB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_compliance_proto_rawDescOnce sync.Once
@@ -2457,30 +2457,30 @@ var file_services_v1_compliance_proto_goTypes = []any{
 	nil,                                           // 34: v1consortium.services.GetComplianceAnalyticsResponse.ComplianceByTypeEntry
 	nil,                                           // 35: v1consortium.services.ComplianceAuditEntry.DetailsEntry
 	(*timestamppb.Timestamp)(nil),                 // 36: google.protobuf.Timestamp
-	(*v1consortium_backend.ComplianceStatus)(nil), // 37: v1consortium.backend.ComplianceStatus
-	(*v1consortium_backend.Certificates)(nil),     // 38: v1consortium.backend.Certificates
-	(*v1consortium_backend.SavedReports)(nil),     // 39: v1consortium.backend.SavedReports
+	(*pbentity.ComplianceStatus)(nil),             // 37: pbentity.ComplianceStatus
+	(*pbentity.Certificates)(nil),                 // 38: pbentity.Certificates
+	(*pbentity.SavedReports)(nil),                 // 39: pbentity.SavedReports
 }
 var file_services_v1_compliance_proto_depIdxs = []int32{
 	36, // 0: v1consortium.services.ComplianceMetrics.last_calculated:type_name -> google.protobuf.Timestamp
-	37, // 1: v1consortium.services.GetComplianceStatusResponse.status:type_name -> v1consortium.backend.ComplianceStatus
+	37, // 1: v1consortium.services.GetComplianceStatusResponse.status:type_name -> pbentity.ComplianceStatus
 	1,  // 2: v1consortium.services.GetComplianceStatusResponse.metrics:type_name -> v1consortium.services.ComplianceMetrics
-	37, // 3: v1consortium.services.UpdateComplianceStatusResponse.status:type_name -> v1consortium.backend.ComplianceStatus
+	37, // 3: v1consortium.services.UpdateComplianceStatusResponse.status:type_name -> pbentity.ComplianceStatus
 	1,  // 4: v1consortium.services.UpdateComplianceStatusResponse.updated_metrics:type_name -> v1consortium.services.ComplianceMetrics
-	37, // 5: v1consortium.services.ListComplianceStatusResponse.statuses:type_name -> v1consortium.backend.ComplianceStatus
+	37, // 5: v1consortium.services.ListComplianceStatusResponse.statuses:type_name -> pbentity.ComplianceStatus
 	1,  // 6: v1consortium.services.ListComplianceStatusResponse.organization_metrics:type_name -> v1consortium.services.ComplianceMetrics
 	32, // 7: v1consortium.services.GenerateComplianceCertificateRequest.custom_fields:type_name -> v1consortium.services.GenerateComplianceCertificateRequest.CustomFieldsEntry
-	38, // 8: v1consortium.services.GenerateComplianceCertificateResponse.certificate:type_name -> v1consortium.backend.Certificates
-	38, // 9: v1consortium.services.GetCertificateResponse.certificate:type_name -> v1consortium.backend.Certificates
-	38, // 10: v1consortium.services.ListCertificatesResponse.certificates:type_name -> v1consortium.backend.Certificates
+	38, // 8: v1consortium.services.GenerateComplianceCertificateResponse.certificate:type_name -> pbentity.Certificates
+	38, // 9: v1consortium.services.GetCertificateResponse.certificate:type_name -> pbentity.Certificates
+	38, // 10: v1consortium.services.ListCertificatesResponse.certificates:type_name -> pbentity.Certificates
 	36, // 11: v1consortium.services.GenerateComplianceReportRequest.start_date:type_name -> google.protobuf.Timestamp
 	36, // 12: v1consortium.services.GenerateComplianceReportRequest.end_date:type_name -> google.protobuf.Timestamp
 	33, // 13: v1consortium.services.GenerateComplianceReportRequest.filters:type_name -> v1consortium.services.GenerateComplianceReportRequest.FiltersEntry
-	39, // 14: v1consortium.services.GenerateComplianceReportResponse.report:type_name -> v1consortium.backend.SavedReports
-	39, // 15: v1consortium.services.GetSavedReportResponse.report:type_name -> v1consortium.backend.SavedReports
+	39, // 14: v1consortium.services.GenerateComplianceReportResponse.report:type_name -> pbentity.SavedReports
+	39, // 15: v1consortium.services.GetSavedReportResponse.report:type_name -> pbentity.SavedReports
 	36, // 16: v1consortium.services.ListSavedReportsRequest.start_date:type_name -> google.protobuf.Timestamp
 	36, // 17: v1consortium.services.ListSavedReportsRequest.end_date:type_name -> google.protobuf.Timestamp
-	39, // 18: v1consortium.services.ListSavedReportsResponse.reports:type_name -> v1consortium.backend.SavedReports
+	39, // 18: v1consortium.services.ListSavedReportsResponse.reports:type_name -> pbentity.SavedReports
 	36, // 19: v1consortium.services.ComplianceAlert.due_date:type_name -> google.protobuf.Timestamp
 	24, // 20: v1consortium.services.GetComplianceAlertsResponse.alerts:type_name -> v1consortium.services.ComplianceAlert
 	36, // 21: v1consortium.services.GetComplianceAnalyticsRequest.start_date:type_name -> google.protobuf.Timestamp

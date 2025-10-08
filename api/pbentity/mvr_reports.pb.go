@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/mvr_reports.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -259,7 +259,7 @@ var File_pbentity_mvr_reports_proto protoreflect.FileDescriptor
 
 const file_pbentity_mvr_reports_proto_rawDesc = "" +
 	"\n" +
-	"\x1apbentity/mvr_reports.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xaa\b\n" +
+	"\x1apbentity/mvr_reports.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xaa\b\n" +
 	"\n" +
 	"MvrReports\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
@@ -290,7 +290,7 @@ const file_pbentity_mvr_reports_proto_rawDesc = "" +
 	"\x0eRequiresAction\x18\x15 \x01(\bR\x0eRequiresAction\x12 \n" +
 	"\vActionNotes\x18\x16 \x01(\tR\vActionNotes\x128\n" +
 	"\tCreatedAt\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_mvr_reports_proto_rawDescOnce sync.Once
@@ -306,17 +306,17 @@ func file_pbentity_mvr_reports_proto_rawDescGZIP() []byte {
 
 var file_pbentity_mvr_reports_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_mvr_reports_proto_goTypes = []any{
-	(*MvrReports)(nil),            // 0: v1consortium.backend.MvrReports
+	(*MvrReports)(nil),            // 0: pbentity.MvrReports
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_mvr_reports_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.MvrReports.OrderedDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.MvrReports.ReportDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.MvrReports.ReportReceivedDate:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.MvrReports.LicenseExpirationDate:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.MvrReports.ReviewedDate:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.MvrReports.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 6: v1consortium.backend.MvrReports.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.MvrReports.OrderedDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.MvrReports.ReportDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.MvrReports.ReportReceivedDate:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.MvrReports.LicenseExpirationDate:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.MvrReports.ReviewedDate:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.MvrReports.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 6: pbentity.MvrReports.UpdatedAt:type_name -> google.protobuf.Timestamp
 	7, // [7:7] is the sub-list for method output_type
 	7, // [7:7] is the sub-list for method input_type
 	7, // [7:7] is the sub-list for extension type_name

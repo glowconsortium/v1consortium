@@ -11,6 +11,7 @@ import (
 	sync "sync"
 	unsafe "unsafe"
 
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
@@ -866,7 +867,7 @@ var File_auth_v1_authorization_proto protoreflect.FileDescriptor
 
 const file_auth_v1_authorization_proto_rawDesc = "" +
 	"\n" +
-	"\x1bauth/v1/authorization.proto\x12\x11v1consortium.auth\"\xb8\x01\n" +
+	"\x1bauth/v1/authorization.proto\x12\x11v1consortium.auth\x1a\x1cgoogle/api/annotations.proto\x1a\x15google/api/http.proto\"\xb8\x01\n" +
 	"\x14HasPermissionRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12=\n" +
 	"\n" +
@@ -966,15 +967,15 @@ const file_auth_v1_authorization_proto_rawDesc = "" +
 	"\x14MANAGE_NOTIFICATIONS\x10Z\x12\x16\n" +
 	"\x12SEND_NOTIFICATIONS\x10[\x12\x13\n" +
 	"\x0fVIEW_AUDIT_LOGS\x10d\x12 \n" +
-	"\x1cVIEW_ORGANIZATION_AUDIT_LOGS\x10e2\x84\x04\n" +
-	"\x14AuthorizationService\x12b\n" +
-	"\rHasPermission\x12'.v1consortium.auth.HasPermissionRequest\x1a(.v1consortium.auth.HasPermissionResponse\x12Y\n" +
+	"\x1cVIEW_ORGANIZATION_AUDIT_LOGS\x10e2\xe3\x05\n" +
+	"\x14AuthorizationService\x12\x8d\x01\n" +
+	"\rHasPermission\x12'.v1consortium.auth.HasPermissionRequest\x1a(.v1consortium.auth.HasPermissionResponse\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v1/auth/permissions/check\x12\x7f\n" +
 	"\n" +
-	"AssignRole\x12$.v1consortium.auth.AssignRoleRequest\x1a%.v1consortium.auth.AssignRoleResponse\x12Y\n" +
+	"AssignRole\x12$.v1consortium.auth.AssignRoleRequest\x1a%.v1consortium.auth.AssignRoleResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/api/v1/auth/roles/assign\x12\x88\x01\n" +
 	"\n" +
-	"RemoveRole\x12$.v1consortium.auth.RemoveRoleRequest\x1a%.v1consortium.auth.RemoveRoleResponse\x12_\n" +
-	"\fGetUserRoles\x12&.v1consortium.auth.GetUserRolesRequest\x1a'.v1consortium.auth.GetUserRolesResponse\x12q\n" +
-	"\x12GetRolePermissions\x12,.v1consortium.auth.GetRolePermissionsRequest\x1a-.v1consortium.auth.GetRolePermissionsResponseB\tZ\aauth/v1b\x06proto3"
+	"RemoveRole\x12$.v1consortium.auth.RemoveRoleRequest\x1a%.v1consortium.auth.RemoveRoleResponse\"-\x82\xd3\xe4\x93\x02':\x01**\"/api/v1/auth/users/{user_id}/roles\x12\x8b\x01\n" +
+	"\fGetUserRoles\x12&.v1consortium.auth.GetUserRolesRequest\x1a'.v1consortium.auth.GetUserRolesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/auth/users/{user_id}/roles\x12\xa0\x01\n" +
+	"\x12GetRolePermissions\x12,.v1consortium.auth.GetRolePermissionsRequest\x1a-.v1consortium.auth.GetRolePermissionsResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/auth/roles/{role}/permissionsB\tZ\aauth/v1b\x06proto3"
 
 var (
 	file_auth_v1_authorization_proto_rawDescOnce sync.Once

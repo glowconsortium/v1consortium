@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/subscription_plans.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -147,7 +147,7 @@ var File_pbentity_subscription_plans_proto protoreflect.FileDescriptor
 
 const file_pbentity_subscription_plans_proto_rawDesc = "" +
 	"\n" +
-	"!pbentity/subscription_plans.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xdf\x02\n" +
+	"!pbentity/subscription_plans.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xdf\x02\n" +
 	"\x11SubscriptionPlans\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x12\n" +
@@ -159,7 +159,7 @@ const file_pbentity_subscription_plans_proto_rawDesc = "" +
 	"\bIsActive\x18\b \x01(\bR\bIsActive\x128\n" +
 	"\tCreatedAt\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
 	"\tUpdatedAt\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	" \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_subscription_plans_proto_rawDescOnce sync.Once
@@ -175,12 +175,12 @@ func file_pbentity_subscription_plans_proto_rawDescGZIP() []byte {
 
 var file_pbentity_subscription_plans_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_subscription_plans_proto_goTypes = []any{
-	(*SubscriptionPlans)(nil),     // 0: v1consortium.backend.SubscriptionPlans
+	(*SubscriptionPlans)(nil),     // 0: pbentity.SubscriptionPlans
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_subscription_plans_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.SubscriptionPlans.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.SubscriptionPlans.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.SubscriptionPlans.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.SubscriptionPlans.UpdatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

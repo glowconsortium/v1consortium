@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -167,9 +167,9 @@ func (x *UploadDocumentRequest) GetAutoDeleteAt() *timestamppb.Timestamp {
 }
 
 type UploadDocumentResponse struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Document      *v1consortium_backend.Documents `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
-	UploadUrl     string                          `protobuf:"bytes,2,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty" dc:"If using signed URLs for upload"` // If using signed URLs for upload
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Document      *pbentity.Documents    `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
+	UploadUrl     string                 `protobuf:"bytes,2,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty" dc:"If using signed URLs for upload"` // If using signed URLs for upload
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -204,7 +204,7 @@ func (*UploadDocumentResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *UploadDocumentResponse) GetDocument() *v1consortium_backend.Documents {
+func (x *UploadDocumentResponse) GetDocument() *pbentity.Documents {
 	if x != nil {
 		return x.Document
 	}
@@ -271,10 +271,10 @@ func (x *GetDocumentRequest) GetIncludeContent() bool {
 }
 
 type GetDocumentResponse struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Document      *v1consortium_backend.Documents `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
-	FileData      []byte                          `protobuf:"bytes,2,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty" dc:"Only included if include_content is true"` // Only included if include_content is true
-	DownloadUrl   string                          `protobuf:"bytes,3,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty" dc:"Signed URL for download"`         // Signed URL for download
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Document      *pbentity.Documents    `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
+	FileData      []byte                 `protobuf:"bytes,2,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty" dc:"Only included if include_content is true"` // Only included if include_content is true
+	DownloadUrl   string                 `protobuf:"bytes,3,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty" dc:"Signed URL for download"`         // Signed URL for download
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -309,7 +309,7 @@ func (*GetDocumentResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetDocumentResponse) GetDocument() *v1consortium_backend.Documents {
+func (x *GetDocumentResponse) GetDocument() *pbentity.Documents {
 	if x != nil {
 		return x.Document
 	}
@@ -463,11 +463,11 @@ func (x *ListDocumentsRequest) GetSearch() string {
 }
 
 type ListDocumentsResponse struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Documents     []*v1consortium_backend.Documents `protobuf:"bytes,1,rep,name=documents,proto3" json:"documents,omitempty"`
-	TotalCount    int32                             `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                             `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                             `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Documents     []*pbentity.Documents  `protobuf:"bytes,1,rep,name=documents,proto3" json:"documents,omitempty"`
+	TotalCount    int32                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                  `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -502,7 +502,7 @@ func (*ListDocumentsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListDocumentsResponse) GetDocuments() []*v1consortium_backend.Documents {
+func (x *ListDocumentsResponse) GetDocuments() []*pbentity.Documents {
 	if x != nil {
 		return x.Documents
 	}
@@ -615,8 +615,8 @@ func (x *UpdateDocumentRequest) GetMetadata() map[string]string {
 }
 
 type UpdateDocumentResponse struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Document      *v1consortium_backend.Documents `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Document      *pbentity.Documents    `protobuf:"bytes,1,opt,name=document,proto3" json:"document,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -651,7 +651,7 @@ func (*UpdateDocumentResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *UpdateDocumentResponse) GetDocument() *v1consortium_backend.Documents {
+func (x *UpdateDocumentResponse) GetDocument() *pbentity.Documents {
 	if x != nil {
 		return x.Document
 	}
@@ -807,8 +807,8 @@ func (x *GetDocumentVersionsRequest) GetDocumentId() string {
 }
 
 type GetDocumentVersionsResponse struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Versions      []*v1consortium_backend.Documents `protobuf:"bytes,1,rep,name=versions,proto3" json:"versions,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Versions      []*pbentity.Documents  `protobuf:"bytes,1,rep,name=versions,proto3" json:"versions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -843,7 +843,7 @@ func (*GetDocumentVersionsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GetDocumentVersionsResponse) GetVersions() []*v1consortium_backend.Documents {
+func (x *GetDocumentVersionsResponse) GetVersions() []*pbentity.Documents {
 	if x != nil {
 		return x.Versions
 	}
@@ -1048,15 +1048,15 @@ func (x *GetSharedDocumentsRequest) GetPermissionLevel() string {
 }
 
 type SharedDocument struct {
-	state           protoimpl.MessageState          `protogen:"open.v1"`
-	ShareId         string                          `protobuf:"bytes,1,opt,name=share_id,json=shareId,proto3" json:"share_id,omitempty"`
-	Document        *v1consortium_backend.Documents `protobuf:"bytes,2,opt,name=document,proto3" json:"document,omitempty"`
-	SharedBy        string                          `protobuf:"bytes,3,opt,name=shared_by,json=sharedBy,proto3" json:"shared_by,omitempty"`
-	SharedWith      string                          `protobuf:"bytes,4,opt,name=shared_with,json=sharedWith,proto3" json:"shared_with,omitempty"`
-	PermissionLevel string                          `protobuf:"bytes,5,opt,name=permission_level,json=permissionLevel,proto3" json:"permission_level,omitempty"`
-	SharedAt        *timestamppb.Timestamp          `protobuf:"bytes,6,opt,name=shared_at,json=sharedAt,proto3" json:"shared_at,omitempty"`
-	ExpiresAt       *timestamppb.Timestamp          `protobuf:"bytes,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	IsActive        bool                            `protobuf:"varint,8,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ShareId         string                 `protobuf:"bytes,1,opt,name=share_id,json=shareId,proto3" json:"share_id,omitempty"`
+	Document        *pbentity.Documents    `protobuf:"bytes,2,opt,name=document,proto3" json:"document,omitempty"`
+	SharedBy        string                 `protobuf:"bytes,3,opt,name=shared_by,json=sharedBy,proto3" json:"shared_by,omitempty"`
+	SharedWith      string                 `protobuf:"bytes,4,opt,name=shared_with,json=sharedWith,proto3" json:"shared_with,omitempty"`
+	PermissionLevel string                 `protobuf:"bytes,5,opt,name=permission_level,json=permissionLevel,proto3" json:"permission_level,omitempty"`
+	SharedAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=shared_at,json=sharedAt,proto3" json:"shared_at,omitempty"`
+	ExpiresAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	IsActive        bool                   `protobuf:"varint,8,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1098,7 +1098,7 @@ func (x *SharedDocument) GetShareId() string {
 	return ""
 }
 
-func (x *SharedDocument) GetDocument() *v1consortium_backend.Documents {
+func (x *SharedDocument) GetDocument() *pbentity.Documents {
 	if x != nil {
 		return x.Document
 	}
@@ -1397,12 +1397,12 @@ func (x *SearchDocumentsRequest) GetPageSize() int32 {
 }
 
 type SearchDocumentsResponse struct {
-	state            protoimpl.MessageState            `protogen:"open.v1"`
-	Documents        []*v1consortium_backend.Documents `protobuf:"bytes,1,rep,name=documents,proto3" json:"documents,omitempty"`
-	TotalCount       int32                             `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page             int32                             `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize         int32                             `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	SearchHighlights map[string]string                 `protobuf:"bytes,5,rep,name=search_highlights,json=searchHighlights,proto3" json:"search_highlights,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" dc:"document_id -> highlighted text"` // document_id -> highlighted text
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Documents        []*pbentity.Documents  `protobuf:"bytes,1,rep,name=documents,proto3" json:"documents,omitempty"`
+	TotalCount       int32                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page             int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize         int32                  `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	SearchHighlights map[string]string      `protobuf:"bytes,5,rep,name=search_highlights,json=searchHighlights,proto3" json:"search_highlights,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" dc:"document_id -> highlighted text"` // document_id -> highlighted text
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -1437,7 +1437,7 @@ func (*SearchDocumentsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_document_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *SearchDocumentsResponse) GetDocuments() []*v1consortium_backend.Documents {
+func (x *SearchDocumentsResponse) GetDocuments() []*pbentity.Documents {
 	if x != nil {
 		return x.Documents
 	}
@@ -2030,7 +2030,7 @@ var File_services_v1_document_proto protoreflect.FileDescriptor
 
 const file_services_v1_document_proto_rawDesc = "" +
 	"\n" +
-	"\x1aservices/v1/document.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18pbentity/documents.proto\"\x93\x04\n" +
+	"\x1aservices/v1/document.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18pbentity/documents.proto\"\x93\x04\n" +
 	"\x15UploadDocumentRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12#\n" +
@@ -2045,17 +2045,17 @@ const file_services_v1_document_proto_rawDesc = "" +
 	" \x01(\tR\x0frelatedEntityId\x12,\n" +
 	"\x12is_hipaa_protected\x18\v \x01(\bR\x10isHipaaProtected\x123\n" +
 	"\x15confidentiality_level\x18\f \x01(\tR\x14confidentialityLevel\x12@\n" +
-	"\x0eauto_delete_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\fautoDeleteAt\"t\n" +
-	"\x16UploadDocumentResponse\x12;\n" +
-	"\bdocument\x18\x01 \x01(\v2\x1f.v1consortium.backend.DocumentsR\bdocument\x12\x1d\n" +
+	"\x0eauto_delete_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\fautoDeleteAt\"h\n" +
+	"\x16UploadDocumentResponse\x12/\n" +
+	"\bdocument\x18\x01 \x01(\v2\x13.pbentity.DocumentsR\bdocument\x12\x1d\n" +
 	"\n" +
 	"upload_url\x18\x02 \x01(\tR\tuploadUrl\"^\n" +
 	"\x12GetDocumentRequest\x12\x1f\n" +
 	"\vdocument_id\x18\x01 \x01(\tR\n" +
 	"documentId\x12'\n" +
-	"\x0finclude_content\x18\x02 \x01(\bR\x0eincludeContent\"\x92\x01\n" +
-	"\x13GetDocumentResponse\x12;\n" +
-	"\bdocument\x18\x01 \x01(\v2\x1f.v1consortium.backend.DocumentsR\bdocument\x12\x1b\n" +
+	"\x0finclude_content\x18\x02 \x01(\bR\x0eincludeContent\"\x86\x01\n" +
+	"\x13GetDocumentResponse\x12/\n" +
+	"\bdocument\x18\x01 \x01(\v2\x13.pbentity.DocumentsR\bdocument\x12\x1b\n" +
 	"\tfile_data\x18\x02 \x01(\fR\bfileData\x12!\n" +
 	"\fdownload_url\x18\x03 \x01(\tR\vdownloadUrl\"\x91\x04\n" +
 	"\x14ListDocumentsRequest\x12'\n" +
@@ -2071,9 +2071,9 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\x04page\x18\n" +
 	" \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\v \x01(\x05R\bpageSize\x12\x16\n" +
-	"\x06search\x18\f \x01(\tR\x06search\"\xa8\x01\n" +
-	"\x15ListDocumentsResponse\x12=\n" +
-	"\tdocuments\x18\x01 \x03(\v2\x1f.v1consortium.backend.DocumentsR\tdocuments\x12\x1f\n" +
+	"\x06search\x18\f \x01(\tR\x06search\"\x9c\x01\n" +
+	"\x15ListDocumentsResponse\x121\n" +
+	"\tdocuments\x18\x01 \x03(\v2\x13.pbentity.DocumentsR\tdocuments\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2088,9 +2088,9 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\bmetadata\x18\x06 \x03(\v2:.v1consortium.services.UpdateDocumentRequest.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"U\n" +
-	"\x16UpdateDocumentResponse\x12;\n" +
-	"\bdocument\x18\x01 \x01(\v2\x1f.v1consortium.backend.DocumentsR\bdocument\"\x80\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"I\n" +
+	"\x16UpdateDocumentResponse\x12/\n" +
+	"\bdocument\x18\x01 \x01(\v2\x13.pbentity.DocumentsR\bdocument\"\x80\x01\n" +
 	"\x15DeleteDocumentRequest\x12\x1f\n" +
 	"\vdocument_id\x18\x01 \x01(\tR\n" +
 	"documentId\x12\x1d\n" +
@@ -2101,9 +2101,9 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"=\n" +
 	"\x1aGetDocumentVersionsRequest\x12\x1f\n" +
 	"\vdocument_id\x18\x01 \x01(\tR\n" +
-	"documentId\"Z\n" +
-	"\x1bGetDocumentVersionsResponse\x12;\n" +
-	"\bversions\x18\x01 \x03(\v2\x1f.v1consortium.backend.DocumentsR\bversions\"\x83\x02\n" +
+	"documentId\"N\n" +
+	"\x1bGetDocumentVersionsResponse\x12/\n" +
+	"\bversions\x18\x01 \x03(\v2\x13.pbentity.DocumentsR\bversions\"\x83\x02\n" +
 	"\x14ShareDocumentRequest\x12\x1f\n" +
 	"\vdocument_id\x18\x01 \x01(\tR\n" +
 	"documentId\x12-\n" +
@@ -2119,10 +2119,10 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\x19GetSharedDocumentsRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12$\n" +
 	"\x0eshared_with_me\x18\x02 \x01(\bR\fsharedWithMe\x12)\n" +
-	"\x10permission_level\x18\x03 \x01(\tR\x0fpermissionLevel\"\xe2\x02\n" +
+	"\x10permission_level\x18\x03 \x01(\tR\x0fpermissionLevel\"\xd6\x02\n" +
 	"\x0eSharedDocument\x12\x19\n" +
-	"\bshare_id\x18\x01 \x01(\tR\ashareId\x12;\n" +
-	"\bdocument\x18\x02 \x01(\v2\x1f.v1consortium.backend.DocumentsR\bdocument\x12\x1b\n" +
+	"\bshare_id\x18\x01 \x01(\tR\ashareId\x12/\n" +
+	"\bdocument\x18\x02 \x01(\v2\x13.pbentity.DocumentsR\bdocument\x12\x1b\n" +
 	"\tshared_by\x18\x03 \x01(\tR\bsharedBy\x12\x1f\n" +
 	"\vshared_with\x18\x04 \x01(\tR\n" +
 	"sharedWith\x12)\n" +
@@ -2148,9 +2148,9 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\tdate_from\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\bdateFrom\x123\n" +
 	"\adate_to\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x06dateTo\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xe2\x02\n" +
-	"\x17SearchDocumentsResponse\x12=\n" +
-	"\tdocuments\x18\x01 \x03(\v2\x1f.v1consortium.backend.DocumentsR\tdocuments\x12\x1f\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xd6\x02\n" +
+	"\x17SearchDocumentsResponse\x121\n" +
+	"\tdocuments\x18\x01 \x03(\v2\x13.pbentity.DocumentsR\tdocuments\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2204,21 +2204,21 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"forceApply\"e\n" +
 	"\x1cApplyRetentionPolicyResponse\x12+\n" +
 	"\x11documents_updated\x18\x01 \x01(\x05R\x10documentsUpdated\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\x9b\f\n" +
-	"\x0fDocumentService\x12m\n" +
-	"\x0eUploadDocument\x12,.v1consortium.services.UploadDocumentRequest\x1a-.v1consortium.services.UploadDocumentResponse\x12d\n" +
-	"\vGetDocument\x12).v1consortium.services.GetDocumentRequest\x1a*.v1consortium.services.GetDocumentResponse\x12j\n" +
-	"\rListDocuments\x12+.v1consortium.services.ListDocumentsRequest\x1a,.v1consortium.services.ListDocumentsResponse\x12m\n" +
-	"\x0eUpdateDocument\x12,.v1consortium.services.UpdateDocumentRequest\x1a-.v1consortium.services.UpdateDocumentResponse\x12m\n" +
-	"\x0eDeleteDocument\x12,.v1consortium.services.DeleteDocumentRequest\x1a-.v1consortium.services.DeleteDocumentResponse\x12|\n" +
-	"\x13GetDocumentVersions\x121.v1consortium.services.GetDocumentVersionsRequest\x1a2.v1consortium.services.GetDocumentVersionsResponse\x12j\n" +
-	"\rShareDocument\x12+.v1consortium.services.ShareDocumentRequest\x1a,.v1consortium.services.ShareDocumentResponse\x12y\n" +
-	"\x12GetSharedDocuments\x120.v1consortium.services.GetSharedDocumentsRequest\x1a1.v1consortium.services.GetSharedDocumentsResponse\x12|\n" +
-	"\x13RevokeDocumentShare\x121.v1consortium.services.RevokeDocumentShareRequest\x1a2.v1consortium.services.RevokeDocumentShareResponse\x12p\n" +
-	"\x0fSearchDocuments\x12-.v1consortium.services.SearchDocumentsRequest\x1a..v1consortium.services.SearchDocumentsResponse\x12\x7f\n" +
-	"\x14GetDocumentAnalytics\x122.v1consortium.services.GetDocumentAnalyticsRequest\x1a3.v1consortium.services.GetDocumentAnalyticsResponse\x12\x91\x01\n" +
-	"\x1aGetDocumentRetentionStatus\x128.v1consortium.services.GetDocumentRetentionStatusRequest\x1a9.v1consortium.services.GetDocumentRetentionStatusResponse\x12\x7f\n" +
-	"\x14ApplyRetentionPolicy\x122.v1consortium.services.ApplyRetentionPolicyRequest\x1a3.v1consortium.services.ApplyRetentionPolicyResponseB\rZ\vservices/v1b\x06proto3"
+	"\amessage\x18\x02 \x01(\tR\amessage2\xf1\x11\n" +
+	"\x0fDocumentService\x12\xab\x01\n" +
+	"\x0eUploadDocument\x12,.v1consortium.services.UploadDocumentRequest\x1a-.v1consortium.services.UploadDocumentResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/organizations/{organization_id}/documents\x12\x8d\x01\n" +
+	"\vGetDocument\x12).v1consortium.services.GetDocumentRequest\x1a*.v1consortium.services.GetDocumentResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/documents/{document_id}\x12\xa5\x01\n" +
+	"\rListDocuments\x12+.v1consortium.services.ListDocumentsRequest\x1a,.v1consortium.services.ListDocumentsResponse\"9\x82\xd3\xe4\x93\x023\x121/api/v1/organizations/{organization_id}/documents\x12\x99\x01\n" +
+	"\x0eUpdateDocument\x12,.v1consortium.services.UpdateDocumentRequest\x1a-.v1consortium.services.UpdateDocumentResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\x1a\x1f/api/v1/documents/{document_id}\x12\x96\x01\n" +
+	"\x0eDeleteDocument\x12,.v1consortium.services.DeleteDocumentRequest\x1a-.v1consortium.services.DeleteDocumentResponse\"'\x82\xd3\xe4\x93\x02!*\x1f/api/v1/documents/{document_id}\x12\xae\x01\n" +
+	"\x13GetDocumentVersions\x121.v1consortium.services.GetDocumentVersionsRequest\x1a2.v1consortium.services.GetDocumentVersionsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/documents/{document_id}/versions\x12\x9c\x01\n" +
+	"\rShareDocument\x12+.v1consortium.services.ShareDocumentRequest\x1a,.v1consortium.services.ShareDocumentResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v1/documents/{document_id}/share\x12\xab\x01\n" +
+	"\x12GetSharedDocuments\x120.v1consortium.services.GetSharedDocumentsRequest\x1a1.v1consortium.services.GetSharedDocumentsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/users/{user_id}/shared-documents\x12\xb6\x01\n" +
+	"\x13RevokeDocumentShare\x121.v1consortium.services.RevokeDocumentShareRequest\x1a2.v1consortium.services.RevokeDocumentShareResponse\"8\x82\xd3\xe4\x93\x022*0/api/v1/documents/{document_id}/share/{share_id}\x12\xb2\x01\n" +
+	"\x0fSearchDocuments\x12-.v1consortium.services.SearchDocumentsRequest\x1a..v1consortium.services.SearchDocumentsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/organizations/{organization_id}/documents/search\x12\xc3\x01\n" +
+	"\x14GetDocumentAnalytics\x122.v1consortium.services.GetDocumentAnalyticsRequest\x1a3.v1consortium.services.GetDocumentAnalyticsResponse\"B\x82\xd3\xe4\x93\x02<\x12:/api/v1/organizations/{organization_id}/document-analytics\x12\xcb\x01\n" +
+	"\x1aGetDocumentRetentionStatus\x128.v1consortium.services.GetDocumentRetentionStatusRequest\x1a9.v1consortium.services.GetDocumentRetentionStatusResponse\"8\x82\xd3\xe4\x93\x022\x120/api/v1/documents/{document_id}/retention-status\x12\xc2\x01\n" +
+	"\x14ApplyRetentionPolicy\x122.v1consortium.services.ApplyRetentionPolicyRequest\x1a3.v1consortium.services.ApplyRetentionPolicyResponse\"A\x82\xd3\xe4\x93\x02;:\x01*\"6/api/v1/documents/{document_id}/apply-retention-policyB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_document_proto_rawDescOnce sync.Once
@@ -2266,27 +2266,27 @@ var file_services_v1_document_proto_goTypes = []any{
 	nil,                                        // 29: v1consortium.services.UpdateDocumentRequest.MetadataEntry
 	nil,                                        // 30: v1consortium.services.SearchDocumentsResponse.SearchHighlightsEntry
 	(*timestamppb.Timestamp)(nil),              // 31: google.protobuf.Timestamp
-	(*v1consortium_backend.Documents)(nil),     // 32: v1consortium.backend.Documents
+	(*pbentity.Documents)(nil),                 // 32: pbentity.Documents
 }
 var file_services_v1_document_proto_depIdxs = []int32{
 	31, // 0: v1consortium.services.UploadDocumentRequest.auto_delete_at:type_name -> google.protobuf.Timestamp
-	32, // 1: v1consortium.services.UploadDocumentResponse.document:type_name -> v1consortium.backend.Documents
-	32, // 2: v1consortium.services.GetDocumentResponse.document:type_name -> v1consortium.backend.Documents
+	32, // 1: v1consortium.services.UploadDocumentResponse.document:type_name -> pbentity.Documents
+	32, // 2: v1consortium.services.GetDocumentResponse.document:type_name -> pbentity.Documents
 	31, // 3: v1consortium.services.ListDocumentsRequest.uploaded_after:type_name -> google.protobuf.Timestamp
 	31, // 4: v1consortium.services.ListDocumentsRequest.uploaded_before:type_name -> google.protobuf.Timestamp
-	32, // 5: v1consortium.services.ListDocumentsResponse.documents:type_name -> v1consortium.backend.Documents
+	32, // 5: v1consortium.services.ListDocumentsResponse.documents:type_name -> pbentity.Documents
 	31, // 6: v1consortium.services.UpdateDocumentRequest.auto_delete_at:type_name -> google.protobuf.Timestamp
 	29, // 7: v1consortium.services.UpdateDocumentRequest.metadata:type_name -> v1consortium.services.UpdateDocumentRequest.MetadataEntry
-	32, // 8: v1consortium.services.UpdateDocumentResponse.document:type_name -> v1consortium.backend.Documents
-	32, // 9: v1consortium.services.GetDocumentVersionsResponse.versions:type_name -> v1consortium.backend.Documents
+	32, // 8: v1consortium.services.UpdateDocumentResponse.document:type_name -> pbentity.Documents
+	32, // 9: v1consortium.services.GetDocumentVersionsResponse.versions:type_name -> pbentity.Documents
 	31, // 10: v1consortium.services.ShareDocumentRequest.expires_at:type_name -> google.protobuf.Timestamp
-	32, // 11: v1consortium.services.SharedDocument.document:type_name -> v1consortium.backend.Documents
+	32, // 11: v1consortium.services.SharedDocument.document:type_name -> pbentity.Documents
 	31, // 12: v1consortium.services.SharedDocument.shared_at:type_name -> google.protobuf.Timestamp
 	31, // 13: v1consortium.services.SharedDocument.expires_at:type_name -> google.protobuf.Timestamp
 	15, // 14: v1consortium.services.GetSharedDocumentsResponse.shared_documents:type_name -> v1consortium.services.SharedDocument
 	31, // 15: v1consortium.services.SearchDocumentsRequest.date_from:type_name -> google.protobuf.Timestamp
 	31, // 16: v1consortium.services.SearchDocumentsRequest.date_to:type_name -> google.protobuf.Timestamp
-	32, // 17: v1consortium.services.SearchDocumentsResponse.documents:type_name -> v1consortium.backend.Documents
+	32, // 17: v1consortium.services.SearchDocumentsResponse.documents:type_name -> pbentity.Documents
 	30, // 18: v1consortium.services.SearchDocumentsResponse.search_highlights:type_name -> v1consortium.services.SearchDocumentsResponse.SearchHighlightsEntry
 	31, // 19: v1consortium.services.GetDocumentAnalyticsRequest.start_date:type_name -> google.protobuf.Timestamp
 	31, // 20: v1consortium.services.GetDocumentAnalyticsRequest.end_date:type_name -> google.protobuf.Timestamp

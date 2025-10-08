@@ -2,15 +2,16 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "pbentity/testing_programs.proto";
 import "pbentity/drug_alcohol_tests.proto";
-import "pbentity/random_testing_pools.proto";
 import "pbentity/pool_memberships.proto";
-import "pbentity/random_selections.proto";
 import "pbentity/random_selection_members.proto";
+import "pbentity/random_selections.proto";
+import "pbentity/random_testing_pools.proto";
+import "pbentity/testing_programs.proto";
+
+option go_package = "services/v1";
 
 // Testing Program Management
 message CreateTestingProgramRequest {
@@ -25,7 +26,7 @@ message CreateTestingProgramRequest {
 }
 
 message CreateTestingProgramResponse {
-  v1consortium.backend.TestingPrograms program = 1;
+  pbentity.TestingPrograms program = 1;
 }
 
 message GetTestingProgramRequest {
@@ -33,7 +34,7 @@ message GetTestingProgramRequest {
 }
 
 message GetTestingProgramResponse {
-  v1consortium.backend.TestingPrograms program = 1;
+  pbentity.TestingPrograms program = 1;
 }
 
 message ListTestingProgramsRequest {
@@ -43,7 +44,7 @@ message ListTestingProgramsRequest {
 }
 
 message ListTestingProgramsResponse {
-  repeated v1consortium.backend.TestingPrograms programs = 1;
+  repeated pbentity.TestingPrograms programs = 1;
 }
 
 // Drug Test Management
@@ -61,7 +62,7 @@ message OrderDrugTestRequest {
 }
 
 message OrderDrugTestResponse {
-  v1consortium.backend.DrugAlcoholTests test = 1;
+  pbentity.DrugAlcoholTests test = 1;
   string external_order_id = 2;
   string facility_name = 3;
   string facility_address = 4;
@@ -73,7 +74,7 @@ message GetDrugTestRequest {
 }
 
 message GetDrugTestResponse {
-  v1consortium.backend.DrugAlcoholTests test = 1;
+  pbentity.DrugAlcoholTests test = 1;
 }
 
 message UpdateDrugTestRequest {
@@ -89,7 +90,7 @@ message UpdateDrugTestRequest {
 }
 
 message UpdateDrugTestResponse {
-  v1consortium.backend.DrugAlcoholTests test = 1;
+  pbentity.DrugAlcoholTests test = 1;
 }
 
 message ListDrugTestsRequest {
@@ -105,7 +106,7 @@ message ListDrugTestsRequest {
 }
 
 message ListDrugTestsResponse {
-  repeated v1consortium.backend.DrugAlcoholTests tests = 1;
+  repeated pbentity.DrugAlcoholTests tests = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -123,7 +124,7 @@ message CreateRandomPoolRequest {
 }
 
 message CreateRandomPoolResponse {
-  v1consortium.backend.RandomTestingPools pool = 1;
+  pbentity.RandomTestingPools pool = 1;
 }
 
 message AddUsersToPoolRequest {
@@ -133,7 +134,7 @@ message AddUsersToPoolRequest {
 }
 
 message AddUsersToPoolResponse {
-  repeated v1consortium.backend.PoolMemberships memberships = 1;
+  repeated pbentity.PoolMemberships memberships = 1;
 }
 
 message RemoveUsersFromPoolRequest {
@@ -152,8 +153,8 @@ message GetRandomPoolRequest {
 }
 
 message GetRandomPoolResponse {
-  v1consortium.backend.RandomTestingPools pool = 1;
-  repeated v1consortium.backend.PoolMemberships members = 2;
+  pbentity.RandomTestingPools pool = 1;
+  repeated pbentity.PoolMemberships members = 2;
 }
 
 message ListRandomPoolsRequest {
@@ -163,7 +164,7 @@ message ListRandomPoolsRequest {
 }
 
 message ListRandomPoolsResponse {
-  repeated v1consortium.backend.RandomTestingPools pools = 1;
+  repeated pbentity.RandomTestingPools pools = 1;
 }
 
 // Random Selection Management
@@ -176,8 +177,8 @@ message ConductRandomSelectionRequest {
 }
 
 message ConductRandomSelectionResponse {
-  v1consortium.backend.RandomSelections selection = 1;
-  repeated v1consortium.backend.RandomSelectionMembers selected_members = 2;
+  pbentity.RandomSelections selection = 1;
+  repeated pbentity.RandomSelectionMembers selected_members = 2;
   repeated string selected_user_ids = 3;
 }
 
@@ -186,8 +187,8 @@ message GetRandomSelectionRequest {
 }
 
 message GetRandomSelectionResponse {
-  v1consortium.backend.RandomSelections selection = 1;
-  repeated v1consortium.backend.RandomSelectionMembers members = 2;
+  pbentity.RandomSelections selection = 1;
+  repeated pbentity.RandomSelectionMembers members = 2;
 }
 
 message ListRandomSelectionsRequest {
@@ -200,7 +201,7 @@ message ListRandomSelectionsRequest {
 }
 
 message ListRandomSelectionsResponse {
-  repeated v1consortium.backend.RandomSelections selections = 1;
+  repeated pbentity.RandomSelections selections = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -219,26 +220,94 @@ message ValidateRandomSelectionResponse {
 // Drug Testing Service Definition
 service DrugTestingService {
   // Testing Program Management
-  rpc CreateTestingProgram(CreateTestingProgramRequest) returns (CreateTestingProgramResponse);
-  rpc GetTestingProgram(GetTestingProgramRequest) returns (GetTestingProgramResponse);
-  rpc ListTestingPrograms(ListTestingProgramsRequest) returns (ListTestingProgramsResponse);
-  
+  rpc CreateTestingProgram(CreateTestingProgramRequest) returns (CreateTestingProgramResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/testing-programs"
+      body: "*"
+    };
+  }
+
+  rpc GetTestingProgram(GetTestingProgramRequest) returns (GetTestingProgramResponse) {
+    option (google.api.http) = {get: "/api/v1/testing-programs/{program_id}"};
+  }
+
+  rpc ListTestingPrograms(ListTestingProgramsRequest) returns (ListTestingProgramsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/testing-programs"};
+  }
+
   // Drug Test Management
-  rpc OrderDrugTest(OrderDrugTestRequest) returns (OrderDrugTestResponse);
-  rpc GetDrugTest(GetDrugTestRequest) returns (GetDrugTestResponse);
-  rpc UpdateDrugTest(UpdateDrugTestRequest) returns (UpdateDrugTestResponse);
-  rpc ListDrugTests(ListDrugTestsRequest) returns (ListDrugTestsResponse);
-  
+  rpc OrderDrugTest(OrderDrugTestRequest) returns (OrderDrugTestResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/drug-tests"
+      body: "*"
+    };
+  }
+
+  rpc GetDrugTest(GetDrugTestRequest) returns (GetDrugTestResponse) {
+    option (google.api.http) = {get: "/api/v1/drug-tests/{test_id}"};
+  }
+
+  rpc UpdateDrugTest(UpdateDrugTestRequest) returns (UpdateDrugTestResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/drug-tests/{test_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListDrugTests(ListDrugTestsRequest) returns (ListDrugTestsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/drug-tests"};
+  }
+
   // Random Testing Pool Management
-  rpc CreateRandomPool(CreateRandomPoolRequest) returns (CreateRandomPoolResponse);
-  rpc AddUsersToPool(AddUsersToPoolRequest) returns (AddUsersToPoolResponse);
-  rpc RemoveUsersFromPool(RemoveUsersFromPoolRequest) returns (RemoveUsersFromPoolResponse);
-  rpc GetRandomPool(GetRandomPoolRequest) returns (GetRandomPoolResponse);
-  rpc ListRandomPools(ListRandomPoolsRequest) returns (ListRandomPoolsResponse);
-  
+  rpc CreateRandomPool(CreateRandomPoolRequest) returns (CreateRandomPoolResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/random-pools"
+      body: "*"
+    };
+  }
+
+  rpc AddUsersToPool(AddUsersToPoolRequest) returns (AddUsersToPoolResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/random-pools/{pool_id}/users"
+      body: "*"
+    };
+  }
+
+  rpc RemoveUsersFromPool(RemoveUsersFromPoolRequest) returns (RemoveUsersFromPoolResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/random-pools/{pool_id}/users"
+      body: "*"
+    };
+  }
+
+  rpc GetRandomPool(GetRandomPoolRequest) returns (GetRandomPoolResponse) {
+    option (google.api.http) = {get: "/api/v1/random-pools/{pool_id}"};
+  }
+
+  rpc ListRandomPools(ListRandomPoolsRequest) returns (ListRandomPoolsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/random-pools"};
+  }
+
   // Random Selection Management
-  rpc ConductRandomSelection(ConductRandomSelectionRequest) returns (ConductRandomSelectionResponse);
-  rpc GetRandomSelection(GetRandomSelectionRequest) returns (GetRandomSelectionResponse);
-  rpc ListRandomSelections(ListRandomSelectionsRequest) returns (ListRandomSelectionsResponse);
-  rpc ValidateRandomSelection(ValidateRandomSelectionRequest) returns (ValidateRandomSelectionResponse);
+  rpc ConductRandomSelection(ConductRandomSelectionRequest) returns (ConductRandomSelectionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/random-pools/{pool_id}/selections"
+      body: "*"
+    };
+  }
+
+  rpc GetRandomSelection(GetRandomSelectionRequest) returns (GetRandomSelectionResponse) {
+    option (google.api.http) = {get: "/api/v1/random-selections/{selection_id}"};
+  }
+
+  rpc ListRandomSelections(ListRandomSelectionsRequest) returns (ListRandomSelectionsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/random-selections"};
+  }
+
+  rpc ValidateRandomSelection(ValidateRandomSelectionRequest) returns (ValidateRandomSelectionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/random-selections/{selection_id}/validate"
+      body: "*"
+    };
+  }
 }

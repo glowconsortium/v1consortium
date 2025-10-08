@@ -2,11 +2,12 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/mvr_reports.proto";
 import "pbentity/mvr_violations.proto";
+
+option go_package = "services/v1";
 
 // MVR Management Messages
 message OrderMVRRequest {
@@ -20,7 +21,7 @@ message OrderMVRRequest {
 }
 
 message OrderMVRResponse {
-  v1consortium.backend.MvrReports report = 1;
+  pbentity.MvrReports report = 1;
   string external_order_id = 2;
   string confirmation_code = 3;
   google.protobuf.Timestamp estimated_completion = 4;
@@ -31,8 +32,8 @@ message GetMVRReportRequest {
 }
 
 message GetMVRReportResponse {
-  v1consortium.backend.MvrReports report = 1;
-  repeated v1consortium.backend.MvrViolations violations = 2;
+  pbentity.MvrReports report = 1;
+  repeated pbentity.MvrViolations violations = 2;
 }
 
 message UpdateMVRReportRequest {
@@ -46,7 +47,7 @@ message UpdateMVRReportRequest {
 }
 
 message UpdateMVRReportResponse {
-  v1consortium.backend.MvrReports report = 1;
+  pbentity.MvrReports report = 1;
 }
 
 message ListMVRReportsRequest {
@@ -60,7 +61,7 @@ message ListMVRReportsRequest {
 }
 
 message ListMVRReportsResponse {
-  repeated v1consortium.backend.MvrReports reports = 1;
+  repeated pbentity.MvrReports reports = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -81,7 +82,7 @@ message AddMVRViolationRequest {
 }
 
 message AddMVRViolationResponse {
-  v1consortium.backend.MvrViolations violation = 1;
+  pbentity.MvrViolations violation = 1;
 }
 
 message UpdateMVRViolationRequest {
@@ -93,7 +94,7 @@ message UpdateMVRViolationRequest {
 }
 
 message UpdateMVRViolationResponse {
-  v1consortium.backend.MvrViolations violation = 1;
+  pbentity.MvrViolations violation = 1;
 }
 
 message ListMVRViolationsRequest {
@@ -109,7 +110,7 @@ message ListMVRViolationsRequest {
 }
 
 message ListMVRViolationsResponse {
-  repeated v1consortium.backend.MvrViolations violations = 1;
+  repeated pbentity.MvrViolations violations = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -178,23 +179,69 @@ message SyncProviderDataResponse {
 // MVR Service Definition
 service MVRService {
   // MVR Report Management
-  rpc OrderMVR(OrderMVRRequest) returns (OrderMVRResponse);
-  rpc GetMVRReport(GetMVRReportRequest) returns (GetMVRReportResponse);
-  rpc UpdateMVRReport(UpdateMVRReportRequest) returns (UpdateMVRReportResponse);
-  rpc ListMVRReports(ListMVRReportsRequest) returns (ListMVRReportsResponse);
-  
+  rpc OrderMVR(OrderMVRRequest) returns (OrderMVRResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-reports"
+      body: "*"
+    };
+  }
+
+  rpc GetMVRReport(GetMVRReportRequest) returns (GetMVRReportResponse) {
+    option (google.api.http) = {get: "/api/v1/mvr-reports/{report_id}"};
+  }
+
+  rpc UpdateMVRReport(UpdateMVRReportRequest) returns (UpdateMVRReportResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/mvr-reports/{report_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListMVRReports(ListMVRReportsRequest) returns (ListMVRReportsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-reports"};
+  }
+
   // MVR Violation Management
-  rpc AddMVRViolation(AddMVRViolationRequest) returns (AddMVRViolationResponse);
-  rpc UpdateMVRViolation(UpdateMVRViolationRequest) returns (UpdateMVRViolationResponse);
-  rpc ListMVRViolations(ListMVRViolationsRequest) returns (ListMVRViolationsResponse);
-  
+  rpc AddMVRViolation(AddMVRViolationRequest) returns (AddMVRViolationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/mvr-reports/{report_id}/violations"
+      body: "*"
+    };
+  }
+
+  rpc UpdateMVRViolation(UpdateMVRViolationRequest) returns (UpdateMVRViolationResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/mvr-violations/{violation_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListMVRViolations(ListMVRViolationsRequest) returns (ListMVRViolationsResponse) {
+    option (google.api.http) = {get: "/api/v1/mvr-reports/{report_id}/violations"};
+  }
+
   // Continuous Monitoring
-  rpc EnableContinuousMonitoring(EnableContinuousMonitoringRequest) returns (EnableContinuousMonitoringResponse);
-  rpc GetMonitoringStatus(GetMonitoringStatusRequest) returns (GetMonitoringStatusResponse);
-  
+  rpc EnableContinuousMonitoring(EnableContinuousMonitoringRequest) returns (EnableContinuousMonitoringResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-monitoring"
+      body: "*"
+    };
+  }
+
+  rpc GetMonitoringStatus(GetMonitoringStatusRequest) returns (GetMonitoringStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-monitoring"};
+  }
+
   // Analytics and Reporting
-  rpc GetMVRAnalytics(GetMVRAnalyticsRequest) returns (GetMVRAnalyticsResponse);
-  
+  rpc GetMVRAnalytics(GetMVRAnalyticsRequest) returns (GetMVRAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-analytics"};
+  }
+
   // Provider Integration
-  rpc SyncProviderData(SyncProviderDataRequest) returns (SyncProviderDataResponse);
+  rpc SyncProviderData(SyncProviderDataRequest) returns (SyncProviderDataResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-sync"
+      body: "*"
+    };
+  }
 }

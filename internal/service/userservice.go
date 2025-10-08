@@ -12,6 +12,7 @@ import (
 
 type (
 	IUserService interface {
+		GetUserInfo(ctx context.Context)
 		GetAuth0Config(ctx context.Context) (auth0client.Config, error)
 	}
 )

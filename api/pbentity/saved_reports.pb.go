@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/saved_reports.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -211,7 +211,7 @@ var File_pbentity_saved_reports_proto protoreflect.FileDescriptor
 
 const file_pbentity_saved_reports_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/saved_reports.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xac\x05\n" +
+	"\x1cpbentity/saved_reports.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xac\x05\n" +
 	"\fSavedReports\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x1c\n" +
@@ -239,7 +239,7 @@ const file_pbentity_saved_reports_proto_rawDesc = "" +
 	"SharedWith\x18\x10 \x01(\tR\n" +
 	"SharedWith\x128\n" +
 	"\tCreatedAt\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_saved_reports_proto_rawDescOnce sync.Once
@@ -255,14 +255,14 @@ func file_pbentity_saved_reports_proto_rawDescGZIP() []byte {
 
 var file_pbentity_saved_reports_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_saved_reports_proto_goTypes = []any{
-	(*SavedReports)(nil),          // 0: v1consortium.backend.SavedReports
+	(*SavedReports)(nil),          // 0: pbentity.SavedReports
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_saved_reports_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.SavedReports.GeneratedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.SavedReports.NextRunDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.SavedReports.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.SavedReports.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.SavedReports.GeneratedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.SavedReports.NextRunDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.SavedReports.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.SavedReports.UpdatedAt:type_name -> google.protobuf.Timestamp
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

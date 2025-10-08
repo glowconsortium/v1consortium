@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package v1consortium.gateway;
 
-option go_package = "gateway/v1";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "gateway/v1";
 
 // Metrics Collection Messages
 message RequestMetric {
@@ -219,17 +219,17 @@ service MonitoringService {
   // Metrics Collection and Retrieval
   rpc RecordMetric(RecordMetricRequest) returns (RecordMetricResponse);
   rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse);
-  
+
   // Health and Status
   rpc GetGatewayStatus(GetGatewayStatusRequest) returns (GetGatewayStatusResponse);
-  
+
   // Error Tracking
   rpc RecordError(RecordErrorRequest) returns (RecordErrorResponse);
   rpc GetErrorStats(GetErrorStatsRequest) returns (GetErrorStatsResponse);
-  
+
   // Performance Monitoring
   rpc GetPerformanceStats(GetPerformanceStatsRequest) returns (GetPerformanceStatsResponse);
-  
+
   // Rate Limit Monitoring
   rpc GetRateLimitStats(GetRateLimitStatsRequest) returns (GetRateLimitStatsResponse);
 }

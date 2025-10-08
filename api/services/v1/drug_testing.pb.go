@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -127,8 +127,8 @@ func (x *CreateTestingProgramRequest) GetTestingFrequency() string {
 }
 
 type CreateTestingProgramResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Program       *v1consortium_backend.TestingPrograms `protobuf:"bytes,1,opt,name=program,proto3" json:"program,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Program       *pbentity.TestingPrograms `protobuf:"bytes,1,opt,name=program,proto3" json:"program,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -163,7 +163,7 @@ func (*CreateTestingProgramResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateTestingProgramResponse) GetProgram() *v1consortium_backend.TestingPrograms {
+func (x *CreateTestingProgramResponse) GetProgram() *pbentity.TestingPrograms {
 	if x != nil {
 		return x.Program
 	}
@@ -215,8 +215,8 @@ func (x *GetTestingProgramRequest) GetProgramId() string {
 }
 
 type GetTestingProgramResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Program       *v1consortium_backend.TestingPrograms `protobuf:"bytes,1,opt,name=program,proto3" json:"program,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Program       *pbentity.TestingPrograms `protobuf:"bytes,1,opt,name=program,proto3" json:"program,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -251,7 +251,7 @@ func (*GetTestingProgramResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetTestingProgramResponse) GetProgram() *v1consortium_backend.TestingPrograms {
+func (x *GetTestingProgramResponse) GetProgram() *pbentity.TestingPrograms {
 	if x != nil {
 		return x.Program
 	}
@@ -319,8 +319,8 @@ func (x *ListTestingProgramsRequest) GetIsActive() bool {
 }
 
 type ListTestingProgramsResponse struct {
-	state         protoimpl.MessageState                  `protogen:"open.v1"`
-	Programs      []*v1consortium_backend.TestingPrograms `protobuf:"bytes,1,rep,name=programs,proto3" json:"programs,omitempty"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Programs      []*pbentity.TestingPrograms `protobuf:"bytes,1,rep,name=programs,proto3" json:"programs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -355,7 +355,7 @@ func (*ListTestingProgramsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListTestingProgramsResponse) GetPrograms() []*v1consortium_backend.TestingPrograms {
+func (x *ListTestingProgramsResponse) GetPrograms() []*pbentity.TestingPrograms {
 	if x != nil {
 		return x.Programs
 	}
@@ -480,12 +480,12 @@ func (x *OrderDrugTestRequest) GetFacilityPreference() string {
 }
 
 type OrderDrugTestResponse struct {
-	state            protoimpl.MessageState                 `protogen:"open.v1"`
-	Test             *v1consortium_backend.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
-	ExternalOrderId  string                                 `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
-	FacilityName     string                                 `protobuf:"bytes,3,opt,name=facility_name,json=facilityName,proto3" json:"facility_name,omitempty"`
-	FacilityAddress  string                                 `protobuf:"bytes,4,opt,name=facility_address,json=facilityAddress,proto3" json:"facility_address,omitempty"`
-	ConfirmationCode string                                 `protobuf:"bytes,5,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
+	state            protoimpl.MessageState     `protogen:"open.v1"`
+	Test             *pbentity.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
+	ExternalOrderId  string                     `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
+	FacilityName     string                     `protobuf:"bytes,3,opt,name=facility_name,json=facilityName,proto3" json:"facility_name,omitempty"`
+	FacilityAddress  string                     `protobuf:"bytes,4,opt,name=facility_address,json=facilityAddress,proto3" json:"facility_address,omitempty"`
+	ConfirmationCode string                     `protobuf:"bytes,5,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -520,7 +520,7 @@ func (*OrderDrugTestResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *OrderDrugTestResponse) GetTest() *v1consortium_backend.DrugAlcoholTests {
+func (x *OrderDrugTestResponse) GetTest() *pbentity.DrugAlcoholTests {
 	if x != nil {
 		return x.Test
 	}
@@ -600,8 +600,8 @@ func (x *GetDrugTestRequest) GetTestId() string {
 }
 
 type GetDrugTestResponse struct {
-	state         protoimpl.MessageState                 `protogen:"open.v1"`
-	Test          *v1consortium_backend.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Test          *pbentity.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -636,7 +636,7 @@ func (*GetDrugTestResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *GetDrugTestResponse) GetTest() *v1consortium_backend.DrugAlcoholTests {
+func (x *GetDrugTestResponse) GetTest() *pbentity.DrugAlcoholTests {
 	if x != nil {
 		return x.Test
 	}
@@ -752,8 +752,8 @@ func (x *UpdateDrugTestRequest) GetNotes() string {
 }
 
 type UpdateDrugTestResponse struct {
-	state         protoimpl.MessageState                 `protogen:"open.v1"`
-	Test          *v1consortium_backend.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Test          *pbentity.DrugAlcoholTests `protobuf:"bytes,1,opt,name=test,proto3" json:"test,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -788,7 +788,7 @@ func (*UpdateDrugTestResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpdateDrugTestResponse) GetTest() *v1consortium_backend.DrugAlcoholTests {
+func (x *UpdateDrugTestResponse) GetTest() *pbentity.DrugAlcoholTests {
 	if x != nil {
 		return x.Test
 	}
@@ -904,11 +904,11 @@ func (x *ListDrugTestsRequest) GetPageSize() int32 {
 }
 
 type ListDrugTestsResponse struct {
-	state         protoimpl.MessageState                   `protogen:"open.v1"`
-	Tests         []*v1consortium_backend.DrugAlcoholTests `protobuf:"bytes,1,rep,name=tests,proto3" json:"tests,omitempty"`
-	TotalCount    int32                                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Tests         []*pbentity.DrugAlcoholTests `protobuf:"bytes,1,rep,name=tests,proto3" json:"tests,omitempty"`
+	TotalCount    int32                        `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                        `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                        `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -943,7 +943,7 @@ func (*ListDrugTestsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ListDrugTestsResponse) GetTests() []*v1consortium_backend.DrugAlcoholTests {
+func (x *ListDrugTestsResponse) GetTests() []*pbentity.DrugAlcoholTests {
 	if x != nil {
 		return x.Tests
 	}
@@ -1065,8 +1065,8 @@ func (x *CreateRandomPoolRequest) GetIsActive() bool {
 }
 
 type CreateRandomPoolResponse struct {
-	state         protoimpl.MessageState                   `protogen:"open.v1"`
-	Pool          *v1consortium_backend.RandomTestingPools `protobuf:"bytes,1,opt,name=pool,proto3" json:"pool,omitempty"`
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Pool          *pbentity.RandomTestingPools `protobuf:"bytes,1,opt,name=pool,proto3" json:"pool,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1101,7 +1101,7 @@ func (*CreateRandomPoolResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *CreateRandomPoolResponse) GetPool() *v1consortium_backend.RandomTestingPools {
+func (x *CreateRandomPoolResponse) GetPool() *pbentity.RandomTestingPools {
 	if x != nil {
 		return x.Pool
 	}
@@ -1169,8 +1169,8 @@ func (x *AddUsersToPoolRequest) GetAddedBy() string {
 }
 
 type AddUsersToPoolResponse struct {
-	state         protoimpl.MessageState                  `protogen:"open.v1"`
-	Memberships   []*v1consortium_backend.PoolMemberships `protobuf:"bytes,1,rep,name=memberships,proto3" json:"memberships,omitempty"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Memberships   []*pbentity.PoolMemberships `protobuf:"bytes,1,rep,name=memberships,proto3" json:"memberships,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1205,7 +1205,7 @@ func (*AddUsersToPoolResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *AddUsersToPoolResponse) GetMemberships() []*v1consortium_backend.PoolMemberships {
+func (x *AddUsersToPoolResponse) GetMemberships() []*pbentity.PoolMemberships {
 	if x != nil {
 		return x.Memberships
 	}
@@ -1369,9 +1369,9 @@ func (x *GetRandomPoolRequest) GetPoolId() string {
 }
 
 type GetRandomPoolResponse struct {
-	state         protoimpl.MessageState                   `protogen:"open.v1"`
-	Pool          *v1consortium_backend.RandomTestingPools `protobuf:"bytes,1,opt,name=pool,proto3" json:"pool,omitempty"`
-	Members       []*v1consortium_backend.PoolMemberships  `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Pool          *pbentity.RandomTestingPools `protobuf:"bytes,1,opt,name=pool,proto3" json:"pool,omitempty"`
+	Members       []*pbentity.PoolMemberships  `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1406,14 +1406,14 @@ func (*GetRandomPoolResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *GetRandomPoolResponse) GetPool() *v1consortium_backend.RandomTestingPools {
+func (x *GetRandomPoolResponse) GetPool() *pbentity.RandomTestingPools {
 	if x != nil {
 		return x.Pool
 	}
 	return nil
 }
 
-func (x *GetRandomPoolResponse) GetMembers() []*v1consortium_backend.PoolMemberships {
+func (x *GetRandomPoolResponse) GetMembers() []*pbentity.PoolMemberships {
 	if x != nil {
 		return x.Members
 	}
@@ -1481,8 +1481,8 @@ func (x *ListRandomPoolsRequest) GetIsActive() bool {
 }
 
 type ListRandomPoolsResponse struct {
-	state         protoimpl.MessageState                     `protogen:"open.v1"`
-	Pools         []*v1consortium_backend.RandomTestingPools `protobuf:"bytes,1,rep,name=pools,proto3" json:"pools,omitempty"`
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Pools         []*pbentity.RandomTestingPools `protobuf:"bytes,1,rep,name=pools,proto3" json:"pools,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1517,7 +1517,7 @@ func (*ListRandomPoolsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *ListRandomPoolsResponse) GetPools() []*v1consortium_backend.RandomTestingPools {
+func (x *ListRandomPoolsResponse) GetPools() []*pbentity.RandomTestingPools {
 	if x != nil {
 		return x.Pools
 	}
@@ -1602,10 +1602,10 @@ func (x *ConductRandomSelectionRequest) GetAlgorithm() string {
 }
 
 type ConductRandomSelectionResponse struct {
-	state           protoimpl.MessageState                         `protogen:"open.v1"`
-	Selection       *v1consortium_backend.RandomSelections         `protobuf:"bytes,1,opt,name=selection,proto3" json:"selection,omitempty"`
-	SelectedMembers []*v1consortium_backend.RandomSelectionMembers `protobuf:"bytes,2,rep,name=selected_members,json=selectedMembers,proto3" json:"selected_members,omitempty"`
-	SelectedUserIds []string                                       `protobuf:"bytes,3,rep,name=selected_user_ids,json=selectedUserIds,proto3" json:"selected_user_ids,omitempty"`
+	state           protoimpl.MessageState             `protogen:"open.v1"`
+	Selection       *pbentity.RandomSelections         `protobuf:"bytes,1,opt,name=selection,proto3" json:"selection,omitempty"`
+	SelectedMembers []*pbentity.RandomSelectionMembers `protobuf:"bytes,2,rep,name=selected_members,json=selectedMembers,proto3" json:"selected_members,omitempty"`
+	SelectedUserIds []string                           `protobuf:"bytes,3,rep,name=selected_user_ids,json=selectedUserIds,proto3" json:"selected_user_ids,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1640,14 +1640,14 @@ func (*ConductRandomSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *ConductRandomSelectionResponse) GetSelection() *v1consortium_backend.RandomSelections {
+func (x *ConductRandomSelectionResponse) GetSelection() *pbentity.RandomSelections {
 	if x != nil {
 		return x.Selection
 	}
 	return nil
 }
 
-func (x *ConductRandomSelectionResponse) GetSelectedMembers() []*v1consortium_backend.RandomSelectionMembers {
+func (x *ConductRandomSelectionResponse) GetSelectedMembers() []*pbentity.RandomSelectionMembers {
 	if x != nil {
 		return x.SelectedMembers
 	}
@@ -1706,9 +1706,9 @@ func (x *GetRandomSelectionRequest) GetSelectionId() string {
 }
 
 type GetRandomSelectionResponse struct {
-	state         protoimpl.MessageState                         `protogen:"open.v1"`
-	Selection     *v1consortium_backend.RandomSelections         `protobuf:"bytes,1,opt,name=selection,proto3" json:"selection,omitempty"`
-	Members       []*v1consortium_backend.RandomSelectionMembers `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	state         protoimpl.MessageState             `protogen:"open.v1"`
+	Selection     *pbentity.RandomSelections         `protobuf:"bytes,1,opt,name=selection,proto3" json:"selection,omitempty"`
+	Members       []*pbentity.RandomSelectionMembers `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1743,14 +1743,14 @@ func (*GetRandomSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *GetRandomSelectionResponse) GetSelection() *v1consortium_backend.RandomSelections {
+func (x *GetRandomSelectionResponse) GetSelection() *pbentity.RandomSelections {
 	if x != nil {
 		return x.Selection
 	}
 	return nil
 }
 
-func (x *GetRandomSelectionResponse) GetMembers() []*v1consortium_backend.RandomSelectionMembers {
+func (x *GetRandomSelectionResponse) GetMembers() []*pbentity.RandomSelectionMembers {
 	if x != nil {
 		return x.Members
 	}
@@ -1842,11 +1842,11 @@ func (x *ListRandomSelectionsRequest) GetPageSize() int32 {
 }
 
 type ListRandomSelectionsResponse struct {
-	state         protoimpl.MessageState                   `protogen:"open.v1"`
-	Selections    []*v1consortium_backend.RandomSelections `protobuf:"bytes,1,rep,name=selections,proto3" json:"selections,omitempty"`
-	TotalCount    int32                                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Selections    []*pbentity.RandomSelections `protobuf:"bytes,1,rep,name=selections,proto3" json:"selections,omitempty"`
+	TotalCount    int32                        `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                        `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                        `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1881,7 +1881,7 @@ func (*ListRandomSelectionsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_drug_testing_proto_rawDescGZIP(), []int{29}
 }
 
-func (x *ListRandomSelectionsResponse) GetSelections() []*v1consortium_backend.RandomSelections {
+func (x *ListRandomSelectionsResponse) GetSelections() []*pbentity.RandomSelections {
 	if x != nil {
 		return x.Selections
 	}
@@ -2017,7 +2017,7 @@ var File_services_v1_drug_testing_proto protoreflect.FileDescriptor
 
 const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\n" +
-	"\x1eservices/v1/drug_testing.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1fpbentity/testing_programs.proto\x1a!pbentity/drug_alcohol_tests.proto\x1a#pbentity/random_testing_pools.proto\x1a\x1fpbentity/pool_memberships.proto\x1a pbentity/random_selections.proto\x1a'pbentity/random_selection_members.proto\"\xf3\x02\n" +
+	"\x1eservices/v1/drug_testing.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!pbentity/drug_alcohol_tests.proto\x1a\x1fpbentity/pool_memberships.proto\x1a'pbentity/random_selection_members.proto\x1a pbentity/random_selections.proto\x1a#pbentity/random_testing_pools.proto\x1a\x1fpbentity/testing_programs.proto\"\xf3\x02\n" +
 	"\x1bCreateTestingProgramRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12$\n" +
@@ -2026,20 +2026,20 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\x17alcohol_testing_enabled\x18\x05 \x01(\bR\x15alcoholTestingEnabled\x124\n" +
 	"\x16random_testing_enabled\x18\x06 \x01(\bR\x14randomTestingEnabled\x12.\n" +
 	"\x13random_testing_rate\x18\a \x01(\tR\x11randomTestingRate\x12+\n" +
-	"\x11testing_frequency\x18\b \x01(\tR\x10testingFrequency\"_\n" +
-	"\x1cCreateTestingProgramResponse\x12?\n" +
-	"\aprogram\x18\x01 \x01(\v2%.v1consortium.backend.TestingProgramsR\aprogram\"9\n" +
+	"\x11testing_frequency\x18\b \x01(\tR\x10testingFrequency\"S\n" +
+	"\x1cCreateTestingProgramResponse\x123\n" +
+	"\aprogram\x18\x01 \x01(\v2\x19.pbentity.TestingProgramsR\aprogram\"9\n" +
 	"\x18GetTestingProgramRequest\x12\x1d\n" +
 	"\n" +
-	"program_id\x18\x01 \x01(\tR\tprogramId\"\\\n" +
-	"\x19GetTestingProgramResponse\x12?\n" +
-	"\aprogram\x18\x01 \x01(\v2%.v1consortium.backend.TestingProgramsR\aprogram\"\x88\x01\n" +
+	"program_id\x18\x01 \x01(\tR\tprogramId\"P\n" +
+	"\x19GetTestingProgramResponse\x123\n" +
+	"\aprogram\x18\x01 \x01(\v2\x19.pbentity.TestingProgramsR\aprogram\"\x88\x01\n" +
 	"\x1aListTestingProgramsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12$\n" +
 	"\x0eis_dot_program\x18\x02 \x01(\bR\fisDotProgram\x12\x1b\n" +
-	"\tis_active\x18\x03 \x01(\bR\bisActive\"`\n" +
-	"\x1bListTestingProgramsResponse\x12A\n" +
-	"\bprograms\x18\x01 \x03(\v2%.v1consortium.backend.TestingProgramsR\bprograms\"\xf8\x02\n" +
+	"\tis_active\x18\x03 \x01(\bR\bisActive\"T\n" +
+	"\x1bListTestingProgramsResponse\x125\n" +
+	"\bprograms\x18\x01 \x03(\v2\x19.pbentity.TestingProgramsR\bprograms\"\xf8\x02\n" +
 	"\x14OrderDrugTestRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
@@ -2053,17 +2053,17 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"ordered_by\x18\b \x01(\tR\torderedBy\x12\x16\n" +
 	"\x06reason\x18\t \x01(\tR\x06reason\x12/\n" +
 	"\x13facility_preference\x18\n" +
-	" \x01(\tR\x12facilityPreference\"\xfc\x01\n" +
-	"\x15OrderDrugTestResponse\x12:\n" +
-	"\x04test\x18\x01 \x01(\v2&.v1consortium.backend.DrugAlcoholTestsR\x04test\x12*\n" +
+	" \x01(\tR\x12facilityPreference\"\xf0\x01\n" +
+	"\x15OrderDrugTestResponse\x12.\n" +
+	"\x04test\x18\x01 \x01(\v2\x1a.pbentity.DrugAlcoholTestsR\x04test\x12*\n" +
 	"\x11external_order_id\x18\x02 \x01(\tR\x0fexternalOrderId\x12#\n" +
 	"\rfacility_name\x18\x03 \x01(\tR\ffacilityName\x12)\n" +
 	"\x10facility_address\x18\x04 \x01(\tR\x0ffacilityAddress\x12+\n" +
 	"\x11confirmation_code\x18\x05 \x01(\tR\x10confirmationCode\"-\n" +
 	"\x12GetDrugTestRequest\x12\x17\n" +
-	"\atest_id\x18\x01 \x01(\tR\x06testId\"Q\n" +
-	"\x13GetDrugTestResponse\x12:\n" +
-	"\x04test\x18\x01 \x01(\v2&.v1consortium.backend.DrugAlcoholTestsR\x04test\"\x85\x03\n" +
+	"\atest_id\x18\x01 \x01(\tR\x06testId\"E\n" +
+	"\x13GetDrugTestResponse\x12.\n" +
+	"\x04test\x18\x01 \x01(\v2\x1a.pbentity.DrugAlcoholTestsR\x04test\"\x85\x03\n" +
 	"\x15UpdateDrugTestRequest\x12\x17\n" +
 	"\atest_id\x18\x01 \x01(\tR\x06testId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x16\n" +
@@ -2075,9 +2075,9 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\x0fmro_review_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\rmroReviewDate\x12\x1f\n" +
 	"\vlab_results\x18\b \x01(\tR\n" +
 	"labResults\x12\x14\n" +
-	"\x05notes\x18\t \x01(\tR\x05notes\"T\n" +
-	"\x16UpdateDrugTestResponse\x12:\n" +
-	"\x04test\x18\x01 \x01(\v2&.v1consortium.backend.DrugAlcoholTestsR\x04test\"\xcf\x02\n" +
+	"\x05notes\x18\t \x01(\tR\x05notes\"H\n" +
+	"\x16UpdateDrugTestResponse\x12.\n" +
+	"\x04test\x18\x01 \x01(\v2\x1a.pbentity.DrugAlcoholTestsR\x04test\"\xcf\x02\n" +
 	"\x14ListDrugTestsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1d\n" +
@@ -2089,9 +2089,9 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"start_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xa7\x01\n" +
-	"\x15ListDrugTestsResponse\x12<\n" +
-	"\x05tests\x18\x01 \x03(\v2&.v1consortium.backend.DrugAlcoholTestsR\x05tests\x12\x1f\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\x9b\x01\n" +
+	"\x15ListDrugTestsResponse\x120\n" +
+	"\x05tests\x18\x01 \x03(\v2\x1a.pbentity.DrugAlcoholTestsR\x05tests\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2104,15 +2104,15 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\tpool_type\x18\x04 \x01(\tR\bpoolType\x12/\n" +
 	"\x13selection_frequency\x18\x05 \x01(\tR\x12selectionFrequency\x12+\n" +
 	"\x11target_percentage\x18\x06 \x01(\tR\x10targetPercentage\x12\x1b\n" +
-	"\tis_active\x18\a \x01(\bR\bisActive\"X\n" +
-	"\x18CreateRandomPoolResponse\x12<\n" +
-	"\x04pool\x18\x01 \x01(\v2(.v1consortium.backend.RandomTestingPoolsR\x04pool\"f\n" +
+	"\tis_active\x18\a \x01(\bR\bisActive\"L\n" +
+	"\x18CreateRandomPoolResponse\x120\n" +
+	"\x04pool\x18\x01 \x01(\v2\x1c.pbentity.RandomTestingPoolsR\x04pool\"f\n" +
 	"\x15AddUsersToPoolRequest\x12\x17\n" +
 	"\apool_id\x18\x01 \x01(\tR\x06poolId\x12\x19\n" +
 	"\buser_ids\x18\x02 \x03(\tR\auserIds\x12\x19\n" +
-	"\badded_by\x18\x03 \x01(\tR\aaddedBy\"a\n" +
-	"\x16AddUsersToPoolResponse\x12G\n" +
-	"\vmemberships\x18\x01 \x03(\v2%.v1consortium.backend.PoolMembershipsR\vmemberships\"\x87\x01\n" +
+	"\badded_by\x18\x03 \x01(\tR\aaddedBy\"U\n" +
+	"\x16AddUsersToPoolResponse\x12;\n" +
+	"\vmemberships\x18\x01 \x03(\v2\x19.pbentity.PoolMembershipsR\vmemberships\"\x87\x01\n" +
 	"\x1aRemoveUsersFromPoolRequest\x12\x17\n" +
 	"\apool_id\x18\x01 \x01(\tR\x06poolId\x12\x19\n" +
 	"\buser_ids\x18\x02 \x03(\tR\auserIds\x12\x1d\n" +
@@ -2122,32 +2122,32 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\x1bRemoveUsersFromPoolResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"/\n" +
 	"\x14GetRandomPoolRequest\x12\x17\n" +
-	"\apool_id\x18\x01 \x01(\tR\x06poolId\"\x96\x01\n" +
-	"\x15GetRandomPoolResponse\x12<\n" +
-	"\x04pool\x18\x01 \x01(\v2(.v1consortium.backend.RandomTestingPoolsR\x04pool\x12?\n" +
-	"\amembers\x18\x02 \x03(\v2%.v1consortium.backend.PoolMembershipsR\amembers\"}\n" +
+	"\apool_id\x18\x01 \x01(\tR\x06poolId\"~\n" +
+	"\x15GetRandomPoolResponse\x120\n" +
+	"\x04pool\x18\x01 \x01(\v2\x1c.pbentity.RandomTestingPoolsR\x04pool\x123\n" +
+	"\amembers\x18\x02 \x03(\v2\x19.pbentity.PoolMembershipsR\amembers\"}\n" +
 	"\x16ListRandomPoolsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x1d\n" +
 	"\n" +
 	"program_id\x18\x02 \x01(\tR\tprogramId\x12\x1b\n" +
-	"\tis_active\x18\x03 \x01(\bR\bisActive\"Y\n" +
-	"\x17ListRandomPoolsResponse\x12>\n" +
-	"\x05pools\x18\x01 \x03(\v2(.v1consortium.backend.RandomTestingPoolsR\x05pools\"\xce\x01\n" +
+	"\tis_active\x18\x03 \x01(\bR\bisActive\"M\n" +
+	"\x17ListRandomPoolsResponse\x122\n" +
+	"\x05pools\x18\x01 \x03(\v2\x1c.pbentity.RandomTestingPoolsR\x05pools\"\xce\x01\n" +
 	"\x1dConductRandomSelectionRequest\x12\x17\n" +
 	"\apool_id\x18\x01 \x01(\tR\x06poolId\x12(\n" +
 	"\x10number_to_select\x18\x02 \x01(\x05R\x0enumberToSelect\x12!\n" +
 	"\fconducted_by\x18\x03 \x01(\tR\vconductedBy\x12)\n" +
 	"\x10selection_period\x18\x04 \x01(\tR\x0fselectionPeriod\x12\x1c\n" +
-	"\talgorithm\x18\x05 \x01(\tR\talgorithm\"\xeb\x01\n" +
-	"\x1eConductRandomSelectionResponse\x12D\n" +
-	"\tselection\x18\x01 \x01(\v2&.v1consortium.backend.RandomSelectionsR\tselection\x12W\n" +
-	"\x10selected_members\x18\x02 \x03(\v2,.v1consortium.backend.RandomSelectionMembersR\x0fselectedMembers\x12*\n" +
+	"\talgorithm\x18\x05 \x01(\tR\talgorithm\"\xd3\x01\n" +
+	"\x1eConductRandomSelectionResponse\x128\n" +
+	"\tselection\x18\x01 \x01(\v2\x1a.pbentity.RandomSelectionsR\tselection\x12K\n" +
+	"\x10selected_members\x18\x02 \x03(\v2 .pbentity.RandomSelectionMembersR\x0fselectedMembers\x12*\n" +
 	"\x11selected_user_ids\x18\x03 \x03(\tR\x0fselectedUserIds\">\n" +
 	"\x19GetRandomSelectionRequest\x12!\n" +
-	"\fselection_id\x18\x01 \x01(\tR\vselectionId\"\xaa\x01\n" +
-	"\x1aGetRandomSelectionResponse\x12D\n" +
-	"\tselection\x18\x01 \x01(\v2&.v1consortium.backend.RandomSelectionsR\tselection\x12F\n" +
-	"\amembers\x18\x02 \x03(\v2,.v1consortium.backend.RandomSelectionMembersR\amembers\"\x82\x02\n" +
+	"\fselection_id\x18\x01 \x01(\tR\vselectionId\"\x92\x01\n" +
+	"\x1aGetRandomSelectionResponse\x128\n" +
+	"\tselection\x18\x01 \x01(\v2\x1a.pbentity.RandomSelectionsR\tselection\x12:\n" +
+	"\amembers\x18\x02 \x03(\v2 .pbentity.RandomSelectionMembersR\amembers\"\x82\x02\n" +
 	"\x1bListRandomSelectionsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\apool_id\x18\x02 \x01(\tR\x06poolId\x129\n" +
@@ -2155,10 +2155,10 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"start_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x06 \x01(\x05R\bpageSize\"\xb8\x01\n" +
-	"\x1cListRandomSelectionsResponse\x12F\n" +
+	"\tpage_size\x18\x06 \x01(\x05R\bpageSize\"\xac\x01\n" +
+	"\x1cListRandomSelectionsResponse\x12:\n" +
 	"\n" +
-	"selections\x18\x01 \x03(\v2&.v1consortium.backend.RandomSelectionsR\n" +
+	"selections\x18\x01 \x03(\v2\x1a.pbentity.RandomSelectionsR\n" +
 	"selections\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
@@ -2169,24 +2169,24 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\fvalidated_by\x18\x02 \x01(\tR\vvalidatedBy\x12\x14\n" +
 	"\x05notes\x18\x03 \x01(\tR\x05notes\";\n" +
 	"\x1fValidateRandomSelectionResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x87\x0f\n" +
-	"\x12DrugTestingService\x12\x7f\n" +
-	"\x14CreateTestingProgram\x122.v1consortium.services.CreateTestingProgramRequest\x1a3.v1consortium.services.CreateTestingProgramResponse\x12v\n" +
-	"\x11GetTestingProgram\x12/.v1consortium.services.GetTestingProgramRequest\x1a0.v1consortium.services.GetTestingProgramResponse\x12|\n" +
-	"\x13ListTestingPrograms\x121.v1consortium.services.ListTestingProgramsRequest\x1a2.v1consortium.services.ListTestingProgramsResponse\x12j\n" +
-	"\rOrderDrugTest\x12+.v1consortium.services.OrderDrugTestRequest\x1a,.v1consortium.services.OrderDrugTestResponse\x12d\n" +
-	"\vGetDrugTest\x12).v1consortium.services.GetDrugTestRequest\x1a*.v1consortium.services.GetDrugTestResponse\x12m\n" +
-	"\x0eUpdateDrugTest\x12,.v1consortium.services.UpdateDrugTestRequest\x1a-.v1consortium.services.UpdateDrugTestResponse\x12j\n" +
-	"\rListDrugTests\x12+.v1consortium.services.ListDrugTestsRequest\x1a,.v1consortium.services.ListDrugTestsResponse\x12s\n" +
-	"\x10CreateRandomPool\x12..v1consortium.services.CreateRandomPoolRequest\x1a/.v1consortium.services.CreateRandomPoolResponse\x12m\n" +
-	"\x0eAddUsersToPool\x12,.v1consortium.services.AddUsersToPoolRequest\x1a-.v1consortium.services.AddUsersToPoolResponse\x12|\n" +
-	"\x13RemoveUsersFromPool\x121.v1consortium.services.RemoveUsersFromPoolRequest\x1a2.v1consortium.services.RemoveUsersFromPoolResponse\x12j\n" +
-	"\rGetRandomPool\x12+.v1consortium.services.GetRandomPoolRequest\x1a,.v1consortium.services.GetRandomPoolResponse\x12p\n" +
-	"\x0fListRandomPools\x12-.v1consortium.services.ListRandomPoolsRequest\x1a..v1consortium.services.ListRandomPoolsResponse\x12\x85\x01\n" +
-	"\x16ConductRandomSelection\x124.v1consortium.services.ConductRandomSelectionRequest\x1a5.v1consortium.services.ConductRandomSelectionResponse\x12y\n" +
-	"\x12GetRandomSelection\x120.v1consortium.services.GetRandomSelectionRequest\x1a1.v1consortium.services.GetRandomSelectionResponse\x12\x7f\n" +
-	"\x14ListRandomSelections\x122.v1consortium.services.ListRandomSelectionsRequest\x1a3.v1consortium.services.ListRandomSelectionsResponse\x12\x88\x01\n" +
-	"\x17ValidateRandomSelection\x125.v1consortium.services.ValidateRandomSelectionRequest\x1a6.v1consortium.services.ValidateRandomSelectionResponseB\rZ\vservices/v1b\x06proto3"
+	"\amessage\x18\x01 \x01(\tR\amessage2\x87\x16\n" +
+	"\x12DrugTestingService\x12\xc4\x01\n" +
+	"\x14CreateTestingProgram\x122.v1consortium.services.CreateTestingProgramRequest\x1a3.v1consortium.services.CreateTestingProgramResponse\"C\x82\xd3\xe4\x93\x02=:\x01*\"8/api/v1/organizations/{organization_id}/testing-programs\x12\xa5\x01\n" +
+	"\x11GetTestingProgram\x12/.v1consortium.services.GetTestingProgramRequest\x1a0.v1consortium.services.GetTestingProgramResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/testing-programs/{program_id}\x12\xbe\x01\n" +
+	"\x13ListTestingPrograms\x121.v1consortium.services.ListTestingProgramsRequest\x1a2.v1consortium.services.ListTestingProgramsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/organizations/{organization_id}/testing-programs\x12\xa9\x01\n" +
+	"\rOrderDrugTest\x12+.v1consortium.services.OrderDrugTestRequest\x1a,.v1consortium.services.OrderDrugTestResponse\"=\x82\xd3\xe4\x93\x027:\x01*\"2/api/v1/organizations/{organization_id}/drug-tests\x12\x8a\x01\n" +
+	"\vGetDrugTest\x12).v1consortium.services.GetDrugTestRequest\x1a*.v1consortium.services.GetDrugTestResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/drug-tests/{test_id}\x12\x96\x01\n" +
+	"\x0eUpdateDrugTest\x12,.v1consortium.services.UpdateDrugTestRequest\x1a-.v1consortium.services.UpdateDrugTestResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/v1/drug-tests/{test_id}\x12\xa6\x01\n" +
+	"\rListDrugTests\x12+.v1consortium.services.ListDrugTestsRequest\x1a,.v1consortium.services.ListDrugTestsResponse\":\x82\xd3\xe4\x93\x024\x122/api/v1/organizations/{organization_id}/drug-tests\x12\xb4\x01\n" +
+	"\x10CreateRandomPool\x12..v1consortium.services.CreateRandomPoolRequest\x1a/.v1consortium.services.CreateRandomPoolResponse\"?\x82\xd3\xe4\x93\x029:\x01*\"4/api/v1/organizations/{organization_id}/random-pools\x12\x9e\x01\n" +
+	"\x0eAddUsersToPool\x12,.v1consortium.services.AddUsersToPoolRequest\x1a-.v1consortium.services.AddUsersToPoolResponse\"/\x82\xd3\xe4\x93\x02):\x01*\"$/api/v1/random-pools/{pool_id}/users\x12\xad\x01\n" +
+	"\x13RemoveUsersFromPool\x121.v1consortium.services.RemoveUsersFromPoolRequest\x1a2.v1consortium.services.RemoveUsersFromPoolResponse\"/\x82\xd3\xe4\x93\x02):\x01**$/api/v1/random-pools/{pool_id}/users\x12\x92\x01\n" +
+	"\rGetRandomPool\x12+.v1consortium.services.GetRandomPoolRequest\x1a,.v1consortium.services.GetRandomPoolResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/random-pools/{pool_id}\x12\xae\x01\n" +
+	"\x0fListRandomPools\x12-.v1consortium.services.ListRandomPoolsRequest\x1a..v1consortium.services.ListRandomPoolsResponse\"<\x82\xd3\xe4\x93\x026\x124/api/v1/organizations/{organization_id}/random-pools\x12\xbb\x01\n" +
+	"\x16ConductRandomSelection\x124.v1consortium.services.ConductRandomSelectionRequest\x1a5.v1consortium.services.ConductRandomSelectionResponse\"4\x82\xd3\xe4\x93\x02.:\x01*\")/api/v1/random-pools/{pool_id}/selections\x12\xab\x01\n" +
+	"\x12GetRandomSelection\x120.v1consortium.services.GetRandomSelectionRequest\x1a1.v1consortium.services.GetRandomSelectionResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/random-selections/{selection_id}\x12\xc2\x01\n" +
+	"\x14ListRandomSelections\x122.v1consortium.services.ListRandomSelectionsRequest\x1a3.v1consortium.services.ListRandomSelectionsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/random-selections\x12\xc6\x01\n" +
+	"\x17ValidateRandomSelection\x125.v1consortium.services.ValidateRandomSelectionRequest\x1a6.v1consortium.services.ValidateRandomSelectionResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/random-selections/{selection_id}/validateB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_drug_testing_proto_rawDescOnce sync.Once
@@ -2202,72 +2202,72 @@ func file_services_v1_drug_testing_proto_rawDescGZIP() []byte {
 
 var file_services_v1_drug_testing_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_services_v1_drug_testing_proto_goTypes = []any{
-	(*CreateTestingProgramRequest)(nil),                 // 0: v1consortium.services.CreateTestingProgramRequest
-	(*CreateTestingProgramResponse)(nil),                // 1: v1consortium.services.CreateTestingProgramResponse
-	(*GetTestingProgramRequest)(nil),                    // 2: v1consortium.services.GetTestingProgramRequest
-	(*GetTestingProgramResponse)(nil),                   // 3: v1consortium.services.GetTestingProgramResponse
-	(*ListTestingProgramsRequest)(nil),                  // 4: v1consortium.services.ListTestingProgramsRequest
-	(*ListTestingProgramsResponse)(nil),                 // 5: v1consortium.services.ListTestingProgramsResponse
-	(*OrderDrugTestRequest)(nil),                        // 6: v1consortium.services.OrderDrugTestRequest
-	(*OrderDrugTestResponse)(nil),                       // 7: v1consortium.services.OrderDrugTestResponse
-	(*GetDrugTestRequest)(nil),                          // 8: v1consortium.services.GetDrugTestRequest
-	(*GetDrugTestResponse)(nil),                         // 9: v1consortium.services.GetDrugTestResponse
-	(*UpdateDrugTestRequest)(nil),                       // 10: v1consortium.services.UpdateDrugTestRequest
-	(*UpdateDrugTestResponse)(nil),                      // 11: v1consortium.services.UpdateDrugTestResponse
-	(*ListDrugTestsRequest)(nil),                        // 12: v1consortium.services.ListDrugTestsRequest
-	(*ListDrugTestsResponse)(nil),                       // 13: v1consortium.services.ListDrugTestsResponse
-	(*CreateRandomPoolRequest)(nil),                     // 14: v1consortium.services.CreateRandomPoolRequest
-	(*CreateRandomPoolResponse)(nil),                    // 15: v1consortium.services.CreateRandomPoolResponse
-	(*AddUsersToPoolRequest)(nil),                       // 16: v1consortium.services.AddUsersToPoolRequest
-	(*AddUsersToPoolResponse)(nil),                      // 17: v1consortium.services.AddUsersToPoolResponse
-	(*RemoveUsersFromPoolRequest)(nil),                  // 18: v1consortium.services.RemoveUsersFromPoolRequest
-	(*RemoveUsersFromPoolResponse)(nil),                 // 19: v1consortium.services.RemoveUsersFromPoolResponse
-	(*GetRandomPoolRequest)(nil),                        // 20: v1consortium.services.GetRandomPoolRequest
-	(*GetRandomPoolResponse)(nil),                       // 21: v1consortium.services.GetRandomPoolResponse
-	(*ListRandomPoolsRequest)(nil),                      // 22: v1consortium.services.ListRandomPoolsRequest
-	(*ListRandomPoolsResponse)(nil),                     // 23: v1consortium.services.ListRandomPoolsResponse
-	(*ConductRandomSelectionRequest)(nil),               // 24: v1consortium.services.ConductRandomSelectionRequest
-	(*ConductRandomSelectionResponse)(nil),              // 25: v1consortium.services.ConductRandomSelectionResponse
-	(*GetRandomSelectionRequest)(nil),                   // 26: v1consortium.services.GetRandomSelectionRequest
-	(*GetRandomSelectionResponse)(nil),                  // 27: v1consortium.services.GetRandomSelectionResponse
-	(*ListRandomSelectionsRequest)(nil),                 // 28: v1consortium.services.ListRandomSelectionsRequest
-	(*ListRandomSelectionsResponse)(nil),                // 29: v1consortium.services.ListRandomSelectionsResponse
-	(*ValidateRandomSelectionRequest)(nil),              // 30: v1consortium.services.ValidateRandomSelectionRequest
-	(*ValidateRandomSelectionResponse)(nil),             // 31: v1consortium.services.ValidateRandomSelectionResponse
-	(*v1consortium_backend.TestingPrograms)(nil),        // 32: v1consortium.backend.TestingPrograms
-	(*timestamppb.Timestamp)(nil),                       // 33: google.protobuf.Timestamp
-	(*v1consortium_backend.DrugAlcoholTests)(nil),       // 34: v1consortium.backend.DrugAlcoholTests
-	(*v1consortium_backend.RandomTestingPools)(nil),     // 35: v1consortium.backend.RandomTestingPools
-	(*v1consortium_backend.PoolMemberships)(nil),        // 36: v1consortium.backend.PoolMemberships
-	(*v1consortium_backend.RandomSelections)(nil),       // 37: v1consortium.backend.RandomSelections
-	(*v1consortium_backend.RandomSelectionMembers)(nil), // 38: v1consortium.backend.RandomSelectionMembers
+	(*CreateTestingProgramRequest)(nil),     // 0: v1consortium.services.CreateTestingProgramRequest
+	(*CreateTestingProgramResponse)(nil),    // 1: v1consortium.services.CreateTestingProgramResponse
+	(*GetTestingProgramRequest)(nil),        // 2: v1consortium.services.GetTestingProgramRequest
+	(*GetTestingProgramResponse)(nil),       // 3: v1consortium.services.GetTestingProgramResponse
+	(*ListTestingProgramsRequest)(nil),      // 4: v1consortium.services.ListTestingProgramsRequest
+	(*ListTestingProgramsResponse)(nil),     // 5: v1consortium.services.ListTestingProgramsResponse
+	(*OrderDrugTestRequest)(nil),            // 6: v1consortium.services.OrderDrugTestRequest
+	(*OrderDrugTestResponse)(nil),           // 7: v1consortium.services.OrderDrugTestResponse
+	(*GetDrugTestRequest)(nil),              // 8: v1consortium.services.GetDrugTestRequest
+	(*GetDrugTestResponse)(nil),             // 9: v1consortium.services.GetDrugTestResponse
+	(*UpdateDrugTestRequest)(nil),           // 10: v1consortium.services.UpdateDrugTestRequest
+	(*UpdateDrugTestResponse)(nil),          // 11: v1consortium.services.UpdateDrugTestResponse
+	(*ListDrugTestsRequest)(nil),            // 12: v1consortium.services.ListDrugTestsRequest
+	(*ListDrugTestsResponse)(nil),           // 13: v1consortium.services.ListDrugTestsResponse
+	(*CreateRandomPoolRequest)(nil),         // 14: v1consortium.services.CreateRandomPoolRequest
+	(*CreateRandomPoolResponse)(nil),        // 15: v1consortium.services.CreateRandomPoolResponse
+	(*AddUsersToPoolRequest)(nil),           // 16: v1consortium.services.AddUsersToPoolRequest
+	(*AddUsersToPoolResponse)(nil),          // 17: v1consortium.services.AddUsersToPoolResponse
+	(*RemoveUsersFromPoolRequest)(nil),      // 18: v1consortium.services.RemoveUsersFromPoolRequest
+	(*RemoveUsersFromPoolResponse)(nil),     // 19: v1consortium.services.RemoveUsersFromPoolResponse
+	(*GetRandomPoolRequest)(nil),            // 20: v1consortium.services.GetRandomPoolRequest
+	(*GetRandomPoolResponse)(nil),           // 21: v1consortium.services.GetRandomPoolResponse
+	(*ListRandomPoolsRequest)(nil),          // 22: v1consortium.services.ListRandomPoolsRequest
+	(*ListRandomPoolsResponse)(nil),         // 23: v1consortium.services.ListRandomPoolsResponse
+	(*ConductRandomSelectionRequest)(nil),   // 24: v1consortium.services.ConductRandomSelectionRequest
+	(*ConductRandomSelectionResponse)(nil),  // 25: v1consortium.services.ConductRandomSelectionResponse
+	(*GetRandomSelectionRequest)(nil),       // 26: v1consortium.services.GetRandomSelectionRequest
+	(*GetRandomSelectionResponse)(nil),      // 27: v1consortium.services.GetRandomSelectionResponse
+	(*ListRandomSelectionsRequest)(nil),     // 28: v1consortium.services.ListRandomSelectionsRequest
+	(*ListRandomSelectionsResponse)(nil),    // 29: v1consortium.services.ListRandomSelectionsResponse
+	(*ValidateRandomSelectionRequest)(nil),  // 30: v1consortium.services.ValidateRandomSelectionRequest
+	(*ValidateRandomSelectionResponse)(nil), // 31: v1consortium.services.ValidateRandomSelectionResponse
+	(*pbentity.TestingPrograms)(nil),        // 32: pbentity.TestingPrograms
+	(*timestamppb.Timestamp)(nil),           // 33: google.protobuf.Timestamp
+	(*pbentity.DrugAlcoholTests)(nil),       // 34: pbentity.DrugAlcoholTests
+	(*pbentity.RandomTestingPools)(nil),     // 35: pbentity.RandomTestingPools
+	(*pbentity.PoolMemberships)(nil),        // 36: pbentity.PoolMemberships
+	(*pbentity.RandomSelections)(nil),       // 37: pbentity.RandomSelections
+	(*pbentity.RandomSelectionMembers)(nil), // 38: pbentity.RandomSelectionMembers
 }
 var file_services_v1_drug_testing_proto_depIdxs = []int32{
-	32, // 0: v1consortium.services.CreateTestingProgramResponse.program:type_name -> v1consortium.backend.TestingPrograms
-	32, // 1: v1consortium.services.GetTestingProgramResponse.program:type_name -> v1consortium.backend.TestingPrograms
-	32, // 2: v1consortium.services.ListTestingProgramsResponse.programs:type_name -> v1consortium.backend.TestingPrograms
+	32, // 0: v1consortium.services.CreateTestingProgramResponse.program:type_name -> pbentity.TestingPrograms
+	32, // 1: v1consortium.services.GetTestingProgramResponse.program:type_name -> pbentity.TestingPrograms
+	32, // 2: v1consortium.services.ListTestingProgramsResponse.programs:type_name -> pbentity.TestingPrograms
 	33, // 3: v1consortium.services.OrderDrugTestRequest.due_date:type_name -> google.protobuf.Timestamp
-	34, // 4: v1consortium.services.OrderDrugTestResponse.test:type_name -> v1consortium.backend.DrugAlcoholTests
-	34, // 5: v1consortium.services.GetDrugTestResponse.test:type_name -> v1consortium.backend.DrugAlcoholTests
+	34, // 4: v1consortium.services.OrderDrugTestResponse.test:type_name -> pbentity.DrugAlcoholTests
+	34, // 5: v1consortium.services.GetDrugTestResponse.test:type_name -> pbentity.DrugAlcoholTests
 	33, // 6: v1consortium.services.UpdateDrugTestRequest.collection_date:type_name -> google.protobuf.Timestamp
 	33, // 7: v1consortium.services.UpdateDrugTestRequest.result_date:type_name -> google.protobuf.Timestamp
 	33, // 8: v1consortium.services.UpdateDrugTestRequest.mro_review_date:type_name -> google.protobuf.Timestamp
-	34, // 9: v1consortium.services.UpdateDrugTestResponse.test:type_name -> v1consortium.backend.DrugAlcoholTests
+	34, // 9: v1consortium.services.UpdateDrugTestResponse.test:type_name -> pbentity.DrugAlcoholTests
 	33, // 10: v1consortium.services.ListDrugTestsRequest.start_date:type_name -> google.protobuf.Timestamp
 	33, // 11: v1consortium.services.ListDrugTestsRequest.end_date:type_name -> google.protobuf.Timestamp
-	34, // 12: v1consortium.services.ListDrugTestsResponse.tests:type_name -> v1consortium.backend.DrugAlcoholTests
-	35, // 13: v1consortium.services.CreateRandomPoolResponse.pool:type_name -> v1consortium.backend.RandomTestingPools
-	36, // 14: v1consortium.services.AddUsersToPoolResponse.memberships:type_name -> v1consortium.backend.PoolMemberships
-	35, // 15: v1consortium.services.GetRandomPoolResponse.pool:type_name -> v1consortium.backend.RandomTestingPools
-	36, // 16: v1consortium.services.GetRandomPoolResponse.members:type_name -> v1consortium.backend.PoolMemberships
-	35, // 17: v1consortium.services.ListRandomPoolsResponse.pools:type_name -> v1consortium.backend.RandomTestingPools
-	37, // 18: v1consortium.services.ConductRandomSelectionResponse.selection:type_name -> v1consortium.backend.RandomSelections
-	38, // 19: v1consortium.services.ConductRandomSelectionResponse.selected_members:type_name -> v1consortium.backend.RandomSelectionMembers
-	37, // 20: v1consortium.services.GetRandomSelectionResponse.selection:type_name -> v1consortium.backend.RandomSelections
-	38, // 21: v1consortium.services.GetRandomSelectionResponse.members:type_name -> v1consortium.backend.RandomSelectionMembers
+	34, // 12: v1consortium.services.ListDrugTestsResponse.tests:type_name -> pbentity.DrugAlcoholTests
+	35, // 13: v1consortium.services.CreateRandomPoolResponse.pool:type_name -> pbentity.RandomTestingPools
+	36, // 14: v1consortium.services.AddUsersToPoolResponse.memberships:type_name -> pbentity.PoolMemberships
+	35, // 15: v1consortium.services.GetRandomPoolResponse.pool:type_name -> pbentity.RandomTestingPools
+	36, // 16: v1consortium.services.GetRandomPoolResponse.members:type_name -> pbentity.PoolMemberships
+	35, // 17: v1consortium.services.ListRandomPoolsResponse.pools:type_name -> pbentity.RandomTestingPools
+	37, // 18: v1consortium.services.ConductRandomSelectionResponse.selection:type_name -> pbentity.RandomSelections
+	38, // 19: v1consortium.services.ConductRandomSelectionResponse.selected_members:type_name -> pbentity.RandomSelectionMembers
+	37, // 20: v1consortium.services.GetRandomSelectionResponse.selection:type_name -> pbentity.RandomSelections
+	38, // 21: v1consortium.services.GetRandomSelectionResponse.members:type_name -> pbentity.RandomSelectionMembers
 	33, // 22: v1consortium.services.ListRandomSelectionsRequest.start_date:type_name -> google.protobuf.Timestamp
 	33, // 23: v1consortium.services.ListRandomSelectionsRequest.end_date:type_name -> google.protobuf.Timestamp
-	37, // 24: v1consortium.services.ListRandomSelectionsResponse.selections:type_name -> v1consortium.backend.RandomSelections
+	37, // 24: v1consortium.services.ListRandomSelectionsResponse.selections:type_name -> pbentity.RandomSelections
 	0,  // 25: v1consortium.services.DrugTestingService.CreateTestingProgram:input_type -> v1consortium.services.CreateTestingProgramRequest
 	2,  // 26: v1consortium.services.DrugTestingService.GetTestingProgram:input_type -> v1consortium.services.GetTestingProgramRequest
 	4,  // 27: v1consortium.services.DrugTestingService.ListTestingPrograms:input_type -> v1consortium.services.ListTestingProgramsRequest

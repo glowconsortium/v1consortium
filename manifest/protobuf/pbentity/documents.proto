@@ -4,40 +4,40 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message Documents {
-    string                    Id                   = 1;  //
-    string                    OrganizationId       = 2;  //
-    string                    UserId               = 3;  //
-    string                    DocumentType         = 4;  //
-    string                    Title                = 5;  //
-    string                    Description          = 6;  //
-    string                    FileName             = 7;  //
-    int64                     FileSize             = 8;  //
-    string                    MimeType             = 9;  //
-    string                    StoragePath          = 10; //
-    string                    StorageBucket        = 11; //
-    string                    TestId               = 12; //
-    string                    MvrReportId          = 13; //
-    string                    PhysicalId           = 14; //
-    string                    BackgroundCheckId    = 15; //
-    string                    UploadedBy           = 16; //
-    google.protobuf.Timestamp UploadedAt           = 17; //
-    bool                      IsConfidential       = 18; //
-    bool                      IsHipaaProtected     = 19; //
-    int32                     RetentionPeriodYears = 20; //
-    google.protobuf.Timestamp AutoDeleteDate       = 21; //
-    int32                     DownloadCount        = 22; //
-    google.protobuf.Timestamp LastAccessedAt       = 23; //
-    string                    LastAccessedBy       = 24; //
-    int32                     Version              = 25; //
-    string                    ParentDocumentId     = 26; //
-    bool                      IsCurrentVersion     = 27; //
-    google.protobuf.Timestamp CreatedAt            = 28; //
-    google.protobuf.Timestamp UpdatedAt            = 29; //
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string DocumentType = 4; //
+  string Title = 5; //
+  string Description = 6; //
+  string FileName = 7; //
+  int64 FileSize = 8; //
+  string MimeType = 9; //
+  string StoragePath = 10; //
+  string StorageBucket = 11; //
+  string TestId = 12; //
+  string MvrReportId = 13; //
+  string PhysicalId = 14; //
+  string BackgroundCheckId = 15; //
+  string UploadedBy = 16; //
+  google.protobuf.Timestamp UploadedAt = 17; //
+  bool IsConfidential = 18; //
+  bool IsHipaaProtected = 19; //
+  int32 RetentionPeriodYears = 20; //
+  google.protobuf.Timestamp AutoDeleteDate = 21; //
+  int32 DownloadCount = 22; //
+  google.protobuf.Timestamp LastAccessedAt = 23; //
+  string LastAccessedBy = 24; //
+  int32 Version = 25; //
+  string ParentDocumentId = 26; //
+  bool IsCurrentVersion = 27; //
+  google.protobuf.Timestamp CreatedAt = 28; //
+  google.protobuf.Timestamp UpdatedAt = 29; //
 }

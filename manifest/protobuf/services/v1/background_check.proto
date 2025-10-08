@@ -2,11 +2,12 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "pbentity/background_checks.proto";
 import "pbentity/background_check_findings.proto";
+import "pbentity/background_checks.proto";
+
+option go_package = "services/v1";
 
 // Background Check Management Messages
 message OrderBackgroundCheckRequest {
@@ -22,7 +23,7 @@ message OrderBackgroundCheckRequest {
 }
 
 message OrderBackgroundCheckResponse {
-  v1consortium.backend.BackgroundChecks background_check = 1;
+  pbentity.BackgroundChecks background_check = 1;
   string external_order_id = 2;
   string confirmation_code = 3;
   google.protobuf.Timestamp estimated_completion = 4;
@@ -34,8 +35,8 @@ message GetBackgroundCheckRequest {
 }
 
 message GetBackgroundCheckResponse {
-  v1consortium.backend.BackgroundChecks background_check = 1;
-  repeated v1consortium.backend.BackgroundCheckFindings findings = 2;
+  pbentity.BackgroundChecks background_check = 1;
+  repeated pbentity.BackgroundCheckFindings findings = 2;
 }
 
 message UpdateBackgroundCheckRequest {
@@ -49,7 +50,7 @@ message UpdateBackgroundCheckRequest {
 }
 
 message UpdateBackgroundCheckResponse {
-  v1consortium.backend.BackgroundChecks background_check = 1;
+  pbentity.BackgroundChecks background_check = 1;
 }
 
 message ListBackgroundChecksRequest {
@@ -65,7 +66,7 @@ message ListBackgroundChecksRequest {
 }
 
 message ListBackgroundChecksResponse {
-  repeated v1consortium.backend.BackgroundChecks background_checks = 1;
+  repeated pbentity.BackgroundChecks background_checks = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -87,7 +88,7 @@ message AddFindingRequest {
 }
 
 message AddFindingResponse {
-  v1consortium.backend.BackgroundCheckFindings finding = 1;
+  pbentity.BackgroundCheckFindings finding = 1;
 }
 
 message UpdateFindingRequest {
@@ -101,7 +102,7 @@ message UpdateFindingRequest {
 }
 
 message UpdateFindingResponse {
-  v1consortium.backend.BackgroundCheckFindings finding = 1;
+  pbentity.BackgroundCheckFindings finding = 1;
 }
 
 message ListFindingsRequest {
@@ -117,7 +118,7 @@ message ListFindingsRequest {
 }
 
 message ListFindingsResponse {
-  repeated v1consortium.backend.BackgroundCheckFindings findings = 1;
+  repeated pbentity.BackgroundCheckFindings findings = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -235,25 +236,77 @@ message GetBackgroundCheckAnalyticsResponse {
 // Background Check Service Definition
 service BackgroundCheckService {
   // Background Check Management
-  rpc OrderBackgroundCheck(OrderBackgroundCheckRequest) returns (OrderBackgroundCheckResponse);
-  rpc GetBackgroundCheck(GetBackgroundCheckRequest) returns (GetBackgroundCheckResponse);
-  rpc UpdateBackgroundCheck(UpdateBackgroundCheckRequest) returns (UpdateBackgroundCheckResponse);
-  rpc ListBackgroundChecks(ListBackgroundChecksRequest) returns (ListBackgroundChecksResponse);
-  
+  rpc OrderBackgroundCheck(OrderBackgroundCheckRequest) returns (OrderBackgroundCheckResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/background-checks"
+      body: "*"
+    };
+  }
+
+  rpc GetBackgroundCheck(GetBackgroundCheckRequest) returns (GetBackgroundCheckResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}"};
+  }
+
+  rpc UpdateBackgroundCheck(UpdateBackgroundCheckRequest) returns (UpdateBackgroundCheckResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/background-checks/{background_check_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListBackgroundChecks(ListBackgroundChecksRequest) returns (ListBackgroundChecksResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-checks"};
+  }
+
   // Findings Management
-  rpc AddFinding(AddFindingRequest) returns (AddFindingResponse);
-  rpc UpdateFinding(UpdateFindingRequest) returns (UpdateFindingResponse);
-  rpc ListFindings(ListFindingsRequest) returns (ListFindingsResponse);
-  
+  rpc AddFinding(AddFindingRequest) returns (AddFindingResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/findings"
+      body: "*"
+    };
+  }
+
+  rpc UpdateFinding(UpdateFindingRequest) returns (UpdateFindingResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/background-check-findings/{finding_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListFindings(ListFindingsRequest) returns (ListFindingsResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}/findings"};
+  }
+
   // FCRA Compliance
-  rpc InitiateAdverseAction(InitiateAdverseActionRequest) returns (InitiateAdverseActionResponse);
-  rpc HandleDispute(HandleDisputeRequest) returns (HandleDisputeResponse);
-  rpc GetAdverseActionStatus(GetAdverseActionStatusRequest) returns (GetAdverseActionStatusResponse);
-  
+  rpc InitiateAdverseAction(InitiateAdverseActionRequest) returns (InitiateAdverseActionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/adverse-action"
+      body: "*"
+    };
+  }
+
+  rpc HandleDispute(HandleDisputeRequest) returns (HandleDisputeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/dispute"
+      body: "*"
+    };
+  }
+
+  rpc GetAdverseActionStatus(GetAdverseActionStatusRequest) returns (GetAdverseActionStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}/adverse-action-status"};
+  }
+
   // Package and Provider Management
-  rpc GetAvailablePackages(GetAvailablePackagesRequest) returns (GetAvailablePackagesResponse);
-  rpc GetProviderStatus(GetProviderStatusRequest) returns (GetProviderStatusResponse);
-  
+  rpc GetAvailablePackages(GetAvailablePackagesRequest) returns (GetAvailablePackagesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-packages"};
+  }
+
+  rpc GetProviderStatus(GetProviderStatusRequest) returns (GetProviderStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-provider-status"};
+  }
+
   // Analytics
-  rpc GetBackgroundCheckAnalytics(GetBackgroundCheckAnalyticsRequest) returns (GetBackgroundCheckAnalyticsResponse);
+  rpc GetBackgroundCheckAnalytics(GetBackgroundCheckAnalyticsRequest) returns (GetBackgroundCheckAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-analytics"};
+  }
 }

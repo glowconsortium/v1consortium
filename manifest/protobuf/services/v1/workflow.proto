@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/temporal_workflows.proto";
+
+option go_package = "services/v1";
 
 // Workflow Management Messages
 message StartWorkflowRequest {
@@ -19,7 +20,7 @@ message StartWorkflowRequest {
 }
 
 message StartWorkflowResponse {
-  v1consortium.backend.TemporalWorkflows workflow = 1;
+  pbentity.TemporalWorkflows workflow = 1;
   string workflow_execution_id = 2;
 }
 
@@ -28,7 +29,7 @@ message GetWorkflowRequest {
 }
 
 message GetWorkflowResponse {
-  v1consortium.backend.TemporalWorkflows workflow = 1;
+  pbentity.TemporalWorkflows workflow = 1;
 }
 
 message ListWorkflowsRequest {
@@ -44,7 +45,7 @@ message ListWorkflowsRequest {
 }
 
 message ListWorkflowsResponse {
-  repeated v1consortium.backend.TemporalWorkflows workflows = 1;
+  repeated pbentity.TemporalWorkflows workflows = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -60,7 +61,7 @@ message UpdateWorkflowRequest {
 }
 
 message UpdateWorkflowResponse {
-  v1consortium.backend.TemporalWorkflows workflow = 1;
+  pbentity.TemporalWorkflows workflow = 1;
 }
 
 message CancelWorkflowRequest {
@@ -80,7 +81,7 @@ message RetryWorkflowRequest {
 }
 
 message RetryWorkflowResponse {
-  v1consortium.backend.TemporalWorkflows new_workflow = 1;
+  pbentity.TemporalWorkflows new_workflow = 1;
   string new_workflow_execution_id = 2;
 }
 
@@ -195,7 +196,7 @@ message GetFailedWorkflowsRequest {
 }
 
 message FailedWorkflow {
-  v1consortium.backend.TemporalWorkflows workflow = 1;
+  pbentity.TemporalWorkflows workflow = 1;
   string error_summary = 2;
   bool can_retry = 3;
   int32 retry_count = 4;
@@ -216,7 +217,7 @@ message GetRunningWorkflowsRequest {
 }
 
 message RunningWorkflow {
-  v1consortium.backend.TemporalWorkflows workflow = 1;
+  pbentity.TemporalWorkflows workflow = 1;
   int32 running_duration_minutes = 2;
   string current_activity = 3;
   google.protobuf.Timestamp estimated_completion = 4;
@@ -229,22 +230,88 @@ message GetRunningWorkflowsResponse {
 // Workflow Service Definition
 service WorkflowService {
   // Generic Workflow Management
-  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse);
-  rpc GetWorkflow(GetWorkflowRequest) returns (GetWorkflowResponse);
-  rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse);
-  rpc UpdateWorkflow(UpdateWorkflowRequest) returns (UpdateWorkflowResponse);
-  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse);
-  rpc RetryWorkflow(RetryWorkflowRequest) returns (RetryWorkflowResponse);
-  
+  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows"
+      body: "*"
+    };
+  }
+
+  rpc GetWorkflow(GetWorkflowRequest) returns (GetWorkflowResponse) {
+    option (google.api.http) = {get: "/api/v1/workflows/{workflow_id}"};
+  }
+
+  rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/workflows"};
+  }
+
+  rpc UpdateWorkflow(UpdateWorkflowRequest) returns (UpdateWorkflowResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/workflows/{workflow_id}"
+      body: "*"
+    };
+  }
+
+  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/workflows/{workflow_id}/cancel"
+      body: "*"
+    };
+  }
+
+  rpc RetryWorkflow(RetryWorkflowRequest) returns (RetryWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/workflows/{workflow_id}/retry"
+      body: "*"
+    };
+  }
+
   // Specific Workflow Types
-  rpc StartDrugTestOrderWorkflow(StartDrugTestOrderWorkflowRequest) returns (StartDrugTestOrderWorkflowResponse);
-  rpc StartMVRMonitoringWorkflow(StartMVRMonitoringWorkflowRequest) returns (StartMVRMonitoringWorkflowResponse);
-  rpc StartRandomSelectionWorkflow(StartRandomSelectionWorkflowRequest) returns (StartRandomSelectionWorkflowResponse);
-  rpc StartBackgroundCheckWorkflow(StartBackgroundCheckWorkflowRequest) returns (StartBackgroundCheckWorkflowResponse);
-  rpc StartNotificationWorkflow(StartNotificationWorkflowRequest) returns (StartNotificationWorkflowResponse);
-  
+  rpc StartDrugTestOrderWorkflow(StartDrugTestOrderWorkflowRequest) returns (StartDrugTestOrderWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows/drug-test-order"
+      body: "*"
+    };
+  }
+
+  rpc StartMVRMonitoringWorkflow(StartMVRMonitoringWorkflowRequest) returns (StartMVRMonitoringWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows/mvr-monitoring"
+      body: "*"
+    };
+  }
+
+  rpc StartRandomSelectionWorkflow(StartRandomSelectionWorkflowRequest) returns (StartRandomSelectionWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows/random-selection"
+      body: "*"
+    };
+  }
+
+  rpc StartBackgroundCheckWorkflow(StartBackgroundCheckWorkflowRequest) returns (StartBackgroundCheckWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows/background-check"
+      body: "*"
+    };
+  }
+
+  rpc StartNotificationWorkflow(StartNotificationWorkflowRequest) returns (StartNotificationWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/workflows/notification"
+      body: "*"
+    };
+  }
+
   // Workflow Analytics and Monitoring
-  rpc GetWorkflowAnalytics(GetWorkflowAnalyticsRequest) returns (GetWorkflowAnalyticsResponse);
-  rpc GetFailedWorkflows(GetFailedWorkflowsRequest) returns (GetFailedWorkflowsResponse);
-  rpc GetRunningWorkflows(GetRunningWorkflowsRequest) returns (GetRunningWorkflowsResponse);
+  rpc GetWorkflowAnalytics(GetWorkflowAnalyticsRequest) returns (GetWorkflowAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/workflow-analytics"};
+  }
+
+  rpc GetFailedWorkflows(GetFailedWorkflowsRequest) returns (GetFailedWorkflowsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/workflows/failed"};
+  }
+
+  rpc GetRunningWorkflows(GetRunningWorkflowsRequest) returns (GetRunningWorkflowsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/workflows/running"};
+  }
 }

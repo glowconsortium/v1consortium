@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -119,11 +119,11 @@ func (x *OrderMVRRequest) GetProvider() string {
 }
 
 type OrderMVRResponse struct {
-	state               protoimpl.MessageState           `protogen:"open.v1"`
-	Report              *v1consortium_backend.MvrReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
-	ExternalOrderId     string                           `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
-	ConfirmationCode    string                           `protobuf:"bytes,3,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
-	EstimatedCompletion *timestamppb.Timestamp           `protobuf:"bytes,4,opt,name=estimated_completion,json=estimatedCompletion,proto3" json:"estimated_completion,omitempty"`
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Report              *pbentity.MvrReports   `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
+	ExternalOrderId     string                 `protobuf:"bytes,2,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
+	ConfirmationCode    string                 `protobuf:"bytes,3,opt,name=confirmation_code,json=confirmationCode,proto3" json:"confirmation_code,omitempty"`
+	EstimatedCompletion *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=estimated_completion,json=estimatedCompletion,proto3" json:"estimated_completion,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -158,7 +158,7 @@ func (*OrderMVRResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *OrderMVRResponse) GetReport() *v1consortium_backend.MvrReports {
+func (x *OrderMVRResponse) GetReport() *pbentity.MvrReports {
 	if x != nil {
 		return x.Report
 	}
@@ -231,9 +231,9 @@ func (x *GetMVRReportRequest) GetReportId() string {
 }
 
 type GetMVRReportResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Report        *v1consortium_backend.MvrReports      `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
-	Violations    []*v1consortium_backend.MvrViolations `protobuf:"bytes,2,rep,name=violations,proto3" json:"violations,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Report        *pbentity.MvrReports      `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
+	Violations    []*pbentity.MvrViolations `protobuf:"bytes,2,rep,name=violations,proto3" json:"violations,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -268,14 +268,14 @@ func (*GetMVRReportResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetMVRReportResponse) GetReport() *v1consortium_backend.MvrReports {
+func (x *GetMVRReportResponse) GetReport() *pbentity.MvrReports {
 	if x != nil {
 		return x.Report
 	}
 	return nil
 }
 
-func (x *GetMVRReportResponse) GetViolations() []*v1consortium_backend.MvrViolations {
+func (x *GetMVRReportResponse) GetViolations() []*pbentity.MvrViolations {
 	if x != nil {
 		return x.Violations
 	}
@@ -375,8 +375,8 @@ func (x *UpdateMVRReportRequest) GetProviderReference() string {
 }
 
 type UpdateMVRReportResponse struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Report        *v1consortium_backend.MvrReports `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Report        *pbentity.MvrReports   `protobuf:"bytes,1,opt,name=report,proto3" json:"report,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -411,7 +411,7 @@ func (*UpdateMVRReportResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateMVRReportResponse) GetReport() *v1consortium_backend.MvrReports {
+func (x *UpdateMVRReportResponse) GetReport() *pbentity.MvrReports {
 	if x != nil {
 		return x.Report
 	}
@@ -511,11 +511,11 @@ func (x *ListMVRReportsRequest) GetPageSize() int32 {
 }
 
 type ListMVRReportsResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Reports       []*v1consortium_backend.MvrReports `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
-	TotalCount    int32                              `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                              `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                              `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reports       []*pbentity.MvrReports `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
+	TotalCount    int32                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                  `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -550,7 +550,7 @@ func (*ListMVRReportsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ListMVRReportsResponse) GetReports() []*v1consortium_backend.MvrReports {
+func (x *ListMVRReportsResponse) GetReports() []*pbentity.MvrReports {
 	if x != nil {
 		return x.Reports
 	}
@@ -696,8 +696,8 @@ func (x *AddMVRViolationRequest) GetRequiresAction() bool {
 }
 
 type AddMVRViolationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Violation     *v1consortium_backend.MvrViolations `protobuf:"bytes,1,opt,name=violation,proto3" json:"violation,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Violation     *pbentity.MvrViolations `protobuf:"bytes,1,opt,name=violation,proto3" json:"violation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -732,7 +732,7 @@ func (*AddMVRViolationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *AddMVRViolationResponse) GetViolation() *v1consortium_backend.MvrViolations {
+func (x *AddMVRViolationResponse) GetViolation() *pbentity.MvrViolations {
 	if x != nil {
 		return x.Violation
 	}
@@ -816,8 +816,8 @@ func (x *UpdateMVRViolationRequest) GetNotes() string {
 }
 
 type UpdateMVRViolationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Violation     *v1consortium_backend.MvrViolations `protobuf:"bytes,1,opt,name=violation,proto3" json:"violation,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Violation     *pbentity.MvrViolations `protobuf:"bytes,1,opt,name=violation,proto3" json:"violation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -852,7 +852,7 @@ func (*UpdateMVRViolationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpdateMVRViolationResponse) GetViolation() *v1consortium_backend.MvrViolations {
+func (x *UpdateMVRViolationResponse) GetViolation() *pbentity.MvrViolations {
 	if x != nil {
 		return x.Violation
 	}
@@ -968,11 +968,11 @@ func (x *ListMVRViolationsRequest) GetPageSize() int32 {
 }
 
 type ListMVRViolationsResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Violations    []*v1consortium_backend.MvrViolations `protobuf:"bytes,1,rep,name=violations,proto3" json:"violations,omitempty"`
-	TotalCount    int32                                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                 `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Violations    []*pbentity.MvrViolations `protobuf:"bytes,1,rep,name=violations,proto3" json:"violations,omitempty"`
+	TotalCount    int32                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                     `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                     `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1007,7 +1007,7 @@ func (*ListMVRViolationsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_mvr_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ListMVRViolationsResponse) GetViolations() []*v1consortium_backend.MvrViolations {
+func (x *ListMVRViolationsResponse) GetViolations() []*pbentity.MvrViolations {
 	if x != nil {
 		return x.Violations
 	}
@@ -1606,7 +1606,7 @@ var File_services_v1_mvr_proto protoreflect.FileDescriptor
 
 const file_services_v1_mvr_proto_rawDesc = "" +
 	"\n" +
-	"\x15services/v1/mvr.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1apbentity/mvr_reports.proto\x1a\x1dpbentity/mvr_violations.proto\"\xfb\x01\n" +
+	"\x15services/v1/mvr.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1apbentity/mvr_reports.proto\x1a\x1dpbentity/mvr_violations.proto\"\xfb\x01\n" +
 	"\x0fOrderMVRRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12%\n" +
@@ -1616,18 +1616,18 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"ordered_by\x18\x05 \x01(\tR\torderedBy\x12\x1f\n" +
 	"\vreport_type\x18\x06 \x01(\tR\n" +
 	"reportType\x12\x1a\n" +
-	"\bprovider\x18\a \x01(\tR\bprovider\"\xf4\x01\n" +
-	"\x10OrderMVRResponse\x128\n" +
-	"\x06report\x18\x01 \x01(\v2 .v1consortium.backend.MvrReportsR\x06report\x12*\n" +
+	"\bprovider\x18\a \x01(\tR\bprovider\"\xe8\x01\n" +
+	"\x10OrderMVRResponse\x12,\n" +
+	"\x06report\x18\x01 \x01(\v2\x14.pbentity.MvrReportsR\x06report\x12*\n" +
 	"\x11external_order_id\x18\x02 \x01(\tR\x0fexternalOrderId\x12+\n" +
 	"\x11confirmation_code\x18\x03 \x01(\tR\x10confirmationCode\x12M\n" +
 	"\x14estimated_completion\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x13estimatedCompletion\"2\n" +
 	"\x13GetMVRReportRequest\x12\x1b\n" +
-	"\treport_id\x18\x01 \x01(\tR\breportId\"\x95\x01\n" +
-	"\x14GetMVRReportResponse\x128\n" +
-	"\x06report\x18\x01 \x01(\v2 .v1consortium.backend.MvrReportsR\x06report\x12C\n" +
+	"\treport_id\x18\x01 \x01(\tR\breportId\"}\n" +
+	"\x14GetMVRReportResponse\x12,\n" +
+	"\x06report\x18\x01 \x01(\v2\x14.pbentity.MvrReportsR\x06report\x127\n" +
 	"\n" +
-	"violations\x18\x02 \x03(\v2#.v1consortium.backend.MvrViolationsR\n" +
+	"violations\x18\x02 \x03(\v2\x17.pbentity.MvrViolationsR\n" +
 	"violations\"\x9a\x02\n" +
 	"\x16UpdateMVRReportRequest\x12\x1b\n" +
 	"\treport_id\x18\x01 \x01(\tR\breportId\x12\x16\n" +
@@ -1638,9 +1638,9 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"\n" +
 	"cdl_status\x18\x05 \x01(\tR\tcdlStatus\x12\x19\n" +
 	"\braw_data\x18\x06 \x01(\tR\arawData\x12-\n" +
-	"\x12provider_reference\x18\a \x01(\tR\x11providerReference\"S\n" +
-	"\x17UpdateMVRReportResponse\x128\n" +
-	"\x06report\x18\x01 \x01(\v2 .v1consortium.backend.MvrReportsR\x06report\"\x94\x02\n" +
+	"\x12provider_reference\x18\a \x01(\tR\x11providerReference\"G\n" +
+	"\x17UpdateMVRReportResponse\x12,\n" +
+	"\x06report\x18\x01 \x01(\v2\x14.pbentity.MvrReportsR\x06report\"\x94\x02\n" +
 	"\x15ListMVRReportsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
@@ -1649,9 +1649,9 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"start_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\a \x01(\x05R\bpageSize\"\xa6\x01\n" +
-	"\x16ListMVRReportsResponse\x12:\n" +
-	"\areports\x18\x01 \x03(\v2 .v1consortium.backend.MvrReportsR\areports\x12\x1f\n" +
+	"\tpage_size\x18\a \x01(\x05R\bpageSize\"\x9a\x01\n" +
+	"\x16ListMVRReportsResponse\x12.\n" +
+	"\areports\x18\x01 \x03(\v2\x14.pbentity.MvrReportsR\areports\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -1670,17 +1670,17 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"\vaffects_cdl\x18\t \x01(\bR\n" +
 	"affectsCdl\x12'\n" +
 	"\x0frequires_action\x18\n" +
-	" \x01(\bR\x0erequiresAction\"\\\n" +
-	"\x17AddMVRViolationResponse\x12A\n" +
-	"\tviolation\x18\x01 \x01(\v2#.v1consortium.backend.MvrViolationsR\tviolation\"\xd4\x01\n" +
+	" \x01(\bR\x0erequiresAction\"P\n" +
+	"\x17AddMVRViolationResponse\x125\n" +
+	"\tviolation\x18\x01 \x01(\v2\x17.pbentity.MvrViolationsR\tviolation\"\xd4\x01\n" +
 	"\x19UpdateMVRViolationRequest\x12!\n" +
 	"\fviolation_id\x18\x01 \x01(\tR\vviolationId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12!\n" +
 	"\faction_taken\x18\x03 \x01(\tR\vactionTaken\x12C\n" +
 	"\x0fresolution_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0eresolutionDate\x12\x14\n" +
-	"\x05notes\x18\x05 \x01(\tR\x05notes\"_\n" +
-	"\x1aUpdateMVRViolationResponse\x12A\n" +
-	"\tviolation\x18\x01 \x01(\v2#.v1consortium.backend.MvrViolationsR\tviolation\"\xe0\x02\n" +
+	"\x05notes\x18\x05 \x01(\tR\x05notes\"S\n" +
+	"\x1aUpdateMVRViolationResponse\x125\n" +
+	"\tviolation\x18\x01 \x01(\v2\x17.pbentity.MvrViolationsR\tviolation\"\xe0\x02\n" +
 	"\x18ListMVRViolationsRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\"\n" +
@@ -1692,10 +1692,10 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"start_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x12\n" +
 	"\x04page\x18\b \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xb2\x01\n" +
-	"\x19ListMVRViolationsResponse\x12C\n" +
+	"\tpage_size\x18\t \x01(\x05R\bpageSize\"\xa6\x01\n" +
+	"\x19ListMVRViolationsResponse\x127\n" +
 	"\n" +
-	"violations\x18\x01 \x03(\v2#.v1consortium.backend.MvrViolationsR\n" +
+	"violations\x18\x01 \x03(\v2\x17.pbentity.MvrViolationsR\n" +
 	"violations\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
@@ -1740,21 +1740,20 @@ const file_services_v1_mvr_proto_rawDesc = "" +
 	"\x0ereports_synced\x18\x01 \x01(\x05R\rreportsSynced\x12)\n" +
 	"\x10violations_added\x18\x02 \x01(\x05R\x0fviolationsAdded\x12F\n" +
 	"\x11sync_completed_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0fsyncCompletedAt\x12\x16\n" +
-	"\x06errors\x18\x04 \x03(\tR\x06errors2\x91\n" +
+	"\x06errors\x18\x04 \x03(\tR\x06errors2\x89\x0f\n" +
 	"\n" +
-	"\n" +
-	"MVRService\x12[\n" +
-	"\bOrderMVR\x12&.v1consortium.services.OrderMVRRequest\x1a'.v1consortium.services.OrderMVRResponse\x12g\n" +
-	"\fGetMVRReport\x12*.v1consortium.services.GetMVRReportRequest\x1a+.v1consortium.services.GetMVRReportResponse\x12p\n" +
-	"\x0fUpdateMVRReport\x12-.v1consortium.services.UpdateMVRReportRequest\x1a..v1consortium.services.UpdateMVRReportResponse\x12m\n" +
-	"\x0eListMVRReports\x12,.v1consortium.services.ListMVRReportsRequest\x1a-.v1consortium.services.ListMVRReportsResponse\x12p\n" +
-	"\x0fAddMVRViolation\x12-.v1consortium.services.AddMVRViolationRequest\x1a..v1consortium.services.AddMVRViolationResponse\x12y\n" +
-	"\x12UpdateMVRViolation\x120.v1consortium.services.UpdateMVRViolationRequest\x1a1.v1consortium.services.UpdateMVRViolationResponse\x12v\n" +
-	"\x11ListMVRViolations\x12/.v1consortium.services.ListMVRViolationsRequest\x1a0.v1consortium.services.ListMVRViolationsResponse\x12\x91\x01\n" +
-	"\x1aEnableContinuousMonitoring\x128.v1consortium.services.EnableContinuousMonitoringRequest\x1a9.v1consortium.services.EnableContinuousMonitoringResponse\x12|\n" +
-	"\x13GetMonitoringStatus\x121.v1consortium.services.GetMonitoringStatusRequest\x1a2.v1consortium.services.GetMonitoringStatusResponse\x12p\n" +
-	"\x0fGetMVRAnalytics\x12-.v1consortium.services.GetMVRAnalyticsRequest\x1a..v1consortium.services.GetMVRAnalyticsResponse\x12s\n" +
-	"\x10SyncProviderData\x12..v1consortium.services.SyncProviderDataRequest\x1a/.v1consortium.services.SyncProviderDataResponseB\rZ\vservices/v1b\x06proto3"
+	"MVRService\x12\x9b\x01\n" +
+	"\bOrderMVR\x12&.v1consortium.services.OrderMVRRequest\x1a'.v1consortium.services.OrderMVRResponse\">\x82\xd3\xe4\x93\x028:\x01*\"3/api/v1/organizations/{organization_id}/mvr-reports\x12\x90\x01\n" +
+	"\fGetMVRReport\x12*.v1consortium.services.GetMVRReportRequest\x1a+.v1consortium.services.GetMVRReportResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/mvr-reports/{report_id}\x12\x9c\x01\n" +
+	"\x0fUpdateMVRReport\x12-.v1consortium.services.UpdateMVRReportRequest\x1a..v1consortium.services.UpdateMVRReportResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\x1a\x1f/api/v1/mvr-reports/{report_id}\x12\xaa\x01\n" +
+	"\x0eListMVRReports\x12,.v1consortium.services.ListMVRReportsRequest\x1a-.v1consortium.services.ListMVRReportsResponse\";\x82\xd3\xe4\x93\x025\x123/api/v1/organizations/{organization_id}/mvr-reports\x12\xa7\x01\n" +
+	"\x0fAddMVRViolation\x12-.v1consortium.services.AddMVRViolationRequest\x1a..v1consortium.services.AddMVRViolationResponse\"5\x82\xd3\xe4\x93\x02/:\x01*\"*/api/v1/mvr-reports/{report_id}/violations\x12\xab\x01\n" +
+	"\x12UpdateMVRViolation\x120.v1consortium.services.UpdateMVRViolationRequest\x1a1.v1consortium.services.UpdateMVRViolationResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\x1a%/api/v1/mvr-violations/{violation_id}\x12\xaa\x01\n" +
+	"\x11ListMVRViolations\x12/.v1consortium.services.ListMVRViolationsRequest\x1a0.v1consortium.services.ListMVRViolationsResponse\"2\x82\xd3\xe4\x93\x02,\x12*/api/v1/mvr-reports/{report_id}/violations\x12\xd4\x01\n" +
+	"\x1aEnableContinuousMonitoring\x128.v1consortium.services.EnableContinuousMonitoringRequest\x1a9.v1consortium.services.EnableContinuousMonitoringResponse\"A\x82\xd3\xe4\x93\x02;:\x01*\"6/api/v1/organizations/{organization_id}/mvr-monitoring\x12\xbc\x01\n" +
+	"\x13GetMonitoringStatus\x121.v1consortium.services.GetMonitoringStatusRequest\x1a2.v1consortium.services.GetMonitoringStatusResponse\">\x82\xd3\xe4\x93\x028\x126/api/v1/organizations/{organization_id}/mvr-monitoring\x12\xaf\x01\n" +
+	"\x0fGetMVRAnalytics\x12-.v1consortium.services.GetMVRAnalyticsRequest\x1a..v1consortium.services.GetMVRAnalyticsResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/mvr-analytics\x12\xb0\x01\n" +
+	"\x10SyncProviderData\x12..v1consortium.services.SyncProviderDataRequest\x1a/.v1consortium.services.SyncProviderDataResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/api/v1/organizations/{organization_id}/mvr-syncB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_mvr_proto_rawDescOnce sync.Once
@@ -1793,27 +1792,27 @@ var file_services_v1_mvr_proto_goTypes = []any{
 	(*GetMVRAnalyticsResponse)(nil),            // 20: v1consortium.services.GetMVRAnalyticsResponse
 	(*SyncProviderDataRequest)(nil),            // 21: v1consortium.services.SyncProviderDataRequest
 	(*SyncProviderDataResponse)(nil),           // 22: v1consortium.services.SyncProviderDataResponse
-	(*v1consortium_backend.MvrReports)(nil),    // 23: v1consortium.backend.MvrReports
+	(*pbentity.MvrReports)(nil),                // 23: pbentity.MvrReports
 	(*timestamppb.Timestamp)(nil),              // 24: google.protobuf.Timestamp
-	(*v1consortium_backend.MvrViolations)(nil), // 25: v1consortium.backend.MvrViolations
+	(*pbentity.MvrViolations)(nil),             // 25: pbentity.MvrViolations
 }
 var file_services_v1_mvr_proto_depIdxs = []int32{
-	23, // 0: v1consortium.services.OrderMVRResponse.report:type_name -> v1consortium.backend.MvrReports
+	23, // 0: v1consortium.services.OrderMVRResponse.report:type_name -> pbentity.MvrReports
 	24, // 1: v1consortium.services.OrderMVRResponse.estimated_completion:type_name -> google.protobuf.Timestamp
-	23, // 2: v1consortium.services.GetMVRReportResponse.report:type_name -> v1consortium.backend.MvrReports
-	25, // 3: v1consortium.services.GetMVRReportResponse.violations:type_name -> v1consortium.backend.MvrViolations
+	23, // 2: v1consortium.services.GetMVRReportResponse.report:type_name -> pbentity.MvrReports
+	25, // 3: v1consortium.services.GetMVRReportResponse.violations:type_name -> pbentity.MvrViolations
 	24, // 4: v1consortium.services.UpdateMVRReportRequest.report_date:type_name -> google.protobuf.Timestamp
-	23, // 5: v1consortium.services.UpdateMVRReportResponse.report:type_name -> v1consortium.backend.MvrReports
+	23, // 5: v1consortium.services.UpdateMVRReportResponse.report:type_name -> pbentity.MvrReports
 	24, // 6: v1consortium.services.ListMVRReportsRequest.start_date:type_name -> google.protobuf.Timestamp
 	24, // 7: v1consortium.services.ListMVRReportsRequest.end_date:type_name -> google.protobuf.Timestamp
-	23, // 8: v1consortium.services.ListMVRReportsResponse.reports:type_name -> v1consortium.backend.MvrReports
+	23, // 8: v1consortium.services.ListMVRReportsResponse.reports:type_name -> pbentity.MvrReports
 	24, // 9: v1consortium.services.AddMVRViolationRequest.violation_date:type_name -> google.protobuf.Timestamp
-	25, // 10: v1consortium.services.AddMVRViolationResponse.violation:type_name -> v1consortium.backend.MvrViolations
+	25, // 10: v1consortium.services.AddMVRViolationResponse.violation:type_name -> pbentity.MvrViolations
 	24, // 11: v1consortium.services.UpdateMVRViolationRequest.resolution_date:type_name -> google.protobuf.Timestamp
-	25, // 12: v1consortium.services.UpdateMVRViolationResponse.violation:type_name -> v1consortium.backend.MvrViolations
+	25, // 12: v1consortium.services.UpdateMVRViolationResponse.violation:type_name -> pbentity.MvrViolations
 	24, // 13: v1consortium.services.ListMVRViolationsRequest.start_date:type_name -> google.protobuf.Timestamp
 	24, // 14: v1consortium.services.ListMVRViolationsRequest.end_date:type_name -> google.protobuf.Timestamp
-	25, // 15: v1consortium.services.ListMVRViolationsResponse.violations:type_name -> v1consortium.backend.MvrViolations
+	25, // 15: v1consortium.services.ListMVRViolationsResponse.violations:type_name -> pbentity.MvrViolations
 	24, // 16: v1consortium.services.GetMonitoringStatusResponse.last_check_date:type_name -> google.protobuf.Timestamp
 	24, // 17: v1consortium.services.GetMonitoringStatusResponse.next_check_date:type_name -> google.protobuf.Timestamp
 	24, // 18: v1consortium.services.GetMVRAnalyticsRequest.start_date:type_name -> google.protobuf.Timestamp

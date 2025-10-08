@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/mvr_violations.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -203,7 +203,7 @@ var File_pbentity_mvr_violations_proto protoreflect.FileDescriptor
 
 const file_pbentity_mvr_violations_proto_rawDesc = "" +
 	"\n" +
-	"\x1dpbentity/mvr_violations.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb3\x05\n" +
+	"\x1dpbentity/mvr_violations.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb3\x05\n" +
 	"\rMvrViolations\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12 \n" +
 	"\vMvrReportId\x18\x02 \x01(\tR\vMvrReportId\x12@\n" +
@@ -228,7 +228,7 @@ const file_pbentity_mvr_violations_proto_rawDesc = "" +
 	"\n" +
 	"AffectsCdl\x18\x10 \x01(\bR\n" +
 	"AffectsCdl\x128\n" +
-	"\tCreatedAt\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tCreatedAt\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_mvr_violations_proto_rawDescOnce sync.Once
@@ -244,13 +244,13 @@ func file_pbentity_mvr_violations_proto_rawDescGZIP() []byte {
 
 var file_pbentity_mvr_violations_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_mvr_violations_proto_goTypes = []any{
-	(*MvrViolations)(nil),         // 0: v1consortium.backend.MvrViolations
+	(*MvrViolations)(nil),         // 0: pbentity.MvrViolations
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_mvr_violations_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.MvrViolations.ViolationDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.MvrViolations.ConvictionDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.MvrViolations.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.MvrViolations.ViolationDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.MvrViolations.ConvictionDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.MvrViolations.CreatedAt:type_name -> google.protobuf.Timestamp
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

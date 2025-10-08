@@ -7,6 +7,8 @@ import (
 
 	"github.com/gogf/gf/v2/os/gctx"
 
+	_ "github.com/gogf/gf/contrib/drivers/pgsql/v2"
+
 	"v1consortium/internal/cmd"
 )
 

@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/dot_physicals.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -291,7 +291,7 @@ var File_pbentity_dot_physicals_proto protoreflect.FileDescriptor
 
 const file_pbentity_dot_physicals_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/dot_physicals.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbe\n" +
+	"\x1cpbentity/dot_physicals.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbe\n" +
 	"\n" +
 	"\fDotPhysicals\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
@@ -328,7 +328,7 @@ const file_pbentity_dot_physicals_proto_rawDesc = "" +
 	"\x15CertificateUploadedAt\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\x15CertificateUploadedAt\x12\x14\n" +
 	"\x05Notes\x18\x1a \x01(\tR\x05Notes\x128\n" +
 	"\tCreatedAt\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x1c \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x1c \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_dot_physicals_proto_rawDescOnce sync.Once
@@ -344,18 +344,18 @@ func file_pbentity_dot_physicals_proto_rawDescGZIP() []byte {
 
 var file_pbentity_dot_physicals_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_dot_physicals_proto_goTypes = []any{
-	(*DotPhysicals)(nil),          // 0: v1consortium.backend.DotPhysicals
+	(*DotPhysicals)(nil),          // 0: pbentity.DotPhysicals
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_dot_physicals_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.DotPhysicals.ScheduledDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.DotPhysicals.ExaminationDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.DotPhysicals.CertificateIssueDate:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.DotPhysicals.CertificateExpirationDate:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.DotPhysicals.NextRequiredDate:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.DotPhysicals.CertificateUploadedAt:type_name -> google.protobuf.Timestamp
-	1, // 6: v1consortium.backend.DotPhysicals.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 7: v1consortium.backend.DotPhysicals.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.DotPhysicals.ScheduledDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.DotPhysicals.ExaminationDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.DotPhysicals.CertificateIssueDate:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.DotPhysicals.CertificateExpirationDate:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.DotPhysicals.NextRequiredDate:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.DotPhysicals.CertificateUploadedAt:type_name -> google.protobuf.Timestamp
+	1, // 6: pbentity.DotPhysicals.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 7: pbentity.DotPhysicals.UpdatedAt:type_name -> google.protobuf.Timestamp
 	8, // [8:8] is the sub-list for method output_type
 	8, // [8:8] is the sub-list for method input_type
 	8, // [8:8] is the sub-list for extension type_name

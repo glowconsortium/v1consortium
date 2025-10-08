@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/random_testing_pools.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -131,7 +131,7 @@ var File_pbentity_random_testing_pools_proto protoreflect.FileDescriptor
 
 const file_pbentity_random_testing_pools_proto_rawDesc = "" +
 	"\n" +
-	"#pbentity/random_testing_pools.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb0\x02\n" +
+	"#pbentity/random_testing_pools.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb0\x02\n" +
 	"\x12RandomTestingPools\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x1c\n" +
@@ -140,7 +140,7 @@ const file_pbentity_random_testing_pools_proto_rawDesc = "" +
 	"\vDescription\x18\x05 \x01(\tR\vDescription\x12\x1a\n" +
 	"\bIsActive\x18\x06 \x01(\bR\bIsActive\x128\n" +
 	"\tCreatedAt\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_random_testing_pools_proto_rawDescOnce sync.Once
@@ -156,12 +156,12 @@ func file_pbentity_random_testing_pools_proto_rawDescGZIP() []byte {
 
 var file_pbentity_random_testing_pools_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_random_testing_pools_proto_goTypes = []any{
-	(*RandomTestingPools)(nil),    // 0: v1consortium.backend.RandomTestingPools
+	(*RandomTestingPools)(nil),    // 0: pbentity.RandomTestingPools
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_random_testing_pools_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.RandomTestingPools.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.RandomTestingPools.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.RandomTestingPools.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.RandomTestingPools.UpdatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

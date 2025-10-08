@@ -8,17 +8,23 @@ import (
 	"v1consortium/internal/controller/services"
 
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
-	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/frame/g"
 	"google.golang.org/grpc"
 )
 
-func SetupInternalRoutes(ctx context.Context, s *ghttp.Server) {
+func SetupInternalStartupData(ctx context.Context) {
 
 	internalSetup := internalsetup.NewInternalSetupConfig(ctx)
 
 	if internalSetup.Enabled {
-		internalSetup.SetupOrganizations()
-		internalSetup.SetupUsers()
+		err := internalSetup.SetupOrganizations()
+		if err != nil {
+			g.Log().Errorf(ctx, "Failed to setup organizations: %v", err)
+		}
+		err = internalSetup.SetupUsers()
+		if err != nil {
+			g.Log().Errorf(ctx, "Failed to setup users: %v", err)
+		}
 	}
 }
 

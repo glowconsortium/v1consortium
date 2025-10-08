@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/background_check_findings.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -171,7 +171,7 @@ var File_pbentity_background_check_findings_proto protoreflect.FileDescriptor
 
 const file_pbentity_background_check_findings_proto_rawDesc = "" +
 	"\n" +
-	"(pbentity/background_check_findings.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa9\x04\n" +
+	"(pbentity/background_check_findings.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa9\x04\n" +
 	"\x17BackgroundCheckFindings\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12,\n" +
 	"\x11BackgroundCheckId\x18\x02 \x01(\tR\x11BackgroundCheckId\x12 \n" +
@@ -190,7 +190,7 @@ const file_pbentity_background_check_findings_proto_rawDesc = "" +
 	"JobRelated\x12$\n" +
 	"\rDisqualifying\x18\v \x01(\bR\rDisqualifying\x12J\n" +
 	" RequiresIndividualizedAssessment\x18\f \x01(\bR RequiresIndividualizedAssessment\x128\n" +
-	"\tCreatedAt\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tCreatedAt\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_background_check_findings_proto_rawDescOnce sync.Once
@@ -206,12 +206,12 @@ func file_pbentity_background_check_findings_proto_rawDescGZIP() []byte {
 
 var file_pbentity_background_check_findings_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_background_check_findings_proto_goTypes = []any{
-	(*BackgroundCheckFindings)(nil), // 0: v1consortium.backend.BackgroundCheckFindings
+	(*BackgroundCheckFindings)(nil), // 0: pbentity.BackgroundCheckFindings
 	(*timestamppb.Timestamp)(nil),   // 1: google.protobuf.Timestamp
 }
 var file_pbentity_background_check_findings_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.BackgroundCheckFindings.DateOfRecord:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.BackgroundCheckFindings.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.BackgroundCheckFindings.DateOfRecord:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.BackgroundCheckFindings.CreatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

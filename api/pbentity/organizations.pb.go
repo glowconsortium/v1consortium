@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/organizations.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -235,7 +235,7 @@ var File_pbentity_organizations_proto protoreflect.FileDescriptor
 
 const file_pbentity_organizations_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/organizations.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf7\x04\n" +
+	"\x1cpbentity/organizations.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf7\x04\n" +
 	"\rOrganizations\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x12\n" +
@@ -258,7 +258,7 @@ const file_pbentity_organizations_proto_rawDesc = "" +
 	"\tCreatedAt\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
 	"\tUpdatedAt\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAt\x12\x1a\n" +
 	"\bIsActive\x18\x14 \x01(\bR\bIsActive\x12\x1a\n" +
-	"\bSettings\x18\x15 \x01(\tR\bSettingsB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\bSettings\x18\x15 \x01(\tR\bSettingsB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_organizations_proto_rawDescOnce sync.Once
@@ -274,12 +274,12 @@ func file_pbentity_organizations_proto_rawDescGZIP() []byte {
 
 var file_pbentity_organizations_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_organizations_proto_goTypes = []any{
-	(*Organizations)(nil),         // 0: v1consortium.backend.Organizations
+	(*Organizations)(nil),         // 0: pbentity.Organizations
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_organizations_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.Organizations.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.Organizations.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.Organizations.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.Organizations.UpdatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

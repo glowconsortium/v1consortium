@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/dot_physicals.proto";
+
+option go_package = "services/v1";
 
 // DOT Physical Management Messages
 message ScheduleDOTPhysicalRequest {
@@ -20,7 +21,7 @@ message ScheduleDOTPhysicalRequest {
 }
 
 message ScheduleDOTPhysicalResponse {
-  v1consortium.backend.DotPhysicals physical = 1;
+  pbentity.DotPhysicals physical = 1;
   string appointment_confirmation = 2;
   string examiner_name = 3;
   string facility_name = 4;
@@ -32,7 +33,7 @@ message GetDOTPhysicalRequest {
 }
 
 message GetDOTPhysicalResponse {
-  v1consortium.backend.DotPhysicals physical = 1;
+  pbentity.DotPhysicals physical = 1;
 }
 
 message UpdateDOTPhysicalRequest {
@@ -52,7 +53,7 @@ message UpdateDOTPhysicalRequest {
 }
 
 message UpdateDOTPhysicalResponse {
-  v1consortium.backend.DotPhysicals physical = 1;
+  pbentity.DotPhysicals physical = 1;
 }
 
 message ListDOTPhysicalsRequest {
@@ -68,7 +69,7 @@ message ListDOTPhysicalsRequest {
 }
 
 message ListDOTPhysicalsResponse {
-  repeated v1consortium.backend.DotPhysicals physicals = 1;
+  repeated pbentity.DotPhysicals physicals = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -202,21 +203,68 @@ message SetExpirationReminderResponse {
 // DOT Physical Service Definition
 service DOTPhysicalService {
   // DOT Physical Management
-  rpc ScheduleDOTPhysical(ScheduleDOTPhysicalRequest) returns (ScheduleDOTPhysicalResponse);
-  rpc GetDOTPhysical(GetDOTPhysicalRequest) returns (GetDOTPhysicalResponse);
-  rpc UpdateDOTPhysical(UpdateDOTPhysicalRequest) returns (UpdateDOTPhysicalResponse);
-  rpc ListDOTPhysicals(ListDOTPhysicalsRequest) returns (ListDOTPhysicalsResponse);
-  
+  rpc ScheduleDOTPhysical(ScheduleDOTPhysicalRequest) returns (ScheduleDOTPhysicalResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/dot-physicals"
+      body: "*"
+    };
+  }
+
+  rpc GetDOTPhysical(GetDOTPhysicalRequest) returns (GetDOTPhysicalResponse) {
+    option (google.api.http) = {get: "/api/v1/dot-physicals/{physical_id}"};
+  }
+
+  rpc UpdateDOTPhysical(UpdateDOTPhysicalRequest) returns (UpdateDOTPhysicalResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/dot-physicals/{physical_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListDOTPhysicals(ListDOTPhysicalsRequest) returns (ListDOTPhysicalsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/dot-physicals"};
+  }
+
   // Medical Examiner Management
-  rpc RegisterMedicalExaminer(RegisterMedicalExaminerRequest) returns (RegisterMedicalExaminerResponse);
-  rpc GetMedicalExaminer(GetMedicalExaminerRequest) returns (GetMedicalExaminerResponse);
-  rpc ListMedicalExaminers(ListMedicalExaminersRequest) returns (ListMedicalExaminersResponse);
-  
+  rpc RegisterMedicalExaminer(RegisterMedicalExaminerRequest) returns (RegisterMedicalExaminerResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/medical-examiners"
+      body: "*"
+    };
+  }
+
+  rpc GetMedicalExaminer(GetMedicalExaminerRequest) returns (GetMedicalExaminerResponse) {
+    option (google.api.http) = {get: "/api/v1/medical-examiners/{examiner_id}"};
+  }
+
+  rpc ListMedicalExaminers(ListMedicalExaminersRequest) returns (ListMedicalExaminersResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/medical-examiners"};
+  }
+
   // Certificate Management
-  rpc GenerateCertificate(GenerateCertificateRequest) returns (GenerateCertificateResponse);
-  rpc ValidateCertificate(ValidateCertificateRequest) returns (ValidateCertificateResponse);
-  
+  rpc GenerateCertificate(GenerateCertificateRequest) returns (GenerateCertificateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-physicals/{physical_id}/certificate"
+      body: "*"
+    };
+  }
+
+  rpc ValidateCertificate(ValidateCertificateRequest) returns (ValidateCertificateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-certificates/validate"
+      body: "*"
+    };
+  }
+
   // Expiration Monitoring
-  rpc GetExpiringCertificates(GetExpiringCertificatesRequest) returns (GetExpiringCertificatesResponse);
-  rpc SetExpirationReminder(SetExpirationReminderRequest) returns (SetExpirationReminderResponse);
+  rpc GetExpiringCertificates(GetExpiringCertificatesRequest) returns (GetExpiringCertificatesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/dot-certificates/expiring"};
+  }
+
+  rpc SetExpirationReminder(SetExpirationReminderRequest) returns (SetExpirationReminderResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-physicals/{physical_id}/expiration-reminder"
+      body: "*"
+    };
+  }
 }

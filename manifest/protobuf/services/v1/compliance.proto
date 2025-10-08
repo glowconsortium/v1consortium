@@ -2,12 +2,13 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "pbentity/compliance_status.proto";
 import "pbentity/certificates.proto";
+import "pbentity/compliance_status.proto";
 import "pbentity/saved_reports.proto";
+
+option go_package = "services/v1";
 
 // Compliance Status Management
 message GetComplianceStatusRequest {
@@ -28,7 +29,7 @@ message ComplianceMetrics {
 }
 
 message GetComplianceStatusResponse {
-  v1consortium.backend.ComplianceStatus status = 1;
+  pbentity.ComplianceStatus status = 1;
   ComplianceMetrics metrics = 2;
 }
 
@@ -39,7 +40,7 @@ message UpdateComplianceStatusRequest {
 }
 
 message UpdateComplianceStatusResponse {
-  v1consortium.backend.ComplianceStatus status = 1;
+  pbentity.ComplianceStatus status = 1;
   ComplianceMetrics updated_metrics = 2;
 }
 
@@ -52,7 +53,7 @@ message ListComplianceStatusRequest {
 }
 
 message ListComplianceStatusResponse {
-  repeated v1consortium.backend.ComplianceStatus statuses = 1;
+  repeated pbentity.ComplianceStatus statuses = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -68,7 +69,7 @@ message GenerateComplianceCertificateRequest {
 }
 
 message GenerateComplianceCertificateResponse {
-  v1consortium.backend.Certificates certificate = 1;
+  pbentity.Certificates certificate = 1;
   string download_url = 2;
 }
 
@@ -77,7 +78,7 @@ message GetCertificateRequest {
 }
 
 message GetCertificateResponse {
-  v1consortium.backend.Certificates certificate = 1;
+  pbentity.Certificates certificate = 1;
   string download_url = 2;
 }
 
@@ -91,7 +92,7 @@ message ListCertificatesRequest {
 }
 
 message ListCertificatesResponse {
-  repeated v1consortium.backend.Certificates certificates = 1;
+  repeated pbentity.Certificates certificates = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -119,7 +120,7 @@ message GenerateComplianceReportRequest {
 }
 
 message GenerateComplianceReportResponse {
-  v1consortium.backend.SavedReports report = 1;
+  pbentity.SavedReports report = 1;
   string download_url = 2;
 }
 
@@ -128,7 +129,7 @@ message GetSavedReportRequest {
 }
 
 message GetSavedReportResponse {
-  v1consortium.backend.SavedReports report = 1;
+  pbentity.SavedReports report = 1;
   string download_url = 2;
 }
 
@@ -143,7 +144,7 @@ message ListSavedReportsRequest {
 }
 
 message ListSavedReportsResponse {
-  repeated v1consortium.backend.SavedReports reports = 1;
+  repeated pbentity.SavedReports reports = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -240,26 +241,75 @@ message GetComplianceAuditTrailResponse {
 // Compliance Service Definition
 service ComplianceService {
   // Compliance Status Management
-  rpc GetComplianceStatus(GetComplianceStatusRequest) returns (GetComplianceStatusResponse);
-  rpc UpdateComplianceStatus(UpdateComplianceStatusRequest) returns (UpdateComplianceStatusResponse);
-  rpc ListComplianceStatus(ListComplianceStatusRequest) returns (ListComplianceStatusResponse);
-  
+  rpc GetComplianceStatus(GetComplianceStatusRequest) returns (GetComplianceStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/compliance-status"};
+  }
+
+  rpc UpdateComplianceStatus(UpdateComplianceStatusRequest) returns (UpdateComplianceStatusResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}/compliance-status"
+      body: "*"
+    };
+  }
+
+  rpc ListComplianceStatus(ListComplianceStatusRequest) returns (ListComplianceStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/compliance-status"};
+  }
+
   // Certificate Management
-  rpc GenerateComplianceCertificate(GenerateComplianceCertificateRequest) returns (GenerateComplianceCertificateResponse);
-  rpc GetCertificate(GetCertificateRequest) returns (GetCertificateResponse);
-  rpc ListCertificates(ListCertificatesRequest) returns (ListCertificatesResponse);
-  rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
-  
+  rpc GenerateComplianceCertificate(GenerateComplianceCertificateRequest) returns (GenerateComplianceCertificateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/certificates"
+      body: "*"
+    };
+  }
+
+  rpc GetCertificate(GetCertificateRequest) returns (GetCertificateResponse) {
+    option (google.api.http) = {get: "/api/v1/certificates/{certificate_id}"};
+  }
+
+  rpc ListCertificates(ListCertificatesRequest) returns (ListCertificatesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/certificates"};
+  }
+
+  rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/certificates/{certificate_id}"
+      body: "*"
+    };
+  }
+
   // Reporting
-  rpc GenerateComplianceReport(GenerateComplianceReportRequest) returns (GenerateComplianceReportResponse);
-  rpc GetSavedReport(GetSavedReportRequest) returns (GetSavedReportResponse);
-  rpc ListSavedReports(ListSavedReportsRequest) returns (ListSavedReportsResponse);
-  rpc DeleteSavedReport(DeleteSavedReportRequest) returns (DeleteSavedReportResponse);
-  
+  rpc GenerateComplianceReport(GenerateComplianceReportRequest) returns (GenerateComplianceReportResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/compliance-reports"
+      body: "*"
+    };
+  }
+
+  rpc GetSavedReport(GetSavedReportRequest) returns (GetSavedReportResponse) {
+    option (google.api.http) = {get: "/api/v1/reports/{report_id}"};
+  }
+
+  rpc ListSavedReports(ListSavedReportsRequest) returns (ListSavedReportsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/reports"};
+  }
+
+  rpc DeleteSavedReport(DeleteSavedReportRequest) returns (DeleteSavedReportResponse) {
+    option (google.api.http) = {delete: "/api/v1/reports/{report_id}"};
+  }
+
   // Compliance Monitoring
-  rpc GetComplianceAlerts(GetComplianceAlertsRequest) returns (GetComplianceAlertsResponse);
-  rpc GetComplianceAnalytics(GetComplianceAnalyticsRequest) returns (GetComplianceAnalyticsResponse);
-  
+  rpc GetComplianceAlerts(GetComplianceAlertsRequest) returns (GetComplianceAlertsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/compliance-alerts"};
+  }
+
+  rpc GetComplianceAnalytics(GetComplianceAnalyticsRequest) returns (GetComplianceAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/compliance-analytics"};
+  }
+
   // Audit and Tracking
-  rpc GetComplianceAuditTrail(GetComplianceAuditTrailRequest) returns (GetComplianceAuditTrailResponse);
+  rpc GetComplianceAuditTrail(GetComplianceAuditTrailRequest) returns (GetComplianceAuditTrailResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/compliance-audit-trail"};
+  }
 }

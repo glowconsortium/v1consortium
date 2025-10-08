@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/random_selections.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -155,7 +155,7 @@ var File_pbentity_random_selections_proto protoreflect.FileDescriptor
 
 const file_pbentity_random_selections_proto_rawDesc = "" +
 	"\n" +
-	" pbentity/random_selections.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x03\n" +
+	" pbentity/random_selections.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x03\n" +
 	"\x10RandomSelections\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06PoolId\x18\x02 \x01(\tR\x06PoolId\x12@\n" +
@@ -168,7 +168,7 @@ const file_pbentity_random_selections_proto_rawDesc = "" +
 	"\x05Notes\x18\t \x01(\tR\x05Notes\x128\n" +
 	"\tCreatedAt\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x12\x1c\n" +
-	"\tCreatedBy\x18\v \x01(\tR\tCreatedByB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tCreatedBy\x18\v \x01(\tR\tCreatedByB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_random_selections_proto_rawDescOnce sync.Once
@@ -184,12 +184,12 @@ func file_pbentity_random_selections_proto_rawDescGZIP() []byte {
 
 var file_pbentity_random_selections_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_random_selections_proto_goTypes = []any{
-	(*RandomSelections)(nil),      // 0: v1consortium.backend.RandomSelections
+	(*RandomSelections)(nil),      // 0: pbentity.RandomSelections
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_random_selections_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.RandomSelections.SelectionDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.RandomSelections.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.RandomSelections.SelectionDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.RandomSelections.CreatedAt:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

@@ -26,6 +26,7 @@ scripts
 web-pkg
 web-int-ui/node_modules
 web-ui/node_modules
+node_modules
 
 # Output
 .output
@@ -50,3 +51,5 @@ src/lib/paraglide
 
 *storybook.log
 storybook-static
+
+node_modules

@@ -1,0 +1,16 @@
+version: v2
+managed:
+  enabled: true
+  disable:
+    - file_option: go_package
+      module: buf.build/googleapis/googleapis
+plugins:
+  - local: protoc-gen-es
+    include_imports: true
+    out: v1-consortium-web-pkg/src/lib/gen
+    opt: target=ts
+  - local: protoc-gen-connect-query
+    out: v1-consortium-web-pkg/src/lib/gen
+    opt: target=ts
+inputs:
+  - directory: manifest/protobuf

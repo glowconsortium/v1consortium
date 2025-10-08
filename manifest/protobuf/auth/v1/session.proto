@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package v1consortium.auth;
 
-option go_package = "auth/v1";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "auth/v1";
 
 // Session Management Messages
 message CreateSessionRequest {
@@ -132,7 +132,7 @@ service SessionService {
   rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse);
   rpc GetActiveSessions(GetActiveSessionsRequest) returns (GetActiveSessionsResponse);
   rpc RevokeAllSessions(RevokeAllSessionsRequest) returns (RevokeAllSessionsResponse);
-  
+
   // Token Management
   rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);

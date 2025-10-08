@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/documents.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -299,7 +299,7 @@ var File_pbentity_documents_proto protoreflect.FileDescriptor
 
 const file_pbentity_documents_proto_rawDesc = "" +
 	"\n" +
-	"\x18pbentity/documents.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\b\n" +
+	"\x18pbentity/documents.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\b\n" +
 	"\tDocuments\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -336,7 +336,7 @@ const file_pbentity_documents_proto_rawDesc = "" +
 	"\x10ParentDocumentId\x18\x1a \x01(\tR\x10ParentDocumentId\x12*\n" +
 	"\x10IsCurrentVersion\x18\x1b \x01(\bR\x10IsCurrentVersion\x128\n" +
 	"\tCreatedAt\x18\x1c \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_documents_proto_rawDescOnce sync.Once
@@ -352,15 +352,15 @@ func file_pbentity_documents_proto_rawDescGZIP() []byte {
 
 var file_pbentity_documents_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_documents_proto_goTypes = []any{
-	(*Documents)(nil),             // 0: v1consortium.backend.Documents
+	(*Documents)(nil),             // 0: pbentity.Documents
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_documents_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.Documents.UploadedAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.Documents.AutoDeleteDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.Documents.LastAccessedAt:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.Documents.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.Documents.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.Documents.UploadedAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.Documents.AutoDeleteDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.Documents.LastAccessedAt:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.Documents.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.Documents.UpdatedAt:type_name -> google.protobuf.Timestamp
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

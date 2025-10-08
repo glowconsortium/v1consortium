@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/user_profiles.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -283,7 +283,7 @@ var File_pbentity_user_profiles_proto protoreflect.FileDescriptor
 
 const file_pbentity_user_profiles_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/user_profiles.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\x84\t\n" +
+	"\x1cpbentity/user_profiles.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\x84\t\n" +
 	"\fUserProfiles\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x12\n" +
@@ -316,7 +316,7 @@ const file_pbentity_user_profiles_proto_rawDesc = "" +
 	"\x1cEmergencyContactRelationship\x18\x18 \x01(\tR\x1cEmergencyContactRelationship\x128\n" +
 	"\tCreatedAt\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
 	"\tUpdatedAt\x18\x1a \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAt\x12<\n" +
-	"\vLastLoginAt\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampR\vLastLoginAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\vLastLoginAt\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampR\vLastLoginAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_user_profiles_proto_rawDescOnce sync.Once
@@ -332,17 +332,17 @@ func file_pbentity_user_profiles_proto_rawDescGZIP() []byte {
 
 var file_pbentity_user_profiles_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_user_profiles_proto_goTypes = []any{
-	(*UserProfiles)(nil),          // 0: v1consortium.backend.UserProfiles
+	(*UserProfiles)(nil),          // 0: pbentity.UserProfiles
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_user_profiles_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.UserProfiles.DateOfBirth:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.UserProfiles.HireDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.UserProfiles.TerminationDate:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.UserProfiles.CdlExpirationDate:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.UserProfiles.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.UserProfiles.UpdatedAt:type_name -> google.protobuf.Timestamp
-	1, // 6: v1consortium.backend.UserProfiles.LastLoginAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.UserProfiles.DateOfBirth:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.UserProfiles.HireDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.UserProfiles.TerminationDate:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.UserProfiles.CdlExpirationDate:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.UserProfiles.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.UserProfiles.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 6: pbentity.UserProfiles.LastLoginAt:type_name -> google.protobuf.Timestamp
 	7, // [7:7] is the sub-list for method output_type
 	7, // [7:7] is the sub-list for method input_type
 	7, // [7:7] is the sub-list for extension type_name

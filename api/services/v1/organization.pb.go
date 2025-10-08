@@ -10,9 +10,9 @@ import (
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+	pbentity "v1consortium/api/pbentity"
 
-	v1consortium_backend "v1consortium/api/pbentity"
-
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -199,8 +199,8 @@ func (x *CreateOrganizationRequest) GetSettings() string {
 }
 
 type CreateOrganizationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Organization  *v1consortium_backend.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Organization  *pbentity.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -235,7 +235,7 @@ func (*CreateOrganizationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateOrganizationResponse) GetOrganization() *v1consortium_backend.Organizations {
+func (x *CreateOrganizationResponse) GetOrganization() *pbentity.Organizations {
 	if x != nil {
 		return x.Organization
 	}
@@ -287,8 +287,8 @@ func (x *GetOrganizationRequest) GetOrganizationId() string {
 }
 
 type GetOrganizationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Organization  *v1consortium_backend.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Organization  *pbentity.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -323,7 +323,7 @@ func (*GetOrganizationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetOrganizationResponse) GetOrganization() *v1consortium_backend.Organizations {
+func (x *GetOrganizationResponse) GetOrganization() *pbentity.Organizations {
 	if x != nil {
 		return x.Organization
 	}
@@ -495,8 +495,8 @@ func (x *UpdateOrganizationRequest) GetSettings() string {
 }
 
 type UpdateOrganizationResponse struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Organization  *v1consortium_backend.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Organization  *pbentity.Organizations `protobuf:"bytes,1,opt,name=organization,proto3" json:"organization,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -531,7 +531,7 @@ func (*UpdateOrganizationResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateOrganizationResponse) GetOrganization() *v1consortium_backend.Organizations {
+func (x *UpdateOrganizationResponse) GetOrganization() *pbentity.Organizations {
 	if x != nil {
 		return x.Organization
 	}
@@ -615,11 +615,11 @@ func (x *ListOrganizationsRequest) GetSearch() string {
 }
 
 type ListOrganizationsResponse struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Organizations []*v1consortium_backend.Organizations `protobuf:"bytes,1,rep,name=organizations,proto3" json:"organizations,omitempty"`
-	TotalCount    int32                                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                 `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Organizations []*pbentity.Organizations `protobuf:"bytes,1,rep,name=organizations,proto3" json:"organizations,omitempty"`
+	TotalCount    int32                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                     `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                     `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -654,7 +654,7 @@ func (*ListOrganizationsResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ListOrganizationsResponse) GetOrganizations() []*v1consortium_backend.Organizations {
+func (x *ListOrganizationsResponse) GetOrganizations() []*pbentity.Organizations {
 	if x != nil {
 		return x.Organizations
 	}
@@ -984,8 +984,8 @@ func (x *CreateUserRequest) GetEmergencyContactRelationship() string {
 }
 
 type CreateUserResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	User          *v1consortium_backend.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *pbentity.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1020,7 +1020,7 @@ func (*CreateUserResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *CreateUserResponse) GetUser() *v1consortium_backend.UserProfiles {
+func (x *CreateUserResponse) GetUser() *pbentity.UserProfiles {
 	if x != nil {
 		return x.User
 	}
@@ -1072,8 +1072,8 @@ func (x *GetUserRequest) GetUserId() string {
 }
 
 type GetUserResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	User          *v1consortium_backend.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *pbentity.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1108,7 +1108,7 @@ func (*GetUserResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *GetUserResponse) GetUser() *v1consortium_backend.UserProfiles {
+func (x *GetUserResponse) GetUser() *pbentity.UserProfiles {
 	if x != nil {
 		return x.User
 	}
@@ -1336,8 +1336,8 @@ func (x *UpdateUserRequest) GetEmergencyContactRelationship() string {
 }
 
 type UpdateUserResponse struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	User          *v1consortium_backend.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *pbentity.UserProfiles `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1372,7 +1372,7 @@ func (*UpdateUserResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *UpdateUserResponse) GetUser() *v1consortium_backend.UserProfiles {
+func (x *UpdateUserResponse) GetUser() *pbentity.UserProfiles {
 	if x != nil {
 		return x.User
 	}
@@ -1480,11 +1480,11 @@ func (x *ListUsersRequest) GetDepartment() string {
 }
 
 type ListUsersResponse struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Users         []*v1consortium_backend.UserProfiles `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
-	TotalCount    int32                                `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	Page          int32                                `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Users         []*pbentity.UserProfiles `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	TotalCount    int32                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	Page          int32                    `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                    `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1519,7 +1519,7 @@ func (*ListUsersResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *ListUsersResponse) GetUsers() []*v1consortium_backend.UserProfiles {
+func (x *ListUsersResponse) GetUsers() []*pbentity.UserProfiles {
 	if x != nil {
 		return x.Users
 	}
@@ -1737,8 +1737,8 @@ func (x *CreateSubscriptionRequest) GetStripeCustomerId() string {
 }
 
 type CreateSubscriptionResponse struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	Subscription  *v1consortium_backend.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Subscription  *pbentity.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1773,7 +1773,7 @@ func (*CreateSubscriptionResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *CreateSubscriptionResponse) GetSubscription() *v1consortium_backend.OrganizationSubscriptions {
+func (x *CreateSubscriptionResponse) GetSubscription() *pbentity.OrganizationSubscriptions {
 	if x != nil {
 		return x.Subscription
 	}
@@ -1825,9 +1825,9 @@ func (x *GetSubscriptionRequest) GetOrganizationId() string {
 }
 
 type GetSubscriptionResponse struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	Subscription  *v1consortium_backend.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	Plan          *v1consortium_backend.SubscriptionPlans         `protobuf:"bytes,2,opt,name=plan,proto3" json:"plan,omitempty"`
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Subscription  *pbentity.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	Plan          *pbentity.SubscriptionPlans         `protobuf:"bytes,2,opt,name=plan,proto3" json:"plan,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1862,14 +1862,14 @@ func (*GetSubscriptionResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *GetSubscriptionResponse) GetSubscription() *v1consortium_backend.OrganizationSubscriptions {
+func (x *GetSubscriptionResponse) GetSubscription() *pbentity.OrganizationSubscriptions {
 	if x != nil {
 		return x.Subscription
 	}
 	return nil
 }
 
-func (x *GetSubscriptionResponse) GetPlan() *v1consortium_backend.SubscriptionPlans {
+func (x *GetSubscriptionResponse) GetPlan() *pbentity.SubscriptionPlans {
 	if x != nil {
 		return x.Plan
 	}
@@ -1945,8 +1945,8 @@ func (x *UpdateSubscriptionRequest) GetStatus() string {
 }
 
 type UpdateSubscriptionResponse struct {
-	state         protoimpl.MessageState                          `protogen:"open.v1"`
-	Subscription  *v1consortium_backend.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Subscription  *pbentity.OrganizationSubscriptions `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1981,7 +1981,7 @@ func (*UpdateSubscriptionResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *UpdateSubscriptionResponse) GetSubscription() *v1consortium_backend.OrganizationSubscriptions {
+func (x *UpdateSubscriptionResponse) GetSubscription() *pbentity.OrganizationSubscriptions {
 	if x != nil {
 		return x.Subscription
 	}
@@ -2033,8 +2033,8 @@ func (x *ListSubscriptionPlansRequest) GetIsActive() bool {
 }
 
 type ListSubscriptionPlansResponse struct {
-	state         protoimpl.MessageState                    `protogen:"open.v1"`
-	Plans         []*v1consortium_backend.SubscriptionPlans `protobuf:"bytes,1,rep,name=plans,proto3" json:"plans,omitempty"`
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	Plans         []*pbentity.SubscriptionPlans `protobuf:"bytes,1,rep,name=plans,proto3" json:"plans,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2069,7 +2069,7 @@ func (*ListSubscriptionPlansResponse) Descriptor() ([]byte, []int) {
 	return file_services_v1_organization_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *ListSubscriptionPlansResponse) GetPlans() []*v1consortium_backend.SubscriptionPlans {
+func (x *ListSubscriptionPlansResponse) GetPlans() []*pbentity.SubscriptionPlans {
 	if x != nil {
 		return x.Plans
 	}
@@ -2080,7 +2080,7 @@ var File_services_v1_organization_proto protoreflect.FileDescriptor
 
 const file_services_v1_organization_proto_rawDesc = "" +
 	"\n" +
-	"\x1eservices/v1/organization.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cpbentity/organizations.proto\x1a\x1cpbentity/user_profiles.proto\x1a)pbentity/organization_subscriptions.proto\x1a!pbentity/subscription_plans.proto\"\xeb\x03\n" +
+	"\x1eservices/v1/organization.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1cpbentity/organizations.proto\x1a\x1cpbentity/user_profiles.proto\x1a)pbentity/organization_subscriptions.proto\x1a!pbentity/subscription_plans.proto\"\xeb\x03\n" +
 	"\x19CreateOrganizationRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12!\n" +
@@ -2099,13 +2099,13 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\x05email\x18\x0e \x01(\tR\x05email\x12\x18\n" +
 	"\awebsite\x18\x0f \x01(\tR\awebsite\x12\x15\n" +
 	"\x06tax_id\x18\x10 \x01(\tR\x05taxId\x12\x1a\n" +
-	"\bsettings\x18\x11 \x01(\tR\bsettings\"e\n" +
-	"\x1aCreateOrganizationResponse\x12G\n" +
-	"\forganization\x18\x01 \x01(\v2#.v1consortium.backend.OrganizationsR\forganization\"A\n" +
+	"\bsettings\x18\x11 \x01(\tR\bsettings\"Y\n" +
+	"\x1aCreateOrganizationResponse\x12;\n" +
+	"\forganization\x18\x01 \x01(\v2\x17.pbentity.OrganizationsR\forganization\"A\n" +
 	"\x16GetOrganizationRequest\x12'\n" +
-	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\"b\n" +
-	"\x17GetOrganizationResponse\x12G\n" +
-	"\forganization\x18\x01 \x01(\v2#.v1consortium.backend.OrganizationsR\forganization\"\xe9\x03\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\"V\n" +
+	"\x17GetOrganizationResponse\x12;\n" +
+	"\forganization\x18\x01 \x01(\v2\x17.pbentity.OrganizationsR\forganization\"\xe9\x03\n" +
 	"\x19UpdateOrganizationRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
@@ -2123,17 +2123,17 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\x05phone\x18\r \x01(\tR\x05phone\x12\x14\n" +
 	"\x05email\x18\x0e \x01(\tR\x05email\x12\x18\n" +
 	"\awebsite\x18\x0f \x01(\tR\awebsite\x12\x1a\n" +
-	"\bsettings\x18\x10 \x01(\tR\bsettings\"e\n" +
-	"\x1aUpdateOrganizationResponse\x12G\n" +
-	"\forganization\x18\x01 \x01(\v2#.v1consortium.backend.OrganizationsR\forganization\"\x94\x01\n" +
+	"\bsettings\x18\x10 \x01(\tR\bsettings\"Y\n" +
+	"\x1aUpdateOrganizationResponse\x12;\n" +
+	"\forganization\x18\x01 \x01(\v2\x17.pbentity.OrganizationsR\forganization\"\x94\x01\n" +
 	"\x18ListOrganizationsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\tR\x04type\x12\x1b\n" +
 	"\tis_active\x18\x04 \x01(\bR\bisActive\x12\x16\n" +
-	"\x06search\x18\x05 \x01(\tR\x06search\"\xb8\x01\n" +
-	"\x19ListOrganizationsResponse\x12I\n" +
-	"\rorganizations\x18\x01 \x03(\v2#.v1consortium.backend.OrganizationsR\rorganizations\x12\x1f\n" +
+	"\x06search\x18\x05 \x01(\tR\x06search\"\xac\x01\n" +
+	"\x19ListOrganizationsResponse\x12=\n" +
+	"\rorganizations\x18\x01 \x03(\v2\x17.pbentity.OrganizationsR\rorganizations\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2170,13 +2170,13 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\rsupervisor_id\x18\x12 \x01(\tR\fsupervisorId\x124\n" +
 	"\x16emergency_contact_name\x18\x13 \x01(\tR\x14emergencyContactName\x126\n" +
 	"\x17emergency_contact_phone\x18\x14 \x01(\tR\x15emergencyContactPhone\x12D\n" +
-	"\x1eemergency_contact_relationship\x18\x15 \x01(\tR\x1cemergencyContactRelationship\"L\n" +
-	"\x12CreateUserResponse\x126\n" +
-	"\x04user\x18\x01 \x01(\v2\".v1consortium.backend.UserProfilesR\x04user\")\n" +
+	"\x1eemergency_contact_relationship\x18\x15 \x01(\tR\x1cemergencyContactRelationship\"@\n" +
+	"\x12CreateUserResponse\x12*\n" +
+	"\x04user\x18\x01 \x01(\v2\x16.pbentity.UserProfilesR\x04user\")\n" +
 	"\x0eGetUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\"I\n" +
-	"\x0fGetUserResponse\x126\n" +
-	"\x04user\x18\x01 \x01(\v2\".v1consortium.backend.UserProfilesR\x04user\"\xd3\a\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"=\n" +
+	"\x0fGetUserResponse\x12*\n" +
+	"\x04user\x18\x01 \x01(\v2\x16.pbentity.UserProfilesR\x04user\"\xd3\a\n" +
 	"\x11UpdateUserRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04role\x18\x02 \x01(\tR\x04role\x12\x1f\n" +
@@ -2206,9 +2206,9 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\rsupervisor_id\x18\x14 \x01(\tR\fsupervisorId\x124\n" +
 	"\x16emergency_contact_name\x18\x15 \x01(\tR\x14emergencyContactName\x126\n" +
 	"\x17emergency_contact_phone\x18\x16 \x01(\tR\x15emergencyContactPhone\x12D\n" +
-	"\x1eemergency_contact_relationship\x18\x17 \x01(\tR\x1cemergencyContactRelationship\"L\n" +
-	"\x12UpdateUserResponse\x126\n" +
-	"\x04user\x18\x01 \x01(\v2\".v1consortium.backend.UserProfilesR\x04user\"\x87\x02\n" +
+	"\x1eemergency_contact_relationship\x18\x17 \x01(\tR\x1cemergencyContactRelationship\"@\n" +
+	"\x12UpdateUserResponse\x12*\n" +
+	"\x04user\x18\x01 \x01(\v2\x16.pbentity.UserProfilesR\x04user\"\x87\x02\n" +
 	"\x10ListUsersRequest\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2219,9 +2219,9 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\x14requires_dot_testing\x18\a \x01(\bR\x12requiresDotTesting\x12\x1e\n" +
 	"\n" +
 	"department\x18\b \x01(\tR\n" +
-	"department\"\x9f\x01\n" +
-	"\x11ListUsersResponse\x128\n" +
-	"\x05users\x18\x01 \x03(\v2\".v1consortium.backend.UserProfilesR\x05users\x12\x1f\n" +
+	"department\"\x93\x01\n" +
+	"\x11ListUsersResponse\x12,\n" +
+	"\x05users\x18\x01 \x03(\v2\x16.pbentity.UserProfilesR\x05users\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
@@ -2239,42 +2239,42 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"start_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
 	"\bend_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x124\n" +
 	"\x16stripe_subscription_id\x18\x05 \x01(\tR\x14stripeSubscriptionId\x12,\n" +
-	"\x12stripe_customer_id\x18\x06 \x01(\tR\x10stripeCustomerId\"q\n" +
-	"\x1aCreateSubscriptionResponse\x12S\n" +
-	"\fsubscription\x18\x01 \x01(\v2/.v1consortium.backend.OrganizationSubscriptionsR\fsubscription\"A\n" +
+	"\x12stripe_customer_id\x18\x06 \x01(\tR\x10stripeCustomerId\"e\n" +
+	"\x1aCreateSubscriptionResponse\x12G\n" +
+	"\fsubscription\x18\x01 \x01(\v2#.pbentity.OrganizationSubscriptionsR\fsubscription\"A\n" +
 	"\x16GetSubscriptionRequest\x12'\n" +
-	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\"\xab\x01\n" +
-	"\x17GetSubscriptionResponse\x12S\n" +
-	"\fsubscription\x18\x01 \x01(\v2/.v1consortium.backend.OrganizationSubscriptionsR\fsubscription\x12;\n" +
-	"\x04plan\x18\x02 \x01(\v2'.v1consortium.backend.SubscriptionPlansR\x04plan\"\xac\x01\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\"\x93\x01\n" +
+	"\x17GetSubscriptionResponse\x12G\n" +
+	"\fsubscription\x18\x01 \x01(\v2#.pbentity.OrganizationSubscriptionsR\fsubscription\x12/\n" +
+	"\x04plan\x18\x02 \x01(\v2\x1b.pbentity.SubscriptionPlansR\x04plan\"\xac\x01\n" +
 	"\x19UpdateSubscriptionRequest\x12'\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x17\n" +
 	"\aplan_id\x18\x02 \x01(\tR\x06planId\x125\n" +
 	"\bend_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\tR\x06status\"q\n" +
-	"\x1aUpdateSubscriptionResponse\x12S\n" +
-	"\fsubscription\x18\x01 \x01(\v2/.v1consortium.backend.OrganizationSubscriptionsR\fsubscription\";\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\"e\n" +
+	"\x1aUpdateSubscriptionResponse\x12G\n" +
+	"\fsubscription\x18\x01 \x01(\v2#.pbentity.OrganizationSubscriptionsR\fsubscription\";\n" +
 	"\x1cListSubscriptionPlansRequest\x12\x1b\n" +
-	"\tis_active\x18\x01 \x01(\bR\bisActive\"^\n" +
-	"\x1dListSubscriptionPlansResponse\x12=\n" +
-	"\x05plans\x18\x01 \x03(\v2'.v1consortium.backend.SubscriptionPlansR\x05plans2\xd9\f\n" +
-	"\x13OrganizationService\x12y\n" +
-	"\x12CreateOrganization\x120.v1consortium.services.CreateOrganizationRequest\x1a1.v1consortium.services.CreateOrganizationResponse\x12p\n" +
-	"\x0fGetOrganization\x12-.v1consortium.services.GetOrganizationRequest\x1a..v1consortium.services.GetOrganizationResponse\x12y\n" +
-	"\x12UpdateOrganization\x120.v1consortium.services.UpdateOrganizationRequest\x1a1.v1consortium.services.UpdateOrganizationResponse\x12v\n" +
-	"\x11ListOrganizations\x12/.v1consortium.services.ListOrganizationsRequest\x1a0.v1consortium.services.ListOrganizationsResponse\x12\x85\x01\n" +
-	"\x16DeactivateOrganization\x124.v1consortium.services.DeactivateOrganizationRequest\x1a5.v1consortium.services.DeactivateOrganizationResponse\x12a\n" +
+	"\tis_active\x18\x01 \x01(\bR\bisActive\"R\n" +
+	"\x1dListSubscriptionPlansResponse\x121\n" +
+	"\x05plans\x18\x01 \x03(\v2\x1b.pbentity.SubscriptionPlansR\x05plans2\xf1\x11\n" +
+	"\x13OrganizationService\x12\x9b\x01\n" +
+	"\x12CreateOrganization\x120.v1consortium.services.CreateOrganizationRequest\x1a1.v1consortium.services.CreateOrganizationResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/organizations\x12\xa1\x01\n" +
+	"\x0fGetOrganization\x12-.v1consortium.services.GetOrganizationRequest\x1a..v1consortium.services.GetOrganizationResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/organizations/{organization_id}\x12\xad\x01\n" +
+	"\x12UpdateOrganization\x120.v1consortium.services.UpdateOrganizationRequest\x1a1.v1consortium.services.UpdateOrganizationResponse\"2\x82\xd3\xe4\x93\x02,:\x01*\x1a'/api/v1/organizations/{organization_id}\x12\x95\x01\n" +
+	"\x11ListOrganizations\x12/.v1consortium.services.ListOrganizationsRequest\x1a0.v1consortium.services.ListOrganizationsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v1/organizations\x12\xb9\x01\n" +
+	"\x16DeactivateOrganization\x124.v1consortium.services.DeactivateOrganizationRequest\x1a5.v1consortium.services.DeactivateOrganizationResponse\"2\x82\xd3\xe4\x93\x02,:\x01**'/api/v1/organizations/{organization_id}\x12\x9b\x01\n" +
 	"\n" +
-	"CreateUser\x12(.v1consortium.services.CreateUserRequest\x1a).v1consortium.services.CreateUserResponse\x12X\n" +
-	"\aGetUser\x12%.v1consortium.services.GetUserRequest\x1a&.v1consortium.services.GetUserResponse\x12a\n" +
+	"CreateUser\x12(.v1consortium.services.CreateUserRequest\x1a).v1consortium.services.CreateUserResponse\"8\x82\xd3\xe4\x93\x022:\x01*\"-/api/v1/organizations/{organization_id}/users\x12y\n" +
+	"\aGetUser\x12%.v1consortium.services.GetUserRequest\x1a&.v1consortium.services.GetUserResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v1/users/{user_id}\x12\x85\x01\n" +
 	"\n" +
-	"UpdateUser\x12(.v1consortium.services.UpdateUserRequest\x1a).v1consortium.services.UpdateUserResponse\x12^\n" +
-	"\tListUsers\x12'.v1consortium.services.ListUsersRequest\x1a(.v1consortium.services.ListUsersResponse\x12m\n" +
-	"\x0eDeactivateUser\x12,.v1consortium.services.DeactivateUserRequest\x1a-.v1consortium.services.DeactivateUserResponse\x12y\n" +
-	"\x12CreateSubscription\x120.v1consortium.services.CreateSubscriptionRequest\x1a1.v1consortium.services.CreateSubscriptionResponse\x12p\n" +
-	"\x0fGetSubscription\x12-.v1consortium.services.GetSubscriptionRequest\x1a..v1consortium.services.GetSubscriptionResponse\x12y\n" +
-	"\x12UpdateSubscription\x120.v1consortium.services.UpdateSubscriptionRequest\x1a1.v1consortium.services.UpdateSubscriptionResponse\x12\x82\x01\n" +
-	"\x15ListSubscriptionPlans\x123.v1consortium.services.ListSubscriptionPlansRequest\x1a4.v1consortium.services.ListSubscriptionPlansResponseB\rZ\vservices/v1b\x06proto3"
+	"UpdateUser\x12(.v1consortium.services.UpdateUserRequest\x1a).v1consortium.services.UpdateUserResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\x1a\x17/api/v1/users/{user_id}\x12\x95\x01\n" +
+	"\tListUsers\x12'.v1consortium.services.ListUsersRequest\x1a(.v1consortium.services.ListUsersResponse\"5\x82\xd3\xe4\x93\x02/\x12-/api/v1/organizations/{organization_id}/users\x12\x91\x01\n" +
+	"\x0eDeactivateUser\x12,.v1consortium.services.DeactivateUserRequest\x1a-.v1consortium.services.DeactivateUserResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01**\x17/api/v1/users/{user_id}\x12\xbb\x01\n" +
+	"\x12CreateSubscription\x120.v1consortium.services.CreateSubscriptionRequest\x1a1.v1consortium.services.CreateSubscriptionResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/api/v1/organizations/{organization_id}/subscriptions\x12\xaf\x01\n" +
+	"\x0fGetSubscription\x12-.v1consortium.services.GetSubscriptionRequest\x1a..v1consortium.services.GetSubscriptionResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/subscriptions\x12\xad\x01\n" +
+	"\x12UpdateSubscription\x120.v1consortium.services.UpdateSubscriptionRequest\x1a1.v1consortium.services.UpdateSubscriptionResponse\"2\x82\xd3\xe4\x93\x02,:\x01*\x1a'/api/v1/subscriptions/{subscription_id}\x12\xa6\x01\n" +
+	"\x15ListSubscriptionPlans\x123.v1consortium.services.ListSubscriptionPlansRequest\x1a4.v1consortium.services.ListSubscriptionPlansResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/subscription-plansB\rZ\vservices/v1b\x06proto3"
 
 var (
 	file_services_v1_organization_proto_rawDescOnce sync.Once
@@ -2290,65 +2290,65 @@ func file_services_v1_organization_proto_rawDescGZIP() []byte {
 
 var file_services_v1_organization_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_services_v1_organization_proto_goTypes = []any{
-	(*CreateOrganizationRequest)(nil),                      // 0: v1consortium.services.CreateOrganizationRequest
-	(*CreateOrganizationResponse)(nil),                     // 1: v1consortium.services.CreateOrganizationResponse
-	(*GetOrganizationRequest)(nil),                         // 2: v1consortium.services.GetOrganizationRequest
-	(*GetOrganizationResponse)(nil),                        // 3: v1consortium.services.GetOrganizationResponse
-	(*UpdateOrganizationRequest)(nil),                      // 4: v1consortium.services.UpdateOrganizationRequest
-	(*UpdateOrganizationResponse)(nil),                     // 5: v1consortium.services.UpdateOrganizationResponse
-	(*ListOrganizationsRequest)(nil),                       // 6: v1consortium.services.ListOrganizationsRequest
-	(*ListOrganizationsResponse)(nil),                      // 7: v1consortium.services.ListOrganizationsResponse
-	(*DeactivateOrganizationRequest)(nil),                  // 8: v1consortium.services.DeactivateOrganizationRequest
-	(*DeactivateOrganizationResponse)(nil),                 // 9: v1consortium.services.DeactivateOrganizationResponse
-	(*CreateUserRequest)(nil),                              // 10: v1consortium.services.CreateUserRequest
-	(*CreateUserResponse)(nil),                             // 11: v1consortium.services.CreateUserResponse
-	(*GetUserRequest)(nil),                                 // 12: v1consortium.services.GetUserRequest
-	(*GetUserResponse)(nil),                                // 13: v1consortium.services.GetUserResponse
-	(*UpdateUserRequest)(nil),                              // 14: v1consortium.services.UpdateUserRequest
-	(*UpdateUserResponse)(nil),                             // 15: v1consortium.services.UpdateUserResponse
-	(*ListUsersRequest)(nil),                               // 16: v1consortium.services.ListUsersRequest
-	(*ListUsersResponse)(nil),                              // 17: v1consortium.services.ListUsersResponse
-	(*DeactivateUserRequest)(nil),                          // 18: v1consortium.services.DeactivateUserRequest
-	(*DeactivateUserResponse)(nil),                         // 19: v1consortium.services.DeactivateUserResponse
-	(*CreateSubscriptionRequest)(nil),                      // 20: v1consortium.services.CreateSubscriptionRequest
-	(*CreateSubscriptionResponse)(nil),                     // 21: v1consortium.services.CreateSubscriptionResponse
-	(*GetSubscriptionRequest)(nil),                         // 22: v1consortium.services.GetSubscriptionRequest
-	(*GetSubscriptionResponse)(nil),                        // 23: v1consortium.services.GetSubscriptionResponse
-	(*UpdateSubscriptionRequest)(nil),                      // 24: v1consortium.services.UpdateSubscriptionRequest
-	(*UpdateSubscriptionResponse)(nil),                     // 25: v1consortium.services.UpdateSubscriptionResponse
-	(*ListSubscriptionPlansRequest)(nil),                   // 26: v1consortium.services.ListSubscriptionPlansRequest
-	(*ListSubscriptionPlansResponse)(nil),                  // 27: v1consortium.services.ListSubscriptionPlansResponse
-	(*v1consortium_backend.Organizations)(nil),             // 28: v1consortium.backend.Organizations
-	(*timestamppb.Timestamp)(nil),                          // 29: google.protobuf.Timestamp
-	(*v1consortium_backend.UserProfiles)(nil),              // 30: v1consortium.backend.UserProfiles
-	(*v1consortium_backend.OrganizationSubscriptions)(nil), // 31: v1consortium.backend.OrganizationSubscriptions
-	(*v1consortium_backend.SubscriptionPlans)(nil),         // 32: v1consortium.backend.SubscriptionPlans
+	(*CreateOrganizationRequest)(nil),          // 0: v1consortium.services.CreateOrganizationRequest
+	(*CreateOrganizationResponse)(nil),         // 1: v1consortium.services.CreateOrganizationResponse
+	(*GetOrganizationRequest)(nil),             // 2: v1consortium.services.GetOrganizationRequest
+	(*GetOrganizationResponse)(nil),            // 3: v1consortium.services.GetOrganizationResponse
+	(*UpdateOrganizationRequest)(nil),          // 4: v1consortium.services.UpdateOrganizationRequest
+	(*UpdateOrganizationResponse)(nil),         // 5: v1consortium.services.UpdateOrganizationResponse
+	(*ListOrganizationsRequest)(nil),           // 6: v1consortium.services.ListOrganizationsRequest
+	(*ListOrganizationsResponse)(nil),          // 7: v1consortium.services.ListOrganizationsResponse
+	(*DeactivateOrganizationRequest)(nil),      // 8: v1consortium.services.DeactivateOrganizationRequest
+	(*DeactivateOrganizationResponse)(nil),     // 9: v1consortium.services.DeactivateOrganizationResponse
+	(*CreateUserRequest)(nil),                  // 10: v1consortium.services.CreateUserRequest
+	(*CreateUserResponse)(nil),                 // 11: v1consortium.services.CreateUserResponse
+	(*GetUserRequest)(nil),                     // 12: v1consortium.services.GetUserRequest
+	(*GetUserResponse)(nil),                    // 13: v1consortium.services.GetUserResponse
+	(*UpdateUserRequest)(nil),                  // 14: v1consortium.services.UpdateUserRequest
+	(*UpdateUserResponse)(nil),                 // 15: v1consortium.services.UpdateUserResponse
+	(*ListUsersRequest)(nil),                   // 16: v1consortium.services.ListUsersRequest
+	(*ListUsersResponse)(nil),                  // 17: v1consortium.services.ListUsersResponse
+	(*DeactivateUserRequest)(nil),              // 18: v1consortium.services.DeactivateUserRequest
+	(*DeactivateUserResponse)(nil),             // 19: v1consortium.services.DeactivateUserResponse
+	(*CreateSubscriptionRequest)(nil),          // 20: v1consortium.services.CreateSubscriptionRequest
+	(*CreateSubscriptionResponse)(nil),         // 21: v1consortium.services.CreateSubscriptionResponse
+	(*GetSubscriptionRequest)(nil),             // 22: v1consortium.services.GetSubscriptionRequest
+	(*GetSubscriptionResponse)(nil),            // 23: v1consortium.services.GetSubscriptionResponse
+	(*UpdateSubscriptionRequest)(nil),          // 24: v1consortium.services.UpdateSubscriptionRequest
+	(*UpdateSubscriptionResponse)(nil),         // 25: v1consortium.services.UpdateSubscriptionResponse
+	(*ListSubscriptionPlansRequest)(nil),       // 26: v1consortium.services.ListSubscriptionPlansRequest
+	(*ListSubscriptionPlansResponse)(nil),      // 27: v1consortium.services.ListSubscriptionPlansResponse
+	(*pbentity.Organizations)(nil),             // 28: pbentity.Organizations
+	(*timestamppb.Timestamp)(nil),              // 29: google.protobuf.Timestamp
+	(*pbentity.UserProfiles)(nil),              // 30: pbentity.UserProfiles
+	(*pbentity.OrganizationSubscriptions)(nil), // 31: pbentity.OrganizationSubscriptions
+	(*pbentity.SubscriptionPlans)(nil),         // 32: pbentity.SubscriptionPlans
 }
 var file_services_v1_organization_proto_depIdxs = []int32{
-	28, // 0: v1consortium.services.CreateOrganizationResponse.organization:type_name -> v1consortium.backend.Organizations
-	28, // 1: v1consortium.services.GetOrganizationResponse.organization:type_name -> v1consortium.backend.Organizations
-	28, // 2: v1consortium.services.UpdateOrganizationResponse.organization:type_name -> v1consortium.backend.Organizations
-	28, // 3: v1consortium.services.ListOrganizationsResponse.organizations:type_name -> v1consortium.backend.Organizations
+	28, // 0: v1consortium.services.CreateOrganizationResponse.organization:type_name -> pbentity.Organizations
+	28, // 1: v1consortium.services.GetOrganizationResponse.organization:type_name -> pbentity.Organizations
+	28, // 2: v1consortium.services.UpdateOrganizationResponse.organization:type_name -> pbentity.Organizations
+	28, // 3: v1consortium.services.ListOrganizationsResponse.organizations:type_name -> pbentity.Organizations
 	29, // 4: v1consortium.services.CreateUserRequest.date_of_birth:type_name -> google.protobuf.Timestamp
 	29, // 5: v1consortium.services.CreateUserRequest.hire_date:type_name -> google.protobuf.Timestamp
 	29, // 6: v1consortium.services.CreateUserRequest.cdl_expiration_date:type_name -> google.protobuf.Timestamp
-	30, // 7: v1consortium.services.CreateUserResponse.user:type_name -> v1consortium.backend.UserProfiles
-	30, // 8: v1consortium.services.GetUserResponse.user:type_name -> v1consortium.backend.UserProfiles
+	30, // 7: v1consortium.services.CreateUserResponse.user:type_name -> pbentity.UserProfiles
+	30, // 8: v1consortium.services.GetUserResponse.user:type_name -> pbentity.UserProfiles
 	29, // 9: v1consortium.services.UpdateUserRequest.date_of_birth:type_name -> google.protobuf.Timestamp
 	29, // 10: v1consortium.services.UpdateUserRequest.hire_date:type_name -> google.protobuf.Timestamp
 	29, // 11: v1consortium.services.UpdateUserRequest.termination_date:type_name -> google.protobuf.Timestamp
 	29, // 12: v1consortium.services.UpdateUserRequest.cdl_expiration_date:type_name -> google.protobuf.Timestamp
-	30, // 13: v1consortium.services.UpdateUserResponse.user:type_name -> v1consortium.backend.UserProfiles
-	30, // 14: v1consortium.services.ListUsersResponse.users:type_name -> v1consortium.backend.UserProfiles
+	30, // 13: v1consortium.services.UpdateUserResponse.user:type_name -> pbentity.UserProfiles
+	30, // 14: v1consortium.services.ListUsersResponse.users:type_name -> pbentity.UserProfiles
 	29, // 15: v1consortium.services.DeactivateUserRequest.termination_date:type_name -> google.protobuf.Timestamp
 	29, // 16: v1consortium.services.CreateSubscriptionRequest.start_date:type_name -> google.protobuf.Timestamp
 	29, // 17: v1consortium.services.CreateSubscriptionRequest.end_date:type_name -> google.protobuf.Timestamp
-	31, // 18: v1consortium.services.CreateSubscriptionResponse.subscription:type_name -> v1consortium.backend.OrganizationSubscriptions
-	31, // 19: v1consortium.services.GetSubscriptionResponse.subscription:type_name -> v1consortium.backend.OrganizationSubscriptions
-	32, // 20: v1consortium.services.GetSubscriptionResponse.plan:type_name -> v1consortium.backend.SubscriptionPlans
+	31, // 18: v1consortium.services.CreateSubscriptionResponse.subscription:type_name -> pbentity.OrganizationSubscriptions
+	31, // 19: v1consortium.services.GetSubscriptionResponse.subscription:type_name -> pbentity.OrganizationSubscriptions
+	32, // 20: v1consortium.services.GetSubscriptionResponse.plan:type_name -> pbentity.SubscriptionPlans
 	29, // 21: v1consortium.services.UpdateSubscriptionRequest.end_date:type_name -> google.protobuf.Timestamp
-	31, // 22: v1consortium.services.UpdateSubscriptionResponse.subscription:type_name -> v1consortium.backend.OrganizationSubscriptions
-	32, // 23: v1consortium.services.ListSubscriptionPlansResponse.plans:type_name -> v1consortium.backend.SubscriptionPlans
+	31, // 22: v1consortium.services.UpdateSubscriptionResponse.subscription:type_name -> pbentity.OrganizationSubscriptions
+	32, // 23: v1consortium.services.ListSubscriptionPlansResponse.plans:type_name -> pbentity.SubscriptionPlans
 	0,  // 24: v1consortium.services.OrganizationService.CreateOrganization:input_type -> v1consortium.services.CreateOrganizationRequest
 	2,  // 25: v1consortium.services.OrganizationService.GetOrganization:input_type -> v1consortium.services.GetOrganizationRequest
 	4,  // 26: v1consortium.services.OrganizationService.UpdateOrganization:input_type -> v1consortium.services.UpdateOrganizationRequest

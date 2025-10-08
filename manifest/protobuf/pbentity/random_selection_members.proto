@@ -4,16 +4,14 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
+package pbentity;
 
-option go_package = "v1consortium.backend";
-
-
+option go_package = "v1consortium/api/pbentity";
 
 message RandomSelectionMembers {
-    string Id             = 1; //
-    string SelectionId    = 2; //
-    string UserId         = 3; //
-    string TestId         = 4; //
-    int32  SelectionOrder = 5; //
+  string Id = 1; //
+  string SelectionId = 2; //
+  string UserId = 3; //
+  string TestId = 4; //
+  int32 SelectionOrder = 5; //
 }

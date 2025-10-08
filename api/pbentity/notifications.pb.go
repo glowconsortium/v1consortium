@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/notifications.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -243,7 +243,7 @@ var File_pbentity_notifications_proto protoreflect.FileDescriptor
 
 const file_pbentity_notifications_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/notifications.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf3\x06\n" +
+	"\x1cpbentity/notifications.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf3\x06\n" +
 	"\rNotifications\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -271,7 +271,7 @@ const file_pbentity_notifications_proto_rawDesc = "" +
 	"\rLastAttemptAt\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\rLastAttemptAt\x12$\n" +
 	"\rDeliveryError\x18\x14 \x01(\tR\rDeliveryError\x128\n" +
 	"\tCreatedAt\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_notifications_proto_rawDescOnce sync.Once
@@ -287,16 +287,16 @@ func file_pbentity_notifications_proto_rawDescGZIP() []byte {
 
 var file_pbentity_notifications_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_notifications_proto_goTypes = []any{
-	(*Notifications)(nil),         // 0: v1consortium.backend.Notifications
+	(*Notifications)(nil),         // 0: pbentity.Notifications
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_notifications_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.Notifications.SentAt:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.Notifications.DeliveredAt:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.Notifications.ReadAt:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.Notifications.LastAttemptAt:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.Notifications.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 5: v1consortium.backend.Notifications.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.Notifications.SentAt:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.Notifications.DeliveredAt:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.Notifications.ReadAt:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.Notifications.LastAttemptAt:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.Notifications.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 5: pbentity.Notifications.UpdatedAt:type_name -> google.protobuf.Timestamp
 	6, // [6:6] is the sub-list for method output_type
 	6, // [6:6] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name

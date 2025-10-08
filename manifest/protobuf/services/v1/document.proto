@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package v1consortium.services;
 
-option go_package = "services/v1";
-
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/documents.proto";
+
+option go_package = "services/v1";
 
 // Document Management Messages
 message UploadDocumentRequest {
@@ -25,7 +26,7 @@ message UploadDocumentRequest {
 }
 
 message UploadDocumentResponse {
-  v1consortium.backend.Documents document = 1;
+  pbentity.Documents document = 1;
   string upload_url = 2; // If using signed URLs for upload
 }
 
@@ -35,7 +36,7 @@ message GetDocumentRequest {
 }
 
 message GetDocumentResponse {
-  v1consortium.backend.Documents document = 1;
+  pbentity.Documents document = 1;
   bytes file_data = 2; // Only included if include_content is true
   string download_url = 3; // Signed URL for download
 }
@@ -56,7 +57,7 @@ message ListDocumentsRequest {
 }
 
 message ListDocumentsResponse {
-  repeated v1consortium.backend.Documents documents = 1;
+  repeated pbentity.Documents documents = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -72,7 +73,7 @@ message UpdateDocumentRequest {
 }
 
 message UpdateDocumentResponse {
-  v1consortium.backend.Documents document = 1;
+  pbentity.Documents document = 1;
 }
 
 message DeleteDocumentRequest {
@@ -90,7 +91,7 @@ message GetDocumentVersionsRequest {
 }
 
 message GetDocumentVersionsResponse {
-  repeated v1consortium.backend.Documents versions = 1;
+  repeated pbentity.Documents versions = 1;
 }
 
 // Document Sharing Messages
@@ -116,7 +117,7 @@ message GetSharedDocumentsRequest {
 
 message SharedDocument {
   string share_id = 1;
-  v1consortium.backend.Documents document = 2;
+  pbentity.Documents document = 2;
   string shared_by = 3;
   string shared_with = 4;
   string permission_level = 5;
@@ -152,7 +153,7 @@ message SearchDocumentsRequest {
 }
 
 message SearchDocumentsResponse {
-  repeated v1consortium.backend.Documents documents = 1;
+  repeated pbentity.Documents documents = 1;
   int32 total_count = 2;
   int32 page = 3;
   int32 page_size = 4;
@@ -221,25 +222,71 @@ message ApplyRetentionPolicyResponse {
 // Document Service Definition
 service DocumentService {
   // Document Management
-  rpc UploadDocument(UploadDocumentRequest) returns (UploadDocumentResponse);
-  rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse);
-  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse);
-  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse);
-  rpc DeleteDocument(DeleteDocumentRequest) returns (DeleteDocumentResponse);
-  rpc GetDocumentVersions(GetDocumentVersionsRequest) returns (GetDocumentVersionsResponse);
-  
+  rpc UploadDocument(UploadDocumentRequest) returns (UploadDocumentResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/documents"
+      body: "*"
+    };
+  }
+
+  rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse) {
+    option (google.api.http) = {get: "/api/v1/documents/{document_id}"};
+  }
+
+  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/documents"};
+  }
+
+  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/documents/{document_id}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteDocument(DeleteDocumentRequest) returns (DeleteDocumentResponse) {
+    option (google.api.http) = {delete: "/api/v1/documents/{document_id}"};
+  }
+
+  rpc GetDocumentVersions(GetDocumentVersionsRequest) returns (GetDocumentVersionsResponse) {
+    option (google.api.http) = {get: "/api/v1/documents/{document_id}/versions"};
+  }
+
   // Document Sharing
-  rpc ShareDocument(ShareDocumentRequest) returns (ShareDocumentResponse);
-  rpc GetSharedDocuments(GetSharedDocumentsRequest) returns (GetSharedDocumentsResponse);
-  rpc RevokeDocumentShare(RevokeDocumentShareRequest) returns (RevokeDocumentShareResponse);
-  
+  rpc ShareDocument(ShareDocumentRequest) returns (ShareDocumentResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/documents/{document_id}/share"
+      body: "*"
+    };
+  }
+
+  rpc GetSharedDocuments(GetSharedDocumentsRequest) returns (GetSharedDocumentsResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/shared-documents"};
+  }
+
+  rpc RevokeDocumentShare(RevokeDocumentShareRequest) returns (RevokeDocumentShareResponse) {
+    option (google.api.http) = {delete: "/api/v1/documents/{document_id}/share/{share_id}"};
+  }
+
   // Document Search
-  rpc SearchDocuments(SearchDocumentsRequest) returns (SearchDocumentsResponse);
-  
+  rpc SearchDocuments(SearchDocumentsRequest) returns (SearchDocumentsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/documents/search"};
+  }
+
   // Document Analytics
-  rpc GetDocumentAnalytics(GetDocumentAnalyticsRequest) returns (GetDocumentAnalyticsResponse);
-  
+  rpc GetDocumentAnalytics(GetDocumentAnalyticsRequest) returns (GetDocumentAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/document-analytics"};
+  }
+
   // Document Compliance
-  rpc GetDocumentRetentionStatus(GetDocumentRetentionStatusRequest) returns (GetDocumentRetentionStatusResponse);
-  rpc ApplyRetentionPolicy(ApplyRetentionPolicyRequest) returns (ApplyRetentionPolicyResponse);
+  rpc GetDocumentRetentionStatus(GetDocumentRetentionStatusRequest) returns (GetDocumentRetentionStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/documents/{document_id}/retention-status"};
+  }
+
+  rpc ApplyRetentionPolicy(ApplyRetentionPolicyRequest) returns (ApplyRetentionPolicyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/documents/{document_id}/apply-retention-policy"
+      body: "*"
+    };
+  }
 }

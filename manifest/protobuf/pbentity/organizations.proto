@@ -4,32 +4,32 @@
 
 syntax = "proto3";
 
-package v1consortium.backend;
-
-option go_package = "v1consortium.backend";
+package pbentity;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "v1consortium/api/pbentity";
+
 message Organizations {
-    string                    Id             = 1;  //
-    string                    Name           = 2;  //
-    string                    Type           = 3;  //
-    string                    UsdotNumber    = 4;  //
-    string                    McNumber       = 5;  //
-    string                    Industry       = 6;  //
-    bool                      IsDotRegulated = 7;  //
-    string                    AddressLine1   = 8;  //
-    string                    AddressLine2   = 9;  //
-    string                    City           = 10; //
-    string                    State          = 11; //
-    string                    ZipCode        = 12; //
-    string                    Country        = 13; //
-    string                    Phone          = 14; //
-    string                    Email          = 15; //
-    string                    Website        = 16; //
-    string                    TaxId          = 17; //
-    google.protobuf.Timestamp CreatedAt      = 18; //
-    google.protobuf.Timestamp UpdatedAt      = 19; //
-    bool                      IsActive       = 20; //
-    string                    Settings       = 21; //
+  string Id = 1; //
+  string Name = 2; //
+  string Type = 3; //
+  string UsdotNumber = 4; //
+  string McNumber = 5; //
+  string Industry = 6; //
+  bool IsDotRegulated = 7; //
+  string AddressLine1 = 8; //
+  string AddressLine2 = 9; //
+  string City = 10; //
+  string State = 11; //
+  string ZipCode = 12; //
+  string Country = 13; //
+  string Phone = 14; //
+  string Email = 15; //
+  string Website = 16; //
+  string TaxId = 17; //
+  google.protobuf.Timestamp CreatedAt = 18; //
+  google.protobuf.Timestamp UpdatedAt = 19; //
+  bool IsActive = 20; //
+  string Settings = 21; //
 }

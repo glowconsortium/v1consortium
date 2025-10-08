@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/background_checks.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -235,7 +235,7 @@ var File_pbentity_background_checks_proto protoreflect.FileDescriptor
 
 const file_pbentity_background_checks_proto_rawDesc = "" +
 	"\n" +
-	" pbentity/background_checks.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9e\a\n" +
+	" pbentity/background_checks.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9e\a\n" +
 	"\x10BackgroundChecks\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -260,7 +260,7 @@ const file_pbentity_background_checks_proto_rawDesc = "" +
 	"\x11AdverseActionSent\x18\x12 \x01(\bR\x11AdverseActionSent\x12\x14\n" +
 	"\x05Notes\x18\x13 \x01(\tR\x05Notes\x128\n" +
 	"\tCreatedAt\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_background_checks_proto_rawDescOnce sync.Once
@@ -276,15 +276,15 @@ func file_pbentity_background_checks_proto_rawDescGZIP() []byte {
 
 var file_pbentity_background_checks_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_background_checks_proto_goTypes = []any{
-	(*BackgroundChecks)(nil),      // 0: v1consortium.backend.BackgroundChecks
+	(*BackgroundChecks)(nil),      // 0: pbentity.BackgroundChecks
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_background_checks_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.BackgroundChecks.OrderedDate:type_name -> google.protobuf.Timestamp
-	1, // 1: v1consortium.backend.BackgroundChecks.CompletedDate:type_name -> google.protobuf.Timestamp
-	1, // 2: v1consortium.backend.BackgroundChecks.ReportDate:type_name -> google.protobuf.Timestamp
-	1, // 3: v1consortium.backend.BackgroundChecks.CreatedAt:type_name -> google.protobuf.Timestamp
-	1, // 4: v1consortium.backend.BackgroundChecks.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.BackgroundChecks.OrderedDate:type_name -> google.protobuf.Timestamp
+	1, // 1: pbentity.BackgroundChecks.CompletedDate:type_name -> google.protobuf.Timestamp
+	1, // 2: pbentity.BackgroundChecks.ReportDate:type_name -> google.protobuf.Timestamp
+	1, // 3: pbentity.BackgroundChecks.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 4: pbentity.BackgroundChecks.UpdatedAt:type_name -> google.protobuf.Timestamp
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

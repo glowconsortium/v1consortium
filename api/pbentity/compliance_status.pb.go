@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/compliance_status.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -243,7 +243,7 @@ var File_pbentity_compliance_status_proto protoreflect.FileDescriptor
 
 const file_pbentity_compliance_status_proto_rawDesc = "" +
 	"\n" +
-	" pbentity/compliance_status.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\x96\t\n" +
+	" pbentity/compliance_status.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\x96\t\n" +
 	"\x10ComplianceStatus\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -271,7 +271,7 @@ const file_pbentity_compliance_status_proto_rawDesc = "" +
 	"\x0fViolationsCount\x18\x13 \x01(\x05R\x0fViolationsCount\x12$\n" +
 	"\rHighRiskFlags\x18\x14 \x01(\x05R\rHighRiskFlags\x128\n" +
 	"\tCreatedAt\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tUpdatedAt\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_compliance_status_proto_rawDescOnce sync.Once
@@ -287,20 +287,20 @@ func file_pbentity_compliance_status_proto_rawDescGZIP() []byte {
 
 var file_pbentity_compliance_status_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_compliance_status_proto_goTypes = []any{
-	(*ComplianceStatus)(nil),      // 0: v1consortium.backend.ComplianceStatus
+	(*ComplianceStatus)(nil),      // 0: pbentity.ComplianceStatus
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_compliance_status_proto_depIdxs = []int32{
-	1,  // 0: v1consortium.backend.ComplianceStatus.LastUpdated:type_name -> google.protobuf.Timestamp
-	1,  // 1: v1consortium.backend.ComplianceStatus.LastDrugTestDate:type_name -> google.protobuf.Timestamp
-	1,  // 2: v1consortium.backend.ComplianceStatus.NextDrugTestDue:type_name -> google.protobuf.Timestamp
-	1,  // 3: v1consortium.backend.ComplianceStatus.LastMvrDate:type_name -> google.protobuf.Timestamp
-	1,  // 4: v1consortium.backend.ComplianceStatus.NextMvrDue:type_name -> google.protobuf.Timestamp
-	1,  // 5: v1consortium.backend.ComplianceStatus.MedicalCertExpirationDate:type_name -> google.protobuf.Timestamp
-	1,  // 6: v1consortium.backend.ComplianceStatus.LastBackgroundCheckDate:type_name -> google.protobuf.Timestamp
-	1,  // 7: v1consortium.backend.ComplianceStatus.LastTrainingDate:type_name -> google.protobuf.Timestamp
-	1,  // 8: v1consortium.backend.ComplianceStatus.CreatedAt:type_name -> google.protobuf.Timestamp
-	1,  // 9: v1consortium.backend.ComplianceStatus.UpdatedAt:type_name -> google.protobuf.Timestamp
+	1,  // 0: pbentity.ComplianceStatus.LastUpdated:type_name -> google.protobuf.Timestamp
+	1,  // 1: pbentity.ComplianceStatus.LastDrugTestDate:type_name -> google.protobuf.Timestamp
+	1,  // 2: pbentity.ComplianceStatus.NextDrugTestDue:type_name -> google.protobuf.Timestamp
+	1,  // 3: pbentity.ComplianceStatus.LastMvrDate:type_name -> google.protobuf.Timestamp
+	1,  // 4: pbentity.ComplianceStatus.NextMvrDue:type_name -> google.protobuf.Timestamp
+	1,  // 5: pbentity.ComplianceStatus.MedicalCertExpirationDate:type_name -> google.protobuf.Timestamp
+	1,  // 6: pbentity.ComplianceStatus.LastBackgroundCheckDate:type_name -> google.protobuf.Timestamp
+	1,  // 7: pbentity.ComplianceStatus.LastTrainingDate:type_name -> google.protobuf.Timestamp
+	1,  // 8: pbentity.ComplianceStatus.CreatedAt:type_name -> google.protobuf.Timestamp
+	1,  // 9: pbentity.ComplianceStatus.UpdatedAt:type_name -> google.protobuf.Timestamp
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name

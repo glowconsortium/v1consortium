@@ -8,7 +8,7 @@
 // 	protoc        v3.21.12
 // source: pbentity/audit_logs.proto
 
-package v1consortium_backend
+package pbentity
 
 import (
 	reflect "reflect"
@@ -179,7 +179,7 @@ var File_pbentity_audit_logs_proto protoreflect.FileDescriptor
 
 const file_pbentity_audit_logs_proto_rawDesc = "" +
 	"\n" +
-	"\x19pbentity/audit_logs.proto\x12\x14v1consortium.backend\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc9\x03\n" +
+	"\x19pbentity/audit_logs.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc9\x03\n" +
 	"\tAuditLogs\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x16\n" +
@@ -197,7 +197,7 @@ const file_pbentity_audit_logs_proto_rawDesc = "" +
 	"\tRequestId\x18\v \x01(\tR\tRequestId\x12,\n" +
 	"\x11RetentionRequired\x18\f \x01(\bR\x11RetentionRequired\x12\x1a\n" +
 	"\bHipaaLog\x18\r \x01(\bR\bHipaaLog\x128\n" +
-	"\tCreatedAt\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x16Z\x14v1consortium.backendb\x06proto3"
+	"\tCreatedAt\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_audit_logs_proto_rawDescOnce sync.Once
@@ -213,11 +213,11 @@ func file_pbentity_audit_logs_proto_rawDescGZIP() []byte {
 
 var file_pbentity_audit_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_pbentity_audit_logs_proto_goTypes = []any{
-	(*AuditLogs)(nil),             // 0: v1consortium.backend.AuditLogs
+	(*AuditLogs)(nil),             // 0: pbentity.AuditLogs
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_pbentity_audit_logs_proto_depIdxs = []int32{
-	1, // 0: v1consortium.backend.AuditLogs.CreatedAt:type_name -> google.protobuf.Timestamp
+	1, // 0: pbentity.AuditLogs.CreatedAt:type_name -> google.protobuf.Timestamp
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

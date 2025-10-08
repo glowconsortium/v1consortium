@@ -33,3 +33,11 @@ setup:
 .PHONY: dev
 dev:
 	docker compose up --build --watch
+
+.PHONY: gen-web
+gen-web:
+	@echo "Generating TypeScript files from protobuf..."
+	rm -rf v1-consortium-web-pkg/src/lib/gen
+	npx buf format manifest/protobuf -w
+	npx buf generate --template buf.gen-typescript.yaml
+	
