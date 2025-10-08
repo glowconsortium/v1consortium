@@ -27,6 +27,8 @@ web-pkg
 web-int-ui/node_modules
 web-ui/node_modules
 node_modules
+supabase/
+thirdparty/
 
 # Output
 .output

@@ -31,7 +31,8 @@ setup:
 	docker compose stop postgres
 
 .PHONY: dev
-dev:
+dev:	
+	cd supabase && npx supabase start
 	docker compose up --build --watch
 
 .PHONY: gen-web

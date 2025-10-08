@@ -9,9 +9,9 @@ services:
           path: /home/kobdev/v1consortium/manifest/docker/Dockerfile
         - action: rebuild
           path: /home/kobdev/v1consortium/internal
-    depends_on:
-      postgres:
-        condition: service_healthy
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
     ports:
       - "8000:8000"
     expose:
@@ -48,24 +48,24 @@ services:
       - ./.local/nginx:/etc/nginx/conf.d
 
   
-  postgres:
-    image: postgres:15.8
-    environment:
-      POSTGRES_PASSWORD: "password"
-    expose:
-      - 5432
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test:
-        ["CMD-SHELL", "PGPASSWORD=password pg_isready -U postgres -d postgres"]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      timeout: 10s
-    volumes:
-      - ./.local/postgres:/var/lib/postgresql/data
-      - ./.local/tmp:/tmp/local
+  # postgres:
+  #   image: postgres:15.8
+  #   environment:
+  #     POSTGRES_PASSWORD: "password"
+  #   expose:
+  #     - 5432
+  #   ports:
+  #     - "5432:5432"
+  #   healthcheck:
+  #     test:
+  #       ["CMD-SHELL", "PGPASSWORD=password pg_isready -U postgres -d postgres"]
+  #     interval: 10s
+  #     retries: 5
+  #     start_period: 30s
+  #     timeout: 10s
+  #   volumes:
+  #     - ./.local/postgres:/var/lib/postgresql/data
+  #     - ./.local/tmp:/tmp/local
 
   # kms:
   #   environment:
