@@ -1,40 +1,140 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Jobs on V1 Consortium - Compliance &amp; Screening Services</title>
-    <link>http://localhost:1313/jobs/</link>
-    <description>Recent content in Jobs on V1 Consortium - Compliance &amp; Screening Services</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 06 Jul 2025 16:06:52 -0400</lastBuildDate>
-    <atom:link href="http://localhost:1313/jobs/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Product Manager - Fleet Operations</title>
-      <link>http://localhost:1313/jobs/product-manager/</link>
-      <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/jobs/product-manager/</guid>
-      <description>&lt;p&gt;We&amp;rsquo;re looking for a Product Manager to join FleetOps and help shape the future of fleet management technology for transportation companies nationwide.&lt;/p&gt;&#xA;&lt;h2 id=&#34;about-the-role&#34;&gt;About the Role&lt;/h2&gt;&#xA;&lt;p&gt;As a Product Manager at FleetOps, you&amp;rsquo;ll be responsible for:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Defining and executing product strategy for our comprehensive fleet management platform&lt;/li&gt;&#xA;&lt;li&gt;Working closely with engineering (Go/Python backend, SvelteKit frontend), design, and customer success teams&lt;/li&gt;&#xA;&lt;li&gt;Conducting user research with fleet managers, dispatchers, and drivers&lt;/li&gt;&#xA;&lt;li&gt;Analyzing transportation industry trends and regulatory requirements&lt;/li&gt;&#xA;&lt;li&gt;Prioritizing features for compliance tracking, trip management, and operational efficiency&lt;/li&gt;&#xA;&lt;li&gt;Managing product roadmaps for multi-carrier operations and enterprise features&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;industry-focus&#34;&gt;Industry Focus&lt;/h2&gt;&#xA;&lt;p&gt;Our platform serves:&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Senior Frontend Developer</title>
-      <link>http://localhost:1313/jobs/senior-frontend-developer/</link>
-      <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/jobs/senior-frontend-developer/</guid>
-      <description>&lt;p&gt;We&amp;rsquo;re looking for a Senior Frontend Developer to join our growing team and help shape the future of fleet management technology with FleetOps.&lt;/p&gt;&#xA;&lt;h2 id=&#34;about-the-role&#34;&gt;About the Role&lt;/h2&gt;&#xA;&lt;p&gt;As a Senior Frontend Developer at FleetOps, you&amp;rsquo;ll be responsible for:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Building and maintaining high-quality, responsive UI components for our fleet management platform&lt;/li&gt;&#xA;&lt;li&gt;Collaborating with our product team to implement intuitive interfaces for fleet managers, dispatchers, and drivers&lt;/li&gt;&#xA;&lt;li&gt;Developing mobile-optimized experiences for our driver-facing applications&lt;/li&gt;&#xA;&lt;li&gt;Optimizing application performance for real-time fleet tracking and compliance reporting&lt;/li&gt;&#xA;&lt;li&gt;Mentoring junior developers and contributing to our engineering culture&lt;/li&gt;&#xA;&lt;li&gt;Working with our Go and Python backend teams to integrate frontend experiences&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;tech-stack&#34;&gt;Tech Stack&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Frontend:&lt;/strong&gt; SvelteKit, TypeScript, TailwindCSS&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Backend:&lt;/strong&gt; Go (primary), Python (analytics/AI features)&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Database:&lt;/strong&gt; PostgreSQL via Supabase&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Infrastructure:&lt;/strong&gt; Cloud-hosted with CI/CD automation&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Tools:&lt;/strong&gt; Git, Docker, modern frontend build tools&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;requirements&#34;&gt;Requirements&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;5+ years of experience in frontend development&lt;/li&gt;&#xA;&lt;li&gt;Strong experience with modern JavaScript/TypeScript and CSS&lt;/li&gt;&#xA;&lt;li&gt;Experience with SvelteKit, Svelte, or similar modern frontend frameworks&lt;/li&gt;&#xA;&lt;li&gt;Understanding of responsive design and mobile-first development&lt;/li&gt;&#xA;&lt;li&gt;Experience working with REST APIs and real-time data&lt;/li&gt;&#xA;&lt;li&gt;Understanding of transportation/logistics industry challenges (preferred)&lt;/li&gt;&#xA;&lt;li&gt;Strong communication skills and ability to work in a collaborative environment&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;nice-to-have&#34;&gt;Nice to Have&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Experience with fleet management or transportation software&lt;/li&gt;&#xA;&lt;li&gt;Knowledge of mapping libraries and geolocation features&lt;/li&gt;&#xA;&lt;li&gt;Experience with Progressive Web Apps (PWAs)&lt;/li&gt;&#xA;&lt;li&gt;Understanding of backend technologies (Go, Python)&lt;/li&gt;&#xA;&lt;li&gt;Contributions to open source projects&lt;/li&gt;&#xA;&lt;li&gt;Experience with design systems and component libraries&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;benefits&#34;&gt;Benefits&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Competitive salary and equity package&lt;/li&gt;&#xA;&lt;li&gt;Flexible hybrid work (Columbus, OH) or fully remote options&lt;/li&gt;&#xA;&lt;li&gt;Comprehensive health, dental, and vision insurance&lt;/li&gt;&#xA;&lt;li&gt;401(k) with company matching&lt;/li&gt;&#xA;&lt;li&gt;Professional development budget ($2,000/year)&lt;/li&gt;&#xA;&lt;li&gt;Home office setup allowance ($1,500)&lt;/li&gt;&#xA;&lt;li&gt;Flexible PTO and company holidays&lt;/li&gt;&#xA;&lt;li&gt;Annual team events and quarterly offsites&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;how-to-apply&#34;&gt;How to Apply&lt;/h2&gt;&#xA;&lt;p&gt;Please send your resume, portfolio, and a brief cover letter explaining your interest in transportation technology. Include links to relevant projects, especially any work with SvelteKit or similar frameworks.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Compliance Manager</title>
-      <link>http://localhost:1313/jobs/compliance-manager/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/jobs/compliance-manager/</guid>
-      <description>&lt;h2 id=&#34;about-the-role&#34;&gt;About the Role&lt;/h2&gt;&#xA;&lt;p&gt;We&amp;rsquo;re seeking an experienced Compliance Manager to join our growing team and help lead our compliance operations. In this role, you&amp;rsquo;ll be responsible for managing client compliance programs, ensuring regulatory adherence, and helping organizations maintain safe, compliant workplaces.&lt;/p&gt;&#xA;&lt;p&gt;This is an excellent opportunity for a compliance professional with DOT and/or workplace safety experience to grow their career in a fast-paced, technology-driven environment.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-responsibilities&#34;&gt;Key Responsibilities&lt;/h2&gt;&#xA;&lt;h3 id=&#34;program-management&#34;&gt;Program Management&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Manage drug testing programs for DOT and non-DOT clients&lt;/li&gt;&#xA;&lt;li&gt;Oversee MVR monitoring and violation management&lt;/li&gt;&#xA;&lt;li&gt;Coordinate DOT physical scheduling and tracking&lt;/li&gt;&#xA;&lt;li&gt;Handle background check processes and adverse action procedures&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;regulatory-compliance&#34;&gt;Regulatory Compliance&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Ensure adherence to DOT Part 40, Part 382, and other relevant regulations&lt;/li&gt;&#xA;&lt;li&gt;Stay current with regulatory changes and update client programs accordingly&lt;/li&gt;&#xA;&lt;li&gt;Assist with audit preparations and regulatory inspections&lt;/li&gt;&#xA;&lt;li&gt;Maintain documentation for compliance purposes&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;client-relations&#34;&gt;Client Relations&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Serve as primary compliance contact for assigned client accounts&lt;/li&gt;&#xA;&lt;li&gt;Provide regulatory guidance and best practice recommendations&lt;/li&gt;&#xA;&lt;li&gt;Handle compliance violations and coordinate corrective actions&lt;/li&gt;&#xA;&lt;li&gt;Train client personnel on compliance requirements&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;quality-assurance&#34;&gt;Quality Assurance&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Review and audit compliance processes for accuracy&lt;/li&gt;&#xA;&lt;li&gt;Identify areas for process improvement&lt;/li&gt;&#xA;&lt;li&gt;Maintain quality standards for all compliance services&lt;/li&gt;&#xA;&lt;li&gt;Support internal compliance training initiatives&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;qualifications&#34;&gt;Qualifications&lt;/h2&gt;&#xA;&lt;h3 id=&#34;required-experience&#34;&gt;Required Experience&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;3-5 years of experience in compliance management, preferably DOT compliance&lt;/li&gt;&#xA;&lt;li&gt;Knowledge of DOT Part 40 drug and alcohol testing regulations&lt;/li&gt;&#xA;&lt;li&gt;Experience with MVR monitoring and driver qualification requirements&lt;/li&gt;&#xA;&lt;li&gt;Understanding of FMCSA regulations and requirements&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;preferred-qualifications&#34;&gt;Preferred Qualifications&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;DOT Reasonable Suspicion training certification&lt;/li&gt;&#xA;&lt;li&gt;Experience with TPA (Third Party Administrator) services&lt;/li&gt;&#xA;&lt;li&gt;Background check and adverse action experience&lt;/li&gt;&#xA;&lt;li&gt;HIPAA compliance knowledge&lt;/li&gt;&#xA;&lt;li&gt;Bachelor&amp;rsquo;s degree in related field&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;skills--competencies&#34;&gt;Skills &amp;amp; Competencies&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Strong attention to detail and accuracy&lt;/li&gt;&#xA;&lt;li&gt;Excellent communication and interpersonal skills&lt;/li&gt;&#xA;&lt;li&gt;Ability to manage multiple client accounts simultaneously&lt;/li&gt;&#xA;&lt;li&gt;Problem-solving and critical thinking abilities&lt;/li&gt;&#xA;&lt;li&gt;Proficiency with compliance management software&lt;/li&gt;&#xA;&lt;li&gt;Customer service orientation&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;what-we-offer&#34;&gt;What We Offer&lt;/h2&gt;&#xA;&lt;h3 id=&#34;compensation--benefits&#34;&gt;Compensation &amp;amp; Benefits&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Competitive salary: $65,000 - $85,000 based on experience&lt;/li&gt;&#xA;&lt;li&gt;Comprehensive health, dental, and vision insurance&lt;/li&gt;&#xA;&lt;li&gt;401(k) with company matching&lt;/li&gt;&#xA;&lt;li&gt;Flexible PTO policy&lt;/li&gt;&#xA;&lt;li&gt;Professional development budget&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;work-environment&#34;&gt;Work Environment&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Remote-first culture with optional office access&lt;/li&gt;&#xA;&lt;li&gt;Flexible working hours&lt;/li&gt;&#xA;&lt;li&gt;Modern technology and tools&lt;/li&gt;&#xA;&lt;li&gt;Collaborative team environment&lt;/li&gt;&#xA;&lt;li&gt;Opportunities for career advancement&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;growth-opportunities&#34;&gt;Growth Opportunities&lt;/h2&gt;&#xA;&lt;p&gt;This role offers significant growth potential within our expanding organization. Successful candidates may advance to:&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Drug Testing Coordinator</title>
-      <link>http://localhost:1313/jobs/drug-testing-coordinator/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/jobs/drug-testing-coordinator/</guid>
-      <description>&lt;h2 id=&#34;about-the-role&#34;&gt;About the Role&lt;/h2&gt;&#xA;&lt;p&gt;We&amp;rsquo;re seeking a detail-oriented Drug Testing Coordinator to join our operations team and manage comprehensive drug and alcohol testing programs for our diverse client base. This role involves coordinating with testing facilities, MROs, and clients to ensure seamless testing operations and regulatory compliance.&lt;/p&gt;&#xA;&lt;p&gt;This is an excellent opportunity for someone with drug testing or healthcare administration experience to build their career in the compliance industry while making a meaningful impact on workplace safety.&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jobs on V1 Consortium - Compliance &amp; Screening Services</title><link>https://www.v1consortium.com/jobs/</link><description>Recent content in Jobs on V1 Consortium - Compliance &amp; Screening Services</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 06 Jul 2025 16:06:52 -0400</lastBuildDate><atom:link href="https://www.v1consortium.com/jobs/index.xml" rel="self" type="application/rss+xml"/><item><title>Product Manager - Fleet Operations</title><link>https://www.v1consortium.com/jobs/product-manager/</link><pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate><guid>https://www.v1consortium.com/jobs/product-manager/</guid><description>&lt;p&gt;We&amp;rsquo;re looking for a Product Manager to join FleetOps and help shape the future of fleet management technology for transportation companies nationwide.&lt;/p&gt;
+&lt;h2 id="about-the-role"&gt;About the Role&lt;/h2&gt;
+&lt;p&gt;As a Product Manager at FleetOps, you&amp;rsquo;ll be responsible for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Defining and executing product strategy for our comprehensive fleet management platform&lt;/li&gt;
+&lt;li&gt;Working closely with engineering (Go/Python backend, SvelteKit frontend), design, and customer success teams&lt;/li&gt;
+&lt;li&gt;Conducting user research with fleet managers, dispatchers, and drivers&lt;/li&gt;
+&lt;li&gt;Analyzing transportation industry trends and regulatory requirements&lt;/li&gt;
+&lt;li&gt;Prioritizing features for compliance tracking, trip management, and operational efficiency&lt;/li&gt;
+&lt;li&gt;Managing product roadmaps for multi-carrier operations and enterprise features&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="industry-focus"&gt;Industry Focus&lt;/h2&gt;
+&lt;p&gt;Our platform serves:&lt;/p&gt;</description></item><item><title>Senior Frontend Developer</title><link>https://www.v1consortium.com/jobs/senior-frontend-developer/</link><pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate><guid>https://www.v1consortium.com/jobs/senior-frontend-developer/</guid><description>&lt;p&gt;We&amp;rsquo;re looking for a Senior Frontend Developer to join our growing team and help shape the future of fleet management technology with FleetOps.&lt;/p&gt;
+&lt;h2 id="about-the-role"&gt;About the Role&lt;/h2&gt;
+&lt;p&gt;As a Senior Frontend Developer at FleetOps, you&amp;rsquo;ll be responsible for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Building and maintaining high-quality, responsive UI components for our fleet management platform&lt;/li&gt;
+&lt;li&gt;Collaborating with our product team to implement intuitive interfaces for fleet managers, dispatchers, and drivers&lt;/li&gt;
+&lt;li&gt;Developing mobile-optimized experiences for our driver-facing applications&lt;/li&gt;
+&lt;li&gt;Optimizing application performance for real-time fleet tracking and compliance reporting&lt;/li&gt;
+&lt;li&gt;Mentoring junior developers and contributing to our engineering culture&lt;/li&gt;
+&lt;li&gt;Working with our Go and Python backend teams to integrate frontend experiences&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="tech-stack"&gt;Tech Stack&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Frontend:&lt;/strong&gt; SvelteKit, TypeScript, TailwindCSS&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backend:&lt;/strong&gt; Go (primary), Python (analytics/AI features)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Database:&lt;/strong&gt; PostgreSQL via Supabase&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure:&lt;/strong&gt; Cloud-hosted with CI/CD automation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tools:&lt;/strong&gt; Git, Docker, modern frontend build tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="requirements"&gt;Requirements&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;5+ years of experience in frontend development&lt;/li&gt;
+&lt;li&gt;Strong experience with modern JavaScript/TypeScript and CSS&lt;/li&gt;
+&lt;li&gt;Experience with SvelteKit, Svelte, or similar modern frontend frameworks&lt;/li&gt;
+&lt;li&gt;Understanding of responsive design and mobile-first development&lt;/li&gt;
+&lt;li&gt;Experience working with REST APIs and real-time data&lt;/li&gt;
+&lt;li&gt;Understanding of transportation/logistics industry challenges (preferred)&lt;/li&gt;
+&lt;li&gt;Strong communication skills and ability to work in a collaborative environment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="nice-to-have"&gt;Nice to Have&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Experience with fleet management or transportation software&lt;/li&gt;
+&lt;li&gt;Knowledge of mapping libraries and geolocation features&lt;/li&gt;
+&lt;li&gt;Experience with Progressive Web Apps (PWAs)&lt;/li&gt;
+&lt;li&gt;Understanding of backend technologies (Go, Python)&lt;/li&gt;
+&lt;li&gt;Contributions to open source projects&lt;/li&gt;
+&lt;li&gt;Experience with design systems and component libraries&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="benefits"&gt;Benefits&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Competitive salary and equity package&lt;/li&gt;
+&lt;li&gt;Flexible hybrid work (Columbus, OH) or fully remote options&lt;/li&gt;
+&lt;li&gt;Comprehensive health, dental, and vision insurance&lt;/li&gt;
+&lt;li&gt;401(k) with company matching&lt;/li&gt;
+&lt;li&gt;Professional development budget ($2,000/year)&lt;/li&gt;
+&lt;li&gt;Home office setup allowance ($1,500)&lt;/li&gt;
+&lt;li&gt;Flexible PTO and company holidays&lt;/li&gt;
+&lt;li&gt;Annual team events and quarterly offsites&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="how-to-apply"&gt;How to Apply&lt;/h2&gt;
+&lt;p&gt;Please send your resume, portfolio, and a brief cover letter explaining your interest in transportation technology. Include links to relevant projects, especially any work with SvelteKit or similar frameworks.&lt;/p&gt;</description></item><item><title>Compliance Manager</title><link>https://www.v1consortium.com/jobs/compliance-manager/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.v1consortium.com/jobs/compliance-manager/</guid><description>&lt;h2 id="about-the-role"&gt;About the Role&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;re seeking an experienced Compliance Manager to join our growing team and help lead our compliance operations. In this role, you&amp;rsquo;ll be responsible for managing client compliance programs, ensuring regulatory adherence, and helping organizations maintain safe, compliant workplaces.&lt;/p&gt;
+&lt;p&gt;This is an excellent opportunity for a compliance professional with DOT and/or workplace safety experience to grow their career in a fast-paced, technology-driven environment.&lt;/p&gt;
+&lt;h2 id="key-responsibilities"&gt;Key Responsibilities&lt;/h2&gt;
+&lt;h3 id="program-management"&gt;Program Management&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Manage drug testing programs for DOT and non-DOT clients&lt;/li&gt;
+&lt;li&gt;Oversee MVR monitoring and violation management&lt;/li&gt;
+&lt;li&gt;Coordinate DOT physical scheduling and tracking&lt;/li&gt;
+&lt;li&gt;Handle background check processes and adverse action procedures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="regulatory-compliance"&gt;Regulatory Compliance&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Ensure adherence to DOT Part 40, Part 382, and other relevant regulations&lt;/li&gt;
+&lt;li&gt;Stay current with regulatory changes and update client programs accordingly&lt;/li&gt;
+&lt;li&gt;Assist with audit preparations and regulatory inspections&lt;/li&gt;
+&lt;li&gt;Maintain documentation for compliance purposes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="client-relations"&gt;Client Relations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Serve as primary compliance contact for assigned client accounts&lt;/li&gt;
+&lt;li&gt;Provide regulatory guidance and best practice recommendations&lt;/li&gt;
+&lt;li&gt;Handle compliance violations and coordinate corrective actions&lt;/li&gt;
+&lt;li&gt;Train client personnel on compliance requirements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="quality-assurance"&gt;Quality Assurance&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Review and audit compliance processes for accuracy&lt;/li&gt;
+&lt;li&gt;Identify areas for process improvement&lt;/li&gt;
+&lt;li&gt;Maintain quality standards for all compliance services&lt;/li&gt;
+&lt;li&gt;Support internal compliance training initiatives&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="qualifications"&gt;Qualifications&lt;/h2&gt;
+&lt;h3 id="required-experience"&gt;Required Experience&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;3-5 years of experience in compliance management, preferably DOT compliance&lt;/li&gt;
+&lt;li&gt;Knowledge of DOT Part 40 drug and alcohol testing regulations&lt;/li&gt;
+&lt;li&gt;Experience with MVR monitoring and driver qualification requirements&lt;/li&gt;
+&lt;li&gt;Understanding of FMCSA regulations and requirements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="preferred-qualifications"&gt;Preferred Qualifications&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;DOT Reasonable Suspicion training certification&lt;/li&gt;
+&lt;li&gt;Experience with TPA (Third Party Administrator) services&lt;/li&gt;
+&lt;li&gt;Background check and adverse action experience&lt;/li&gt;
+&lt;li&gt;HIPAA compliance knowledge&lt;/li&gt;
+&lt;li&gt;Bachelor&amp;rsquo;s degree in related field&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="skills--competencies"&gt;Skills &amp;amp; Competencies&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Strong attention to detail and accuracy&lt;/li&gt;
+&lt;li&gt;Excellent communication and interpersonal skills&lt;/li&gt;
+&lt;li&gt;Ability to manage multiple client accounts simultaneously&lt;/li&gt;
+&lt;li&gt;Problem-solving and critical thinking abilities&lt;/li&gt;
+&lt;li&gt;Proficiency with compliance management software&lt;/li&gt;
+&lt;li&gt;Customer service orientation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="what-we-offer"&gt;What We Offer&lt;/h2&gt;
+&lt;h3 id="compensation--benefits"&gt;Compensation &amp;amp; Benefits&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Competitive salary: $65,000 - $85,000 based on experience&lt;/li&gt;
+&lt;li&gt;Comprehensive health, dental, and vision insurance&lt;/li&gt;
+&lt;li&gt;401(k) with company matching&lt;/li&gt;
+&lt;li&gt;Flexible PTO policy&lt;/li&gt;
+&lt;li&gt;Professional development budget&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="work-environment"&gt;Work Environment&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Remote-first culture with optional office access&lt;/li&gt;
+&lt;li&gt;Flexible working hours&lt;/li&gt;
+&lt;li&gt;Modern technology and tools&lt;/li&gt;
+&lt;li&gt;Collaborative team environment&lt;/li&gt;
+&lt;li&gt;Opportunities for career advancement&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="growth-opportunities"&gt;Growth Opportunities&lt;/h2&gt;
+&lt;p&gt;This role offers significant growth potential within our expanding organization. Successful candidates may advance to:&lt;/p&gt;</description></item><item><title>Drug Testing Coordinator</title><link>https://www.v1consortium.com/jobs/drug-testing-coordinator/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.v1consortium.com/jobs/drug-testing-coordinator/</guid><description>&lt;h2 id="about-the-role"&gt;About the Role&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;re seeking a detail-oriented Drug Testing Coordinator to join our operations team and manage comprehensive drug and alcohol testing programs for our diverse client base. This role involves coordinating with testing facilities, MROs, and clients to ensure seamless testing operations and regulatory compliance.&lt;/p&gt;
+&lt;p&gt;This is an excellent opportunity for someone with drug testing or healthcare administration experience to build their career in the compliance industry while making a meaningful impact on workplace safety.&lt;/p&gt;</description></item></channel></rss>

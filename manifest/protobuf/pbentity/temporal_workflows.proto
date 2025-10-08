@@ -1,0 +1,33 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message TemporalWorkflows {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string WorkflowId = 3; //
+  string WorkflowType = 4; //
+  string Status = 5; //
+  string InputData = 6; //
+  string OutputData = 7; //
+  string ErrorMessage = 8; //
+  string UserId = 9; //
+  string TestId = 10; //
+  string SelectionId = 11; //
+  google.protobuf.Timestamp StartedAt = 12; //
+  google.protobuf.Timestamp CompletedAt = 13; //
+  google.protobuf.Timestamp ScheduledFor = 14; //
+  int32 RetryCount = 15; //
+  int32 MaxRetries = 16; //
+  google.protobuf.Timestamp NextRetryAt = 17; //
+  google.protobuf.Timestamp CreatedAt = 18; //
+  google.protobuf.Timestamp UpdatedAt = 19; //
+}

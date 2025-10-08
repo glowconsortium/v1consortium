@@ -1,0 +1,20 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message PoolMemberships {
+  string Id = 1; //
+  string PoolId = 2; //
+  string UserId = 3; //
+  google.protobuf.Timestamp JoinedAt = 4; //
+  google.protobuf.Timestamp LeftAt = 5; //
+  bool IsActive = 6; //
+}

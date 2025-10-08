@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package v1consortium.auth;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "auth/v1";
+
+// Session Management Messages
+message CreateSessionRequest {
+  string user_id = 1;
+  string ip_address = 2;
+  string user_agent = 3;
+  google.protobuf.Timestamp expires_at = 4;
+}
+
+message CreateSessionResponse {
+  string session_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+message ValidateSessionRequest {
+  string session_id = 1;
+  string access_token = 2;
+}
+
+message ValidateSessionResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string organization_id = 3;
+  string role = 4;
+  repeated string permissions = 5;
+  google.protobuf.Timestamp expires_at = 6;
+}
+
+message RefreshSessionRequest {
+  string session_id = 1;
+  string refresh_token = 2;
+}
+
+message RefreshSessionResponse {
+  string new_access_token = 1;
+  string new_refresh_token = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+}
+
+message RevokeSessionResponse {
+  string message = 1;
+}
+
+message GetActiveSessionsRequest {
+  string user_id = 1;
+}
+
+message SessionInfo {
+  string session_id = 1;
+  string ip_address = 2;
+  string user_agent = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp last_accessed = 5;
+  google.protobuf.Timestamp expires_at = 6;
+  bool is_current = 7;
+}
+
+message GetActiveSessionsResponse {
+  repeated SessionInfo sessions = 1;
+}
+
+message RevokeAllSessionsRequest {
+  string user_id = 1;
+  string except_session_id = 2;
+}
+
+message RevokeAllSessionsResponse {
+  int32 revoked_count = 1;
+  string message = 2;
+}
+
+// Token Management Messages
+message CreateTokenRequest {
+  string user_id = 1;
+  string token_type = 2; // "access", "refresh", "reset", "verification", "api"
+  google.protobuf.Timestamp expires_at = 3;
+  map<string, string> metadata = 4;
+}
+
+message CreateTokenResponse {
+  string token = 1;
+  string token_id = 2;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+  string expected_type = 2;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string token_type = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  map<string, string> metadata = 5;
+}
+
+message RevokeTokenRequest {
+  string token = 1;
+}
+
+message RevokeTokenResponse {
+  string message = 1;
+}
+
+message CleanupExpiredTokensRequest {
+  // Empty - cleanup all expired tokens
+}
+
+message CleanupExpiredTokensResponse {
+  int32 cleaned_count = 1;
+}
+
+// Session Service Definition
+service SessionService {
+  // Session Management
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+  rpc ValidateSession(ValidateSessionRequest) returns (ValidateSessionResponse);
+  rpc RefreshSession(RefreshSessionRequest) returns (RefreshSessionResponse);
+  rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse);
+  rpc GetActiveSessions(GetActiveSessionsRequest) returns (GetActiveSessionsResponse);
+  rpc RevokeAllSessions(RevokeAllSessionsRequest) returns (RevokeAllSessionsResponse);
+
+  // Token Management
+  rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc RevokeToken(RevokeTokenRequest) returns (RevokeTokenResponse);
+  rpc CleanupExpiredTokens(CleanupExpiredTokensRequest) returns (CleanupExpiredTokensResponse);
+}

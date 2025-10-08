@@ -1,112 +1,111 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { authService } from '@movsm/v1-consortium-web-pkg';
-    import { Button } from '@movsm/v1-consortium-web-pkg';
-    import { Card } from '@movsm/v1-consortium-web-pkg';
-    import { Icon } from '@movsm/v1-consortium-web-pkg';
-    import { Badge } from '@movsm/v1-consortium-web-pkg';
-    import { Toggle } from '@movsm/v1-consortium-web-pkg';
-    import type { v2oneglobe_api_profile_v1_SecuritySettings } from '@movsm/v1-consortium-web-pkg';
-	import { toaster } from '@movsm/v1-consortium-web-pkg';
+    // import { onMount } from 'svelte';
+    // import { authService } from '@movsm/v1-consortium-web-pkg';
+    // import { Button } from '@movsm/v1-consortium-web-pkg';
+    // import { Card } from '@movsm/v1-consortium-web-pkg';
+    // import { Icon } from '@movsm/v1-consortium-web-pkg';
+    // import { Badge } from '@movsm/v1-consortium-web-pkg';
+    // import { Toggle } from '@movsm/v1-consortium-web-pkg';
+    // import type { v2oneglobe_api_profile_v1_SecuritySettings } from '@movsm/v1-consortium-web-pkg';
+	// import { toaster } from '@movsm/v1-consortium-web-pkg';
 
-    // Runes for reactive state
-    let loading = $state(false);
-    let error = $state('');
-    let success = $state('');
-    let securitySettings: v2oneglobe_api_profile_v1_SecuritySettings | null = $state(null);
+    // // Runes for reactive state
+    // let loading = $state(false);
+    // let error = $state('');
+    // let success = $state('');
+    // let securitySettings: v2oneglobe_api_profile_v1_SecuritySettings | null = $state(null);
 
-    onMount(async () => {
-        await loadSecuritySettings();
-    });
+    // onMount(async () => {
+    //     await loadSecuritySettings();
+    // });
 
-    async function loadSecuritySettings() {
-        try {
-            loading = true;
-            const response = await authService.getSecuritySettings();
-            // Fix: Access nested data structure and provide defaults
-            securitySettings = response.data?.security || response.data?.security || {
-                two_factor_enabled: false,
-                email_notifications: true,
-                security_alerts: true,
-                session_timeout_minutes: 1440, // 24 hours
-                allow_multiple_sessions: true,
-                require_password_for_actions: false
-            };
-            console.log('Security settings loaded:', securitySettings);
-        } catch (err: any) {
-            console.error('Failed to load security settings:', err);
-            error = err.message || 'Failed to load security settings';
-            // Set default settings on error
-            securitySettings = {
-                two_factor_enabled: false,
-                email_notifications: true,
-                security_alerts: true,
-                session_timeout_minutes: 1440,
-                allow_multiple_sessions: true,
-                require_password_for_actions: false
-            };
-        } finally {
-            loading = false;
-        }
-    }
+    // async function loadSecuritySettings() {
+    //     try {
+    //         loading = true;
+    //         const response = await authService.getSecuritySettings();
+    //         // Fix: Access nested data structure and provide defaults
+    //         securitySettings = response.data?.security || response.data?.security || {
+    //             two_factor_enabled: false,
+    //             email_notifications: true,
+    //             security_alerts: true,
+    //             session_timeout_minutes: 1440, // 24 hours
+    //             allow_multiple_sessions: true,
+    //             require_password_for_actions: false
+    //         };
+    //         console.log('Security settings loaded:', securitySettings);
+    //     } catch (err: any) {
+    //         console.error('Failed to load security settings:', err);
+    //         error = err.message || 'Failed to load security settings';
+    //         // Set default settings on error
+    //         securitySettings = {
+    //             two_factor_enabled: false,
+    //             email_notifications: true,
+    //             security_alerts: true,
+    //             session_timeout_minutes: 1440,
+    //             allow_multiple_sessions: true,
+    //             require_password_for_actions: false
+    //         };
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function updateSecuritySettings(updates: Partial<v2oneglobe_api_profile_v1_SecuritySettings>) {
-        try {
-            loading = true;
-            error = '';
+    // async function updateSecuritySettings(updates: Partial<v2oneglobe_api_profile_v1_SecuritySettings>) {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.updateSecuritySettings(updates);
-            success = 'Security settings updated successfully';
+    //         await authService.updateSecuritySettings(updates);
+    //         success = 'Security settings updated successfully';
             
-            // Update local state
-            securitySettings = { ...securitySettings, ...updates };
-        } catch (err: any) {
-            console.error('Failed to update security settings:', err);
-            error = err.message || 'Failed to update security settings';
-        } finally {
-            loading = false;
-        }
-    }
+    //         // Update local state
+    //         securitySettings = { ...securitySettings, ...updates };
+    //     } catch (err: any) {
+    //         console.error('Failed to update security settings:', err);
+    //         error = err.message || 'Failed to update security settings';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    // Helper function to convert minutes to readable format
-    function getTimeoutLabel(minutes: number): string {
-        if (minutes === 0) return 'Never';
-        if (minutes < 60) return `${minutes} minutes`;
-        if (minutes < 1440) return `${Math.floor(minutes / 60)} hours`;
-        return `${Math.floor(minutes / 1440)} days`;
-    }
+    // // Helper function to convert minutes to readable format
+    // function getTimeoutLabel(minutes: number): string {
+    //     if (minutes === 0) return 'Never';
+    //     if (minutes < 60) return `${minutes} minutes`;
+    //     if (minutes < 1440) return `${Math.floor(minutes / 60)} hours`;
+    //     return `${Math.floor(minutes / 1440)} days`;
+    // }
 
-    // Helper function to get timeout options
-    function getTimeoutOptions() {
-        return [
-            { value: 0, label: 'Never' },
-            { value: 60, label: '1 hour' },
-            { value: 240, label: '4 hours' },
-            { value: 480, label: '8 hours' },
-            { value: 1440, label: '24 hours' },
-            { value: 10080, label: '7 days' }
-        ];
-    }
+    // // Helper function to get timeout options
+    // function getTimeoutOptions() {
+    //     return [
+    //         { value: 0, label: 'Never' },
+    //         { value: 60, label: '1 hour' },
+    //         { value: 240, label: '4 hours' },
+    //         { value: 480, label: '8 hours' },
+    //         { value: 1440, label: '24 hours' },
+    //         { value: 10080, label: '7 days' }
+    //     ];
+    // }
 
-    // Clear messages after 5 seconds
-    $effect(() => {
-        if (error || success) {
-            const timer = setTimeout(() => {
-                error = '';
-                success = '';
-            }, 5000);
+    // // Clear messages after 5 seconds
+    // $effect(() => {
+    //     if (error || success) {
+    //         const timer = setTimeout(() => {
+    //             error = '';
+    //             success = '';
+    //         }, 5000);
             
-            return () => clearTimeout(timer);
-        }
-    });
+    //         return () => clearTimeout(timer);
+    //     }
+    // });
 </script>
 
 <svelte:head>
     <title>Security Settings - FormApp</title>
 </svelte:head>
 
-<div class="max-w-4xl mx-auto space-y-6">
-    <!-- Header -->
+<!-- <div class="max-w-4xl mx-auto space-y-6">
     <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
             Security Settings
@@ -116,7 +115,6 @@
         </p>
     </div>
 
-    <!-- Toast Messages -->
     {#if error}
     {toaster.create({
         type: 'error',
@@ -131,14 +129,12 @@
         })}
     {/if}
 
-    <!-- Loading State -->
     {#if loading && !securitySettings}
         <div class="flex items-center justify-center py-12">
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>
     {:else}
         <div class="space-y-6">
-            <!-- Two-Factor Authentication -->
             <Card>
                 <div class="flex items-center justify-between mb-6">
                     <div>
@@ -209,7 +205,6 @@
                 </div>
             </Card>
 
-            <!-- Login Security -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Login Security
@@ -266,7 +261,6 @@
                 </div>
             </Card>
 
-            <!-- Security Actions -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Security Actions
@@ -293,7 +287,6 @@
                 </div>
             </Card>
 
-            <!-- Account Monitoring -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Account Monitoring
@@ -320,7 +313,6 @@
                 </div>
             </Card>
 
-            <!-- Security Information -->
             <Card>
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
                     Current Security Status
@@ -359,7 +351,6 @@
                         </div>
                     </div>
 
-                    <!-- Security Tips -->
                     <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                         <h4 class="text-blue-800 dark:text-blue-400 font-medium mb-2">
                             Security Recommendations
@@ -395,4 +386,4 @@
             </Card>
         </div>
     {/if}
-</div>
+</div> -->

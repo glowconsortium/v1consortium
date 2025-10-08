@@ -1,0 +1,36 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message ComplianceStatus {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  bool IsCompliant = 4; //
+  string CompliancePercentage = 5; //
+  google.protobuf.Timestamp LastUpdated = 6; //
+  bool DrugTestingCurrent = 7; //
+  google.protobuf.Timestamp LastDrugTestDate = 8; //
+  google.protobuf.Timestamp NextDrugTestDue = 9; //
+  bool MvrCurrent = 10; //
+  google.protobuf.Timestamp LastMvrDate = 11; //
+  google.protobuf.Timestamp NextMvrDue = 12; //
+  bool PhysicalCurrent = 13; //
+  google.protobuf.Timestamp MedicalCertExpirationDate = 14; //
+  bool BackgroundCheckCurrent = 15; //
+  google.protobuf.Timestamp LastBackgroundCheckDate = 16; //
+  bool TrainingCurrent = 17; //
+  google.protobuf.Timestamp LastTrainingDate = 18; //
+  int32 ViolationsCount = 19; //
+  int32 HighRiskFlags = 20; //
+  google.protobuf.Timestamp CreatedAt = 21; //
+  google.protobuf.Timestamp UpdatedAt = 22; //
+}

@@ -1,0 +1,12 @@
+{
+  "name": "v1consortium",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Samuel Abasah <kobabco@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@bufbuild/buf": "^1.57.2",
+    "@bufbuild/protoc-gen-es": "^2.2.3",
+    "@connectrpc/protoc-gen-connect-query": "^2.0.0"
+  }
+}

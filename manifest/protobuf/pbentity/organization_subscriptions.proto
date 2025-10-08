@@ -1,0 +1,25 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message OrganizationSubscriptions {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string PlanId = 3; //
+  string Status = 4; //
+  google.protobuf.Timestamp StartDate = 5; //
+  google.protobuf.Timestamp EndDate = 6; //
+  bool AutoRenew = 7; //
+  string StripeSubscriptionId = 8; //
+  string StripeCustomerId = 9; //
+  google.protobuf.Timestamp CreatedAt = 10; //
+  google.protobuf.Timestamp UpdatedAt = 11; //
+}

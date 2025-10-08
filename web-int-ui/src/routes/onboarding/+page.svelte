@@ -1,150 +1,150 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { onboardingStore } from '$lib/stores/onboardingStore.js';
-    import { goto } from '$app/navigation';
-    import { OnboardingStep, InvitedOnboardingStep, type OnboardingState, type OnboardingProgress, UserType, OnboardingType, type InvitedOnboardingState } from '$lib/types/onboarding.js';
+    // import { onMount } from 'svelte';
+    // import { onboardingStore } from '$lib/stores/onboardingStore.js';
+    // import { goto } from '$app/navigation';
+    // import { OnboardingStep, InvitedOnboardingStep, type OnboardingState, type OnboardingProgress, UserType, OnboardingType, type InvitedOnboardingState } from '$lib/types/onboarding.js';
 
-    // Import your UI library components
-    import { Button, Alert, Spinner, Card } from '@movsm/v1-consortium-web-pkg';
+    // // Import your UI library components
+    // import { Button, Alert, Spinner, Card } from '@movsm/v1-consortium-web-pkg';
 
-    const { subscribe, progress, loading, error } = onboardingStore;
+    // const { subscribe, progress, loading, error } = onboardingStore;
     
-    let currentState = $state<OnboardingState | InvitedOnboardingState>();
-    let progressData = $state<OnboardingProgress>();
+    // let currentState = $state<OnboardingState | InvitedOnboardingState>();
+    // let progressData = $state<OnboardingProgress>();
     
-    // Subscribe to store updates
-    $effect(() => {
-        const unsubscribe = subscribe((state) => {
-            currentState = state;
-        });
-        return unsubscribe;
-    });
+    // // Subscribe to store updates
+    // $effect(() => {
+    //     const unsubscribe = subscribe((state) => {
+    //         currentState = state;
+    //     });
+    //     return unsubscribe;
+    // });
     
-    $effect(() => {
-        const unsubscribe = progress.subscribe((prog) => {
-            progressData = prog;
-        });
-        return unsubscribe;
-    });
+    // $effect(() => {
+    //     const unsubscribe = progress.subscribe((prog) => {
+    //         progressData = prog;
+    //     });
+    //     return unsubscribe;
+    // });
     
-    onMount(async () => {
-        await onboardingStore.loadOnboardingState();
+    // onMount(async () => {
+    //     await onboardingStore.loadOnboardingState();
         
-        // Redirect if already completed
-        if (currentState?.isCompleted) {
-            goto('/dashboard');
-            return;
-        }
+    //     // Redirect if already completed
+    //     if (currentState?.isCompleted) {
+    //         goto('/dashboard');
+    //         return;
+    //     }
         
-        // Redirect to specific step if onboarding is in progress
-        if (currentState?.currentStep && currentState.currentStep !== (currentState.userType === UserType.INVITED ? InvitedOnboardingStep.WELCOME : OnboardingStep.WELCOME)) {
-            redirectToCurrentStep(currentState.currentStep);
-        }
-    });
+    //     // Redirect to specific step if onboarding is in progress
+    //     if (currentState?.currentStep && currentState.currentStep !== (currentState.userType === UserType.INVITED ? InvitedOnboardingStep.WELCOME : OnboardingStep.WELCOME)) {
+    //         redirectToCurrentStep(currentState.currentStep);
+    //     }
+    // });
     
-    function redirectToCurrentStep(step: OnboardingStep | InvitedOnboardingStep) {
-        switch (step) {
-            case OnboardingStep.ORGANIZATION:
-                if (currentState?.userType === UserType.SIGNUP) {
-                    goto('/onboarding/organization');
-                }
-                break;
-            case OnboardingStep.PLAN_SELECTION:
-                if (currentState?.userType === UserType.SIGNUP) {
-                    goto('/onboarding/plans');
-                }
-                break;
-            case OnboardingStep.TUTORIAL:
-            case InvitedOnboardingStep.TUTORIAL:
-                goto('/onboarding/tutorial');
-                break;
-            case OnboardingStep.COMPLETED:
-            case InvitedOnboardingStep.COMPLETED:
-                goto('/onboarding/complete');
-                break;
-            default:
-                // Stay on welcome page
-                break;
-        }
-    }
+    // function redirectToCurrentStep(step: OnboardingStep | InvitedOnboardingStep) {
+    //     switch (step) {
+    //         case OnboardingStep.ORGANIZATION:
+    //             if (currentState?.userType === UserType.SIGNUP) {
+    //                 goto('/onboarding/organization');
+    //             }
+    //             break;
+    //         case OnboardingStep.PLAN_SELECTION:
+    //             if (currentState?.userType === UserType.SIGNUP) {
+    //                 goto('/onboarding/plans');
+    //             }
+    //             break;
+    //         case OnboardingStep.TUTORIAL:
+    //         case InvitedOnboardingStep.TUTORIAL:
+    //             goto('/onboarding/tutorial');
+    //             break;
+    //         case OnboardingStep.COMPLETED:
+    //         case InvitedOnboardingStep.COMPLETED:
+    //             goto('/onboarding/complete');
+    //             break;
+    //         default:
+    //             // Stay on welcome page
+    //             break;
+    //     }
+    // }
     
-    function startOnboarding() {
-        console.log('Starting onboarding process...');
-        if (currentState?.userType === UserType.INVITED) {
-            goto('/onboarding/tutorial', { replaceState: true });
-        } else {
-            goto('/onboarding/organization', { replaceState: true });
-        }
-    }
+    // function startOnboarding() {
+    //     console.log('Starting onboarding process...');
+    //     if (currentState?.userType === UserType.INVITED) {
+    //         goto('/onboarding/tutorial', { replaceState: true });
+    //     } else {
+    //         goto('/onboarding/organization', { replaceState: true });
+    //     }
+    // }
     
-    function skipOnboarding() {
-        goto('/dashboard');
-    }
+    // function skipOnboarding() {
+    //     goto('/dashboard');
+    // }
     
-    function continueOnboarding() {
-        console.log('Continuing onboarding...');
-        const welcomeStep = currentState?.userType === UserType.INVITED ? InvitedOnboardingStep.WELCOME : OnboardingStep.WELCOME;
-        if (currentState?.currentStep && currentState?.currentStep !== welcomeStep) {
-            redirectToCurrentStep(currentState.currentStep);
-        } else {
-            startOnboarding();
-        }
-    }
+    // function continueOnboarding() {
+    //     console.log('Continuing onboarding...');
+    //     const welcomeStep = currentState?.userType === UserType.INVITED ? InvitedOnboardingStep.WELCOME : OnboardingStep.WELCOME;
+    //     if (currentState?.currentStep && currentState?.currentStep !== welcomeStep) {
+    //         redirectToCurrentStep(currentState.currentStep);
+    //     } else {
+    //         startOnboarding();
+    //     }
+    // }
 
-    function getCurrentStepLabel(step: OnboardingStep | InvitedOnboardingStep): string {
-        switch (step) {
-            case OnboardingStep.WELCOME:
-            case InvitedOnboardingStep.WELCOME:
-                return 'Getting Started';
-            case OnboardingStep.ORGANIZATION:
-                return 'Organization Setup';
-            case OnboardingStep.PLAN_SELECTION:
-                return 'Plan Selection';
-            case OnboardingStep.TUTORIAL:
-            case InvitedOnboardingStep.TUTORIAL:
-                return 'Quick Tutorial';
+    // function getCurrentStepLabel(step: OnboardingStep | InvitedOnboardingStep): string {
+    //     switch (step) {
+    //         case OnboardingStep.WELCOME:
+    //         case InvitedOnboardingStep.WELCOME:
+    //             return 'Getting Started';
+    //         case OnboardingStep.ORGANIZATION:
+    //             return 'Organization Setup';
+    //         case OnboardingStep.PLAN_SELECTION:
+    //             return 'Plan Selection';
+    //         case OnboardingStep.TUTORIAL:
+    //         case InvitedOnboardingStep.TUTORIAL:
+    //             return 'Quick Tutorial';
 
-            case OnboardingStep.COMPLETED:
-            case InvitedOnboardingStep.COMPLETED:
-                return 'Completed';
-            default:
-                return 'Unknown Step';
-        }
-    }
+    //         case OnboardingStep.COMPLETED:
+    //         case InvitedOnboardingStep.COMPLETED:
+    //             return 'Completed';
+    //         default:
+    //             return 'Unknown Step';
+    //     }
+    // }
 
-    function getOnboardingSteps() {
-        if (currentState?.userType === UserType.INVITED) {
-            return [
-                {
-                    step: 1,
-                    title: 'Quick Tutorial',
-                    description: 'Learn how to use FormApp effectively'
-                },
+    // function getOnboardingSteps() {
+    //     if (currentState?.userType === UserType.INVITED) {
+    //         return [
+    //             {
+    //                 step: 1,
+    //                 title: 'Quick Tutorial',
+    //                 description: 'Learn how to use FormApp effectively'
+    //             },
 
-            ];
-        }
+    //         ];
+    //     }
 
-        return [
-            {
-                step: 1,
-                title: 'Create Organization',
-                description: 'Set up your workspace for team collaboration'
-            },
-            {
-                step: 2,
-                title: 'Choose Your Plan',
-                description: 'Select the plan that fits your needs (start free!)'
-            },
+    //     return [
+    //         {
+    //             step: 1,
+    //             title: 'Create Organization',
+    //             description: 'Set up your workspace for team collaboration'
+    //         },
+    //         {
+    //             step: 2,
+    //             title: 'Choose Your Plan',
+    //             description: 'Select the plan that fits your needs (start free!)'
+    //         },
 
-        ];
-    }
+    //     ];
+    // }
 </script>
 
 <svelte:head>
     <title>Welcome to FormApp - Get Started</title>
     <meta name="description" content="Welcome to FormApp! Let's get you set up to start collecting data." />
 </svelte:head>
-
+<!-- 
 <div class="min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white">
     {#if $loading.isLoading}
         <div class="flex flex-col items-center gap-4">
@@ -268,4 +268,4 @@
             {/if}
         </div>
     {/if}
-</div>
+</div> -->

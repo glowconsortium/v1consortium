@@ -1,0 +1,32 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message SavedReports {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string CreatedBy = 3; //
+  string Name = 4; //
+  string Description = 5; //
+  string ReportType = 6; //
+  string Parameters = 7; //
+  string Filters = 8; //
+  google.protobuf.Timestamp GeneratedAt = 9; //
+  string FilePath = 10; //
+  string FileFormat = 11; //
+  bool IsScheduled = 12; //
+  string ScheduleFrequency = 13; //
+  google.protobuf.Timestamp NextRunDate = 14; //
+  bool IsPublic = 15; //
+  string SharedWith = 16; //
+  google.protobuf.Timestamp CreatedAt = 17; //
+  google.protobuf.Timestamp UpdatedAt = 18; //
+}

@@ -1,89 +1,89 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { onboardingStore } from '$lib/stores/onboardingStore.js';
-    import { goto } from '$app/navigation';
-    import type { SubscriptionPlan } from '$lib/types/subscription.js';
-    import type { PlanSelectionData, OnboardingState, InvitedOnboardingState } from '$lib/types/onboarding.js';
+    // import { onMount } from 'svelte';
+    // import { onboardingStore } from '$lib/stores/onboardingStore.js';
+    // import { goto } from '$app/navigation';
+    // import type { SubscriptionPlan } from '$lib/types/subscription.js';
+    // import type { PlanSelectionData, OnboardingState, InvitedOnboardingState } from '$lib/types/onboarding.js';
 
-    // Import your UI library components
-    import { Button, Spinner, Alert, Card } from '$lib/components';
+    // // Import your UI library components
+    // import { Button, Spinner, Alert, Card } from '$lib/components';
 
-    const { plans, loading, error, clearError } = onboardingStore;
+    // const { plans, loading, error, clearError } = onboardingStore;
     
-    let selectedPlan = $state<SubscriptionPlan | null>(null);
-    let billingCycle = $state<'monthly' | 'yearly'>('monthly');
-    let currentState = $state<OnboardingState | InvitedOnboardingState | null>(null);
-    let validationError = $state<string | null>(null);
+    // let selectedPlan = $state<SubscriptionPlan | null>(null);
+    // let billingCycle = $state<'monthly' | 'yearly'>('monthly');
+    // let currentState = $state<OnboardingState | InvitedOnboardingState | null>(null);
+    // let validationError = $state<string | null>(null);
     
-    // Subscribe to store updates
-    $effect(() => {
-        const unsubscribe = onboardingStore.subscribe((state) => {
-            currentState = state;
-        });
-        return unsubscribe;
-    });
+    // // Subscribe to store updates
+    // $effect(() => {
+    //     const unsubscribe = onboardingStore.subscribe((state) => {
+    //         currentState = state;
+    //     });
+    //     return unsubscribe;
+    // });
     
-    onMount(async () => {
-        clearError();
-        await onboardingStore.loadPlans();
+    // onMount(async () => {
+    //     clearError();
+    //     await onboardingStore.loadPlans();
         
-        // Redirect if no organization data
-        if (!currentState?.organizationData?.id) {
-            goto('/onboarding/organization');
-            return;
-        }
-    });
+    //     // Redirect if no organization data
+    //     if (!currentState?.organizationData?.id) {
+    //         goto('/onboarding/organization');
+    //         return;
+    //     }
+    // });
     
-    async function validatePlanSelection(planId: string, organizationId: string): Promise<boolean> {
-        try {
-            const validation = await onboardingStore.validatePlanSelection(organizationId, planId);
-            if (!validation.valid) {
-                validationError = validation.reason || 'Invalid plan selection';
-                return false;
-            }
-            return true;
-        } catch (error) {
-            validationError = 'Failed to validate plan selection';
-            return false;
-        }
-    }
+    // async function validatePlanSelection(planId: string, organizationId: string): Promise<boolean> {
+    //     try {
+    //         const validation = await onboardingStore.validatePlanSelection(organizationId, planId);
+    //         if (!validation.valid) {
+    //             validationError = validation.reason || 'Invalid plan selection';
+    //             return false;
+    //         }
+    //         return true;
+    //     } catch (error) {
+    //         validationError = 'Failed to validate plan selection';
+    //         return false;
+    //     }
+    // }
     
-    async function handlePlanSelection() {
-        clearError();
-        validationError = null;
+    // async function handlePlanSelection() {
+    //     clearError();
+    //     validationError = null;
         
-        if (!selectedPlan || !currentState?.organizationData?.id) {
-            validationError = 'Please select a plan to continue';
-            return;
-        }
+    //     if (!selectedPlan || !currentState?.organizationData?.id) {
+    //         validationError = 'Please select a plan to continue';
+    //         return;
+    //     }
         
-        // Validate plan selection first
-        const isValid = await validatePlanSelection(selectedPlan.id, currentState.organizationData.id);
-        if (!isValid) {
-            return;
-        }
+    //     // Validate plan selection first
+    //     const isValid = await validatePlanSelection(selectedPlan.id, currentState.organizationData.id);
+    //     if (!isValid) {
+    //         return;
+    //     }
         
-        const planSelection: PlanSelectionData = {
-            plan: selectedPlan,
-            billing_cycle: billingCycle
-        };
+    //     const planSelection: PlanSelectionData = {
+    //         plan: selectedPlan,
+    //         billing_cycle: billingCycle
+    //     };
         
-        try {
-            const response = await onboardingStore.selectPlan(planSelection, currentState.organizationData.id);
-            if (response.success) {
-                goto('/onboarding/tutorial');
-            } else {
-                validationError = response.message || 'Failed to select plan';
-            }
-        } catch (error: any) {
-            console.error('Failed to select plan:', error);
-            validationError = error?.message || 'Failed to select plan. Please try again.';
-        }
-    }
+    //     try {
+    //         const response = await onboardingStore.selectPlan(planSelection, currentState.organizationData.id);
+    //         if (response.success) {
+    //             goto('/onboarding/tutorial');
+    //         } else {
+    //             validationError = response.message || 'Failed to select plan';
+    //         }
+    //     } catch (error: any) {
+    //         console.error('Failed to select plan:', error);
+    //         validationError = error?.message || 'Failed to select plan. Please try again.';
+    //     }
+    // }
     
-    function handleBack() {
-        goto('/onboarding/organization');
-    }
+    // function handleBack() {
+    //     goto('/onboarding/organization');
+    // }
 </script>
 
 <svelte:head>
@@ -91,7 +91,7 @@
     <meta name="description" content="Select the plan that best fits your needs" />
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     {#if $loading.isLoading}
         <div class="text-center py-12">
             <Spinner />
@@ -238,4 +238,4 @@
             </div>
         </div>
     {/if}
-</div>
+</div> -->

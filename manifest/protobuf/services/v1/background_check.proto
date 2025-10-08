@@ -1,0 +1,312 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "pbentity/background_check_findings.proto";
+import "pbentity/background_checks.proto";
+
+option go_package = "services/v1";
+
+// Background Check Management Messages
+message OrderBackgroundCheckRequest {
+  string organization_id = 1;
+  string user_id = 2;
+  repeated string check_types = 3; // "criminal", "employment", "education", "reference", "credit", "license"
+  string package_type = 4; // "basic", "standard", "comprehensive", "custom"
+  string ordered_by = 5;
+  string purpose = 6; // "pre_employment", "periodic_review", "promotion"
+  bool fcra_compliant = 7;
+  string provider = 8; // "sterling", "hireright", "checkr"
+  map<string, string> search_parameters = 9; // Additional search criteria
+}
+
+message OrderBackgroundCheckResponse {
+  pbentity.BackgroundChecks background_check = 1;
+  string external_order_id = 2;
+  string confirmation_code = 3;
+  google.protobuf.Timestamp estimated_completion = 4;
+  float estimated_cost = 5;
+}
+
+message GetBackgroundCheckRequest {
+  string background_check_id = 1;
+}
+
+message GetBackgroundCheckResponse {
+  pbentity.BackgroundChecks background_check = 1;
+  repeated pbentity.BackgroundCheckFindings findings = 2;
+}
+
+message UpdateBackgroundCheckRequest {
+  string background_check_id = 1;
+  string status = 2; // "ordered", "processing", "completed", "failed", "cancelled"
+  google.protobuf.Timestamp completion_date = 3;
+  string overall_result = 4; // "clear", "consider", "engaged"
+  string provider_reference = 5;
+  string raw_data = 6; // JSON string from provider
+  float total_cost = 7;
+}
+
+message UpdateBackgroundCheckResponse {
+  pbentity.BackgroundChecks background_check = 1;
+}
+
+message ListBackgroundChecksRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string check_type = 3; // Optional: filter by check type
+  string status = 4; // Optional: filter by status
+  string overall_result = 5; // Optional: filter by result
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListBackgroundChecksResponse {
+  repeated pbentity.BackgroundChecks background_checks = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// Background Check Findings Management
+message AddFindingRequest {
+  string background_check_id = 1;
+  string finding_type = 2; // "criminal", "employment_gap", "education_discrepancy", etc.
+  string severity = 3; // "low", "medium", "high"
+  string description = 4;
+  google.protobuf.Timestamp incident_date = 5;
+  string jurisdiction = 6;
+  string case_number = 7;
+  string disposition = 8;
+  bool job_related = 9;
+  bool requires_review = 10;
+  string raw_data = 11; // JSON string with full details
+}
+
+message AddFindingResponse {
+  pbentity.BackgroundCheckFindings finding = 1;
+}
+
+message UpdateFindingRequest {
+  string finding_id = 1;
+  string review_status = 2; // "pending", "reviewed", "approved", "rejected"
+  string review_decision = 3; // "no_action", "further_review", "disqualifying"
+  string reviewed_by = 4;
+  google.protobuf.Timestamp review_date = 5;
+  string review_notes = 6;
+  bool job_related = 7;
+}
+
+message UpdateFindingResponse {
+  pbentity.BackgroundCheckFindings finding = 1;
+}
+
+message ListFindingsRequest {
+  string organization_id = 1;
+  string background_check_id = 2; // Optional: filter by specific check
+  string user_id = 3; // Optional: filter by user
+  string finding_type = 4; // Optional: filter by finding type
+  string severity = 5; // Optional: filter by severity
+  string review_status = 6; // Optional: filter by review status
+  bool requires_review = 7; // Optional: filter findings needing review
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListFindingsResponse {
+  repeated pbentity.BackgroundCheckFindings findings = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// FCRA Compliance Messages
+message InitiateAdverseActionRequest {
+  string background_check_id = 1;
+  string initiated_by = 2;
+  repeated string disqualifying_findings = 3; // Finding IDs that led to adverse action
+  string reason = 4;
+  bool pre_adverse_action = 5; // true for pre-adverse, false for final adverse
+}
+
+message InitiateAdverseActionResponse {
+  string adverse_action_id = 1;
+  string notice_sent_to = 2;
+  google.protobuf.Timestamp notice_sent_at = 3;
+  google.protobuf.Timestamp dispute_deadline = 4;
+}
+
+message HandleDisputeRequest {
+  string adverse_action_id = 1;
+  string dispute_details = 2;
+  string handled_by = 3;
+  string resolution = 4;
+  bool dispute_valid = 5;
+}
+
+message HandleDisputeResponse {
+  string message = 1;
+  bool requires_re_investigation = 2;
+}
+
+message GetAdverseActionStatusRequest {
+  string adverse_action_id = 1;
+}
+
+message AdverseActionStatus {
+  string adverse_action_id = 1;
+  string status = 2; // "pre_adverse_sent", "waiting_dispute_period", "final_adverse_sent", "disputed", "resolved"
+  google.protobuf.Timestamp initiated_at = 3;
+  google.protobuf.Timestamp dispute_deadline = 4;
+  bool dispute_received = 5;
+  google.protobuf.Timestamp dispute_received_at = 6;
+  string resolution = 7;
+}
+
+message GetAdverseActionStatusResponse {
+  AdverseActionStatus status = 1;
+}
+
+// Package and Provider Management
+message GetAvailablePackagesRequest {
+  string provider = 1; // Optional: filter by provider
+}
+
+message BackgroundCheckPackage {
+  string package_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated string included_checks = 4;
+  float price = 5;
+  string estimated_turnaround = 6; // "1-2 business days", "3-5 business days"
+  string provider = 7;
+  bool fcra_compliant = 8;
+}
+
+message GetAvailablePackagesResponse {
+  repeated BackgroundCheckPackage packages = 1;
+}
+
+message GetProviderStatusRequest {
+  string provider = 1;
+}
+
+message ProviderStatus {
+  string provider = 1;
+  bool is_available = 2;
+  string status_message = 3;
+  google.protobuf.Timestamp last_successful_request = 4;
+  int32 current_queue_time_minutes = 5;
+}
+
+message GetProviderStatusResponse {
+  ProviderStatus status = 1;
+}
+
+// Analytics Messages
+message GetBackgroundCheckAnalyticsRequest {
+  string organization_id = 1;
+  google.protobuf.Timestamp start_date = 2;
+  google.protobuf.Timestamp end_date = 3;
+}
+
+message FindingSummary {
+  string finding_type = 1;
+  int32 count = 2;
+  string severity = 3;
+}
+
+message GetBackgroundCheckAnalyticsResponse {
+  int32 total_checks = 1;
+  int32 completed_checks = 2;
+  int32 pending_checks = 3;
+  int32 clear_results = 4;
+  int32 consider_results = 5;
+  int32 engaged_results = 6;
+  repeated FindingSummary findings_summary = 7;
+  int32 adverse_actions_initiated = 8;
+  float average_completion_time_hours = 9;
+  float total_cost = 10;
+}
+
+// Background Check Service Definition
+service BackgroundCheckService {
+  // Background Check Management
+  rpc OrderBackgroundCheck(OrderBackgroundCheckRequest) returns (OrderBackgroundCheckResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/background-checks"
+      body: "*"
+    };
+  }
+
+  rpc GetBackgroundCheck(GetBackgroundCheckRequest) returns (GetBackgroundCheckResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}"};
+  }
+
+  rpc UpdateBackgroundCheck(UpdateBackgroundCheckRequest) returns (UpdateBackgroundCheckResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/background-checks/{background_check_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListBackgroundChecks(ListBackgroundChecksRequest) returns (ListBackgroundChecksResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-checks"};
+  }
+
+  // Findings Management
+  rpc AddFinding(AddFindingRequest) returns (AddFindingResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/findings"
+      body: "*"
+    };
+  }
+
+  rpc UpdateFinding(UpdateFindingRequest) returns (UpdateFindingResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/background-check-findings/{finding_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListFindings(ListFindingsRequest) returns (ListFindingsResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}/findings"};
+  }
+
+  // FCRA Compliance
+  rpc InitiateAdverseAction(InitiateAdverseActionRequest) returns (InitiateAdverseActionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/adverse-action"
+      body: "*"
+    };
+  }
+
+  rpc HandleDispute(HandleDisputeRequest) returns (HandleDisputeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/background-checks/{background_check_id}/dispute"
+      body: "*"
+    };
+  }
+
+  rpc GetAdverseActionStatus(GetAdverseActionStatusRequest) returns (GetAdverseActionStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}/adverse-action-status"};
+  }
+
+  // Package and Provider Management
+  rpc GetAvailablePackages(GetAvailablePackagesRequest) returns (GetAvailablePackagesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-packages"};
+  }
+
+  rpc GetProviderStatus(GetProviderStatusRequest) returns (GetProviderStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-provider-status"};
+  }
+
+  // Analytics
+  rpc GetBackgroundCheckAnalytics(GetBackgroundCheckAnalyticsRequest) returns (GetBackgroundCheckAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-analytics"};
+  }
+}

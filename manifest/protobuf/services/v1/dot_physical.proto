@@ -1,0 +1,270 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "pbentity/dot_physicals.proto";
+
+option go_package = "services/v1";
+
+// DOT Physical Management Messages
+message ScheduleDOTPhysicalRequest {
+  string organization_id = 1;
+  string user_id = 2;
+  string medical_examiner_id = 3; // Optional: specific examiner
+  google.protobuf.Timestamp preferred_date = 4;
+  string examination_type = 5; // "initial", "renewal", "follow_up"
+  string scheduled_by = 6;
+  string facility_preference = 7;
+  string special_requirements = 8; // Any special accommodations needed
+}
+
+message ScheduleDOTPhysicalResponse {
+  pbentity.DotPhysicals physical = 1;
+  string appointment_confirmation = 2;
+  string examiner_name = 3;
+  string facility_name = 4;
+  string facility_address = 5;
+}
+
+message GetDOTPhysicalRequest {
+  string physical_id = 1;
+}
+
+message GetDOTPhysicalResponse {
+  pbentity.DotPhysicals physical = 1;
+}
+
+message UpdateDOTPhysicalRequest {
+  string physical_id = 1;
+  string status = 2; // "scheduled", "completed", "cancelled", "no_show"
+  google.protobuf.Timestamp examination_date = 3;
+  string qualification_status = 4; // "qualified", "disqualified", "qualified_with_restrictions"
+  google.protobuf.Timestamp certificate_issue_date = 5;
+  google.protobuf.Timestamp certificate_expiration_date = 6;
+  string certificate_number = 7;
+  string restrictions = 8; // JSON string of any restrictions
+  string examiner_notes = 9;
+  bool requires_monitoring = 10;
+  string monitoring_requirements = 11;
+  string exemption_type = 12;
+  google.protobuf.Timestamp exemption_expiration = 13;
+}
+
+message UpdateDOTPhysicalResponse {
+  pbentity.DotPhysicals physical = 1;
+}
+
+message ListDOTPhysicalsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string medical_examiner_id = 3; // Optional: filter by examiner
+  string status = 4; // Optional: filter by status
+  string qualification_status = 5; // Optional: filter by qualification
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListDOTPhysicalsResponse {
+  repeated pbentity.DotPhysicals physicals = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// Medical Examiner Management
+message RegisterMedicalExaminerRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string phone = 4;
+  string license_number = 5;
+  string license_state = 6;
+  google.protobuf.Timestamp license_expiration = 7;
+  string certification_number = 8;
+  google.protobuf.Timestamp certification_expiration = 9;
+  string practice_name = 10;
+  string address_line1 = 11;
+  string address_line2 = 12;
+  string city = 13;
+  string state = 14;
+  string zip_code = 15;
+  bool accepts_new_patients = 16;
+  repeated string specializations = 17;
+}
+
+message RegisterMedicalExaminerResponse {
+  string examiner_id = 1;
+  string message = 2;
+}
+
+message GetMedicalExaminerRequest {
+  string examiner_id = 1;
+}
+
+message MedicalExaminerInfo {
+  string examiner_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string phone = 5;
+  string license_number = 6;
+  string license_state = 7;
+  google.protobuf.Timestamp license_expiration = 8;
+  string certification_number = 9;
+  google.protobuf.Timestamp certification_expiration = 10;
+  string practice_name = 11;
+  string full_address = 12;
+  bool accepts_new_patients = 13;
+  repeated string specializations = 14;
+  bool is_active = 15;
+  float rating = 16;
+  int32 examinations_completed = 17;
+}
+
+message GetMedicalExaminerResponse {
+  MedicalExaminerInfo examiner = 1;
+}
+
+message ListMedicalExaminersRequest {
+  string state = 1; // Optional: filter by state
+  string city = 2; // Optional: filter by city
+  string zip_code = 3; // Optional: filter by zip code
+  bool accepts_new_patients = 4; // Optional: filter by availability
+  int32 radius_miles = 5; // Optional: search radius
+  string location = 6; // Optional: center point for radius search
+}
+
+message ListMedicalExaminersResponse {
+  repeated MedicalExaminerInfo examiners = 1;
+}
+
+// Certificate Management
+message GenerateCertificateRequest {
+  string physical_id = 1;
+  string template_type = 2; // "dot_medical_certificate", "exemption_certificate"
+  bool include_restrictions = 3;
+}
+
+message GenerateCertificateResponse {
+  string certificate_url = 1;
+  string certificate_number = 2;
+  google.protobuf.Timestamp generated_at = 3;
+}
+
+message ValidateCertificateRequest {
+  string certificate_number = 1;
+  string user_id = 2; // Optional: validate for specific user
+}
+
+message ValidateCertificateResponse {
+  bool is_valid = 1;
+  string status = 2; // "valid", "expired", "revoked", "not_found"
+  google.protobuf.Timestamp expiration_date = 3;
+  string holder_name = 4;
+  string restrictions = 5;
+  string issuing_examiner = 6;
+}
+
+// Expiration Monitoring
+message GetExpiringCertificatesRequest {
+  string organization_id = 1;
+  int32 days_ahead = 2; // How many days in advance to check
+}
+
+message ExpiringCertificate {
+  string user_id = 1;
+  string user_name = 2;
+  string certificate_number = 3;
+  google.protobuf.Timestamp expiration_date = 4;
+  int32 days_until_expiration = 5;
+  string qualification_status = 6;
+}
+
+message GetExpiringCertificatesResponse {
+  repeated ExpiringCertificate expiring_certificates = 1;
+}
+
+message SetExpirationReminderRequest {
+  string organization_id = 1;
+  repeated int32 reminder_days = 2; // Days before expiration to send reminders
+  bool email_enabled = 3;
+  bool sms_enabled = 4;
+  repeated string notification_recipients = 5; // Additional recipients
+}
+
+message SetExpirationReminderResponse {
+  string message = 1;
+}
+
+// DOT Physical Service Definition
+service DOTPhysicalService {
+  // DOT Physical Management
+  rpc ScheduleDOTPhysical(ScheduleDOTPhysicalRequest) returns (ScheduleDOTPhysicalResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/dot-physicals"
+      body: "*"
+    };
+  }
+
+  rpc GetDOTPhysical(GetDOTPhysicalRequest) returns (GetDOTPhysicalResponse) {
+    option (google.api.http) = {get: "/api/v1/dot-physicals/{physical_id}"};
+  }
+
+  rpc UpdateDOTPhysical(UpdateDOTPhysicalRequest) returns (UpdateDOTPhysicalResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/dot-physicals/{physical_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListDOTPhysicals(ListDOTPhysicalsRequest) returns (ListDOTPhysicalsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/dot-physicals"};
+  }
+
+  // Medical Examiner Management
+  rpc RegisterMedicalExaminer(RegisterMedicalExaminerRequest) returns (RegisterMedicalExaminerResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/medical-examiners"
+      body: "*"
+    };
+  }
+
+  rpc GetMedicalExaminer(GetMedicalExaminerRequest) returns (GetMedicalExaminerResponse) {
+    option (google.api.http) = {get: "/api/v1/medical-examiners/{examiner_id}"};
+  }
+
+  rpc ListMedicalExaminers(ListMedicalExaminersRequest) returns (ListMedicalExaminersResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/medical-examiners"};
+  }
+
+  // Certificate Management
+  rpc GenerateCertificate(GenerateCertificateRequest) returns (GenerateCertificateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-physicals/{physical_id}/certificate"
+      body: "*"
+    };
+  }
+
+  rpc ValidateCertificate(ValidateCertificateRequest) returns (ValidateCertificateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-certificates/validate"
+      body: "*"
+    };
+  }
+
+  // Expiration Monitoring
+  rpc GetExpiringCertificates(GetExpiringCertificatesRequest) returns (GetExpiringCertificatesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/dot-certificates/expiring"};
+  }
+
+  rpc SetExpirationReminder(SetExpirationReminderRequest) returns (SetExpirationReminderResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/dot-physicals/{physical_id}/expiration-reminder"
+      body: "*"
+    };
+  }
+}

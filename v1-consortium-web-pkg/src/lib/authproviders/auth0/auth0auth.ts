@@ -32,10 +32,25 @@ class Auth0Store {
   public user: User | null = null;
   public error: string | null = null;
 
+  get isInitialized(): boolean {
+    return this.client !== null;
+  }
+
   async init(config: Auth0Config): Promise<void> {
     try {
       this.isLoading = true;
       this.error = null;
+
+      console.log('Initializing Auth0 with config:', {
+        domain: config.domain,
+        clientId: config.clientId,
+        audience: config.audience,
+        redirectUri: config.redirectUri
+      });
+
+      if (!config.domain || !config.clientId) {
+        throw new Error('Auth0 domain and clientId are required');
+      }
 
       this.client = await createAuth0Client({
         domain: config.domain,
@@ -47,13 +62,19 @@ class Auth0Store {
         }
       });
 
+      console.log('Auth0 client created successfully');
+
       // Handle redirect callback
       await this.handleRedirectCallback();
 
       // Update authentication state
       await this.updateAuthState();
+      
+      console.log('Auth0 initialization completed. User authenticated:', this.isAuthenticated);
     } catch (err) {
+      console.error('Auth0 initialization error:', err);
       this.handleError('Auth0 initialization failed', err);
+      throw err;
     } finally {
       this.isLoading = false;
     }
@@ -61,16 +82,34 @@ class Auth0Store {
 
   private async handleRedirectCallback(): Promise<void> {
     const urlParams = new URLSearchParams(window.location.search);
+    console.log('Current URL params:', Object.fromEntries(urlParams.entries()));
+    
     if (urlParams.has('code') && urlParams.has('state')) {
+      console.log('Auth0 callback detected, processing...');
       try {
-        await this.client?.handleRedirectCallback();
+        const result = await this.client?.handleRedirectCallback();
+        console.log('Auth0 callback handled successfully:', result);
+        
         // Clean up URL
         const url = new URL(window.location.href);
         url.search = '';
         window.history.replaceState({}, document.title, url.toString());
+        console.log('URL cleaned up:', url.toString());
       } catch (err) {
+        console.error('Auth0 callback handling failed:', err);
         this.handleError('Failed to handle redirect callback', err);
+        throw err;
       }
+    } else if (urlParams.has('error')) {
+      // Handle Auth0 error response
+      const error = urlParams.get('error');
+      const errorDescription = urlParams.get('error_description');
+      const errorMessage = `Auth0 Error: ${error}${errorDescription ? ` - ${errorDescription}` : ''}`;
+      console.error('Auth0 returned error:', errorMessage);
+      this.handleError('Auth0 authentication failed', new Error(errorMessage));
+      throw new Error(errorMessage);
+    } else {
+      console.log('No Auth0 callback parameters found');
     }
   }
 
@@ -99,6 +138,8 @@ class Auth0Store {
 
     try {
       this.error = null;
+      console.log('Initiating Auth0 login with options:', options);
+      
       await this.client.loginWithRedirect({
         appState: options.appState,
         fragment: options.fragment,
@@ -106,8 +147,12 @@ class Auth0Store {
           redirect_uri: options.redirectUri
         }
       });
+      
+      console.log('Auth0 login redirect initiated successfully');
     } catch (err) {
+      console.error('Auth0 login failed:', err);
       this.handleError('Login failed', err);
+      throw err;
     }
   }
 

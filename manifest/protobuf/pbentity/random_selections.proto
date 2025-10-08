@@ -1,0 +1,25 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message RandomSelections {
+  string Id = 1; //
+  string PoolId = 2; //
+  google.protobuf.Timestamp SelectionDate = 3; //
+  string SelectionPeriod = 4; //
+  int32 TotalPoolSize = 5; //
+  int32 RequiredSelections = 6; //
+  string SelectionAlgorithm = 7; //
+  string SelectionSeed = 8; //
+  string Notes = 9; //
+  google.protobuf.Timestamp CreatedAt = 10; //
+  string CreatedBy = 11; //
+}

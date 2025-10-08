@@ -1,0 +1,3 @@
+#!/bin/bash
+# Wrapper script for protoc to include googleapis
+exec /usr/bin/protoc --proto_path=third_party/googleapis "$@"

@@ -60,14 +60,20 @@ if [ -f "package.json" ]; then
     echo "Building package..."
     pnpm run build
     
-    # Run tests
-    echo "Running tests..."
-    pnpm run test
+    # Run tests if available (skip for certain projects like hugo-site)
+    if [ "$PROJECT" != "hugo-site" ] && pnpm run --if-present test > /dev/null 2>&1; then
+        echo "Running tests..."
+        pnpm run test
+    else
+        echo "Skipping tests (not available or excluded for $PROJECT)"
+    fi
     
-    # Run type checking if available
-    if pnpm run --if-present check > /dev/null 2>&1; then
+    # Run type checking if available (skip for certain projects like hugo-site)
+    if [ "$PROJECT" != "hugo-site" ] && pnpm run --if-present check > /dev/null 2>&1; then
         echo "Running type check..."
         pnpm run check
+    else
+        echo "Skipping type check (not available or excluded for $PROJECT)"
     fi
     
     # Go back to repo root

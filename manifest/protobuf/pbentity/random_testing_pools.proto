@@ -1,0 +1,22 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message RandomTestingPools {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string ProgramId = 3; //
+  string Name = 4; //
+  string Description = 5; //
+  bool IsActive = 6; //
+  google.protobuf.Timestamp CreatedAt = 7; //
+  google.protobuf.Timestamp UpdatedAt = 8; //
+}

@@ -1,0 +1,57 @@
+.buildpath
+.hgignore.swp
+.project
+.orig
+.swp
+.idea/
+.settings/
+.vscode/
+bin/
+**/.DS_Store
+gf
+main
+main.exe
+output/
+manifest/output/
+temp/
+temp.yaml
+bin
+
+test-results
+node_modules
+v1-consortium-web-pkg
+hugo-site
+auth-tesseral 
+scripts
+web-pkg
+web-int-ui/node_modules
+web-ui/node_modules
+node_modules
+supabase/
+thirdparty/
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+
+# OS
+.DS_Store
+Thumbs.db
+
+.pnpm-store
+
+
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Paraglide
+src/lib/paraglide
+
+*storybook.log
+storybook-static
+
+node_modules

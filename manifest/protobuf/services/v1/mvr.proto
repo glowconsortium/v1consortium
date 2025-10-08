@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "pbentity/mvr_reports.proto";
+import "pbentity/mvr_violations.proto";
+
+option go_package = "services/v1";
+
+// MVR Management Messages
+message OrderMVRRequest {
+  string organization_id = 1;
+  string user_id = 2;
+  string license_number = 3;
+  string license_state = 4;
+  string ordered_by = 5;
+  string report_type = 6; // "initial", "annual", "continuous_monitoring"
+  string provider = 7; // "mvr_com", "hireright", "sterling"
+}
+
+message OrderMVRResponse {
+  pbentity.MvrReports report = 1;
+  string external_order_id = 2;
+  string confirmation_code = 3;
+  google.protobuf.Timestamp estimated_completion = 4;
+}
+
+message GetMVRReportRequest {
+  string report_id = 1;
+}
+
+message GetMVRReportResponse {
+  pbentity.MvrReports report = 1;
+  repeated pbentity.MvrViolations violations = 2;
+}
+
+message UpdateMVRReportRequest {
+  string report_id = 1;
+  string status = 2; // "ordered", "processing", "completed", "failed"
+  google.protobuf.Timestamp report_date = 3;
+  string license_status = 4; // "valid", "suspended", "revoked", "expired"
+  string cdl_status = 5; // "valid", "disqualified", "not_applicable"
+  string raw_data = 6; // JSON string from provider
+  string provider_reference = 7;
+}
+
+message UpdateMVRReportResponse {
+  pbentity.MvrReports report = 1;
+}
+
+message ListMVRReportsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string status = 3; // Optional: filter by status
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  int32 page = 6;
+  int32 page_size = 7;
+}
+
+message ListMVRReportsResponse {
+  repeated pbentity.MvrReports reports = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// MVR Violation Management
+message AddMVRViolationRequest {
+  string mvr_report_id = 1;
+  string violation_type = 2; // "speeding", "dui", "reckless_driving", etc.
+  google.protobuf.Timestamp violation_date = 3;
+  string jurisdiction = 4; // State/county where violation occurred
+  string description = 5;
+  string severity = 6; // "minor", "major", "serious"
+  string fine_amount = 7;
+  string case_number = 8;
+  bool affects_cdl = 9;
+  bool requires_action = 10;
+}
+
+message AddMVRViolationResponse {
+  pbentity.MvrViolations violation = 1;
+}
+
+message UpdateMVRViolationRequest {
+  string violation_id = 1;
+  string status = 2; // "active", "resolved", "dismissed"
+  string action_taken = 3;
+  google.protobuf.Timestamp resolution_date = 4;
+  string notes = 5;
+}
+
+message UpdateMVRViolationResponse {
+  pbentity.MvrViolations violation = 1;
+}
+
+message ListMVRViolationsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string mvr_report_id = 3; // Optional: filter by specific report
+  string severity = 4; // Optional: filter by severity
+  bool affects_cdl = 5; // Optional: filter CDL-affecting violations
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  int32 page = 8;
+  int32 page_size = 9;
+}
+
+message ListMVRViolationsResponse {
+  repeated pbentity.MvrViolations violations = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// Continuous Monitoring Messages
+message EnableContinuousMonitoringRequest {
+  string user_id = 1;
+  string organization_id = 2;
+  string monitoring_frequency = 3; // "monthly", "quarterly", "annual"
+  bool enabled = 4;
+}
+
+message EnableContinuousMonitoringResponse {
+  string message = 1;
+}
+
+message GetMonitoringStatusRequest {
+  string user_id = 1;
+}
+
+message GetMonitoringStatusResponse {
+  bool is_monitoring_enabled = 1;
+  string monitoring_frequency = 2;
+  google.protobuf.Timestamp last_check_date = 3;
+  google.protobuf.Timestamp next_check_date = 4;
+  int32 total_violations = 5;
+  int32 active_violations = 6;
+}
+
+// MVR Analytics Messages
+message GetMVRAnalyticsRequest {
+  string organization_id = 1;
+  google.protobuf.Timestamp start_date = 2;
+  google.protobuf.Timestamp end_date = 3;
+}
+
+message ViolationSummary {
+  string violation_type = 1;
+  int32 count = 2;
+  string severity = 3;
+}
+
+message GetMVRAnalyticsResponse {
+  int32 total_reports = 1;
+  int32 active_violations = 2;
+  int32 drivers_with_violations = 3;
+  repeated ViolationSummary violation_summary = 4;
+  int32 cdl_disqualifications = 5;
+  float average_violations_per_driver = 6;
+}
+
+// Provider Integration Messages
+message SyncProviderDataRequest {
+  string provider = 1; // "mvr_com", "hireright", "sterling"
+  google.protobuf.Timestamp last_sync = 2;
+}
+
+message SyncProviderDataResponse {
+  int32 reports_synced = 1;
+  int32 violations_added = 2;
+  google.protobuf.Timestamp sync_completed_at = 3;
+  repeated string errors = 4;
+}
+
+// MVR Service Definition
+service MVRService {
+  // MVR Report Management
+  rpc OrderMVR(OrderMVRRequest) returns (OrderMVRResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-reports"
+      body: "*"
+    };
+  }
+
+  rpc GetMVRReport(GetMVRReportRequest) returns (GetMVRReportResponse) {
+    option (google.api.http) = {get: "/api/v1/mvr-reports/{report_id}"};
+  }
+
+  rpc UpdateMVRReport(UpdateMVRReportRequest) returns (UpdateMVRReportResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/mvr-reports/{report_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListMVRReports(ListMVRReportsRequest) returns (ListMVRReportsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-reports"};
+  }
+
+  // MVR Violation Management
+  rpc AddMVRViolation(AddMVRViolationRequest) returns (AddMVRViolationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/mvr-reports/{report_id}/violations"
+      body: "*"
+    };
+  }
+
+  rpc UpdateMVRViolation(UpdateMVRViolationRequest) returns (UpdateMVRViolationResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/mvr-violations/{violation_id}"
+      body: "*"
+    };
+  }
+
+  rpc ListMVRViolations(ListMVRViolationsRequest) returns (ListMVRViolationsResponse) {
+    option (google.api.http) = {get: "/api/v1/mvr-reports/{report_id}/violations"};
+  }
+
+  // Continuous Monitoring
+  rpc EnableContinuousMonitoring(EnableContinuousMonitoringRequest) returns (EnableContinuousMonitoringResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-monitoring"
+      body: "*"
+    };
+  }
+
+  rpc GetMonitoringStatus(GetMonitoringStatusRequest) returns (GetMonitoringStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-monitoring"};
+  }
+
+  // Analytics and Reporting
+  rpc GetMVRAnalytics(GetMVRAnalyticsRequest) returns (GetMVRAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-analytics"};
+  }
+
+  // Provider Integration
+  rpc SyncProviderData(SyncProviderDataRequest) returns (SyncProviderDataResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/mvr-sync"
+      body: "*"
+    };
+  }
+}

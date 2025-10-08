@@ -1,0 +1,38 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message MvrReports {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string Status = 4; //
+  google.protobuf.Timestamp OrderedDate = 5; //
+  string OrderedBy = 6; //
+  string LicenseNumber = 7; //
+  string LicenseState = 8; //
+  string ExternalOrderId = 9; //
+  string ProviderName = 10; //
+  google.protobuf.Timestamp ReportDate = 11; //
+  google.protobuf.Timestamp ReportReceivedDate = 12; //
+  string RawReportData = 13; //
+  int32 TotalViolations = 14; //
+  int32 MajorViolations = 15; //
+  int32 MinorViolations = 16; //
+  string LicenseStatus = 17; //
+  google.protobuf.Timestamp LicenseExpirationDate = 18; //
+  string ReviewedBy = 19; //
+  google.protobuf.Timestamp ReviewedDate = 20; //
+  bool RequiresAction = 21; //
+  string ActionNotes = 22; //
+  google.protobuf.Timestamp CreatedAt = 23; //
+  google.protobuf.Timestamp UpdatedAt = 24; //
+}

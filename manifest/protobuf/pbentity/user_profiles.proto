@@ -1,0 +1,41 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message UserProfiles {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string Role = 3; //
+  string EmployeeId = 4; //
+  string FirstName = 5; //
+  string LastName = 6; //
+  string Email = 7; //
+  string Phone = 8; //
+  google.protobuf.Timestamp DateOfBirth = 9; //
+  string SsnLastFour = 10; //
+  google.protobuf.Timestamp HireDate = 11; //
+  google.protobuf.Timestamp TerminationDate = 12; //
+  bool IsActive = 13; //
+  bool RequiresDotTesting = 14; //
+  bool RequiresNonDotTesting = 15; //
+  string CdlNumber = 16; //
+  string CdlState = 17; //
+  google.protobuf.Timestamp CdlExpirationDate = 18; //
+  string JobTitle = 19; //
+  string Department = 20; //
+  string SupervisorId = 21; //
+  string EmergencyContactName = 22; //
+  string EmergencyContactPhone = 23; //
+  string EmergencyContactRelationship = 24; //
+  google.protobuf.Timestamp CreatedAt = 25; //
+  google.protobuf.Timestamp UpdatedAt = 26; //
+  google.protobuf.Timestamp LastLoginAt = 27; //
+}

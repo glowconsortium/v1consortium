@@ -1,0 +1,368 @@
+syntax = "proto3";
+
+package v1consortium.services;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "pbentity/notifications.proto";
+
+option go_package = "services/v1";
+
+// Notification Management Messages
+message SendNotificationRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: specific user, otherwise org-wide
+  string notification_type = 3; // "test_reminder", "certificate_expiring", "violation_alert", etc.
+  string channel = 4; // "email", "sms", "in_app", "phone"
+  string priority = 5; // "low", "medium", "high", "urgent"
+  string subject = 6;
+  string message = 7;
+  map<string, string> template_data = 8; // Data for template rendering
+  string template_id = 9; // Optional: use predefined template
+  google.protobuf.Timestamp scheduled_for = 10; // Optional: schedule for future delivery
+  repeated string additional_recipients = 11; // Extra email addresses
+}
+
+message SendNotificationResponse {
+  pbentity.Notifications notification = 1;
+  string message = 2;
+}
+
+message GetNotificationRequest {
+  string notification_id = 1;
+}
+
+message GetNotificationResponse {
+  pbentity.Notifications notification = 1;
+}
+
+message ListNotificationsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  string notification_type = 3; // Optional: filter by type
+  string channel = 4; // Optional: filter by channel
+  string status = 5; // Optional: filter by delivery status
+  string priority = 6; // Optional: filter by priority
+  google.protobuf.Timestamp start_date = 7;
+  google.protobuf.Timestamp end_date = 8;
+  bool unread_only = 9; // Optional: show only unread notifications
+  int32 page = 10;
+  int32 page_size = 11;
+}
+
+message ListNotificationsResponse {
+  repeated pbentity.Notifications notifications = 1;
+  int32 total_count = 2;
+  int32 unread_count = 3;
+  int32 page = 4;
+  int32 page_size = 5;
+}
+
+message MarkNotificationReadRequest {
+  string notification_id = 1;
+  string read_by = 2;
+}
+
+message MarkNotificationReadResponse {
+  string message = 1;
+}
+
+message MarkAllNotificationsReadRequest {
+  string organization_id = 1;
+  string user_id = 2;
+}
+
+message MarkAllNotificationsReadResponse {
+  int32 marked_count = 1;
+  string message = 2;
+}
+
+// Notification Templates
+message CreateNotificationTemplateRequest {
+  string organization_id = 1;
+  string template_name = 2;
+  string notification_type = 3;
+  string channel = 4;
+  string subject_template = 5;
+  string body_template = 6;
+  repeated string required_variables = 7; // Variables that must be provided
+  bool is_system_template = 8; // System templates are read-only
+}
+
+message CreateNotificationTemplateResponse {
+  string template_id = 1;
+  string message = 2;
+}
+
+message GetNotificationTemplateRequest {
+  string template_id = 1;
+}
+
+message NotificationTemplate {
+  string template_id = 1;
+  string organization_id = 2;
+  string template_name = 3;
+  string notification_type = 4;
+  string channel = 5;
+  string subject_template = 6;
+  string body_template = 7;
+  repeated string required_variables = 8;
+  bool is_system_template = 9;
+  bool is_active = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+}
+
+message GetNotificationTemplateResponse {
+  NotificationTemplate template = 1;
+}
+
+message ListNotificationTemplatesRequest {
+  string organization_id = 1;
+  string notification_type = 2; // Optional: filter by type
+  string channel = 3; // Optional: filter by channel
+  bool include_system_templates = 4; // Include system-wide templates
+  bool active_only = 5;
+}
+
+message ListNotificationTemplatesResponse {
+  repeated NotificationTemplate templates = 1;
+}
+
+message UpdateNotificationTemplateRequest {
+  string template_id = 1;
+  string template_name = 2;
+  string subject_template = 3;
+  string body_template = 4;
+  repeated string required_variables = 5;
+  bool is_active = 6;
+}
+
+message UpdateNotificationTemplateResponse {
+  NotificationTemplate template = 1;
+}
+
+// Notification Preferences
+message GetNotificationPreferencesRequest {
+  string user_id = 1;
+}
+
+message NotificationPreference {
+  string notification_type = 1;
+  bool email_enabled = 2;
+  bool sms_enabled = 3;
+  bool in_app_enabled = 4;
+  bool phone_enabled = 5;
+  string frequency = 6; // "immediate", "daily_digest", "weekly_digest"
+}
+
+message GetNotificationPreferencesResponse {
+  repeated NotificationPreference preferences = 1;
+}
+
+message UpdateNotificationPreferencesRequest {
+  string user_id = 1;
+  repeated NotificationPreference preferences = 2;
+}
+
+message UpdateNotificationPreferencesResponse {
+  string message = 1;
+}
+
+// Bulk Notifications
+message SendBulkNotificationRequest {
+  string organization_id = 1;
+  repeated string user_ids = 2; // Target users
+  string notification_type = 3;
+  string channel = 4;
+  string priority = 5;
+  string subject = 6;
+  string message = 7;
+  string template_id = 8; // Optional: use template
+  map<string, string> template_data = 9; // Common template data
+  repeated BulkNotificationRecipient recipients = 10; // Per-recipient data
+}
+
+message BulkNotificationRecipient {
+  string user_id = 1;
+  map<string, string> template_data = 2; // User-specific template data
+}
+
+message SendBulkNotificationResponse {
+  int32 notifications_sent = 1;
+  int32 notifications_failed = 2;
+  repeated string failed_user_ids = 3;
+  string message = 4;
+}
+
+// Scheduled Notifications
+message ScheduleNotificationRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: specific user
+  string notification_type = 3;
+  string channel = 4;
+  string priority = 5;
+  string subject = 6;
+  string message = 7;
+  google.protobuf.Timestamp send_at = 8;
+  string recurrence_pattern = 9; // Optional: "daily", "weekly", "monthly"
+  google.protobuf.Timestamp recurrence_end = 10; // When to stop recurring
+}
+
+message ScheduleNotificationResponse {
+  string scheduled_notification_id = 1;
+  string message = 2;
+}
+
+message ListScheduledNotificationsRequest {
+  string organization_id = 1;
+  string user_id = 2; // Optional: filter by user
+  bool pending_only = 3; // Show only pending notifications
+}
+
+message ScheduledNotification {
+  string scheduled_notification_id = 1;
+  string organization_id = 2;
+  string user_id = 3;
+  string notification_type = 4;
+  string channel = 5;
+  string subject = 6;
+  string message = 7;
+  google.protobuf.Timestamp send_at = 8;
+  string status = 9; // "pending", "sent", "failed", "cancelled"
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message ListScheduledNotificationsResponse {
+  repeated ScheduledNotification notifications = 1;
+}
+
+message CancelScheduledNotificationRequest {
+  string scheduled_notification_id = 1;
+  string cancelled_by = 2;
+}
+
+message CancelScheduledNotificationResponse {
+  string message = 1;
+}
+
+// Notification Analytics
+message GetNotificationAnalyticsRequest {
+  string organization_id = 1;
+  google.protobuf.Timestamp start_date = 2;
+  google.protobuf.Timestamp end_date = 3;
+  string notification_type = 4; // Optional: filter by type
+  string channel = 5; // Optional: filter by channel
+}
+
+message NotificationMetrics {
+  int32 total_sent = 1;
+  int32 total_delivered = 2;
+  int32 total_failed = 3;
+  int32 total_read = 4;
+  float delivery_rate = 5;
+  float read_rate = 6;
+  map<string, int32> by_channel = 7; // channel -> count
+  map<string, int32> by_type = 8; // type -> count
+}
+
+message GetNotificationAnalyticsResponse {
+  NotificationMetrics metrics = 1;
+}
+
+// Notification Service Definition
+service NotificationService {
+  // Basic Notification Management
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notifications"
+      body: "*"
+    };
+  }
+
+  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {get: "/api/v1/notifications/{notification_id}"};
+  }
+
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/notifications"};
+  }
+
+  rpc MarkNotificationRead(MarkNotificationReadRequest) returns (MarkNotificationReadResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/notifications/{notification_id}/read"
+      body: "*"
+    };
+  }
+
+  rpc MarkAllNotificationsRead(MarkAllNotificationsReadRequest) returns (MarkAllNotificationsReadResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}/notifications/mark-all-read"
+      body: "*"
+    };
+  }
+
+  // Template Management
+  rpc CreateNotificationTemplate(CreateNotificationTemplateRequest) returns (CreateNotificationTemplateResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/notification-templates"
+      body: "*"
+    };
+  }
+
+  rpc GetNotificationTemplate(GetNotificationTemplateRequest) returns (GetNotificationTemplateResponse) {
+    option (google.api.http) = {get: "/api/v1/notification-templates/{template_id}"};
+  }
+
+  rpc ListNotificationTemplates(ListNotificationTemplatesRequest) returns (ListNotificationTemplatesResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notification-templates"};
+  }
+
+  rpc UpdateNotificationTemplate(UpdateNotificationTemplateRequest) returns (UpdateNotificationTemplateResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/notification-templates/{template_id}"
+      body: "*"
+    };
+  }
+
+  // Preference Management
+  rpc GetNotificationPreferences(GetNotificationPreferencesRequest) returns (GetNotificationPreferencesResponse) {
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/notification-preferences"};
+  }
+
+  rpc UpdateNotificationPreferences(UpdateNotificationPreferencesRequest) returns (UpdateNotificationPreferencesResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/users/{user_id}/notification-preferences"
+      body: "*"
+    };
+  }
+
+  // Bulk Operations
+  rpc SendBulkNotification(SendBulkNotificationRequest) returns (SendBulkNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/organizations/{organization_id}/notifications/bulk"
+      body: "*"
+    };
+  }
+
+  // Scheduled Notifications
+  rpc ScheduleNotification(ScheduleNotificationRequest) returns (ScheduleNotificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/notifications/schedule"
+      body: "*"
+    };
+  }
+
+  rpc ListScheduledNotifications(ListScheduledNotificationsRequest) returns (ListScheduledNotificationsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notifications/scheduled"};
+  }
+
+  rpc CancelScheduledNotification(CancelScheduledNotificationRequest) returns (CancelScheduledNotificationResponse) {
+    option (google.api.http) = {delete: "/api/v1/notifications/scheduled/{scheduled_id}"};
+  }
+
+  // Analytics
+  rpc GetNotificationAnalytics(GetNotificationAnalyticsRequest) returns (GetNotificationAnalyticsResponse) {
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/notification-analytics"};
+  }
+}

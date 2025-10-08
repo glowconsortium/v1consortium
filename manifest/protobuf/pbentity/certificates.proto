@@ -1,0 +1,39 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+syntax = "proto3";
+
+package pbentity;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "v1consortium/api/pbentity";
+
+message Certificates {
+  string Id = 1; //
+  string OrganizationId = 2; //
+  string UserId = 3; //
+  string CertificateType = 4; //
+  string Title = 5; //
+  string Description = 6; //
+  string CertificateNumber = 7; //
+  google.protobuf.Timestamp IssueDate = 8; //
+  google.protobuf.Timestamp ExpirationDate = 9; //
+  string TestId = 10; //
+  string PhysicalId = 11; //
+  string CertificateUrl = 12; //
+  string TemplateUsed = 13; //
+  bool IsDigitallySigned = 14; //
+  string SignatureHash = 15; //
+  google.protobuf.Timestamp SignatureTimestamp = 16; //
+  int32 DownloadCount = 17; //
+  google.protobuf.Timestamp LastDownloadedAt = 18; //
+  string LastDownloadedBy = 19; //
+  bool IsRevoked = 20; //
+  google.protobuf.Timestamp RevokedAt = 21; //
+  string RevokedBy = 22; //
+  string RevocationReason = 23; //
+  google.protobuf.Timestamp CreatedAt = 24; //
+  google.protobuf.Timestamp UpdatedAt = 25; //
+}

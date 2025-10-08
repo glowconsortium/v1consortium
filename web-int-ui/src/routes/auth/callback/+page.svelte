@@ -1,38 +1,49 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
+  import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-	import { PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
+	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
   let processing = true;
   let errorMessage = '';
 
   onMount(async () => {
     try {
-      // Initialize Auth0 to handle the callback
+      console.log('Callback page mounted, URL:', window.location.href);
+
+      if (!PUBLIC_AUTH0_DOMAIN || !PUBLIC_AUTH0_CLIENT_ID) {
+        throw new Error('Auth0 configuration missing. Please check your environment variables.');
+      }
+
+      // Initialize Auth0 (this will handle redirect if code/state are present)
       await authStore.initialize({
-        domain: PUBLIC_AUTH0_DOMAIN || 'your-domain.auth0.com', // Replace with your Auth0 domain
-        clientId: PUBLIC_AUTH0_CLIENT_ID || 'your-client-id', // Replace with your Auth0 client ID
-        audience: PUBLIC_AUTH0_AUDIENCE || 'your-api-audience', // Replace with your API audience (optional)
+        domain: PUBLIC_AUTH0_DOMAIN,
+        clientId: PUBLIC_AUTH0_CLIENT_ID,
+        audience: PUBLIC_AUTH0_AUDIENCE,
         scope: 'openid profile email',
         redirectUri: `${window.location.origin}/auth/callback`
       });
 
-      // Wait for auth state to be determined
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Prefer appState.returnTo from Auth0 callback, fallback to URL param, then dashboard
+      const appState = authStore.getAppState?.();
+      const returnTo = (appState && appState.returnTo) || $page.url.searchParams.get('returnTo') || '/dashboard';
 
       if ($isAuthenticated) {
-        // Get the intended destination from URL params or default to dashboard
-        const returnTo = $page.url.searchParams.get('returnTo') || '/dashboard';
+        console.log('User authenticated, redirecting to:', returnTo);
         goto(returnTo);
-      } else if ($authError) {
+        return;
+      }
+
+      if ($authError) {
+        console.error('Authentication error:', $authError);
         errorMessage = $authError;
         processing = false;
-      } else {
-        // If not authenticated and no error, redirect to signin
-        goto('/signin');
+        return;
       }
+
+      console.log('Not authenticated, redirecting to signin');
+      goto('/auth/signin');
     } catch (error) {
       console.error('Callback processing failed:', error);
       errorMessage = error instanceof Error ? error.message : 'Authentication failed';
@@ -41,7 +52,7 @@
   });
 
   function handleRetry() {
-    goto('/signin');
+    goto('/auth/signin');
   }
 </script>
 
