@@ -2186,7 +2186,7 @@ const file_services_v1_drug_testing_proto_rawDesc = "" +
 	"\x16ConductRandomSelection\x124.v1consortium.services.ConductRandomSelectionRequest\x1a5.v1consortium.services.ConductRandomSelectionResponse\"4\x82\xd3\xe4\x93\x02.:\x01*\")/api/v1/random-pools/{pool_id}/selections\x12\xab\x01\n" +
 	"\x12GetRandomSelection\x120.v1consortium.services.GetRandomSelectionRequest\x1a1.v1consortium.services.GetRandomSelectionResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/random-selections/{selection_id}\x12\xc2\x01\n" +
 	"\x14ListRandomSelections\x122.v1consortium.services.ListRandomSelectionsRequest\x1a3.v1consortium.services.ListRandomSelectionsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/random-selections\x12\xc6\x01\n" +
-	"\x17ValidateRandomSelection\x125.v1consortium.services.ValidateRandomSelectionRequest\x1a6.v1consortium.services.ValidateRandomSelectionResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/random-selections/{selection_id}/validateB\rZ\vservices/v1b\x06proto3"
+	"\x17ValidateRandomSelection\x125.v1consortium.services.ValidateRandomSelectionRequest\x1a6.v1consortium.services.ValidateRandomSelectionResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/random-selections/{selection_id}/validateB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_drug_testing_proto_rawDescOnce sync.Once

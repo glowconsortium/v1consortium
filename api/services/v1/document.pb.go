@@ -2204,7 +2204,7 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"forceApply\"e\n" +
 	"\x1cApplyRetentionPolicyResponse\x12+\n" +
 	"\x11documents_updated\x18\x01 \x01(\x05R\x10documentsUpdated\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xf1\x11\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xfc\x11\n" +
 	"\x0fDocumentService\x12\xab\x01\n" +
 	"\x0eUploadDocument\x12,.v1consortium.services.UploadDocumentRequest\x1a-.v1consortium.services.UploadDocumentResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/organizations/{organization_id}/documents\x12\x8d\x01\n" +
 	"\vGetDocument\x12).v1consortium.services.GetDocumentRequest\x1a*.v1consortium.services.GetDocumentResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/documents/{document_id}\x12\xa5\x01\n" +
@@ -2213,12 +2213,12 @@ const file_services_v1_document_proto_rawDesc = "" +
 	"\x0eDeleteDocument\x12,.v1consortium.services.DeleteDocumentRequest\x1a-.v1consortium.services.DeleteDocumentResponse\"'\x82\xd3\xe4\x93\x02!*\x1f/api/v1/documents/{document_id}\x12\xae\x01\n" +
 	"\x13GetDocumentVersions\x121.v1consortium.services.GetDocumentVersionsRequest\x1a2.v1consortium.services.GetDocumentVersionsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/documents/{document_id}/versions\x12\x9c\x01\n" +
 	"\rShareDocument\x12+.v1consortium.services.ShareDocumentRequest\x1a,.v1consortium.services.ShareDocumentResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v1/documents/{document_id}/share\x12\xab\x01\n" +
-	"\x12GetSharedDocuments\x120.v1consortium.services.GetSharedDocumentsRequest\x1a1.v1consortium.services.GetSharedDocumentsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/users/{user_id}/shared-documents\x12\xb6\x01\n" +
-	"\x13RevokeDocumentShare\x121.v1consortium.services.RevokeDocumentShareRequest\x1a2.v1consortium.services.RevokeDocumentShareResponse\"8\x82\xd3\xe4\x93\x022*0/api/v1/documents/{document_id}/share/{share_id}\x12\xb2\x01\n" +
+	"\x12GetSharedDocuments\x120.v1consortium.services.GetSharedDocumentsRequest\x1a1.v1consortium.services.GetSharedDocumentsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/users/{user_id}/shared-documents\x12\xa8\x01\n" +
+	"\x13RevokeDocumentShare\x121.v1consortium.services.RevokeDocumentShareRequest\x1a2.v1consortium.services.RevokeDocumentShareResponse\"*\x82\xd3\xe4\x93\x02$*\"/api/v1/document-shares/{share_id}\x12\xb2\x01\n" +
 	"\x0fSearchDocuments\x12-.v1consortium.services.SearchDocumentsRequest\x1a..v1consortium.services.SearchDocumentsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/organizations/{organization_id}/documents/search\x12\xc3\x01\n" +
-	"\x14GetDocumentAnalytics\x122.v1consortium.services.GetDocumentAnalyticsRequest\x1a3.v1consortium.services.GetDocumentAnalyticsResponse\"B\x82\xd3\xe4\x93\x02<\x12:/api/v1/organizations/{organization_id}/document-analytics\x12\xcb\x01\n" +
-	"\x1aGetDocumentRetentionStatus\x128.v1consortium.services.GetDocumentRetentionStatusRequest\x1a9.v1consortium.services.GetDocumentRetentionStatusResponse\"8\x82\xd3\xe4\x93\x022\x120/api/v1/documents/{document_id}/retention-status\x12\xc2\x01\n" +
-	"\x14ApplyRetentionPolicy\x122.v1consortium.services.ApplyRetentionPolicyRequest\x1a3.v1consortium.services.ApplyRetentionPolicyResponse\"A\x82\xd3\xe4\x93\x02;:\x01*\"6/api/v1/documents/{document_id}/apply-retention-policyB\rZ\vservices/v1b\x06proto3"
+	"\x14GetDocumentAnalytics\x122.v1consortium.services.GetDocumentAnalyticsRequest\x1a3.v1consortium.services.GetDocumentAnalyticsResponse\"B\x82\xd3\xe4\x93\x02<\x12:/api/v1/organizations/{organization_id}/document-analytics\x12\xdc\x01\n" +
+	"\x1aGetDocumentRetentionStatus\x128.v1consortium.services.GetDocumentRetentionStatusRequest\x1a9.v1consortium.services.GetDocumentRetentionStatusResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/document-retention-status\x12\xca\x01\n" +
+	"\x14ApplyRetentionPolicy\x122.v1consortium.services.ApplyRetentionPolicyRequest\x1a3.v1consortium.services.ApplyRetentionPolicyResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/organizations/{organization_id}/apply-retention-policyB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_document_proto_rawDescOnce sync.Once

@@ -11,7 +11,7 @@ import "pbentity/random_selections.proto";
 import "pbentity/random_testing_pools.proto";
 import "pbentity/testing_programs.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Testing Program Management
 message CreateTestingProgramRequest {

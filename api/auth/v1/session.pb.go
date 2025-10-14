@@ -1301,7 +1301,7 @@ const file_auth_v1_session_proto_rawDesc = "" +
 	"\vCreateToken\x12%.v1consortium.auth.CreateTokenRequest\x1a&.v1consortium.auth.CreateTokenResponse\x12b\n" +
 	"\rValidateToken\x12'.v1consortium.auth.ValidateTokenRequest\x1a(.v1consortium.auth.ValidateTokenResponse\x12\\\n" +
 	"\vRevokeToken\x12%.v1consortium.auth.RevokeTokenRequest\x1a&.v1consortium.auth.RevokeTokenResponse\x12w\n" +
-	"\x14CleanupExpiredTokens\x12..v1consortium.auth.CleanupExpiredTokensRequest\x1a/.v1consortium.auth.CleanupExpiredTokensResponseB\tZ\aauth/v1b\x06proto3"
+	"\x14CleanupExpiredTokens\x12..v1consortium.auth.CleanupExpiredTokensRequest\x1a/.v1consortium.auth.CleanupExpiredTokensResponseB\x1aZ\x18v1consortium/api/auth/v1b\x06proto3"
 
 var (
 	file_auth_v1_session_proto_rawDescOnce sync.Once

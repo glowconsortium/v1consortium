@@ -975,7 +975,7 @@ const file_auth_v1_authorization_proto_rawDesc = "" +
 	"\n" +
 	"RemoveRole\x12$.v1consortium.auth.RemoveRoleRequest\x1a%.v1consortium.auth.RemoveRoleResponse\"-\x82\xd3\xe4\x93\x02':\x01**\"/api/v1/auth/users/{user_id}/roles\x12\x8b\x01\n" +
 	"\fGetUserRoles\x12&.v1consortium.auth.GetUserRolesRequest\x1a'.v1consortium.auth.GetUserRolesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/auth/users/{user_id}/roles\x12\xa0\x01\n" +
-	"\x12GetRolePermissions\x12,.v1consortium.auth.GetRolePermissionsRequest\x1a-.v1consortium.auth.GetRolePermissionsResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/auth/roles/{role}/permissionsB\tZ\aauth/v1b\x06proto3"
+	"\x12GetRolePermissions\x12,.v1consortium.auth.GetRolePermissionsRequest\x1a-.v1consortium.auth.GetRolePermissionsResponse\"-\x82\xd3\xe4\x93\x02'\x12%/api/v1/auth/roles/{role}/permissionsB\x1aZ\x18v1consortium/api/auth/v1b\x06proto3"
 
 var (
 	file_auth_v1_authorization_proto_rawDescOnce sync.Once

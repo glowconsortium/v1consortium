@@ -5,7 +5,7 @@ package v1consortium.gateway;
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "gateway/v1";
+option go_package = "v1consortium/api/gateway/v1";
 
 // Common API Gateway Messages
 message ApiRequest {

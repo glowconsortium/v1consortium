@@ -1517,8 +1517,7 @@ const file_gateway_v1_gateway_proto_rawDesc = "" +
 	"\fListServices\x12).v1consortium.gateway.ListServicesRequest\x1a*.v1consortium.gateway.ListServicesResponse\x12P\n" +
 	"\x05Route\x12\".v1consortium.gateway.RouteRequest\x1a#.v1consortium.gateway.RouteResponse\x12h\n" +
 	"\rLogApiRequest\x12*.v1consortium.gateway.LogApiRequestRequest\x1a+.v1consortium.gateway.LogApiRequestResponse\x12\x80\x01\n" +
-	"\x17GetCircuitBreakerStatus\x121.v1consortium.gateway.CircuitBreakerStatusRequest\x1a2.v1consortium.gateway.CircuitBreakerStatusResponseB\fZ\n" +
-	"gateway/v1b\x06proto3"
+	"\x17GetCircuitBreakerStatus\x121.v1consortium.gateway.CircuitBreakerStatusRequest\x1a2.v1consortium.gateway.CircuitBreakerStatusResponseB\x1dZ\x1bv1consortium/api/gateway/v1b\x06proto3"
 
 var (
 	file_gateway_v1_gateway_proto_rawDescOnce sync.Once

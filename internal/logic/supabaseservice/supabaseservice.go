@@ -2,6 +2,10 @@ package supabaseservice
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"strings"
+	"time"
 	"v1consortium/internal/pkg/supabaseclient"
 	"v1consortium/internal/service"
 
@@ -42,11 +46,22 @@ func (s *sSupabaseService) GetServiceClient(ctx context.Context) (*supabase.Clie
 }
 
 func (s *sSupabaseService) GetUserAuthenticatedClient(ctx context.Context, accessToken string) (*supabase.Client, error) {
+	// Validate access token format and presence
+	if accessToken == "" {
+		return nil, errors.New("access token cannot be empty")
+	}
+
+	// Basic JWT format validation (should have 3 parts separated by dots)
+	tokenParts := strings.Split(accessToken, ".")
+	if len(tokenParts) != 3 {
+		return nil, errors.New("invalid access token format")
+	}
 
 	anonclient, err := s.GetAnonClient(ctx)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to get anonymous client: %w", err)
 	}
+
 	anonclient.UpdateAuthSession(types.Session{
 		AccessToken: accessToken,
 	})
@@ -131,14 +146,39 @@ func (s *sSupabaseService) UpdateUser(ctx context.Context, userID uuid.UUID, ema
 }
 
 func (s *sSupabaseService) SignIn(ctx context.Context, email, password string) (*types.TokenResponse, error) {
+	// Validate input parameters
+	if email == "" {
+		return nil, errors.New("email cannot be empty")
+	}
+	if password == "" {
+		return nil, errors.New("password cannot be empty")
+	}
+
+	// Basic email format validation
+	if !strings.Contains(email, "@") || !strings.Contains(email, ".") {
+		return nil, errors.New("invalid email format")
+	}
+
 	client, err := s.GetAnonClient(ctx)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to get anonymous client: %w", err)
 	}
+
 	session, err := client.Auth.SignInWithEmailPassword(email, password)
 	if err != nil {
-		return nil, err
+		g.Log().Errorf(ctx, "Sign-in failed for email %s: %v", email, err)
+		return nil, fmt.Errorf("authentication failed: %w", err)
 	}
+
+	// Validate the returned session
+	if session == nil {
+		return nil, errors.New("authentication succeeded but no session returned")
+	}
+	if session.AccessToken == "" {
+		return nil, errors.New("authentication succeeded but no access token returned")
+	}
+
+	g.Log().Infof(ctx, "User signed in successfully: %s", email)
 	return session, nil
 }
 
@@ -159,14 +199,31 @@ func (s *sSupabaseService) SignUp(ctx context.Context, email, password string, u
 }
 
 func (s *sSupabaseService) RefreshToken(ctx context.Context, refreshToken string) (*types.TokenResponse, error) {
+	// Validate refresh token
+	if refreshToken == "" {
+		return nil, errors.New("refresh token cannot be empty")
+	}
+
 	client, err := s.GetAnonClient(ctx)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to get anonymous client: %w", err)
 	}
+
 	session, err := client.Auth.RefreshToken(refreshToken)
 	if err != nil {
-		return nil, err
+		g.Log().Errorf(ctx, "Token refresh failed: %v", err)
+		return nil, fmt.Errorf("token refresh failed: %w", err)
 	}
+
+	// Validate the refreshed session
+	if session == nil {
+		return nil, errors.New("token refresh succeeded but no session returned")
+	}
+	if session.AccessToken == "" {
+		return nil, errors.New("token refresh succeeded but no access token returned")
+	}
+
+	g.Log().Debugf(ctx, "Token refreshed successfully")
 	return session, nil
 }
 
@@ -179,5 +236,116 @@ func (s *sSupabaseService) SignOut(ctx context.Context, accessToken string) erro
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func (s *sSupabaseService) GetUserFromToken(ctx context.Context, accessToken string) (*types.UserResponse, error) {
+	// Validate access token
+	if accessToken == "" {
+		return nil, errors.New("access token cannot be empty")
+	}
+
+	client, err := s.GetUserAuthenticatedClient(ctx, accessToken)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get authenticated client: %w", err)
+	}
+
+	user, err := client.Auth.GetUser()
+	if err != nil {
+		g.Log().Errorf(ctx, "Failed to get user from token: %v", err)
+		return nil, fmt.Errorf("failed to get user from token: %w", err)
+	}
+
+	// Validate user response
+	if user == nil {
+		return nil, errors.New("user retrieval succeeded but no user returned")
+	}
+	if user.ID == uuid.Nil {
+		return nil, errors.New("user retrieved but has invalid ID")
+	}
+
+	return user, nil
+}
+
+// ValidateTokenExpiry checks if the access token is expired
+func (s *sSupabaseService) ValidateTokenExpiry(ctx context.Context, accessToken string) error {
+	if accessToken == "" {
+		return errors.New("access token cannot be empty")
+	}
+
+	user, err := s.GetUserFromToken(ctx, accessToken)
+	if err != nil {
+		return fmt.Errorf("token validation failed: %w", err)
+	}
+
+	if user == nil {
+		return errors.New("invalid token: no user found")
+	}
+
+	return nil
+}
+
+// ValidateAndRefreshSession validates the current session and refreshes if needed
+func (s *sSupabaseService) ValidateAndRefreshSession(ctx context.Context, accessToken, refreshToken string) (*types.TokenResponse, error) {
+	if accessToken == "" {
+		return nil, errors.New("access token cannot be empty")
+	}
+	if refreshToken == "" {
+		return nil, errors.New("refresh token cannot be empty")
+	}
+
+	// First try to validate the current access token
+	err := s.ValidateTokenExpiry(ctx, accessToken)
+	if err == nil {
+		// Token is still valid, return existing session
+		return &types.TokenResponse{
+			Session: types.Session{
+				AccessToken:  accessToken,
+				RefreshToken: refreshToken,
+			},
+		}, nil
+	}
+
+	g.Log().Debugf(ctx, "Access token expired or invalid, attempting refresh")
+
+	// Token is expired or invalid, try to refresh
+	newSession, err := s.RefreshToken(ctx, refreshToken)
+	if err != nil {
+		return nil, fmt.Errorf("failed to refresh expired token: %w", err)
+	}
+
+	return newSession, nil
+}
+
+// ValidateSessionSecurity performs additional security checks on the session
+func (s *sSupabaseService) ValidateSessionSecurity(ctx context.Context, accessToken string, expectedUserID uuid.UUID) error {
+	if accessToken == "" {
+		return errors.New("access token cannot be empty")
+	}
+	if expectedUserID == uuid.Nil {
+		return errors.New("expected user ID cannot be empty")
+	}
+
+	user, err := s.GetUserFromToken(ctx, accessToken)
+	if err != nil {
+		return fmt.Errorf("failed to validate session security: %w", err)
+	}
+
+	// Check if the token belongs to the expected user
+	if user.ID != expectedUserID {
+		g.Log().Warningf(ctx, "Session security violation: token user ID %s does not match expected %s", user.ID, expectedUserID)
+		return errors.New("session security violation: user ID mismatch")
+	}
+
+	// Check if user account is confirmed
+	if user.EmailConfirmedAt == nil {
+		return errors.New("user email not confirmed")
+	}
+
+	// Check if user is not banned
+	if user.BannedUntil != nil && user.BannedUntil.After(time.Now()) {
+		return fmt.Errorf("user is banned until: %v", user.BannedUntil)
+	}
+
 	return nil
 }

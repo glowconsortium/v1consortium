@@ -1981,19 +1981,19 @@ const file_services_v1_dot_physical_proto_rawDesc = "" +
 	"smsEnabled\x127\n" +
 	"\x17notification_recipients\x18\x05 \x03(\tR\x16notificationRecipients\"9\n" +
 	"\x1dSetExpirationReminderResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x9a\x10\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xec\x0f\n" +
 	"\x12DOTPhysicalService\x12\xbe\x01\n" +
 	"\x13ScheduleDOTPhysical\x121.v1consortium.services.ScheduleDOTPhysicalRequest\x1a2.v1consortium.services.ScheduleDOTPhysicalResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/api/v1/organizations/{organization_id}/dot-physicals\x12\x9a\x01\n" +
 	"\x0eGetDOTPhysical\x12,.v1consortium.services.GetDOTPhysicalRequest\x1a-.v1consortium.services.GetDOTPhysicalResponse\"+\x82\xd3\xe4\x93\x02%\x12#/api/v1/dot-physicals/{physical_id}\x12\xa6\x01\n" +
 	"\x11UpdateDOTPhysical\x12/.v1consortium.services.UpdateDOTPhysicalRequest\x1a0.v1consortium.services.UpdateDOTPhysicalResponse\".\x82\xd3\xe4\x93\x02(:\x01*\x1a#/api/v1/dot-physicals/{physical_id}\x12\xb2\x01\n" +
-	"\x10ListDOTPhysicals\x12..v1consortium.services.ListDOTPhysicalsRequest\x1a/.v1consortium.services.ListDOTPhysicalsResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/dot-physicals\x12\xce\x01\n" +
-	"\x17RegisterMedicalExaminer\x125.v1consortium.services.RegisterMedicalExaminerRequest\x1a6.v1consortium.services.RegisterMedicalExaminerResponse\"D\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v1/organizations/{organization_id}/medical-examiners\x12\xaa\x01\n" +
-	"\x12GetMedicalExaminer\x120.v1consortium.services.GetMedicalExaminerRequest\x1a1.v1consortium.services.GetMedicalExaminerResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/medical-examiners/{examiner_id}\x12\xc2\x01\n" +
-	"\x14ListMedicalExaminers\x122.v1consortium.services.ListMedicalExaminersRequest\x1a3.v1consortium.services.ListMedicalExaminersResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/medical-examiners\x12\xb8\x01\n" +
+	"\x10ListDOTPhysicals\x12..v1consortium.services.ListDOTPhysicalsRequest\x1a/.v1consortium.services.ListDOTPhysicalsResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/dot-physicals\x12\xae\x01\n" +
+	"\x17RegisterMedicalExaminer\x125.v1consortium.services.RegisterMedicalExaminerRequest\x1a6.v1consortium.services.RegisterMedicalExaminerResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/api/v1/medical-examiners\x12\xaa\x01\n" +
+	"\x12GetMedicalExaminer\x120.v1consortium.services.GetMedicalExaminerRequest\x1a1.v1consortium.services.GetMedicalExaminerResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/medical-examiners/{examiner_id}\x12\xa2\x01\n" +
+	"\x14ListMedicalExaminers\x122.v1consortium.services.ListMedicalExaminersRequest\x1a3.v1consortium.services.ListMedicalExaminersResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/medical-examiners\x12\xb8\x01\n" +
 	"\x13GenerateCertificate\x121.v1consortium.services.GenerateCertificateRequest\x1a2.v1consortium.services.GenerateCertificateResponse\":\x82\xd3\xe4\x93\x024:\x01*\"//api/v1/dot-physicals/{physical_id}/certificate\x12\xaa\x01\n" +
 	"\x13ValidateCertificate\x121.v1consortium.services.ValidateCertificateRequest\x1a2.v1consortium.services.ValidateCertificateResponse\",\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v1/dot-certificates/validate\x12\xd3\x01\n" +
-	"\x17GetExpiringCertificates\x125.v1consortium.services.GetExpiringCertificatesRequest\x1a6.v1consortium.services.GetExpiringCertificatesResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/dot-certificates/expiring\x12\xc6\x01\n" +
-	"\x15SetExpirationReminder\x123.v1consortium.services.SetExpirationReminderRequest\x1a4.v1consortium.services.SetExpirationReminderResponse\"B\x82\xd3\xe4\x93\x02<:\x01*\"7/api/v1/dot-physicals/{physical_id}/expiration-reminderB\rZ\vservices/v1b\x06proto3"
+	"\x17GetExpiringCertificates\x125.v1consortium.services.GetExpiringCertificatesRequest\x1a6.v1consortium.services.GetExpiringCertificatesResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/dot-certificates/expiring\x12\xd8\x01\n" +
+	"\x15SetExpirationReminder\x123.v1consortium.services.SetExpirationReminderRequest\x1a4.v1consortium.services.SetExpirationReminderResponse\"T\x82\xd3\xe4\x93\x02N:\x01*\"I/api/v1/organizations/{organization_id}/dot-physical-expiration-remindersB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_dot_physical_proto_rawDescOnce sync.Once

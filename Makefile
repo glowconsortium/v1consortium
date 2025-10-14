@@ -35,10 +35,15 @@ dev:
 	cd supabase && npx supabase start
 	docker compose up --build --watch
 
-.PHONY: gen-web
-gen-web:
+.PHONY: gen-buf
+gen-buf:
 	@echo "Generating TypeScript files from protobuf..."
 	rm -rf v1-consortium-web-pkg/src/lib/gen
+	rm -rf api/gen
 	npx buf format manifest/protobuf -w
-	npx buf generate --template buf.gen-typescript.yaml
-	
+	npx buf generate --template buf.gen.yaml
+
+.PHONY: clean-buf
+clean-buf:
+	rm -rf v1-consortium-web-pkg/src/lib/gen
+	rm -rf api/gen

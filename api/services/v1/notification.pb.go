@@ -2750,7 +2750,7 @@ const file_services_v1_notification_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"h\n" +
 	" GetNotificationAnalyticsResponse\x12D\n" +
-	"\ametrics\x18\x01 \x01(\v2*.v1consortium.services.NotificationMetricsR\ametrics2\xe8\x18\n" +
+	"\ametrics\x18\x01 \x01(\v2*.v1consortium.services.NotificationMetricsR\ametrics2\xf5\x18\n" +
 	"\x13NotificationService\x12\x95\x01\n" +
 	"\x10SendNotification\x12..v1consortium.services.SendNotificationRequest\x1a/.v1consortium.services.SendNotificationResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/notifications\x12\xa1\x01\n" +
 	"\x0fGetNotification\x12-.v1consortium.services.GetNotificationRequest\x1a..v1consortium.services.GetNotificationResponse\"/\x82\xd3\xe4\x93\x02)\x12'/api/v1/notifications/{notification_id}\x12\xa5\x01\n" +
@@ -2765,9 +2765,9 @@ const file_services_v1_notification_proto_rawDesc = "" +
 	"\x1dUpdateNotificationPreferences\x12;.v1consortium.services.UpdateNotificationPreferencesRequest\x1a<.v1consortium.services.UpdateNotificationPreferencesResponse\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/api/v1/users/{user_id}/notification-preferences\x12\xc6\x01\n" +
 	"\x14SendBulkNotification\x122.v1consortium.services.SendBulkNotificationRequest\x1a3.v1consortium.services.SendBulkNotificationResponse\"E\x82\xd3\xe4\x93\x02?:\x01*\":/api/v1/organizations/{organization_id}/notifications/bulk\x12\xaa\x01\n" +
 	"\x14ScheduleNotification\x122.v1consortium.services.ScheduleNotificationRequest\x1a3.v1consortium.services.ScheduleNotificationResponse\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v1/notifications/schedule\x12\xda\x01\n" +
-	"\x1aListScheduledNotifications\x128.v1consortium.services.ListScheduledNotificationsRequest\x1a9.v1consortium.services.ListScheduledNotificationsResponse\"G\x82\xd3\xe4\x93\x02A\x12?/api/v1/organizations/{organization_id}/notifications/scheduled\x12\xcc\x01\n" +
-	"\x1bCancelScheduledNotification\x129.v1consortium.services.CancelScheduledNotificationRequest\x1a:.v1consortium.services.CancelScheduledNotificationResponse\"6\x82\xd3\xe4\x93\x020*./api/v1/notifications/scheduled/{scheduled_id}\x12\xd3\x01\n" +
-	"\x18GetNotificationAnalytics\x126.v1consortium.services.GetNotificationAnalyticsRequest\x1a7.v1consortium.services.GetNotificationAnalyticsResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/notification-analyticsB\rZ\vservices/v1b\x06proto3"
+	"\x1aListScheduledNotifications\x128.v1consortium.services.ListScheduledNotificationsRequest\x1a9.v1consortium.services.ListScheduledNotificationsResponse\"G\x82\xd3\xe4\x93\x02A\x12?/api/v1/organizations/{organization_id}/notifications/scheduled\x12\xd9\x01\n" +
+	"\x1bCancelScheduledNotification\x129.v1consortium.services.CancelScheduledNotificationRequest\x1a:.v1consortium.services.CancelScheduledNotificationResponse\"C\x82\xd3\xe4\x93\x02=*;/api/v1/notifications/scheduled/{scheduled_notification_id}\x12\xd3\x01\n" +
+	"\x18GetNotificationAnalytics\x126.v1consortium.services.GetNotificationAnalyticsRequest\x1a7.v1consortium.services.GetNotificationAnalyticsResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/notification-analyticsB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_notification_proto_rawDescOnce sync.Once

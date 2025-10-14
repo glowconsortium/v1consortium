@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/notifications.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Notification Management Messages
 message SendNotificationRequest {
@@ -358,7 +358,7 @@ service NotificationService {
   }
 
   rpc CancelScheduledNotification(CancelScheduledNotificationRequest) returns (CancelScheduledNotificationResponse) {
-    option (google.api.http) = {delete: "/api/v1/notifications/scheduled/{scheduled_id}"};
+    option (google.api.http) = {delete: "/api/v1/notifications/scheduled/{scheduled_notification_id}"};
   }
 
   // Analytics

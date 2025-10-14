@@ -2404,7 +2404,7 @@ const file_services_v1_compliance_proto_rawDesc = "" +
 	"\x11DeleteSavedReport\x12/.v1consortium.services.DeleteSavedReportRequest\x1a0.v1consortium.services.DeleteSavedReportResponse\"#\x82\xd3\xe4\x93\x02\x1d*\x1b/api/v1/reports/{report_id}\x12\xbf\x01\n" +
 	"\x13GetComplianceAlerts\x121.v1consortium.services.GetComplianceAlertsRequest\x1a2.v1consortium.services.GetComplianceAlertsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/compliance-alerts\x12\xcb\x01\n" +
 	"\x16GetComplianceAnalytics\x124.v1consortium.services.GetComplianceAnalyticsRequest\x1a5.v1consortium.services.GetComplianceAnalyticsResponse\"D\x82\xd3\xe4\x93\x02>\x12</api/v1/organizations/{organization_id}/compliance-analytics\x12\xd0\x01\n" +
-	"\x17GetComplianceAuditTrail\x125.v1consortium.services.GetComplianceAuditTrailRequest\x1a6.v1consortium.services.GetComplianceAuditTrailResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/compliance-audit-trailB\rZ\vservices/v1b\x06proto3"
+	"\x17GetComplianceAuditTrail\x125.v1consortium.services.GetComplianceAuditTrailRequest\x1a6.v1consortium.services.GetComplianceAuditTrailResponse\"F\x82\xd3\xe4\x93\x02@\x12>/api/v1/organizations/{organization_id}/compliance-audit-trailB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_compliance_proto_rawDescOnce sync.Once

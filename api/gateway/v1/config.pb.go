@@ -2235,8 +2235,7 @@ const file_gateway_v1_config_proto_rawDesc = "" +
 	"\vRemoveRoute\x12(.v1consortium.gateway.RemoveRouteRequest\x1a).v1consortium.gateway.RemoveRouteResponse\x12b\n" +
 	"\vUpdateRoute\x12(.v1consortium.gateway.UpdateRouteRequest\x1a).v1consortium.gateway.UpdateRouteResponse\x12_\n" +
 	"\n" +
-	"ListRoutes\x12'.v1consortium.gateway.ListRoutesRequest\x1a(.v1consortium.gateway.ListRoutesResponseB\fZ\n" +
-	"gateway/v1b\x06proto3"
+	"ListRoutes\x12'.v1consortium.gateway.ListRoutesRequest\x1a(.v1consortium.gateway.ListRoutesResponseB\x1dZ\x1bv1consortium/api/gateway/v1b\x06proto3"
 
 var (
 	file_gateway_v1_config_proto_rawDescOnce sync.Once

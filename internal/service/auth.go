@@ -7,12 +7,13 @@ package service
 
 import (
 	"context"
+	"v1consortium/internal/model"
 	"v1consortium/internal/model/entity"
 )
 
 type (
 	IAuth interface {
-		Login(ctx context.Context, email string, password string) (access string, refresh string, err error)
+		Login(ctx context.Context, email string, password string, ipaddress string, useragent string) (*model.LoginResponse, error)
 		Logout(ctx context.Context, token string) error
 		RegisterUser(ctx context.Context, email string, password string, data map[string]interface{}) (userID string, err error)
 		RefreshToken(ctx context.Context, refreshToken string) (access string, refresh string, err error)
@@ -24,7 +25,7 @@ type (
 		EnableMFA(ctx context.Context, userID string) (string, error)
 		DisableMFA(ctx context.Context, userID string) error
 		VerifyMFA(ctx context.Context, userID string, code string) (string, error)
-		GetUserInfo(ctx context.Context, token string) (map[string]interface{}, error)
+		GetUserInfo(ctx context.Context, token string) (*entity.UserProfiles, error)
 		UpdateUserProfile(ctx context.Context, userID string, profileData map[string]interface{}) error
 		CheckPermission(ctx context.Context, userID string, permission string) (bool, error)
 		GetUserPermissions(ctx context.Context, userID string) ([]string, error)

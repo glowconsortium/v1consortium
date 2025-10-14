@@ -2273,22 +2273,22 @@ const file_services_v1_workflow_proto_rawDesc = "" +
 	"\x10current_activity\x18\x03 \x01(\tR\x0fcurrentActivity\x12M\n" +
 	"\x14estimated_completion\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x13estimatedCompletion\"r\n" +
 	"\x1bGetRunningWorkflowsResponse\x12S\n" +
-	"\x11running_workflows\x18\x01 \x03(\v2&.v1consortium.services.RunningWorkflowR\x10runningWorkflows2\x89\x15\n" +
+	"\x11running_workflows\x18\x01 \x03(\v2&.v1consortium.services.RunningWorkflowR\x10runningWorkflows2\x89\x14\n" +
 	"\x0fWorkflowService\x12\xa8\x01\n" +
 	"\rStartWorkflow\x12+.v1consortium.services.StartWorkflowRequest\x1a,.v1consortium.services.StartWorkflowResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1/organizations/{organization_id}/workflows\x12\x8d\x01\n" +
 	"\vGetWorkflow\x12).v1consortium.services.GetWorkflowRequest\x1a*.v1consortium.services.GetWorkflowResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/workflows/{workflow_id}\x12\xa5\x01\n" +
 	"\rListWorkflows\x12+.v1consortium.services.ListWorkflowsRequest\x1a,.v1consortium.services.ListWorkflowsResponse\"9\x82\xd3\xe4\x93\x023\x121/api/v1/organizations/{organization_id}/workflows\x12\x99\x01\n" +
 	"\x0eUpdateWorkflow\x12,.v1consortium.services.UpdateWorkflowRequest\x1a-.v1consortium.services.UpdateWorkflowResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\x1a\x1f/api/v1/workflows/{workflow_id}\x12\xa0\x01\n" +
 	"\x0eCancelWorkflow\x12,.v1consortium.services.CancelWorkflowRequest\x1a-.v1consortium.services.CancelWorkflowResponse\"1\x82\xd3\xe4\x93\x02+:\x01*\"&/api/v1/workflows/{workflow_id}/cancel\x12\x9c\x01\n" +
-	"\rRetryWorkflow\x12+.v1consortium.services.RetryWorkflowRequest\x1a,.v1consortium.services.RetryWorkflowResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v1/workflows/{workflow_id}/retry\x12\xdf\x01\n" +
-	"\x1aStartDrugTestOrderWorkflow\x128.v1consortium.services.StartDrugTestOrderWorkflowRequest\x1a9.v1consortium.services.StartDrugTestOrderWorkflowResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/api/v1/organizations/{organization_id}/workflows/drug-test-order\x12\xde\x01\n" +
-	"\x1aStartMVRMonitoringWorkflow\x128.v1consortium.services.StartMVRMonitoringWorkflowRequest\x1a9.v1consortium.services.StartMVRMonitoringWorkflowResponse\"K\x82\xd3\xe4\x93\x02E:\x01*\"@/api/v1/organizations/{organization_id}/workflows/mvr-monitoring\x12\xe6\x01\n" +
-	"\x1cStartRandomSelectionWorkflow\x12:.v1consortium.services.StartRandomSelectionWorkflowRequest\x1a;.v1consortium.services.StartRandomSelectionWorkflowResponse\"M\x82\xd3\xe4\x93\x02G:\x01*\"B/api/v1/organizations/{organization_id}/workflows/random-selection\x12\xe6\x01\n" +
-	"\x1cStartBackgroundCheckWorkflow\x12:.v1consortium.services.StartBackgroundCheckWorkflowRequest\x1a;.v1consortium.services.StartBackgroundCheckWorkflowResponse\"M\x82\xd3\xe4\x93\x02G:\x01*\"B/api/v1/organizations/{organization_id}/workflows/background-check\x12\xd9\x01\n" +
-	"\x19StartNotificationWorkflow\x127.v1consortium.services.StartNotificationWorkflowRequest\x1a8.v1consortium.services.StartNotificationWorkflowResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/organizations/{organization_id}/workflows/notification\x12\xc3\x01\n" +
+	"\rRetryWorkflow\x12+.v1consortium.services.RetryWorkflowRequest\x1a,.v1consortium.services.RetryWorkflowResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v1/workflows/{workflow_id}/retry\x12\xbf\x01\n" +
+	"\x1aStartDrugTestOrderWorkflow\x128.v1consortium.services.StartDrugTestOrderWorkflowRequest\x1a9.v1consortium.services.StartDrugTestOrderWorkflowResponse\",\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v1/workflows/drug-test-order\x12\xde\x01\n" +
+	"\x1aStartMVRMonitoringWorkflow\x128.v1consortium.services.StartMVRMonitoringWorkflowRequest\x1a9.v1consortium.services.StartMVRMonitoringWorkflowResponse\"K\x82\xd3\xe4\x93\x02E:\x01*\"@/api/v1/organizations/{organization_id}/workflows/mvr-monitoring\x12\xc6\x01\n" +
+	"\x1cStartRandomSelectionWorkflow\x12:.v1consortium.services.StartRandomSelectionWorkflowRequest\x1a;.v1consortium.services.StartRandomSelectionWorkflowResponse\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/api/v1/workflows/random-selection\x12\xc6\x01\n" +
+	"\x1cStartBackgroundCheckWorkflow\x12:.v1consortium.services.StartBackgroundCheckWorkflowRequest\x1a;.v1consortium.services.StartBackgroundCheckWorkflowResponse\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/api/v1/workflows/background-check\x12\xb9\x01\n" +
+	"\x19StartNotificationWorkflow\x127.v1consortium.services.StartNotificationWorkflowRequest\x1a8.v1consortium.services.StartNotificationWorkflowResponse\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v1/workflows/notification\x12\xc3\x01\n" +
 	"\x14GetWorkflowAnalytics\x122.v1consortium.services.GetWorkflowAnalyticsRequest\x1a3.v1consortium.services.GetWorkflowAnalyticsResponse\"B\x82\xd3\xe4\x93\x02<\x12:/api/v1/organizations/{organization_id}/workflow-analytics\x12\xbb\x01\n" +
 	"\x12GetFailedWorkflows\x120.v1consortium.services.GetFailedWorkflowsRequest\x1a1.v1consortium.services.GetFailedWorkflowsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/organizations/{organization_id}/workflows/failed\x12\xbf\x01\n" +
-	"\x13GetRunningWorkflows\x121.v1consortium.services.GetRunningWorkflowsRequest\x1a2.v1consortium.services.GetRunningWorkflowsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/workflows/runningB\rZ\vservices/v1b\x06proto3"
+	"\x13GetRunningWorkflows\x121.v1consortium.services.GetRunningWorkflowsRequest\x1a2.v1consortium.services.GetRunningWorkflowsResponse\"A\x82\xd3\xe4\x93\x02;\x129/api/v1/organizations/{organization_id}/workflows/runningB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_workflow_proto_rawDescOnce sync.Once

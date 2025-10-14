@@ -13,5 +13,9 @@ import (
 )
 
 func main() {
+	err := cmd.Main.AddCommand(&cmd.Combined)
+	if err != nil {
+		panic(err)
+	}
 	cmd.Main.Run(gctx.GetInitCtx())
 }

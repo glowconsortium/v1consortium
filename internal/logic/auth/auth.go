@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"v1consortium/internal/dao"
+	"v1consortium/internal/model"
 	"v1consortium/internal/model/do"
 	"v1consortium/internal/model/entity"
 	"v1consortium/internal/service"
@@ -25,13 +26,36 @@ func init() {
 
 // Add your methods for sAuth here
 
-func (s *sAuth) Login(ctx context.Context, email, password string) (access string, refresh string, err error) {
+func (s *sAuth) Login(ctx context.Context, email, password, ipaddress, useragent string) (*model.LoginResponse, error) {
 
 	resp, err := service.SupabaseService().SignIn(ctx, email, password)
 	if err != nil {
-		return "", "", err
+		return nil, err
 	}
-	return resp.AccessToken, resp.RefreshToken, nil
+
+	userssession, err := service.SessionManager().CreateSession(ctx, &model.CreateSessionRequest{
+		UserID:    resp.User.ID.String(),
+		IPAddress: ipaddress,
+		UserAgent: useragent,
+	})
+
+	userssession.AccessToken = resp.AccessToken
+	userssession.RefreshToken = resp.RefreshToken
+
+	userprofile, err := s.GetUserProfileByEmail(ctx, email)
+	if err != nil {
+		return nil, err
+	}
+	if userprofile == nil || userprofile.Id == "" {
+		return nil, gerror.NewCode(gcode.CodeNotFound, "User profile not found")
+	}
+
+	userssessionresponse := &model.LoginResponse{
+		Session: userssession,
+		User:    userprofile,
+	}
+
+	return userssessionresponse, nil
 }
 
 func (s *sAuth) Logout(ctx context.Context, token string) error {
@@ -124,9 +148,27 @@ func (s *sAuth) VerifyMFA(ctx context.Context, userID, code string) (string, err
 	return "", nil
 }
 
-func (s *sAuth) GetUserInfo(ctx context.Context, token string) (map[string]interface{}, error) {
+func (s *sAuth) GetUserInfo(ctx context.Context, token string) (*entity.UserProfiles, error) {
 	// Implement your get user info logic here
-	return nil, nil
+	// userfromtoken supabase
+	userInfo, err := service.SupabaseService().GetUserFromToken(ctx, token)
+
+	if err != nil {
+		return nil, err
+	}
+	if userInfo == nil || userInfo.User.Email == "" {
+		return nil, gerror.NewCode(gcode.CodeNotAuthorized, "Invalid token or user not found")
+	}
+
+	userProfile, err := s.GetUserProfileByEmail(ctx, userInfo.User.Email)
+	if err != nil {
+		return nil, err
+	}
+	if userProfile == nil || userProfile.Id == "" {
+		return nil, gerror.NewCode(gcode.CodeNotFound, "User profile not found")
+	}
+
+	return userProfile, nil
 }
 
 func (s *sAuth) UpdateUserProfile(ctx context.Context, userID string, profileData map[string]interface{}) error {

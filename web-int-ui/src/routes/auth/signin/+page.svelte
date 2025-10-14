@@ -1,20 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { isAuthenticated, authLoading, authError, currentUser } from '$lib/stores/authStore';
+	import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
 	import { goto } from '$app/navigation';
-	import { Button } from '@movsm/v1-consortium-web-pkg';
 	import { page } from '$app/stores';
-	import { getContext } from 'svelte';
-	import type { AuthStore } from '$lib/stores/authStore';
 
 	// Form state
 	let email = $state('');
 	let password = $state('');
 	let rememberMe = $state(false);
 	let isSubmitting = $state(false);
-
-	// Get auth store from context (set in layout)
-	const authStoreInstance = getContext<AuthStore>('authStore');
 
 	onMount(() => {
 		// Redirect if already authenticated
@@ -32,7 +26,12 @@
 		isSubmitting = true;
 		
 		try {
-			await authStoreInstance.login(email.trim(), password, rememberMe);
+			// Use the new login API with credentials object
+			await authStore.login({
+				email: email.trim(),
+				password: password,
+				rememberMe: rememberMe
+			});
 			
 			// Success - redirect to dashboard or return URL
 			const returnTo = $page?.url?.searchParams?.get('returnTo') || '/dashboard';
@@ -46,7 +45,7 @@
 	}
 
 	function clearError() {
-		authStoreInstance?.clearError();
+		authStore?.clearError();
 	}
 
 	// Handle form submission

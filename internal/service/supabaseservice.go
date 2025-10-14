@@ -28,6 +28,13 @@ type (
 		SignUp(ctx context.Context, email string, password string, userMetadata map[string]interface{}) (*types.SignupResponse, error)
 		RefreshToken(ctx context.Context, refreshToken string) (*types.TokenResponse, error)
 		SignOut(ctx context.Context, accessToken string) error
+		GetUserFromToken(ctx context.Context, accessToken string) (*types.UserResponse, error)
+		// ValidateTokenExpiry checks if the access token is expired
+		ValidateTokenExpiry(ctx context.Context, accessToken string) error
+		// ValidateAndRefreshSession validates the current session and refreshes if needed
+		ValidateAndRefreshSession(ctx context.Context, accessToken string, refreshToken string) (*types.TokenResponse, error)
+		// ValidateSessionSecurity performs additional security checks on the session
+		ValidateSessionSecurity(ctx context.Context, accessToken string, expectedUserID uuid.UUID) error
 	}
 )
 

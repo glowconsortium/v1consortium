@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/documents.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Document Management Messages
 message UploadDocumentRequest {
@@ -265,7 +265,7 @@ service DocumentService {
   }
 
   rpc RevokeDocumentShare(RevokeDocumentShareRequest) returns (RevokeDocumentShareResponse) {
-    option (google.api.http) = {delete: "/api/v1/documents/{document_id}/share/{share_id}"};
+    option (google.api.http) = {delete: "/api/v1/document-shares/{share_id}"};
   }
 
   // Document Search
@@ -280,12 +280,12 @@ service DocumentService {
 
   // Document Compliance
   rpc GetDocumentRetentionStatus(GetDocumentRetentionStatusRequest) returns (GetDocumentRetentionStatusResponse) {
-    option (google.api.http) = {get: "/api/v1/documents/{document_id}/retention-status"};
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/document-retention-status"};
   }
 
   rpc ApplyRetentionPolicy(ApplyRetentionPolicyRequest) returns (ApplyRetentionPolicyResponse) {
     option (google.api.http) = {
-      post: "/api/v1/documents/{document_id}/apply-retention-policy"
+      post: "/api/v1/organizations/{organization_id}/apply-retention-policy"
       body: "*"
     };
   }

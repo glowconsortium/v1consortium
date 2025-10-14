@@ -3,10 +3,14 @@ package auth
 import (
 	"context"
 	v1 "v1consortium/api/auth/v1"
+	"v1consortium/internal/service"
 
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Controller struct {
@@ -18,6 +22,44 @@ func Register(s *grpcx.GrpcServer) {
 }
 
 func (*Controller) Login(ctx context.Context, req *v1.LoginRequest) (res *v1.LoginResponse, err error) {
+	//return nil, gerror.NewCode(gcode.CodeNotImplemented)
+
+	reqinct := g.RequestFromCtx(ctx)
+
+	if reqinct == nil {
+		return nil, gerror.NewCode(gcode.CodeInternalError, "request not found in context")
+	}
+
+	useragent := reqinct.UserAgent()
+	ipaddress := reqinct.GetClientIp()
+
+	resp, err := service.Auth().Login(ctx, req.Email, req.Password, ipaddress, useragent)
+	if err != nil {
+		return nil, err
+	}
+
+	//reqinct.Cookie.SetCookie("session_id", resp.Session.SessionID, "", "/", time.Duration(3600)*time.Second)
+
+	// Update context with session and organization information
+	ctx = service.BizCtx().SetCurrentSessionID(ctx, resp.Session.SessionID)
+	ctx = service.BizCtx().SetCurrentOrganizationID(ctx, resp.User.OrganizationId)
+
+	return &v1.LoginResponse{
+		AccessToken:  resp.Session.AccessToken,
+		RefreshToken: resp.Session.RefreshToken,
+		User: &v1.UserSession{
+			UserId:         resp.User.Id,
+			Email:          resp.User.Email,
+			FirstName:      resp.User.FirstName,
+			LastName:       resp.User.LastName,
+			OrganizationId: resp.User.OrganizationId,
+			LastLogin:      timestamppb.New(gtime.Now().Time),
+		},
+		SessionId: resp.Session.SessionID,
+	}, nil
+}
+
+func (*Controller) RegisterUser(ctx context.Context, req *v1.RegisterRequest) (res *v1.RegisterResponse, err error) {
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }
 
@@ -58,7 +100,22 @@ func (*Controller) DisableMFA(ctx context.Context, req *v1.DisableMFARequest) (r
 }
 
 func (*Controller) GetUser(ctx context.Context, req *v1.GetUserRequest) (res *v1.GetUserResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	session := service.SessionManager().GetSessionInfo(ctx)
+	resp, err := service.Auth().GetUserInfo(ctx, session["access_token"].(string))
+	if err != nil {
+		g.Log().Errorf(ctx, "Failed to get user info: %v", err)
+		return nil, err
+	}
+	return &v1.GetUserResponse{
+		User: &v1.UserSession{
+			UserId:         resp.Id,
+			Email:          resp.Email,
+			FirstName:      resp.FirstName,
+			LastName:       resp.LastName,
+			OrganizationId: resp.OrganizationId,
+			Role:           resp.Role,
+		},
+	}, nil
 }
 
 func (*Controller) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (res *v1.UpdateUserResponse, err error) {
@@ -130,9 +187,5 @@ func (*Controller) RevokeToken(ctx context.Context, req *v1.RevokeTokenRequest) 
 }
 
 func (*Controller) CleanupExpiredTokens(ctx context.Context, req *v1.CleanupExpiredTokensRequest) (res *v1.CleanupExpiredTokensResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
-}
-
-func (*Controller) RegisterUser(ctx context.Context, req *v1.RegisterRequest) (res *v1.RegisterResponse, err error) {
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }

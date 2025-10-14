@@ -2080,7 +2080,7 @@ var File_services_v1_organization_proto protoreflect.FileDescriptor
 
 const file_services_v1_organization_proto_rawDesc = "" +
 	"\n" +
-	"\x1eservices/v1/organization.proto\x12\x15v1consortium.services\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1cpbentity/organizations.proto\x1a\x1cpbentity/user_profiles.proto\x1a)pbentity/organization_subscriptions.proto\x1a!pbentity/subscription_plans.proto\"\xeb\x03\n" +
+	"\x1eservices/v1/organization.proto\x12\x15v1consortium.services\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a)pbentity/organization_subscriptions.proto\x1a\x1cpbentity/organizations.proto\x1a!pbentity/subscription_plans.proto\x1a\x1cpbentity/user_profiles.proto\"\xeb\x03\n" +
 	"\x19CreateOrganizationRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12!\n" +
@@ -2274,7 +2274,7 @@ const file_services_v1_organization_proto_rawDesc = "" +
 	"\x12CreateSubscription\x120.v1consortium.services.CreateSubscriptionRequest\x1a1.v1consortium.services.CreateSubscriptionResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/api/v1/organizations/{organization_id}/subscriptions\x12\xaf\x01\n" +
 	"\x0fGetSubscription\x12-.v1consortium.services.GetSubscriptionRequest\x1a..v1consortium.services.GetSubscriptionResponse\"=\x82\xd3\xe4\x93\x027\x125/api/v1/organizations/{organization_id}/subscriptions\x12\xad\x01\n" +
 	"\x12UpdateSubscription\x120.v1consortium.services.UpdateSubscriptionRequest\x1a1.v1consortium.services.UpdateSubscriptionResponse\"2\x82\xd3\xe4\x93\x02,:\x01*\x1a'/api/v1/subscriptions/{subscription_id}\x12\xa6\x01\n" +
-	"\x15ListSubscriptionPlans\x123.v1consortium.services.ListSubscriptionPlansRequest\x1a4.v1consortium.services.ListSubscriptionPlansResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/subscription-plansB\rZ\vservices/v1b\x06proto3"
+	"\x15ListSubscriptionPlans\x123.v1consortium.services.ListSubscriptionPlansRequest\x1a4.v1consortium.services.ListSubscriptionPlansResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/subscription-plansB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_organization_proto_rawDescOnce sync.Once

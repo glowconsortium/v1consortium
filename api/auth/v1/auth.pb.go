@@ -91,6 +91,7 @@ type LoginResponse struct {
 	RefreshToken  string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
 	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	User          *UserSession           `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
+	SessionId     string                 `protobuf:"bytes,5,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -151,6 +152,13 @@ func (x *LoginResponse) GetUser() *UserSession {
 		return x.User
 	}
 	return nil
+}
+
+func (x *LoginResponse) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
 }
 
 type RegisterRequest struct {
@@ -1724,18 +1732,20 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\x11v1consortium.auth\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15google/api/http.proto\x1a\x1cgoogle/api/annotations.proto\"a\n" +
+	"\x12auth/v1/auth.proto\x12\x11v1consortium.auth\x1a\x1cgoogle/api/annotations.proto\x1a\x15google/api/http.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"a\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\vremember_me\x18\x03 \x01(\bR\n" +
-	"rememberMe\"\xc6\x01\n" +
+	"rememberMe\"\xe5\x01\n" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x129\n" +
 	"\n" +
 	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x122\n" +
-	"\x04user\x18\x04 \x01(\v2\x1e.v1consortium.auth.UserSessionR\x04user\"\xe7\x01\n" +
+	"\x04user\x18\x04 \x01(\v2\x1e.v1consortium.auth.UserSessionR\x04user\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x05 \x01(\tR\tsessionId\"\xe7\x01\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1d\n" +
@@ -1857,7 +1867,7 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
 	"UpdateUser\x12$.v1consortium.auth.UpdateUserRequest\x1a%.v1consortium.auth.UpdateUserResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/v1/auth/users/{user_id}\x12\x92\x01\n" +
 	"\x0fCheckPermission\x12).v1consortium.auth.CheckPermissionRequest\x1a*.v1consortium.auth.CheckPermissionResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v1/auth/check-permission\x12\xa3\x01\n" +
-	"\x12GetUserPermissions\x12,.v1consortium.auth.GetUserPermissionsRequest\x1a-.v1consortium.auth.GetUserPermissionsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/auth/users/{user_id}/permissionsB\tZ\aauth/v1b\x06proto3"
+	"\x12GetUserPermissions\x12,.v1consortium.auth.GetUserPermissionsRequest\x1a-.v1consortium.auth.GetUserPermissionsResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/auth/users/{user_id}/permissionsB\x1aZ\x18v1consortium/api/auth/v1b\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once

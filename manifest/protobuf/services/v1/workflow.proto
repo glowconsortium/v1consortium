@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/temporal_workflows.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Workflow Management Messages
 message StartWorkflowRequest {
@@ -269,7 +269,7 @@ service WorkflowService {
   // Specific Workflow Types
   rpc StartDrugTestOrderWorkflow(StartDrugTestOrderWorkflowRequest) returns (StartDrugTestOrderWorkflowResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/workflows/drug-test-order"
+      post: "/api/v1/workflows/drug-test-order"
       body: "*"
     };
   }
@@ -283,21 +283,21 @@ service WorkflowService {
 
   rpc StartRandomSelectionWorkflow(StartRandomSelectionWorkflowRequest) returns (StartRandomSelectionWorkflowResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/workflows/random-selection"
+      post: "/api/v1/workflows/random-selection"
       body: "*"
     };
   }
 
   rpc StartBackgroundCheckWorkflow(StartBackgroundCheckWorkflowRequest) returns (StartBackgroundCheckWorkflowResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/workflows/background-check"
+      post: "/api/v1/workflows/background-check"
       body: "*"
     };
   }
 
   rpc StartNotificationWorkflow(StartNotificationWorkflowRequest) returns (StartNotificationWorkflowResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/workflows/notification"
+      post: "/api/v1/workflows/notification"
       body: "*"
     };
   }

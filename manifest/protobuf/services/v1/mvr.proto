@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 import "pbentity/mvr_reports.proto";
 import "pbentity/mvr_violations.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // MVR Management Messages
 message OrderMVRRequest {
@@ -204,7 +204,7 @@ service MVRService {
   // MVR Violation Management
   rpc AddMVRViolation(AddMVRViolationRequest) returns (AddMVRViolationResponse) {
     option (google.api.http) = {
-      post: "/api/v1/mvr-reports/{report_id}/violations"
+      post: "/api/v1/mvr-reports/{mvr_report_id}/violations"
       body: "*"
     };
   }
@@ -217,7 +217,7 @@ service MVRService {
   }
 
   rpc ListMVRViolations(ListMVRViolationsRequest) returns (ListMVRViolationsResponse) {
-    option (google.api.http) = {get: "/api/v1/mvr-reports/{report_id}/violations"};
+    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-violations"};
   }
 
   // Continuous Monitoring
@@ -229,7 +229,7 @@ service MVRService {
   }
 
   rpc GetMonitoringStatus(GetMonitoringStatusRequest) returns (GetMonitoringStatusResponse) {
-    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/mvr-monitoring"};
+    option (google.api.http) = {get: "/api/v1/users/{user_id}/mvr-monitoring-status"};
   }
 
   // Analytics and Reporting
@@ -240,7 +240,7 @@ service MVRService {
   // Provider Integration
   rpc SyncProviderData(SyncProviderDataRequest) returns (SyncProviderDataResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/mvr-sync"
+      post: "/api/v1/mvr-provider-sync"
       body: "*"
     };
   }

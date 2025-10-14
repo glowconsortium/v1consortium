@@ -2122,8 +2122,7 @@ const file_gateway_v1_monitoring_proto_rawDesc = "" +
 	"\vRecordError\x12(.v1consortium.gateway.RecordErrorRequest\x1a).v1consortium.gateway.RecordErrorResponse\x12h\n" +
 	"\rGetErrorStats\x12*.v1consortium.gateway.GetErrorStatsRequest\x1a+.v1consortium.gateway.GetErrorStatsResponse\x12z\n" +
 	"\x13GetPerformanceStats\x120.v1consortium.gateway.GetPerformanceStatsRequest\x1a1.v1consortium.gateway.GetPerformanceStatsResponse\x12t\n" +
-	"\x11GetRateLimitStats\x12..v1consortium.gateway.GetRateLimitStatsRequest\x1a/.v1consortium.gateway.GetRateLimitStatsResponseB\fZ\n" +
-	"gateway/v1b\x06proto3"
+	"\x11GetRateLimitStats\x12..v1consortium.gateway.GetRateLimitStatsRequest\x1a/.v1consortium.gateway.GetRateLimitStatsResponseB\x1dZ\x1bv1consortium/api/gateway/v1b\x06proto3"
 
 var (
 	file_gateway_v1_monitoring_proto_rawDescOnce sync.Once

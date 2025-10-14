@@ -2331,7 +2331,7 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"\x1daverage_completion_time_hours\x18\t \x01(\x02R\x1aaverageCompletionTimeHours\x12\x1d\n" +
 	"\n" +
 	"total_cost\x18\n" +
-	" \x01(\x02R\ttotalCost2\xeb\x13\n" +
+	" \x01(\x02R\ttotalCost2\x94\x13\n" +
 	"\x16BackgroundCheckService\x12\xc5\x01\n" +
 	"\x14OrderBackgroundCheck\x122.v1consortium.services.OrderBackgroundCheckRequest\x1a3.v1consortium.services.OrderBackgroundCheckResponse\"D\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v1/organizations/{organization_id}/background-checks\x12\xb2\x01\n" +
 	"\x12GetBackgroundCheck\x120.v1consortium.services.GetBackgroundCheckRequest\x1a1.v1consortium.services.GetBackgroundCheckResponse\"7\x82\xd3\xe4\x93\x021\x12//api/v1/background-checks/{background_check_id}\x12\xbe\x01\n" +
@@ -2341,12 +2341,12 @@ const file_services_v1_background_check_proto_rawDesc = "" +
 	"AddFinding\x12(.v1consortium.services.AddFindingRequest\x1a).v1consortium.services.AddFindingResponse\"C\x82\xd3\xe4\x93\x02=:\x01*\"8/api/v1/background-checks/{background_check_id}/findings\x12\xa5\x01\n" +
 	"\rUpdateFinding\x12+.v1consortium.services.UpdateFindingRequest\x1a,.v1consortium.services.UpdateFindingResponse\"9\x82\xd3\xe4\x93\x023:\x01*\x1a./api/v1/background-check-findings/{finding_id}\x12\xa9\x01\n" +
 	"\fListFindings\x12*.v1consortium.services.ListFindingsRequest\x1a+.v1consortium.services.ListFindingsResponse\"@\x82\xd3\xe4\x93\x02:\x128/api/v1/background-checks/{background_check_id}/findings\x12\xcd\x01\n" +
-	"\x15InitiateAdverseAction\x123.v1consortium.services.InitiateAdverseActionRequest\x1a4.v1consortium.services.InitiateAdverseActionResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/background-checks/{background_check_id}/adverse-action\x12\xae\x01\n" +
-	"\rHandleDispute\x12+.v1consortium.services.HandleDisputeRequest\x1a,.v1consortium.services.HandleDisputeResponse\"B\x82\xd3\xe4\x93\x02<:\x01*\"7/api/v1/background-checks/{background_check_id}/dispute\x12\xd4\x01\n" +
-	"\x16GetAdverseActionStatus\x124.v1consortium.services.GetAdverseActionStatusRequest\x1a5.v1consortium.services.GetAdverseActionStatusResponse\"M\x82\xd3\xe4\x93\x02G\x12E/api/v1/background-checks/{background_check_id}/adverse-action-status\x12\xca\x01\n" +
-	"\x14GetAvailablePackages\x122.v1consortium.services.GetAvailablePackagesRequest\x1a3.v1consortium.services.GetAvailablePackagesResponse\"I\x82\xd3\xe4\x93\x02C\x12A/api/v1/organizations/{organization_id}/background-check-packages\x12\xc8\x01\n" +
-	"\x11GetProviderStatus\x12/.v1consortium.services.GetProviderStatusRequest\x1a0.v1consortium.services.GetProviderStatusResponse\"P\x82\xd3\xe4\x93\x02J\x12H/api/v1/organizations/{organization_id}/background-check-provider-status\x12\xe0\x01\n" +
-	"\x1bGetBackgroundCheckAnalytics\x129.v1consortium.services.GetBackgroundCheckAnalyticsRequest\x1a:.v1consortium.services.GetBackgroundCheckAnalyticsResponse\"J\x82\xd3\xe4\x93\x02D\x12B/api/v1/organizations/{organization_id}/background-check-analyticsB\rZ\vservices/v1b\x06proto3"
+	"\x15InitiateAdverseAction\x123.v1consortium.services.InitiateAdverseActionRequest\x1a4.v1consortium.services.InitiateAdverseActionResponse\"I\x82\xd3\xe4\x93\x02C:\x01*\">/api/v1/background-checks/{background_check_id}/adverse-action\x12\xaa\x01\n" +
+	"\rHandleDispute\x12+.v1consortium.services.HandleDisputeRequest\x1a,.v1consortium.services.HandleDisputeResponse\">\x82\xd3\xe4\x93\x028:\x01*\"3/api/v1/adverse-actions/{adverse_action_id}/dispute\x12\xc1\x01\n" +
+	"\x16GetAdverseActionStatus\x124.v1consortium.services.GetAdverseActionStatusRequest\x1a5.v1consortium.services.GetAdverseActionStatusResponse\":\x82\xd3\xe4\x93\x024\x122/api/v1/adverse-actions/{adverse_action_id}/status\x12\xaa\x01\n" +
+	"\x14GetAvailablePackages\x122.v1consortium.services.GetAvailablePackagesRequest\x1a3.v1consortium.services.GetAvailablePackagesResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/background-check-packages\x12\xa8\x01\n" +
+	"\x11GetProviderStatus\x12/.v1consortium.services.GetProviderStatusRequest\x1a0.v1consortium.services.GetProviderStatusResponse\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/background-check-provider-status\x12\xe0\x01\n" +
+	"\x1bGetBackgroundCheckAnalytics\x129.v1consortium.services.GetBackgroundCheckAnalyticsRequest\x1a:.v1consortium.services.GetBackgroundCheckAnalyticsResponse\"J\x82\xd3\xe4\x93\x02D\x12B/api/v1/organizations/{organization_id}/background-check-analyticsB\x1eZ\x1cv1consortium/api/services/v1b\x06proto3"
 
 var (
 	file_services_v1_background_check_proto_rawDescOnce sync.Once
