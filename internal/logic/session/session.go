@@ -275,6 +275,7 @@ func (s *sSessionManager) GetSessionInfo(ctx context.Context) map[string]interfa
 	info := make(map[string]interface{})
 
 	if request == nil || request.Session == nil {
+		g.Log().Warningf(ctx, "Request or session not found")
 		return info
 	}
 

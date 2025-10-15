@@ -23,8 +23,9 @@ type CreateSessionResponse struct {
 }
 
 type LoginResponse struct {
-	Session *CreateSessionResponse `json:"session"`
-	User    *entity.UserProfiles   `json:"user"`
+	Session   *CreateSessionResponse `json:"session"`
+	User      *entity.UserProfiles   `json:"user"`
+	ExpiresAt time.Time              `json:"expires_at"`
 }
 
 // ValidateSessionRequest represents the request to validate a session

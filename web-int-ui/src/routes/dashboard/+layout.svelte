@@ -4,7 +4,8 @@
 	import { authStore } from '@movsm/v1-consortium-web-pkg';
 	import { Header, Sidebar, type SidebarItem } from '@movsm/v1-consortium-web-pkg';
 	import { Spinner } from '@movsm/v1-consortium-web-pkg';
-
+	
+	import type { HeaderUser } from '@movsm/v1-consortium-web-pkg';
 	let { children } = $props();
 
 		let sidebarItems: SidebarItem[] = [
@@ -48,6 +49,22 @@
 		}
 	];
 
+	async function handleLogout() {
+		await authStore.logout();
+		goto('/auth/signin');
+	}
+
+	let headerUser = $derived((): HeaderUser | null => {
+		const user = $authStore.user;
+		if (user) {
+			return {
+				name: user.firstName || user.email,
+				email: user.email,
+			};
+		}
+		return null;
+	});
+
 	// Load onboarding state when component mounts
 	// onMount(async () => {
 	// 	await onboardingStore.loadOnboardingState();
@@ -79,9 +96,9 @@
 	</div>
 {:else if showContent}
 	<div class="flex h-screen overflow-hidden bg-surface-50-900-token">
-		<Sidebar />
+		<Sidebar sidebarItems={sidebarItems} />
 		<div class="flex-1 flex flex-col overflow-hidden">
-			<Header />
+			<Header handleLogout={handleLogout} authUser={headerUser() as HeaderUser} />
 			<main class="flex-1 overflow-auto p-4">
 				<div class="container mx-auto">
 					{@render children()}

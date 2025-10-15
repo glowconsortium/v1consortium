@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"connectrpc.com/connect"
@@ -70,13 +69,12 @@ func runCombinedServer(ctx context.Context) error {
 
 // setupRoutes configures all HTTP routes using GoFrame server
 func setupRoutes(s *ghttp.Server, cfg *config.Config, transcoder *vanguard.Transcoder) {
-	// Add CORS middleware at the HTTP level
+	// Add CORS middleware using GoFrame's native CORS handling
 	s.Use(corsMiddleware(cfg))
 
 	// Health check endpoint
 	s.BindHandler("/health", func(r *ghttp.Request) {
 		r.Response.Header().Set("Content-Type", "application/json")
-		r.Response.Header().Set("Access-Control-Allow-Origin", "*")
 		r.Response.WriteStatus(http.StatusOK)
 		response := fmt.Sprintf(
 			`{"status":"healthy","service":"v1-consortium-server","timestamp":"%s","protocols":["http","grpc","grpc-web","connect"],"version":"1.0.0"}`,
@@ -96,49 +94,45 @@ func setupRoutes(s *ghttp.Server, cfg *config.Config, transcoder *vanguard.Trans
 	log.Println("✅ Routes configured successfully")
 }
 
-// corsMiddleware handles CORS at the HTTP level before Connect interceptors
+// corsMiddleware uses GoFrame's native CORS handling
 func corsMiddleware(cfg *config.Config) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
-		origin := r.Header.Get("Origin")
+		// Convert config to GoFrame CORSOptions
+		corsOptions := r.Response.DefaultCORSOptions()
 
-		// Set CORS headers for all requests
-		if origin != "" {
-			// Check if origin is allowed
-			allowed := false
-			for _, allowedOrigin := range cfg.CORS.AllowedOrigins {
-				if allowedOrigin == "*" || allowedOrigin == origin {
-					allowed = true
-					break
-				}
-			}
-
-			if allowed {
-				r.Response.Header().Set("Access-Control-Allow-Origin", origin)
-			}
-		} else if len(cfg.CORS.AllowedOrigins) > 0 && cfg.CORS.AllowedOrigins[0] == "*" {
-			r.Response.Header().Set("Access-Control-Allow-Origin", "*")
-		}
-
-		r.Response.Header().Set("Access-Control-Allow-Methods", strings.Join(cfg.CORS.AllowedMethods, ", "))
-		r.Response.Header().Set("Access-Control-Allow-Headers", strings.Join(cfg.CORS.AllowedHeaders, ", "))
-
+		// Handle credentials and origin logic
 		if cfg.CORS.AllowCredentials {
-			r.Response.Header().Set("Access-Control-Allow-Credentials", "true")
+			// When credentials are allowed, we cannot use wildcard "*"
+			// We must use specific domains
+			if len(cfg.CORS.AllowDomain) > 0 {
+				corsOptions.AllowDomain = cfg.CORS.AllowDomain
+			} else {
+				// Use the specific origin from config
+				corsOptions.AllowOrigin = cfg.CORS.AllowOrigin
+			}
+			corsOptions.AllowCredentials = "true"
+		} else {
+			// When credentials are not allowed, we can use wildcard or specific domains
+			if len(cfg.CORS.AllowDomain) > 0 {
+				corsOptions.AllowDomain = cfg.CORS.AllowDomain
+			} else {
+				corsOptions.AllowOrigin = cfg.CORS.AllowOrigin
+			}
+			corsOptions.AllowCredentials = "false"
 		}
 
-		// Handle preflight requests
-		if r.Method == "OPTIONS" {
-			r.Response.Header().Set("Access-Control-Max-Age", "86400") // 24 hours
-			r.Response.WriteStatus(http.StatusOK)
-			return // Don't continue to next handler
-		}
+		corsOptions.ExposeHeaders = cfg.CORS.ExposeHeaders
+		corsOptions.MaxAge = cfg.CORS.MaxAge
+		corsOptions.AllowMethods = cfg.CORS.AllowMethods
+		corsOptions.AllowHeaders = cfg.CORS.AllowHeaders
+
+		// Apply CORS
+		r.Response.CORS(corsOptions)
 
 		// Continue to next handler
 		r.Middleware.Next()
 	}
-}
-
-// setupSwaggerRoutes configures OpenAPI/Swagger documentation routes
+} // setupSwaggerRoutes configures OpenAPI/Swagger documentation routes
 func setupSwaggerRoutes(s *ghttp.Server, cfg *config.Config) {
 	// Find swagger file
 	swaggerPath := findSwaggerFile()
@@ -158,7 +152,6 @@ func setupSwaggerRoutes(s *ghttp.Server, cfg *config.Config) {
 	// Swagger JSON endpoints
 	s.BindHandler("/swagger.json", func(r *ghttp.Request) {
 		r.Response.Header().Set("Content-Type", "application/json")
-		r.Response.Header().Set("Access-Control-Allow-Origin", "*")
 
 		data, err := os.ReadFile(swaggerPath)
 		if err != nil {
@@ -378,16 +371,6 @@ func buildInterceptorChain(cfg *config.Config) []connect.Interceptor {
 	} else {
 		log.Println("⚠️  Authentication disabled (development mode)")
 	}
-
-	// Remove CORS interceptor from Connect chain since we handle it at HTTP level
-	// if cfg.Interceptors.CORSEnabled {
-	//     interceptorChain = append(interceptorChain, interceptors.CORSInterceptor(interceptors.CORSConfig{
-	//         AllowedOrigins:   cfg.CORS.AllowedOrigins,
-	//         AllowedHeaders:   cfg.CORS.AllowedHeaders,
-	//         AllowCredentials: cfg.CORS.AllowCredentials,
-	//     }))
-	//     log.Println("✅ CORS interceptor enabled")
-	// }
 
 	return interceptorChain
 }

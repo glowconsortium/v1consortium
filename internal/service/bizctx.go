@@ -7,11 +7,15 @@ package service
 
 import (
 	"context"
+
+	"github.com/supabase-community/gotrue-go/types"
 )
 
 type (
 	IBizCtx interface {
 		Init(ctx context.Context) error
+		SetSupabaseUser(ctx context.Context, userInfo *types.UserResponse) context.Context
+		GetSupabaseUser(ctx context.Context) (*types.UserResponse, error)
 		SetCurrentSessionID(ctx context.Context, sessionID string) context.Context
 		SetCurrentOrganizationID(ctx context.Context, organizationID string) context.Context
 		GetCurrentOrganizationID(ctx context.Context) (string, error)

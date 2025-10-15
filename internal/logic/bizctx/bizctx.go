@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 	"v1consortium/internal/service"
+
+	"github.com/supabase-community/gotrue-go/types"
 )
 
 const (
 	SessionIDKey      bizctxKey = "session_id"
 	OrganizationIDKey bizctxKey = "organization_id"
+	SupabaseUser      bizctxKey = "supabase_user" // holds the Supabase user info map
 )
 
 type bizctxKey string
@@ -28,6 +31,19 @@ func init() {
 
 func (s *sBizCtx) Init(ctx context.Context) error {
 	return nil
+}
+
+func (s *sBizCtx) SetSupabaseUser(ctx context.Context, userInfo *types.UserResponse) context.Context {
+	return context.WithValue(ctx, SupabaseUser, userInfo)
+}
+
+func (s *sBizCtx) GetSupabaseUser(ctx context.Context) (*types.UserResponse, error) {
+	if value := ctx.Value(SupabaseUser); value != nil {
+		if userInfo, ok := value.(*types.UserResponse); ok {
+			return userInfo, nil
+		}
+	}
+	return nil, fmt.Errorf("supabase user info not found in context")
 }
 
 func (s *sBizCtx) SetCurrentSessionID(ctx context.Context, sessionID string) context.Context {

@@ -28,9 +28,9 @@
 							Start Annual Subscription
 						</Button>
 					</a>
-					<a href="/pricing">
+					<a href="/auth/signin">
 						<Button variant="outline" size="lg">
-							View Pricing
+							Sign In
 						</Button>
 					</a>
 				</div>

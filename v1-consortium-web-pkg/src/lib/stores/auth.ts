@@ -47,12 +47,18 @@ const _authStore = writable<AuthState>(initialState);
 function createAuthStore() {
     const { subscribe, set, update } = _authStore;
     let checkUserInterval: NodeJS.Timeout | null = null;
+    let tokenRefreshInterval: NodeJS.Timeout | null = null;
 
     // Sync local state with API client state
     const syncWithApiClient = async () => {
         try {
             const apiState = apiClient.getAuthState();
-            const currentUser = await apiClient.getCurrentUser(apiState.user?.userId || '');
+            
+            // Get user from cache first, then try to fetch if needed
+            let currentUser = apiState.user;
+            if (!currentUser && apiState.isAuthenticated) {
+                currentUser = await apiClient.getCurrentUser();
+            }
             
             update((state: AuthState) => ({
                 ...state,
@@ -71,6 +77,30 @@ function createAuthStore() {
         }
     };
 
+    // Set up automatic token refresh
+    const setupTokenRefresh = () => {
+        if (tokenRefreshInterval) {
+            clearInterval(tokenRefreshInterval);
+        }
+
+        tokenRefreshInterval = setInterval(async () => {
+            const apiState = apiClient.getAuthState();
+            if (apiState.isAuthenticated && apiClient.isTokenExpired()) {
+                try {
+                    const refreshed = await apiClient.refreshAccessToken();
+                    if (refreshed) {
+                        await syncWithApiClient();
+                    } else {
+                        await store.logout();
+                    }
+                } catch (error) {
+                    console.error('Automatic token refresh failed:', error);
+                    await store.logout();
+                }
+            }
+        }, 60000); // Check every minute
+    };
+
     const store = {
         subscribe,
         
@@ -85,7 +115,7 @@ function createAuthStore() {
                 const transport = createApiTransport(config.baseUrl, () => apiClient.getToken());
                 
                 // Initialize API client
-                apiClient.initialize(transport);
+                apiClient.initialize(transport, config.baseUrl);
                 
                 // Sync initial state
                 await syncWithApiClient();
@@ -97,6 +127,9 @@ function createAuthStore() {
                 checkUserInterval = setInterval(() => {
                     syncWithApiClient();
                 }, 30000); // Check every 30 seconds
+
+                // Set up automatic token refresh
+                setupTokenRefresh();
                 
             } catch (error) {
                 console.error('Failed to initialize auth state:', error);
@@ -123,6 +156,9 @@ function createAuthStore() {
                 // Sync state after successful login
                 await syncWithApiClient();
                 
+                // Restart token refresh monitoring
+                setupTokenRefresh();
+                
                 return response;
             } catch (error: any) {
                 const errorMessage = error.message || 'Login failed';
@@ -146,6 +182,12 @@ function createAuthStore() {
 
             try {
                 await apiClient.logout();
+                
+                // Clear intervals
+                if (tokenRefreshInterval) {
+                    clearInterval(tokenRefreshInterval);
+                    tokenRefreshInterval = null;
+                }
                 
                 // Clear local state
                 update((state: AuthState) => ({
@@ -224,7 +266,7 @@ function createAuthStore() {
 
         // Get current user
         async getCurrentUser(): Promise<UserSession | null> {
-            return await apiClient.getCurrentUser(apiClient.getAuthState().user?.userId || '');
+            return await apiClient.getCurrentUser();
         },
 
         // Clear error
@@ -237,6 +279,10 @@ function createAuthStore() {
             if (checkUserInterval) {
                 clearInterval(checkUserInterval);
                 checkUserInterval = null;
+            }
+            if (tokenRefreshInterval) {
+                clearInterval(tokenRefreshInterval);
+                tokenRefreshInterval = null;
             }
         }
     };

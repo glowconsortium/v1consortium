@@ -56,6 +56,7 @@ func (*Controller) Login(ctx context.Context, req *v1.LoginRequest) (res *v1.Log
 			LastLogin:      timestamppb.New(gtime.Now().Time),
 		},
 		SessionId: resp.Session.SessionID,
+		ExpiresAt: timestamppb.New(resp.ExpiresAt),
 	}, nil
 }
 
@@ -100,8 +101,19 @@ func (*Controller) DisableMFA(ctx context.Context, req *v1.DisableMFARequest) (r
 }
 
 func (*Controller) GetUser(ctx context.Context, req *v1.GetUserRequest) (res *v1.GetUserResponse, err error) {
-	session := service.SessionManager().GetSessionInfo(ctx)
-	resp, err := service.Auth().GetUserInfo(ctx, session["access_token"].(string))
+	//session := service.SessionManager().GetSessionInfo(ctx)
+
+	// if session == nil || session["access_token"] == nil {
+	// 	return nil, gerror.NewCode(gcode.CodeNotAuthorized, "no valid session found")
+	// }
+	//resp, err := service.Auth().GetUserInfo(ctx, session["access_token"].(string))
+
+	user, err := service.BizCtx().GetSupabaseUser(ctx)
+	if err != nil {
+		return nil, gerror.NewCode(gcode.CodeNotAuthorized, "no valid user info found in context")
+	}
+
+	resp, err := service.Auth().GetUserProfileByEmail(ctx, user.User.Email)
 	if err != nil {
 		g.Log().Errorf(ctx, "Failed to get user info: %v", err)
 		return nil, err

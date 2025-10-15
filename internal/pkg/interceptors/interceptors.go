@@ -11,7 +11,7 @@ import (
 	"v1consortium/internal/service"
 
 	"connectrpc.com/connect"
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // LoggingInterceptor logs Connect RPC calls with detailed information
@@ -115,51 +115,63 @@ func AuthInterceptor(config JWTConfig) connect.UnaryInterceptorFunc {
 
 			tokenString := parts[1]
 
-			// Parse and validate token
-			token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-				// Validate signing method
-				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-					return nil, connect.NewError(
-						connect.CodeUnauthenticated,
-						fmt.Errorf("invalid token signing method"),
-					)
-				}
-				return config.SecretKey, nil
-			})
-
-			if err != nil || !token.Valid {
+			user, err := service.SupabaseService().GetUserFromToken(ctx, tokenString)
+			if err != nil {
 				return nil, connect.NewError(
 					connect.CodeUnauthenticated,
 					fmt.Errorf("invalid token: %w", err),
 				)
 			}
 
-			// Extract claims
-			claims, ok := token.Claims.(jwt.MapClaims)
-			if !ok {
-				return nil, connect.NewError(
-					connect.CodeUnauthenticated,
-					fmt.Errorf("invalid token claims"),
-				)
-			}
+			ctx = service.BizCtx().SetSupabaseUser(ctx, user)
 
-			// Check required role if specified
-			if config.RequiredRole != "" {
-				role, exists := claims["role"]
-				if !exists || role != config.RequiredRole {
-					return nil, connect.NewError(
-						connect.CodePermissionDenied,
-						fmt.Errorf("insufficient permissions"),
-					)
-				}
-			}
+			g.Log().Debugf(ctx, "Auth interceptor: authenticated user %s with email %s", user.User.ID, user.User.Email)
 
-			// Add user info to context for downstream handlers
-			ctx = context.WithValue(ctx, "user_id", claims["sub"])
-			ctx = context.WithValue(ctx, "user_email", claims["email"])
-			if role, exists := claims["role"]; exists {
-				ctx = context.WithValue(ctx, "user_role", role)
-			}
+			// // Parse and validate token
+			// token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			// 	// Validate signing method
+			// 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			// 		return nil, connect.NewError(
+			// 			connect.CodeUnauthenticated,
+			// 			fmt.Errorf("invalid token signing method"),
+			// 		)
+			// 	}
+			// 	return config.SecretKey, nil
+			// })
+
+			// if err != nil || !token.Valid {
+			// 	return nil, connect.NewError(
+			// 		connect.CodeUnauthenticated,
+			// 		fmt.Errorf("invalid token: %w", err),
+			// 	)
+			// }
+
+			// // Extract claims
+			// claims, ok := token.Claims.(jwt.MapClaims)
+			// if !ok {
+			// 	return nil, connect.NewError(
+			// 		connect.CodeUnauthenticated,
+			// 		fmt.Errorf("invalid token claims"),
+			// 	)
+			// }
+
+			// // Check required role if specified
+			// if config.RequiredRole != "" {
+			// 	role, exists := claims["role"]
+			// 	if !exists || role != config.RequiredRole {
+			// 		return nil, connect.NewError(
+			// 			connect.CodePermissionDenied,
+			// 			fmt.Errorf("insufficient permissions"),
+			// 		)
+			// 	}
+			// }
+
+			// // Add user info to context for downstream handlers
+			// ctx = context.WithValue(ctx, "user_id", claims["sub"])
+			// ctx = context.WithValue(ctx, "user_email", claims["email"])
+			// if role, exists := claims["role"]; exists {
+			// 	ctx = context.WithValue(ctx, "user_role", role)
+			// }
 
 			// Continue with authenticated context
 			return next(ctx, req)

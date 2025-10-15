@@ -35,12 +35,15 @@ type JWTConfig struct {
 	RequiredRole    string   `json:"requiredRole"`
 }
 
-// CORSConfig holds CORS configuration
+// CORSConfig holds CORS configuration - simplified to match GoFrame's CORSOptions
 type CORSConfig struct {
-	AllowedOrigins   []string `json:"allowedOrigins"`
-	AllowedMethods   []string `json:"allowedMethods"`
-	AllowedHeaders   []string `json:"allowedHeaders"`
-	AllowCredentials bool     `json:"allowCredentials"`
+	AllowDomain      []string `json:"allowDomain"`      // Allowed domains for cross-domain requests
+	AllowOrigin      string   `json:"allowOrigin"`      // Access-Control-Allow-Origin
+	AllowCredentials bool     `json:"allowCredentials"` // Access-Control-Allow-Credentials
+	ExposeHeaders    string   `json:"exposeHeaders"`    // Access-Control-Expose-Headers
+	MaxAge           int      `json:"maxAge"`           // Access-Control-Max-Age
+	AllowMethods     string   `json:"allowMethods"`     // Access-Control-Allow-Methods
+	AllowHeaders     string   `json:"allowHeaders"`     // Access-Control-Allow-Headers
 }
 
 // RateLimitConfig holds rate limiting configuration
@@ -105,18 +108,13 @@ func Load() *Config {
 		},
 
 		CORS: CORSConfig{
-			AllowedOrigins: getConfigStringSlice(ctx, "cors.allowedOrigins", []string{"*"}),
-			AllowedMethods: getConfigStringSlice(ctx, "cors.allowedMethods", []string{
-				"GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH",
-			}),
-			AllowedHeaders: getConfigStringSlice(ctx, "cors.allowedHeaders", []string{
-				"Accept", "Accept-Encoding", "Accept-Post", "Content-Encoding",
-				"Content-Length", "Content-Type", "Connect-Protocol-Version",
-				"Connect-Timeout-Ms", "Grpc-Timeout", "Grpc-Encoding",
-				"Grpc-Accept-Encoding", "User-Agent", "X-User-Agent",
-				"X-Grpc-Web", "Authorization",
-			}),
-			AllowCredentials: getConfigBool(ctx, "cors.allowCredentials", false),
+			AllowDomain:      getConfigStringSlice(ctx, "cors.allowDomain", []string{}),
+			AllowOrigin:      getConfigString(ctx, "cors.allowOrigin", "http://localhost:5173"),
+			AllowCredentials: getConfigBool(ctx, "cors.allowCredentials", true),
+			ExposeHeaders:    getConfigString(ctx, "cors.exposeHeaders", "X-Session-ID,X-Organization-ID,Set-Cookie,Authorization"),
+			MaxAge:           getConfigInt(ctx, "cors.maxAge", 86400),
+			AllowMethods:     getConfigString(ctx, "cors.allowMethods", "GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH"),
+			AllowHeaders:     getConfigString(ctx, "cors.allowHeaders", "Accept,Accept-Encoding,Accept-Post,Content-Encoding,Content-Length,Content-Type,Connect-Protocol-Version,Connect-Timeout-Ms,Grpc-Timeout,Grpc-Encoding,Grpc-Accept-Encoding,User-Agent,X-User-Agent,X-Grpc-Web,Authorization,X-Session-ID,X-Organization-ID,X-Requested-With,X-CSRF-Token,Cookie,Set-Cookie"),
 		},
 
 		RateLimit: RateLimitConfig{

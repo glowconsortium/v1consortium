@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"database/sql"
+	"time"
 	"v1consortium/internal/dao"
 	"v1consortium/internal/model"
 	"v1consortium/internal/model/do"
@@ -51,8 +52,9 @@ func (s *sAuth) Login(ctx context.Context, email, password, ipaddress, useragent
 	}
 
 	userssessionresponse := &model.LoginResponse{
-		Session: userssession,
-		User:    userprofile,
+		Session:   userssession,
+		User:      userprofile,
+		ExpiresAt: time.Unix(resp.ExpiresAt, 0),
 	}
 
 	return userssessionresponse, nil
