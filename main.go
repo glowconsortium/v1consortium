@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	err := cmd.Main.AddCommand(&cmd.Combined)
+	err := cmd.Main.AddCommand(&cmd.Combined, &cmd.DBOSWorker)
 	if err != nil {
 		panic(err)
 	}
