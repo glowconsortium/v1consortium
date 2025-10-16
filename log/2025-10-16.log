@@ -1,0 +1,68 @@
+2025-10-16T15:26:59.616-04:00 [INFO] {6e4353ef500f6f187a51a725c07ff9b3} V1 Consortium River Worker starting...
+2025-10-16T15:26:59.617-04:00 [FATA] {6e4353ef500f6f187a51a725c07ff9b3} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:28:50.679-04:00 [INFO] {4ff056cb6a0f6f18e89a3378dbf51f4b} V1 Consortium River Worker starting...
+2025-10-16T15:28:50.679-04:00 [FATA] {4ff056cb6a0f6f18e89a3378dbf51f4b} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:28:59.069-04:00 [INFO] {48b151bf6c0f6f184f9265293f026590} V1 Consortium River Worker starting...
+2025-10-16T15:28:59.070-04:00 [FATA] {48b151bf6c0f6f184f9265293f026590} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:29:42.018-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} V1 Consortium River Worker starting...
+2025-10-16T15:29:42.031-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} Database connection established
+2025-10-16T15:29:42.032-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} River components initialized
+2025-10-16T15:29:42.032-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} Workers registered successfully
+2025-10-16T15:29:42.064-04:00 [FATA] {eaeb42bf760f6f183dd6b5637a990213} Failed to start River client: ERROR: relation "river_queue" does not exist (SQLSTATE 42P01) 
+Stack:
+1.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:94
+2.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:40:55.587-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} V1 Consortium River Worker starting...
+2025-10-16T15:40:55.617-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Database connection established
+2025-10-16T15:40:55.618-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T15:40:55.618-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} River components initialized
+2025-10-16T15:40:55.619-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Workers registered successfully
+2025-10-16T15:40:55.650-04:00 [FATA] {70cb369313106f189d777d2c951b35c8} Failed to start River client: ERROR: relation "river_queue" does not exist (SQLSTATE 42P01) 
+Stack:
+1.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:84
+2.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:42:37.595-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} V1 Consortium River Worker starting...
+2025-10-16T15:42:37.607-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Database connection established
+2025-10-16T15:42:37.607-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T15:42:37.608-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River components initialized
+2025-10-16T15:42:37.608-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Workers registered successfully
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled stuck workflow monitor: 0 */5 * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled workflow cleanup: 0 0 3 * * * (retention: 30 days)
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled metrics collection: 0 */10 * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled health check: 0 * * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River background monitoring jobs configured successfully
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River worker ready and processing jobs
+2025-10-16T15:43:00.416-04:00 [DEBU] {94803f532b106f1898b89745133e9b2b} River worker health check - running
+2025-10-16T15:44:00.439-04:00 [DEBU] {94803f532b106f1898b89745133e9b2b} River worker health check - running
+2025-10-16T15:44:22.209-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Received signal interrupt, shutting down gracefully...
+2025-10-16T15:44:22.217-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River worker shutdown complete
