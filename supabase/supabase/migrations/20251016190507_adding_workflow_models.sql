@@ -16,7 +16,8 @@ CREATE TABLE workflow_executions (
     completed_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    
+
+    args_hash VARCHAR(64),
     -- Organization and user tracking
     org_id VARCHAR(255),
     user_id UUID REFERENCES auth.users(id),
@@ -45,6 +46,7 @@ CREATE TABLE workflow_steps (
     started_at TIMESTAMP WITH TIME ZONE,
     completed_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     
     -- Error handling
     error_message TEXT,
@@ -136,6 +138,11 @@ $$ language 'plpgsql';
 -- Add updated_at triggers
 CREATE TRIGGER update_workflow_executions_updated_at
     BEFORE UPDATE ON workflow_executions
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_workflow_steps_updated_at
+    BEFORE UPDATE ON workflow_steps
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
@@ -257,3 +264,18 @@ COMMENT ON TABLE workflow_steps IS 'Tracks individual job executions within work
 COMMENT ON TABLE workflow_templates IS 'Reusable workflow pattern definitions';
 COMMENT ON TABLE workflow_metrics IS 'Performance and analytics data for workflow executions';
 COMMENT ON VIEW workflow_summary IS 'Aggregated view of workflow execution progress and timing';
+
+
+
+-- Add args_hash column to workflow_executions table for duplicate prevention
+-- This migration should be run to support the workflow deduplication feature
+
+
+
+-- Create index for efficient duplicate checking
+CREATE INDEX IF NOT EXISTS idx_workflow_executions_dedup 
+ON workflow_executions(workflow_type, org_id, args_hash) 
+WHERE status IN ('pending', 'running');
+
+-- Add comment to document the purpose
+COMMENT ON COLUMN workflow_executions.args_hash IS 'SHA256 hash of job arguments for duplicate prevention';

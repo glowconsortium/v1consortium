@@ -319,9 +319,27 @@ importers:
 
   web-ui:
     dependencies:
+      '@bufbuild/buf':
+        specifier: ^1.56.0
+        version: 1.58.0
+      '@bufbuild/protobuf':
+        specifier: ^2.6.2
+        version: 2.9.0
+      '@bufbuild/protoc-gen-es':
+        specifier: ^2.6.2
+        version: 2.9.0(@bufbuild/protobuf@2.9.0)
+      '@connectrpc/connect':
+        specifier: ^2.0.3
+        version: 2.1.0(@bufbuild/protobuf@2.9.0)
+      '@connectrpc/connect-web':
+        specifier: ^2.0.3
+        version: 2.1.0(@bufbuild/protobuf@2.9.0)(@connectrpc/connect@2.1.0(@bufbuild/protobuf@2.9.0))
       '@inlang/paraglide-js':
         specifier: ^2.2.0
         version: 2.4.0
+      '@movsm/v1-consortium-web-pkg':
+        specifier: workspace:*
+        version: link:../v1-consortium-web-pkg
       axios:
         specifier: ^1.11.0
         version: 1.12.2

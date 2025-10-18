@@ -26,6 +26,8 @@ type (
 		UpdateUser(ctx context.Context, userID uuid.UUID, email *string, password *string, userMetadata map[string]interface{}) (*types.AdminUpdateUserResponse, error)
 		SignIn(ctx context.Context, email string, password string) (*types.TokenResponse, error)
 		SignUp(ctx context.Context, email string, password string, userMetadata map[string]interface{}) (*types.SignupResponse, error)
+		// social signup
+		SignUpWithProvider(ctx context.Context, provider string, redirectTo string, scopes string) (*types.AuthorizeResponse, error)
 		RefreshToken(ctx context.Context, refreshToken string) (*types.TokenResponse, error)
 		SignOut(ctx context.Context, accessToken string) error
 		GetUserFromToken(ctx context.Context, accessToken string) (*types.UserResponse, error)

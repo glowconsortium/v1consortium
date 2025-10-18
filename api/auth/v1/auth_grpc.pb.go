@@ -20,21 +20,25 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Login_FullMethodName              = "/v1consortium.auth.AuthService/Login"
-	AuthService_RegisterUser_FullMethodName       = "/v1consortium.auth.AuthService/RegisterUser"
-	AuthService_RefreshToken_FullMethodName       = "/v1consortium.auth.AuthService/RefreshToken"
-	AuthService_Logout_FullMethodName             = "/v1consortium.auth.AuthService/Logout"
-	AuthService_ForgotPassword_FullMethodName     = "/v1consortium.auth.AuthService/ForgotPassword"
-	AuthService_ResetPassword_FullMethodName      = "/v1consortium.auth.AuthService/ResetPassword"
-	AuthService_ChangePassword_FullMethodName     = "/v1consortium.auth.AuthService/ChangePassword"
-	AuthService_VerifyEmail_FullMethodName        = "/v1consortium.auth.AuthService/VerifyEmail"
-	AuthService_EnableMFA_FullMethodName          = "/v1consortium.auth.AuthService/EnableMFA"
-	AuthService_VerifyMFA_FullMethodName          = "/v1consortium.auth.AuthService/VerifyMFA"
-	AuthService_DisableMFA_FullMethodName         = "/v1consortium.auth.AuthService/DisableMFA"
-	AuthService_GetUser_FullMethodName            = "/v1consortium.auth.AuthService/GetUser"
-	AuthService_UpdateUser_FullMethodName         = "/v1consortium.auth.AuthService/UpdateUser"
-	AuthService_CheckPermission_FullMethodName    = "/v1consortium.auth.AuthService/CheckPermission"
-	AuthService_GetUserPermissions_FullMethodName = "/v1consortium.auth.AuthService/GetUserPermissions"
+	AuthService_Login_FullMethodName                = "/v1consortium.auth.AuthService/Login"
+	AuthService_Signup_FullMethodName               = "/v1consortium.auth.AuthService/Signup"
+	AuthService_SocialSignup_FullMethodName         = "/v1consortium.auth.AuthService/SocialSignup"
+	AuthService_CompleteRegistration_FullMethodName = "/v1consortium.auth.AuthService/CompleteRegistration"
+	AuthService_RefreshToken_FullMethodName         = "/v1consortium.auth.AuthService/RefreshToken"
+	AuthService_Logout_FullMethodName               = "/v1consortium.auth.AuthService/Logout"
+	AuthService_ForgotPassword_FullMethodName       = "/v1consortium.auth.AuthService/ForgotPassword"
+	AuthService_ResetPassword_FullMethodName        = "/v1consortium.auth.AuthService/ResetPassword"
+	AuthService_ChangePassword_FullMethodName       = "/v1consortium.auth.AuthService/ChangePassword"
+	AuthService_VerifyEmail_FullMethodName          = "/v1consortium.auth.AuthService/VerifyEmail"
+	AuthService_EnableMFA_FullMethodName            = "/v1consortium.auth.AuthService/EnableMFA"
+	AuthService_VerifyMFA_FullMethodName            = "/v1consortium.auth.AuthService/VerifyMFA"
+	AuthService_DisableMFA_FullMethodName           = "/v1consortium.auth.AuthService/DisableMFA"
+	AuthService_GetUser_FullMethodName              = "/v1consortium.auth.AuthService/GetUser"
+	AuthService_UpdateUser_FullMethodName           = "/v1consortium.auth.AuthService/UpdateUser"
+	AuthService_CheckPermission_FullMethodName      = "/v1consortium.auth.AuthService/CheckPermission"
+	AuthService_GetUserPermissions_FullMethodName   = "/v1consortium.auth.AuthService/GetUserPermissions"
+	AuthService_GetSignupStatus_FullMethodName      = "/v1consortium.auth.AuthService/GetSignupStatus"
+	AuthService_ResendVerification_FullMethodName   = "/v1consortium.auth.AuthService/ResendVerification"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -45,7 +49,10 @@ const (
 type AuthServiceClient interface {
 	// Authentication Operations
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	RegisterUser(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	// New Two-Step Signup Process
+	Signup(ctx context.Context, in *SignupRequest, opts ...grpc.CallOption) (*SignupResponse, error)
+	SocialSignup(ctx context.Context, in *SocialSignupRequest, opts ...grpc.CallOption) (*SocialSignupResponse, error)
+	CompleteRegistration(ctx context.Context, in *CompleteRegistrationRequest, opts ...grpc.CallOption) (*CompleteRegistrationResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
 	// Password Management
@@ -64,6 +71,9 @@ type AuthServiceClient interface {
 	// Authorization
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
 	GetUserPermissions(ctx context.Context, in *GetUserPermissionsRequest, opts ...grpc.CallOption) (*GetUserPermissionsResponse, error)
+	// Workflow Management
+	GetSignupStatus(ctx context.Context, in *GetSignupStatusRequest, opts ...grpc.CallOption) (*GetSignupStatusResponse, error)
+	ResendVerification(ctx context.Context, in *ResendVerificationRequest, opts ...grpc.CallOption) (*ResendVerificationResponse, error)
 }
 
 type authServiceClient struct {
@@ -84,10 +94,30 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *authServiceClient) RegisterUser(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+func (c *authServiceClient) Signup(ctx context.Context, in *SignupRequest, opts ...grpc.CallOption) (*SignupResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, AuthService_RegisterUser_FullMethodName, in, out, cOpts...)
+	out := new(SignupResponse)
+	err := c.cc.Invoke(ctx, AuthService_Signup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) SocialSignup(ctx context.Context, in *SocialSignupRequest, opts ...grpc.CallOption) (*SocialSignupResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SocialSignupResponse)
+	err := c.cc.Invoke(ctx, AuthService_SocialSignup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CompleteRegistration(ctx context.Context, in *CompleteRegistrationRequest, opts ...grpc.CallOption) (*CompleteRegistrationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompleteRegistrationResponse)
+	err := c.cc.Invoke(ctx, AuthService_CompleteRegistration_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -224,6 +254,26 @@ func (c *authServiceClient) GetUserPermissions(ctx context.Context, in *GetUserP
 	return out, nil
 }
 
+func (c *authServiceClient) GetSignupStatus(ctx context.Context, in *GetSignupStatusRequest, opts ...grpc.CallOption) (*GetSignupStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSignupStatusResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetSignupStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ResendVerification(ctx context.Context, in *ResendVerificationRequest, opts ...grpc.CallOption) (*ResendVerificationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResendVerificationResponse)
+	err := c.cc.Invoke(ctx, AuthService_ResendVerification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -232,7 +282,10 @@ func (c *authServiceClient) GetUserPermissions(ctx context.Context, in *GetUserP
 type AuthServiceServer interface {
 	// Authentication Operations
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	RegisterUser(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	// New Two-Step Signup Process
+	Signup(context.Context, *SignupRequest) (*SignupResponse, error)
+	SocialSignup(context.Context, *SocialSignupRequest) (*SocialSignupResponse, error)
+	CompleteRegistration(context.Context, *CompleteRegistrationRequest) (*CompleteRegistrationResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
 	// Password Management
@@ -251,6 +304,9 @@ type AuthServiceServer interface {
 	// Authorization
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
 	GetUserPermissions(context.Context, *GetUserPermissionsRequest) (*GetUserPermissionsResponse, error)
+	// Workflow Management
+	GetSignupStatus(context.Context, *GetSignupStatusRequest) (*GetSignupStatusResponse, error)
+	ResendVerification(context.Context, *ResendVerificationRequest) (*ResendVerificationResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -264,8 +320,14 @@ type UnimplementedAuthServiceServer struct{}
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServiceServer) RegisterUser(context.Context, *RegisterRequest) (*RegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
+func (UnimplementedAuthServiceServer) Signup(context.Context, *SignupRequest) (*SignupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Signup not implemented")
+}
+func (UnimplementedAuthServiceServer) SocialSignup(context.Context, *SocialSignupRequest) (*SocialSignupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SocialSignup not implemented")
+}
+func (UnimplementedAuthServiceServer) CompleteRegistration(context.Context, *CompleteRegistrationRequest) (*CompleteRegistrationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteRegistration not implemented")
 }
 func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
@@ -306,6 +368,12 @@ func (UnimplementedAuthServiceServer) CheckPermission(context.Context, *CheckPer
 func (UnimplementedAuthServiceServer) GetUserPermissions(context.Context, *GetUserPermissionsRequest) (*GetUserPermissionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserPermissions not implemented")
 }
+func (UnimplementedAuthServiceServer) GetSignupStatus(context.Context, *GetSignupStatusRequest) (*GetSignupStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSignupStatus not implemented")
+}
+func (UnimplementedAuthServiceServer) ResendVerification(context.Context, *ResendVerificationRequest) (*ResendVerificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResendVerification not implemented")
+}
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
 
@@ -345,20 +413,56 @@ func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_RegisterUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterRequest)
+func _AuthService_Signup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).RegisterUser(ctx, in)
+		return srv.(AuthServiceServer).Signup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_RegisterUser_FullMethodName,
+		FullMethod: AuthService_Signup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).RegisterUser(ctx, req.(*RegisterRequest))
+		return srv.(AuthServiceServer).Signup(ctx, req.(*SignupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_SocialSignup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SocialSignupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).SocialSignup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_SocialSignup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).SocialSignup(ctx, req.(*SocialSignupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CompleteRegistration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompleteRegistrationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CompleteRegistration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CompleteRegistration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CompleteRegistration(ctx, req.(*CompleteRegistrationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -597,6 +701,42 @@ func _AuthService_GetUserPermissions_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetSignupStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSignupStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetSignupStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetSignupStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetSignupStatus(ctx, req.(*GetSignupStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ResendVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ResendVerification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ResendVerification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ResendVerification(ctx, req.(*ResendVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -609,8 +749,16 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Login_Handler,
 		},
 		{
-			MethodName: "RegisterUser",
-			Handler:    _AuthService_RegisterUser_Handler,
+			MethodName: "Signup",
+			Handler:    _AuthService_Signup_Handler,
+		},
+		{
+			MethodName: "SocialSignup",
+			Handler:    _AuthService_SocialSignup_Handler,
+		},
+		{
+			MethodName: "CompleteRegistration",
+			Handler:    _AuthService_CompleteRegistration_Handler,
 		},
 		{
 			MethodName: "RefreshToken",
@@ -663,6 +811,14 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserPermissions",
 			Handler:    _AuthService_GetUserPermissions_Handler,
+		},
+		{
+			MethodName: "GetSignupStatus",
+			Handler:    _AuthService_GetSignupStatus_Handler,
+		},
+		{
+			MethodName: "ResendVerification",
+			Handler:    _AuthService_ResendVerification_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

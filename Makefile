@@ -30,6 +30,11 @@ setup:
 	@# Stop the docker containers
 	docker compose stop postgres
 
+.PHONY: bootstrap
+bootstrap: 
+	go install github.com/riverqueue/river/cmd/river@latest
+	river migrate-up --database-url 'postgres://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable'
+
 .PHONY: dev
 dev:	
 	cd supabase && npx supabase start

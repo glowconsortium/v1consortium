@@ -16,7 +16,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file pbentity/user_profiles.proto.
  */
 export const file_pbentity_user_profiles: GenFile = /*@__PURE__*/
-  fileDesc("ChxwYmVudGl0eS91c2VyX3Byb2ZpbGVzLnByb3RvEghwYmVudGl0eSKXBgoMVXNlclByb2ZpbGVzEgoKAklkGAEgASgJEhYKDk9yZ2FuaXphdGlvbklkGAIgASgJEgwKBFJvbGUYAyABKAkSEgoKRW1wbG95ZWVJZBgEIAEoCRIRCglGaXJzdE5hbWUYBSABKAkSEAoITGFzdE5hbWUYBiABKAkSDQoFRW1haWwYByABKAkSDQoFUGhvbmUYCCABKAkSLwoLRGF0ZU9mQmlydGgYCSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC1Nzbkxhc3RGb3VyGAogASgJEiwKCEhpcmVEYXRlGAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIzCg9UZXJtaW5hdGlvbkRhdGUYDCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKCElzQWN0aXZlGA0gASgIEhoKElJlcXVpcmVzRG90VGVzdGluZxgOIAEoCBIdChVSZXF1aXJlc05vbkRvdFRlc3RpbmcYDyABKAgSEQoJQ2RsTnVtYmVyGBAgASgJEhAKCENkbFN0YXRlGBEgASgJEjUKEUNkbEV4cGlyYXRpb25EYXRlGBIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghKb2JUaXRsZRgTIAEoCRISCgpEZXBhcnRtZW50GBQgASgJEhQKDFN1cGVydmlzb3JJZBgVIAEoCRIcChRFbWVyZ2VuY3lDb250YWN0TmFtZRgWIAEoCRIdChVFbWVyZ2VuY3lDb250YWN0UGhvbmUYFyABKAkSJAocRW1lcmdlbmN5Q29udGFjdFJlbGF0aW9uc2hpcBgYIAEoCRItCglDcmVhdGVkQXQYGSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi0KCVVwZGF0ZWRBdBgaIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLwoLTGFzdExvZ2luQXQYGyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQnwKDGNvbS5wYmVudGl0eUIRVXNlclByb2ZpbGVzUHJvdG9QAVoZdjFjb25zb3J0aXVtL2FwaS9wYmVudGl0eaICA1BYWKoCCFBiZW50aXR5ygIIUGJlbnRpdHniAhRQYmVudGl0eVxHUEJNZXRhZGF0YeoCCFBiZW50aXR5YgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("ChxwYmVudGl0eS91c2VyX3Byb2ZpbGVzLnByb3RvEghwYmVudGl0eSLZBgoMVXNlclByb2ZpbGVzEgoKAklkGAEgASgJEhYKDk9yZ2FuaXphdGlvbklkGAIgASgJEgwKBFJvbGUYAyABKAkSEgoKRW1wbG95ZWVJZBgEIAEoCRIRCglGaXJzdE5hbWUYBSABKAkSEAoITGFzdE5hbWUYBiABKAkSDQoFRW1haWwYByABKAkSDQoFUGhvbmUYCCABKAkSLwoLRGF0ZU9mQmlydGgYCSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC1Nzbkxhc3RGb3VyGAogASgJEiwKCEhpcmVEYXRlGAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIzCg9UZXJtaW5hdGlvbkRhdGUYDCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKCElzQWN0aXZlGA0gASgIEhQKDElzU3lzdGVtVXNlchgOIAEoCBIYChBTdHJpcGVDdXN0b21lcklkGA8gASgJEhoKElJlcXVpcmVzRG90VGVzdGluZxgQIAEoCBIdChVSZXF1aXJlc05vbkRvdFRlc3RpbmcYESABKAgSEQoJQ2RsTnVtYmVyGBIgASgJEhAKCENkbFN0YXRlGBMgASgJEjUKEUNkbEV4cGlyYXRpb25EYXRlGBQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghKb2JUaXRsZRgVIAEoCRISCgpEZXBhcnRtZW50GBYgASgJEhQKDFN1cGVydmlzb3JJZBgXIAEoCRIcChRFbWVyZ2VuY3lDb250YWN0TmFtZRgYIAEoCRIdChVFbWVyZ2VuY3lDb250YWN0UGhvbmUYGSABKAkSJAocRW1lcmdlbmN5Q29udGFjdFJlbGF0aW9uc2hpcBgaIAEoCRItCglDcmVhdGVkQXQYGyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi0KCVVwZGF0ZWRBdBgcIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLwoLTGFzdExvZ2luQXQYHSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKCFNldHRpbmdzGB4gASgJQnwKDGNvbS5wYmVudGl0eUIRVXNlclByb2ZpbGVzUHJvdG9QAVoZdjFjb25zb3J0aXVtL2FwaS9wYmVudGl0eaICA1BYWKoCCFBiZW50aXR5ygIIUGJlbnRpdHniAhRQYmVudGl0eVxHUEJNZXRhZGF0YeoCCFBiZW50aXR5YgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message pbentity.UserProfiles
@@ -88,74 +88,89 @@ export type UserProfiles = Message<"pbentity.UserProfiles"> & {
   IsActive: boolean;
 
   /**
-   * @generated from field: bool RequiresDotTesting = 14;
+   * @generated from field: bool IsSystemUser = 14;
+   */
+  IsSystemUser: boolean;
+
+  /**
+   * @generated from field: string StripeCustomerId = 15;
+   */
+  StripeCustomerId: string;
+
+  /**
+   * @generated from field: bool RequiresDotTesting = 16;
    */
   RequiresDotTesting: boolean;
 
   /**
-   * @generated from field: bool RequiresNonDotTesting = 15;
+   * @generated from field: bool RequiresNonDotTesting = 17;
    */
   RequiresNonDotTesting: boolean;
 
   /**
-   * @generated from field: string CdlNumber = 16;
+   * @generated from field: string CdlNumber = 18;
    */
   CdlNumber: string;
 
   /**
-   * @generated from field: string CdlState = 17;
+   * @generated from field: string CdlState = 19;
    */
   CdlState: string;
 
   /**
-   * @generated from field: google.protobuf.Timestamp CdlExpirationDate = 18;
+   * @generated from field: google.protobuf.Timestamp CdlExpirationDate = 20;
    */
   CdlExpirationDate?: Timestamp;
 
   /**
-   * @generated from field: string JobTitle = 19;
+   * @generated from field: string JobTitle = 21;
    */
   JobTitle: string;
 
   /**
-   * @generated from field: string Department = 20;
+   * @generated from field: string Department = 22;
    */
   Department: string;
 
   /**
-   * @generated from field: string SupervisorId = 21;
+   * @generated from field: string SupervisorId = 23;
    */
   SupervisorId: string;
 
   /**
-   * @generated from field: string EmergencyContactName = 22;
+   * @generated from field: string EmergencyContactName = 24;
    */
   EmergencyContactName: string;
 
   /**
-   * @generated from field: string EmergencyContactPhone = 23;
+   * @generated from field: string EmergencyContactPhone = 25;
    */
   EmergencyContactPhone: string;
 
   /**
-   * @generated from field: string EmergencyContactRelationship = 24;
+   * @generated from field: string EmergencyContactRelationship = 26;
    */
   EmergencyContactRelationship: string;
 
   /**
-   * @generated from field: google.protobuf.Timestamp CreatedAt = 25;
+   * @generated from field: google.protobuf.Timestamp CreatedAt = 27;
    */
   CreatedAt?: Timestamp;
 
   /**
-   * @generated from field: google.protobuf.Timestamp UpdatedAt = 26;
+   * @generated from field: google.protobuf.Timestamp UpdatedAt = 28;
    */
   UpdatedAt?: Timestamp;
 
   /**
-   * @generated from field: google.protobuf.Timestamp LastLoginAt = 27;
+   * @generated from field: google.protobuf.Timestamp LastLoginAt = 29;
    */
   LastLoginAt?: Timestamp;
+
+  /**
+   * @generated from field: string Settings = 30;
+   */
+  Settings: string;
 };
 
 /**

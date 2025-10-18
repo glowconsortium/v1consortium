@@ -2,7 +2,11 @@ package auth
 
 import (
 	"context"
+	"fmt"
+	"time"
 	v1 "v1consortium/api/auth/v1"
+	"v1consortium/internal/consts"
+	"v1consortium/internal/pkg/riverjobs"
 	"v1consortium/internal/service"
 
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
@@ -10,6 +14,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/riverqueue/river"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -60,20 +65,39 @@ func (*Controller) Login(ctx context.Context, req *v1.LoginRequest) (res *v1.Log
 	}, nil
 }
 
-func (*Controller) RegisterUser(ctx context.Context, req *v1.RegisterRequest) (res *v1.RegisterResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
-}
-
 func (*Controller) RefreshToken(ctx context.Context, req *v1.RefreshTokenRequest) (res *v1.RefreshTokenResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	accessToken, refreshToken, err := service.Auth().RefreshToken(ctx, req.RefreshToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.RefreshTokenResponse{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		ExpiresAt:    timestamppb.New(gtime.Now().Add(time.Hour).Time),
+	}, nil
 }
 
 func (*Controller) Logout(ctx context.Context, req *v1.LogoutRequest) (res *v1.LogoutResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	err = service.Auth().Logout(ctx, req.AccessToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.LogoutResponse{
+		Message: "Successfully logged out",
+	}, nil
 }
 
 func (*Controller) ForgotPassword(ctx context.Context, req *v1.ForgotPasswordRequest) (res *v1.ForgotPasswordResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	err = service.Auth().ForgotPassword(ctx, req.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.ForgotPasswordResponse{
+		Message: "Password reset email sent successfully",
+	}, nil
 }
 
 func (*Controller) ResetPassword(ctx context.Context, req *v1.ResetPasswordRequest) (res *v1.ResetPasswordResponse, err error) {
@@ -199,5 +223,109 @@ func (*Controller) RevokeToken(ctx context.Context, req *v1.RevokeTokenRequest) 
 }
 
 func (*Controller) CleanupExpiredTokens(ctx context.Context, req *v1.CleanupExpiredTokensRequest) (res *v1.CleanupExpiredTokensResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}
+
+func (*Controller) Signup(ctx context.Context, req *v1.SignupRequest) (res *v1.SignupResponse, err error) {
+	// Check if user already exists
+	user, err := service.Auth().GetUserProfileByEmail(ctx, req.Email)
+	if err == nil && user != nil {
+		return nil, gerror.NewCode(gcode.CodeBusinessValidationFailed, "user with this email already exists")
+	}
+
+	// Generate a unique workflow ID
+	workflowId := fmt.Sprintf("user_signup_%d_%s", time.Now().UnixNano(), req.Email)
+
+	// Start the workflow by enqueuing the first step (validation)
+	// The workflow orchestrator will handle the rest within the River worker process
+	riverClient := service.RiverClient()
+	if riverClient != nil {
+		validateArgs := riverjobs.ValidateStepArgs{
+			BaseJobArgs: riverjobs.BaseJobArgs{
+				WorkflowID:   workflowId,
+				WorkflowType: "user_signup",
+				StepName:     "validate",
+				OrgID:        "", // Will be set during workflow execution
+				UserID:       "", // Will be set during workflow execution
+			},
+			SignupData: map[string]interface{}{
+				"email":             req.Email,
+				"password":          req.Password,
+				"first_name":        req.FirstName,
+				"last_name":         req.LastName,
+				"organization_name": req.CompanyName,
+				"is_dot_company":    req.IsDotCompany,
+				"dot_number":        req.DotNumber,
+			},
+		}
+
+		_, err = riverClient.Insert(ctx, validateArgs, &river.InsertOpts{
+			Priority: 1,
+			Queue:    riverjobs.QueueDefault,
+		})
+
+		if err != nil {
+			g.Log().Errorf(ctx, "Failed to enqueue signup validation step: %v", err)
+			return nil, fmt.Errorf("failed to start signup workflow: %w", err)
+		}
+	} else {
+		// Fallback: Try to use the UserSignupWorker if available
+		userWorker := service.UserSignupWorker()
+		if userWorker != nil {
+			workflowId, err = userWorker.StartNewFlow(ctx, riverjobs.UserSignupArgs{
+				Email:     req.Email,
+				Password:  req.Password,
+				FirstName: req.FirstName,
+				LastName:  req.LastName,
+				Role:      string(consts.RoleClientAdmin),
+				OrganizationData: map[string]interface{}{
+					"company_name":   req.CompanyName,
+					"is_dot_company": req.IsDotCompany,
+					"dot_number":     req.DotNumber,
+				},
+			}, &river.InsertOpts{})
+
+			if err != nil {
+				g.Log().Errorf(ctx, "Failed to start user signup workflow via worker: %v", err)
+				return nil, err
+			}
+		} else {
+			return nil, fmt.Errorf("neither RiverClient nor UserSignupWorker available")
+		}
+	}
+
+	g.Log().Info(ctx, "Started user signup workflow", g.Map{
+		"workflow_id": workflowId,
+		"email":       req.Email,
+	})
+
+	return &v1.SignupResponse{
+		WorkflowId:                workflowId,
+		Message:                   "user signup initiated successfully",
+		RequiresEmailVerification: true,
+	}, nil
+}
+
+func (*Controller) SocialSignup(ctx context.Context, req *v1.SocialSignupRequest) (res *v1.SocialSignupResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}
+
+func (*Controller) CompleteRegistration(ctx context.Context, req *v1.CompleteRegistrationRequest) (res *v1.CompleteRegistrationResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}
+
+func (*Controller) GetSignupStatus(ctx context.Context, req *v1.GetSignupStatusRequest) (res *v1.GetSignupStatusResponse, err error) {
+	execution, err := service.UserSignupWorker().GetSignupStatus(ctx, req.WorkflowId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.GetSignupStatusResponse{
+		WorkflowId: req.WorkflowId,
+		Status:     execution.Status,
+	}, nil
+}
+
+func (*Controller) ResendVerification(ctx context.Context, req *v1.ResendVerificationRequest) (res *v1.ResendVerificationResponse, err error) {
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }

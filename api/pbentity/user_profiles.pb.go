@@ -42,20 +42,23 @@ type UserProfiles struct {
 	HireDate                     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=HireDate,proto3" json:"HireDate,omitempty"`                                         //
 	TerminationDate              *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=TerminationDate,proto3" json:"TerminationDate,omitempty"`                           //
 	IsActive                     bool                   `protobuf:"varint,13,opt,name=IsActive,proto3" json:"IsActive,omitempty"`                                        //
-	RequiresDotTesting           bool                   `protobuf:"varint,14,opt,name=RequiresDotTesting,proto3" json:"RequiresDotTesting,omitempty"`                    //
-	RequiresNonDotTesting        bool                   `protobuf:"varint,15,opt,name=RequiresNonDotTesting,proto3" json:"RequiresNonDotTesting,omitempty"`              //
-	CdlNumber                    string                 `protobuf:"bytes,16,opt,name=CdlNumber,proto3" json:"CdlNumber,omitempty"`                                       //
-	CdlState                     string                 `protobuf:"bytes,17,opt,name=CdlState,proto3" json:"CdlState,omitempty"`                                         //
-	CdlExpirationDate            *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=CdlExpirationDate,proto3" json:"CdlExpirationDate,omitempty"`                       //
-	JobTitle                     string                 `protobuf:"bytes,19,opt,name=JobTitle,proto3" json:"JobTitle,omitempty"`                                         //
-	Department                   string                 `protobuf:"bytes,20,opt,name=Department,proto3" json:"Department,omitempty"`                                     //
-	SupervisorId                 string                 `protobuf:"bytes,21,opt,name=SupervisorId,proto3" json:"SupervisorId,omitempty"`                                 //
-	EmergencyContactName         string                 `protobuf:"bytes,22,opt,name=EmergencyContactName,proto3" json:"EmergencyContactName,omitempty"`                 //
-	EmergencyContactPhone        string                 `protobuf:"bytes,23,opt,name=EmergencyContactPhone,proto3" json:"EmergencyContactPhone,omitempty"`               //
-	EmergencyContactRelationship string                 `protobuf:"bytes,24,opt,name=EmergencyContactRelationship,proto3" json:"EmergencyContactRelationship,omitempty"` //
-	CreatedAt                    *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`                                       //
-	UpdatedAt                    *timestamppb.Timestamp `protobuf:"bytes,26,opt,name=UpdatedAt,proto3" json:"UpdatedAt,omitempty"`                                       //
-	LastLoginAt                  *timestamppb.Timestamp `protobuf:"bytes,27,opt,name=LastLoginAt,proto3" json:"LastLoginAt,omitempty"`                                   //
+	IsSystemUser                 bool                   `protobuf:"varint,14,opt,name=IsSystemUser,proto3" json:"IsSystemUser,omitempty"`                                //
+	StripeCustomerId             string                 `protobuf:"bytes,15,opt,name=StripeCustomerId,proto3" json:"StripeCustomerId,omitempty"`                         //
+	RequiresDotTesting           bool                   `protobuf:"varint,16,opt,name=RequiresDotTesting,proto3" json:"RequiresDotTesting,omitempty"`                    //
+	RequiresNonDotTesting        bool                   `protobuf:"varint,17,opt,name=RequiresNonDotTesting,proto3" json:"RequiresNonDotTesting,omitempty"`              //
+	CdlNumber                    string                 `protobuf:"bytes,18,opt,name=CdlNumber,proto3" json:"CdlNumber,omitempty"`                                       //
+	CdlState                     string                 `protobuf:"bytes,19,opt,name=CdlState,proto3" json:"CdlState,omitempty"`                                         //
+	CdlExpirationDate            *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=CdlExpirationDate,proto3" json:"CdlExpirationDate,omitempty"`                       //
+	JobTitle                     string                 `protobuf:"bytes,21,opt,name=JobTitle,proto3" json:"JobTitle,omitempty"`                                         //
+	Department                   string                 `protobuf:"bytes,22,opt,name=Department,proto3" json:"Department,omitempty"`                                     //
+	SupervisorId                 string                 `protobuf:"bytes,23,opt,name=SupervisorId,proto3" json:"SupervisorId,omitempty"`                                 //
+	EmergencyContactName         string                 `protobuf:"bytes,24,opt,name=EmergencyContactName,proto3" json:"EmergencyContactName,omitempty"`                 //
+	EmergencyContactPhone        string                 `protobuf:"bytes,25,opt,name=EmergencyContactPhone,proto3" json:"EmergencyContactPhone,omitempty"`               //
+	EmergencyContactRelationship string                 `protobuf:"bytes,26,opt,name=EmergencyContactRelationship,proto3" json:"EmergencyContactRelationship,omitempty"` //
+	CreatedAt                    *timestamppb.Timestamp `protobuf:"bytes,27,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`                                       //
+	UpdatedAt                    *timestamppb.Timestamp `protobuf:"bytes,28,opt,name=UpdatedAt,proto3" json:"UpdatedAt,omitempty"`                                       //
+	LastLoginAt                  *timestamppb.Timestamp `protobuf:"bytes,29,opt,name=LastLoginAt,proto3" json:"LastLoginAt,omitempty"`                                   //
+	Settings                     string                 `protobuf:"bytes,30,opt,name=Settings,proto3" json:"Settings,omitempty"`                                         //
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -181,6 +184,20 @@ func (x *UserProfiles) GetIsActive() bool {
 	return false
 }
 
+func (x *UserProfiles) GetIsSystemUser() bool {
+	if x != nil {
+		return x.IsSystemUser
+	}
+	return false
+}
+
+func (x *UserProfiles) GetStripeCustomerId() string {
+	if x != nil {
+		return x.StripeCustomerId
+	}
+	return ""
+}
+
 func (x *UserProfiles) GetRequiresDotTesting() bool {
 	if x != nil {
 		return x.RequiresDotTesting
@@ -279,11 +296,18 @@ func (x *UserProfiles) GetLastLoginAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *UserProfiles) GetSettings() string {
+	if x != nil {
+		return x.Settings
+	}
+	return ""
+}
+
 var File_pbentity_user_profiles_proto protoreflect.FileDescriptor
 
 const file_pbentity_user_profiles_proto_rawDesc = "" +
 	"\n" +
-	"\x1cpbentity/user_profiles.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\x84\t\n" +
+	"\x1cpbentity/user_profiles.proto\x12\bpbentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf0\t\n" +
 	"\fUserProfiles\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12&\n" +
 	"\x0eOrganizationId\x18\x02 \x01(\tR\x0eOrganizationId\x12\x12\n" +
@@ -300,23 +324,26 @@ const file_pbentity_user_profiles_proto_rawDesc = "" +
 	" \x01(\tR\vSsnLastFour\x126\n" +
 	"\bHireDate\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\bHireDate\x12D\n" +
 	"\x0fTerminationDate\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0fTerminationDate\x12\x1a\n" +
-	"\bIsActive\x18\r \x01(\bR\bIsActive\x12.\n" +
-	"\x12RequiresDotTesting\x18\x0e \x01(\bR\x12RequiresDotTesting\x124\n" +
-	"\x15RequiresNonDotTesting\x18\x0f \x01(\bR\x15RequiresNonDotTesting\x12\x1c\n" +
-	"\tCdlNumber\x18\x10 \x01(\tR\tCdlNumber\x12\x1a\n" +
-	"\bCdlState\x18\x11 \x01(\tR\bCdlState\x12H\n" +
-	"\x11CdlExpirationDate\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\x11CdlExpirationDate\x12\x1a\n" +
-	"\bJobTitle\x18\x13 \x01(\tR\bJobTitle\x12\x1e\n" +
+	"\bIsActive\x18\r \x01(\bR\bIsActive\x12\"\n" +
+	"\fIsSystemUser\x18\x0e \x01(\bR\fIsSystemUser\x12*\n" +
+	"\x10StripeCustomerId\x18\x0f \x01(\tR\x10StripeCustomerId\x12.\n" +
+	"\x12RequiresDotTesting\x18\x10 \x01(\bR\x12RequiresDotTesting\x124\n" +
+	"\x15RequiresNonDotTesting\x18\x11 \x01(\bR\x15RequiresNonDotTesting\x12\x1c\n" +
+	"\tCdlNumber\x18\x12 \x01(\tR\tCdlNumber\x12\x1a\n" +
+	"\bCdlState\x18\x13 \x01(\tR\bCdlState\x12H\n" +
+	"\x11CdlExpirationDate\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\x11CdlExpirationDate\x12\x1a\n" +
+	"\bJobTitle\x18\x15 \x01(\tR\bJobTitle\x12\x1e\n" +
 	"\n" +
-	"Department\x18\x14 \x01(\tR\n" +
+	"Department\x18\x16 \x01(\tR\n" +
 	"Department\x12\"\n" +
-	"\fSupervisorId\x18\x15 \x01(\tR\fSupervisorId\x122\n" +
-	"\x14EmergencyContactName\x18\x16 \x01(\tR\x14EmergencyContactName\x124\n" +
-	"\x15EmergencyContactPhone\x18\x17 \x01(\tR\x15EmergencyContactPhone\x12B\n" +
-	"\x1cEmergencyContactRelationship\x18\x18 \x01(\tR\x1cEmergencyContactRelationship\x128\n" +
-	"\tCreatedAt\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tUpdatedAt\x18\x1a \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAt\x12<\n" +
-	"\vLastLoginAt\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampR\vLastLoginAtB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
+	"\fSupervisorId\x18\x17 \x01(\tR\fSupervisorId\x122\n" +
+	"\x14EmergencyContactName\x18\x18 \x01(\tR\x14EmergencyContactName\x124\n" +
+	"\x15EmergencyContactPhone\x18\x19 \x01(\tR\x15EmergencyContactPhone\x12B\n" +
+	"\x1cEmergencyContactRelationship\x18\x1a \x01(\tR\x1cEmergencyContactRelationship\x128\n" +
+	"\tCreatedAt\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
+	"\tUpdatedAt\x18\x1c \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAt\x12<\n" +
+	"\vLastLoginAt\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampR\vLastLoginAt\x12\x1a\n" +
+	"\bSettings\x18\x1e \x01(\tR\bSettingsB\x1bZ\x19v1consortium/api/pbentityb\x06proto3"
 
 var (
 	file_pbentity_user_profiles_proto_rawDescOnce sync.Once

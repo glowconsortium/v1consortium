@@ -23,13 +23,38 @@ func NewWorkflowManager(db *pgxpool.Pool, logger *slog.Logger) *WorkflowManager 
 	}
 }
 
+// CheckWorkflowExists checks if a workflow with the same data already exists
+func (wm *WorkflowManager) CheckWorkflowExists(ctx context.Context, workflowType, orgID, argsHash string) (string, error) {
+	query := `
+		SELECT workflow_id 
+		FROM workflow_executions 
+		WHERE workflow_type = $1 
+		  AND org_id = $2 
+		  AND args_hash = $3
+		  AND status IN ('pending', 'running')
+		ORDER BY created_at DESC 
+		LIMIT 1
+	`
+
+	var existingWorkflowID string
+	err := wm.db.QueryRow(ctx, query, workflowType, orgID, argsHash).Scan(&existingWorkflowID)
+	if err != nil {
+		if err.Error() == "no rows in result set" {
+			return "", nil
+		}
+		return "", fmt.Errorf("failed to check existing workflow: %w", err)
+	}
+
+	return existingWorkflowID, nil
+}
+
 // CreateWorkflowExecution creates a new workflow execution record
 func (wm *WorkflowManager) CreateWorkflowExecution(ctx context.Context, execution *WorkflowExecution) error {
 	query := `
 		INSERT INTO workflow_executions (
 			workflow_id, workflow_type, org_id, user_id, status,
-			context, started_at
-		) VALUES ($1, $2, $3, $4, $5, $6, $7)
+			context, args_hash, started_at
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 		RETURNING workflow_id
 	`
 
@@ -37,7 +62,7 @@ func (wm *WorkflowManager) CreateWorkflowExecution(ctx context.Context, executio
 
 	return wm.db.QueryRow(ctx, query,
 		execution.WorkflowID, execution.WorkflowType, execution.OrgID,
-		execution.UserID, execution.Status, contextJSON, execution.StartedAt,
+		execution.UserID, execution.Status, contextJSON, execution.ArgsHash, execution.StartedAt,
 	).Scan(&execution.WorkflowID)
 }
 
@@ -46,7 +71,7 @@ func (wm *WorkflowManager) GetWorkflowExecution(ctx context.Context, workflowID 
 	var execution WorkflowExecution
 	query := `
 		SELECT workflow_id, workflow_type, org_id, user_id, status, 
-		       current_step, context, started_at, completed_at,
+		       current_step, context, args_hash, started_at, completed_at,
 		       error_message, retry_count, created_at, updated_at
 		FROM workflow_executions 
 		WHERE workflow_id = $1
@@ -56,7 +81,7 @@ func (wm *WorkflowManager) GetWorkflowExecution(ctx context.Context, workflowID 
 	err := wm.db.QueryRow(ctx, query, workflowID).Scan(
 		&execution.WorkflowID, &execution.WorkflowType,
 		&execution.OrgID, &execution.UserID, &execution.Status,
-		&execution.CurrentStep, &contextJSON,
+		&execution.CurrentStep, &contextJSON, &execution.ArgsHash,
 		&execution.StartedAt, &execution.CompletedAt, &execution.ErrorMessage,
 		&execution.RetryCount, &execution.CreatedAt, &execution.UpdatedAt,
 	)
@@ -215,5 +240,53 @@ func (wm *WorkflowManager) CancelWorkflow(ctx context.Context, workflowID string
 	`
 
 	_, err := wm.db.Exec(ctx, query, workflowID, StatusCancelled)
+	return err
+}
+
+// UpdateStepStatus updates the status of a workflow step
+func (wm *WorkflowManager) UpdateStepStatus(ctx context.Context, workflowID, stepName, status string, outputData map[string]interface{}, errorMsg *string) error {
+	var outputJSON []byte
+	if outputData != nil {
+		var err error
+		outputJSON, err = json.Marshal(outputData)
+		if err != nil {
+			return fmt.Errorf("failed to marshal output data: %w", err)
+		}
+	}
+
+	var query string
+	var args []interface{}
+
+	if status == StepStatusRunning {
+		query = `
+			UPDATE workflow_steps 
+			SET status = $3, started_at = NOW(), updated_at = NOW()
+			WHERE workflow_id = $1 AND step_name = $2
+		`
+		args = []interface{}{workflowID, stepName, status}
+	} else if status == StepStatusCompleted {
+		query = `
+			UPDATE workflow_steps 
+			SET status = $3, output_data = $4, completed_at = NOW(), updated_at = NOW()
+			WHERE workflow_id = $1 AND step_name = $2
+		`
+		args = []interface{}{workflowID, stepName, status, outputJSON}
+	} else if status == StepStatusFailed {
+		query = `
+			UPDATE workflow_steps 
+			SET status = $3, error_message = $4, updated_at = NOW()
+			WHERE workflow_id = $1 AND step_name = $2
+		`
+		args = []interface{}{workflowID, stepName, status, errorMsg}
+	} else {
+		query = `
+			UPDATE workflow_steps 
+			SET status = $3, updated_at = NOW()
+			WHERE workflow_id = $1 AND step_name = $2
+		`
+		args = []interface{}{workflowID, stepName, status}
+	}
+
+	_, err := wm.db.Exec(ctx, query, args...)
 	return err
 }

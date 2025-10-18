@@ -11,10 +11,14 @@ import (
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/gcron"
 	"github.com/gogf/gf/v2/os/gproc"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
+	riverjobusersignup "v1consortium/internal/logic/riverjobUsersignup"
 	"v1consortium/internal/pkg/riverjobs"
+	"v1consortium/internal/service"
+	signupworkflow "v1consortium/internal/workflow/signup"
 )
 
 var (
@@ -137,13 +141,62 @@ func registerRiverWorkers(riverManager *riverjobs.RiverManager, workflowManager 
 		Logger:          logger,
 	}
 
-	// User Signup Workflow Workers
-	userSignupWorker := &riverjobs.UserSignupWorker{
-		WorkerBase: workerBase,
-	}
-	river.AddWorker[riverjobs.UserSignupArgs](riverManager.Workers, userSignupWorker)
-	logger.Info("Registered UserSignupWorker")
+	// Create workflow orchestrator
+	orchestrator := riverjobs.NewWorkflowOrchestrator(riverManager, workflowManager, logger)
 
+	// Register workflow definitions
+	signupWorkflow := signupworkflow.NewSignupWorkflow()
+	orchestrator.RegisterWorkflow(signupWorkflow)
+	logger.Info("Registered SignupWorkflow definition")
+
+	// Register individual step workers for the signup workflow
+	validateWorker := &signupworkflow.ValidateStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.ValidateStepArgs](riverManager.Workers, validateWorker)
+	logger.Info("Registered ValidateStepWorker")
+
+	createUserWorker := &signupworkflow.CreateUserStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.CreateUserStepArgs](riverManager.Workers, createUserWorker)
+	logger.Info("Registered CreateUserStepWorker")
+
+	createOrgStepWorker := &signupworkflow.CreateOrganizationStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.CreateOrganizationStepArgs](riverManager.Workers, createOrgStepWorker)
+	logger.Info("Registered CreateOrganizationStepWorker")
+
+	setupStripeWorker := &signupworkflow.SetupStripeStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.SetupStripeStepArgs](riverManager.Workers, setupStripeWorker)
+	logger.Info("Registered SetupStripeStepWorker")
+
+	sendVerificationWorker := &signupworkflow.SendVerificationStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.SendVerificationStepArgs](riverManager.Workers, sendVerificationWorker)
+	logger.Info("Registered SendVerificationStepWorker")
+
+	// Keep the legacy UserSignupWorker for backward compatibility
+	userSignupWorker := riverjobusersignup.NewUserSignupWorker(&workerBase, orchestrator)
+	service.RegisterUserSignupWorker(userSignupWorker)
+	river.AddWorker[riverjobs.UserSignupArgs](riverManager.Workers, service.UserSignupWorker())
+	logger.Info("Registered UserSignupWorker (legacy)")
+
+	// Register other existing workers
 	createOrgWorker := &riverjobs.CreateOrganizationWorker{
 		WorkerBase: workerBase,
 	}
@@ -439,4 +492,140 @@ func loadRiverConfig(ctx context.Context, dbURL string) *riverjobs.Config {
 		len(config.Queues), config.PollInterval)
 
 	return config
+}
+
+// Global variables to hold River dependencies for the API server
+var (
+	globalRiverManager    *riverjobs.RiverManager
+	globalWorkflowManager *riverjobs.WorkflowManager
+	globalOrchestrator    *riverjobs.WorkflowOrchestrator
+	globalDBPool          *pgxpool.Pool
+)
+
+func setupRiverDependentServices(ctx context.Context) error {
+
+	// Initialize logger
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+	}))
+
+	// Get database URL
+	dbURL := getRiverDBURL(ctx)
+	if dbURL == "" {
+		g.Log().Fatal(ctx, "Database URL not found in environment variables")
+		return fmt.Errorf("database URL not configured")
+	}
+
+	// Create database connection pool - keep it alive for the server lifetime
+	dbPool, err := pgxpool.New(ctx, dbURL)
+	if err != nil {
+		g.Log().Fatalf(ctx, "Failed to create database pool: %v", err)
+		return err
+	}
+	globalDBPool = dbPool // Store globally to keep it alive
+
+	// Test database connection
+	if err := dbPool.Ping(ctx); err != nil {
+		g.Log().Fatalf(ctx, "Failed to ping database: %v", err)
+		return err
+	}
+
+	g.Log().Info(ctx, "Database connection established")
+
+	// Load River configuration from config file
+	riverConfig := loadRiverConfig(ctx, dbURL)
+
+	// Initialize River manager with loaded config
+	riverManager, err := riverjobs.NewRiverManager(ctx, riverConfig, logger)
+	if err != nil {
+		g.Log().Fatalf(ctx, "Failed to create River manager: %v", err)
+		return err
+	}
+	globalRiverManager = riverManager
+
+	// Initialize workflow manager
+	workflowManager := riverjobs.NewWorkflowManager(dbPool, logger)
+	globalWorkflowManager = workflowManager
+
+	workerBase := riverjobs.WorkerBase{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+
+	// Initialize orchestrator
+	orchestrator := riverjobs.NewWorkflowOrchestrator(riverManager, workflowManager, logger)
+	globalOrchestrator = orchestrator
+
+	// Register workflow definitions with orchestrator
+	signupWorkflow := signupworkflow.NewSignupWorkflow()
+	orchestrator.RegisterWorkflow(signupWorkflow)
+	logger.Info("Registered SignupWorkflow definition in API server")
+
+	// Register step workers with River client (required for enqueueing jobs)
+	// These workers won't actually process jobs in the API server
+	validateWorker := &signupworkflow.ValidateStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.ValidateStepArgs](riverManager.Workers, validateWorker)
+
+	createUserWorker := &signupworkflow.CreateUserStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.CreateUserStepArgs](riverManager.Workers, createUserWorker)
+
+	createOrgStepWorker := &signupworkflow.CreateOrganizationStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.CreateOrganizationStepArgs](riverManager.Workers, createOrgStepWorker)
+
+	setupStripeWorker := &signupworkflow.SetupStripeStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.SetupStripeStepArgs](riverManager.Workers, setupStripeWorker)
+
+	sendVerificationWorker := &signupworkflow.SendVerificationStepWorker{
+		WorkflowManager: workflowManager,
+		RiverClient:     riverManager.Client,
+		Logger:          logger,
+	}
+	river.AddWorker[riverjobs.SendVerificationStepArgs](riverManager.Workers, sendVerificationWorker)
+
+	logger.Info("Registered step workers in API server River client for enqueueing")
+
+	// Create UserSignup worker for API server use (without starting worker process)
+	userSignupWorker := riverjobusersignup.NewUserSignupWorker(&workerBase, orchestrator)
+
+	// Register the worker so it can be used by the API controllers
+	service.RegisterUserSignupWorker(userSignupWorker)
+
+	// Register the River client for API server use
+	service.RegisterRiverClient(riverManager.Client)
+
+	g.Log().Info(ctx, "River dependencies initialized for API server")
+	return nil
+}
+
+// GetGlobalRiverClient returns the global River client for API server use
+func GetGlobalRiverClient() *river.Client[pgx.Tx] {
+	if globalRiverManager != nil {
+		return globalRiverManager.Client
+	}
+	return nil
+}
+
+// CleanupRiverDependencies should be called during server shutdown
+func CleanupRiverDependencies() {
+	if globalDBPool != nil {
+		globalDBPool.Close()
+		g.Log().Info(context.Background(), "Database pool closed")
+	}
 }

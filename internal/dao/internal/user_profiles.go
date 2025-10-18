@@ -34,6 +34,8 @@ type UserProfilesColumns struct {
 	HireDate                     string //
 	TerminationDate              string //
 	IsActive                     string //
+	IsSystemUser                 string //
+	StripeCustomerId             string //
 	RequiresDotTesting           string //
 	RequiresNonDotTesting        string //
 	CdlNumber                    string //
@@ -48,6 +50,7 @@ type UserProfilesColumns struct {
 	CreatedAt                    string //
 	UpdatedAt                    string //
 	LastLoginAt                  string //
+	Settings                     string //
 }
 
 // userProfilesColumns holds the columns for the table user_profiles.
@@ -65,6 +68,8 @@ var userProfilesColumns = UserProfilesColumns{
 	HireDate:                     "hire_date",
 	TerminationDate:              "termination_date",
 	IsActive:                     "is_active",
+	IsSystemUser:                 "is_system_user",
+	StripeCustomerId:             "stripe_customer_id",
 	RequiresDotTesting:           "requires_dot_testing",
 	RequiresNonDotTesting:        "requires_non_dot_testing",
 	CdlNumber:                    "cdl_number",
@@ -79,6 +84,7 @@ var userProfilesColumns = UserProfilesColumns{
 	CreatedAt:                    "created_at",
 	UpdatedAt:                    "updated_at",
 	LastLoginAt:                  "last_login_at",
+	Settings:                     "settings",
 }
 
 // NewUserProfilesDao creates and returns a new DAO object for table data access.

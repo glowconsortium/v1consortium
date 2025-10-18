@@ -14,11 +14,14 @@ import (
 // UserSignupWorkflow - Handles user signup and subscription
 type UserSignupArgs struct {
 	BaseJobArgs
-	Email            string                 `json:"email"`
-	Password         string                 `json:"password"`
-	OrganizationData map[string]interface{} `json:"organization_data"`
-	SubscriptionPlan string                 `json:"subscription_plan"`
-	PaymentMethodID  string                 `json:"payment_method_id"`
+	Email                     string                 `json:"email"`
+	Password                  string                 `json:"password"`
+	Role                      string                 `json:"role,omitempty"`
+	UserMetadata              map[string]interface{} `json:"user_metadata,omitempty"`
+	OrganizationData          map[string]interface{} `json:"organization_data"`
+	FirstName                 string                 `json:"first_name,omitempty"`
+	LastName                  string                 `json:"last_name,omitempty"`
+	RequiresEmailVerification bool                   `json:"requires_email_verification,omitempty"`
 }
 
 func (args UserSignupArgs) Kind() string { return "user_signup" }

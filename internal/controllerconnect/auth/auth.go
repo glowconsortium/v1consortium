@@ -131,24 +131,28 @@ func buildSessionCookie(name, value string) string {
 	return cookie
 }
 
-func (s *AuthConnectService) RegisterUser(ctx context.Context, req *connect.Request[v1.RegisterRequest]) (res *connect.Response[v1.RegisterResponse], err error) {
-	resp, err := s.authController.RegisterUser(ctx, req.Msg)
+func (s *AuthConnectService) RefreshToken(ctx context.Context, req *connect.Request[v1.RefreshTokenRequest]) (res *connect.Response[v1.RefreshTokenResponse], err error) {
+	resp, err := s.authController.RefreshToken(ctx, req.Msg)
 	if err != nil {
 		return nil, HandleError(err)
 	}
 	return connect.NewResponse(resp), nil
 }
 
-func (s *AuthConnectService) RefreshToken(ctx context.Context, req *connect.Request[v1.RefreshTokenRequest]) (res *connect.Response[v1.RefreshTokenResponse], err error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("refresh token not implemented"))
-}
-
 func (s *AuthConnectService) Logout(ctx context.Context, req *connect.Request[v1.LogoutRequest]) (res *connect.Response[v1.LogoutResponse], err error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("logout not implemented"))
+	resp, err := s.authController.Logout(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
 }
 
 func (s *AuthConnectService) ForgotPassword(ctx context.Context, req *connect.Request[v1.ForgotPasswordRequest]) (res *connect.Response[v1.ForgotPasswordResponse], err error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("forgot password not implemented"))
+	resp, err := s.authController.ForgotPassword(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
 }
 
 func (s *AuthConnectService) ResetPassword(ctx context.Context, req *connect.Request[v1.ResetPasswordRequest]) (res *connect.Response[v1.ResetPasswordResponse], err error) {
@@ -253,4 +257,49 @@ func (s *AuthConnectService) RevokeToken(ctx context.Context, req *connect.Reque
 
 func (s *AuthConnectService) CleanupExpiredTokens(ctx context.Context, req *connect.Request[v1.CleanupExpiredTokensRequest]) (res *connect.Response[v1.CleanupExpiredTokensResponse], err error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cleanup expired tokens not implemented"))
+}
+
+// CompleteRegistration handles completing a user's registration; stubbed as unimplemented
+func (s *AuthConnectService) CompleteRegistration(ctx context.Context, req *connect.Request[v1.CompleteRegistrationRequest]) (res *connect.Response[v1.CompleteRegistrationResponse], err error) {
+	resp, err := s.authController.CompleteRegistration(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+// Signup handles user signup/registration
+func (s *AuthConnectService) Signup(ctx context.Context, req *connect.Request[v1.SignupRequest]) (res *connect.Response[v1.SignupResponse], err error) {
+	resp, err := s.authController.Signup(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+// SocialSignup handles social media signup
+func (s *AuthConnectService) SocialSignup(ctx context.Context, req *connect.Request[v1.SocialSignupRequest]) (res *connect.Response[v1.SocialSignupResponse], err error) {
+	resp, err := s.authController.SocialSignup(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+// GetSignupStatus gets the status of a signup workflow
+func (s *AuthConnectService) GetSignupStatus(ctx context.Context, req *connect.Request[v1.GetSignupStatusRequest]) (res *connect.Response[v1.GetSignupStatusResponse], err error) {
+	resp, err := s.authController.GetSignupStatus(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+// ResendVerification resends verification email
+func (s *AuthConnectService) ResendVerification(ctx context.Context, req *connect.Request[v1.ResendVerificationRequest]) (res *connect.Response[v1.ResendVerificationResponse], err error) {
+	resp, err := s.authController.ResendVerification(ctx, req.Msg)
+	if err != nil {
+		return nil, HandleError(err)
+	}
+	return connect.NewResponse(resp), nil
 }

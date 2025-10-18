@@ -40,6 +40,7 @@ type WorkflowExecution struct {
 	TotalSteps   int                    `json:"total_steps" db:"total_steps"`
 	Context      map[string]interface{} `json:"context" db:"context"`
 	Metadata     map[string]interface{} `json:"metadata" db:"metadata"`
+	ArgsHash     string                 `json:"args_hash" db:"args_hash"`
 	StartedAt    time.Time              `json:"started_at" db:"started_at"`
 	CompletedAt  *time.Time             `json:"completed_at" db:"completed_at"`
 	ErrorMessage *string                `json:"error_message" db:"error_message"`
@@ -124,3 +125,79 @@ const (
 	StepStatusFailed    = "failed"
 	StepStatusSkipped   = "skipped"
 )
+
+// Error types for categorizing step failures
+type StepError struct {
+	Type      StepErrorType `json:"type"`
+	Message   string        `json:"message"`
+	Retryable bool          `json:"retryable"`
+	Cause     error         `json:"-"`
+}
+
+func (e *StepError) Error() string {
+	return e.Message
+}
+
+func (e *StepError) Unwrap() error {
+	return e.Cause
+}
+
+// StepErrorType categorizes different types of step errors
+type StepErrorType string
+
+const (
+	ErrorTypeValidation    StepErrorType = "validation"
+	ErrorTypeNetwork       StepErrorType = "network"
+	ErrorTypeDatabase      StepErrorType = "database"
+	ErrorTypeExternal      StepErrorType = "external_service"
+	ErrorTypeBusiness      StepErrorType = "business_logic"
+	ErrorTypeTimeout       StepErrorType = "timeout"
+	ErrorTypePermission    StepErrorType = "permission"
+	ErrorTypeConfiguration StepErrorType = "configuration"
+)
+
+// NewStepError creates a new step error
+func NewStepError(errorType StepErrorType, message string, retryable bool, cause error) *StepError {
+	return &StepError{
+		Type:      errorType,
+		Message:   message,
+		Retryable: retryable,
+		Cause:     cause,
+	}
+}
+
+// Signup workflow step arguments
+type ValidateStepArgs struct {
+	BaseJobArgs
+	SignupData map[string]interface{} `json:"signup_data"`
+}
+
+func (ValidateStepArgs) Kind() string { return "signup_validate" }
+
+type CreateUserStepArgs struct {
+	BaseJobArgs
+	UserData map[string]interface{} `json:"user_data"`
+}
+
+func (CreateUserStepArgs) Kind() string { return "signup_create_user" }
+
+type CreateOrganizationStepArgs struct {
+	BaseJobArgs
+	OrgData map[string]interface{} `json:"org_data"`
+}
+
+func (CreateOrganizationStepArgs) Kind() string { return "signup_create_org" }
+
+type SetupStripeStepArgs struct {
+	BaseJobArgs
+	StripeData map[string]interface{} `json:"stripe_data"`
+}
+
+func (SetupStripeStepArgs) Kind() string { return "signup_setup_stripe" }
+
+type SendVerificationStepArgs struct {
+	BaseJobArgs
+	VerificationData map[string]interface{} `json:"verification_data"`
+}
+
+func (SendVerificationStepArgs) Kind() string { return "signup_send_verification" }

@@ -78,6 +78,82 @@ func (s *sOrganizationService) DeactivateOrganization(ctx context.Context, id st
 	return err
 }
 
+func (s *sOrganizationService) CreateOrganizationSubscription(ctx context.Context, createdata *do.OrganizationSubscriptions) (*entity.OrganizationSubscriptions, error) {
+
+	_, err := dao.OrganizationSubscriptions.Ctx(ctx).Data(createdata).Insert()
+	if err != nil {
+		return nil, err
+	}
+
+	// createdata.Id is interface{}; assert or convert to string
+	var id string
+	switch v := createdata.Id.(type) {
+	case string:
+		id = v
+	case []byte:
+		id = string(v)
+	default:
+		return nil, fmt.Errorf("unsupported id type: %T", createdata.Id)
+	}
+
+	return s.GetOrganizationSubscription(ctx, id)
+}
+
+func (s *sOrganizationService) GetOrganizationSubscription(ctx context.Context, id string) (*entity.OrganizationSubscriptions, error) {
+	var organizationsubscription entity.OrganizationSubscriptions
+	err := dao.OrganizationSubscriptions.Ctx(ctx).Where(dao.OrganizationSubscriptions.Columns().Id, id).Scan(&organizationsubscription)
+	if err != nil {
+		return nil, err
+	}
+	return &organizationsubscription, nil
+
+}
+
+func (s *sOrganizationService) GetOrganizationSubscriptionByOrganizationID(ctx context.Context, organizationID string) (*entity.OrganizationSubscriptions, error) {
+	var organizationsubscription entity.OrganizationSubscriptions
+	err := dao.OrganizationSubscriptions.Ctx(ctx).Where(dao.OrganizationSubscriptions.Columns().OrganizationId, organizationID).Scan(&organizationsubscription)
+	if err != nil {
+		return nil, err
+	}
+	return &organizationsubscription, nil
+
+}
+
+func (s *sOrganizationService) ListOrganizationSubscriptions(ctx context.Context, offset, limit int) ([]*entity.OrganizationSubscriptions, error) {
+	var organizationsubscriptions []*entity.OrganizationSubscriptions
+	err := dao.OrganizationSubscriptions.Ctx(ctx).Offset(offset).Limit(limit).Scan(&organizationsubscriptions)
+	if err != nil {
+		return nil, err
+	}
+	return organizationsubscriptions, nil
+}
+
+func (s *sOrganizationService) DeactivateOrganizationSubscription(ctx context.Context, id string) error {
+	_, err := dao.OrganizationSubscriptions.Ctx(ctx).Where(dao.OrganizationSubscriptions.Columns().Id, id).Data(do.OrganizationSubscriptions{
+		Status: "cancelled",
+	}).Update()
+	return err
+}
+
+func (s *sOrganizationService) UpdateOrganizationSubscription(ctx context.Context, id string, updatedata *do.OrganizationSubscriptions) (*entity.OrganizationSubscriptions, error) {
+
+	_, err := dao.OrganizationSubscriptions.Ctx(ctx).Where(dao.OrganizationSubscriptions.Columns().Id, id).Data(updatedata).Update()
+	if err != nil {
+		return nil, err
+	}
+	return s.GetOrganizationSubscription(ctx, id)
+}
+
+// get plan by tier
+func (s *sOrganizationService) GetPlanByTier(ctx context.Context, tier string) (*entity.SubscriptionPlans, error) {
+	var plan entity.SubscriptionPlans
+	err := dao.SubscriptionPlans.Ctx(ctx).Where(dao.SubscriptionPlans.Columns().Tier, tier).Scan(&plan)
+	if err != nil {
+		return nil, err
+	}
+	return &plan, nil
+}
+
 // func (s *sOrganizationService) CreateOrganizationUser(ctx context.Context, createdata *do.OrganizationUsers) (*entity.OrganizationUsers, error) {
 
 // 	_, err := dao.OrganizationUsers.Ctx(ctx).Data(createdata).Insert()

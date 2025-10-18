@@ -1,61 +1,61 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { invitationStore, invitations, loading, error } from '$lib/stores/invitation';
-	import { currentOrganization } from '$lib/stores/organization';
-	import type { Invitation } from '$lib/types/invitation';
-	import { Alert, Button, Card, Table, Modal, Select } from '$lib/components/ui';
-	import { toaster } from '$lib/utils/toaster';
+	// import { onMount } from 'svelte';
+	// import { invitationStore, invitations, loading, error } from '@movsm/v1-consortium-web-pkg';
+	// import { currentOrganization } from '@movsm/v1-consortium-web-pkg';
+	// import type { Invitation } from '@movsm/v1-consortium-web-pkg';
+	// import { Alert, Button, Card, Table, Modal, Select } from '@movsm/v1-consortium-web-pkg';
+	// import { toaster } from '@movsm/v1-consortium-web-pkg';
 
-	let showInviteModal = false;
-	let inviteEmail = '';
-	let selectedRoleId = '';
-	//let roles = $currentOrganization?.role ? [{ id: $currentOrganization.role.id, name: $currentOrganization.role.name }] : [];
-	let roles =  ['admin', 'editor', 'viewer'];
-	onMount(() => {
-		console.log('Loading invitations for organization:', $currentOrganization);
-		invitationStore.loadInvitations();
-	});
+	// let showInviteModal = false;
+	// let inviteEmail = '';
+	// let selectedRoleId = '';
+	// //let roles = $currentOrganization?.role ? [{ id: $currentOrganization.role.id, name: $currentOrganization.role.name }] : [];
+	// let roles =  ['admin', 'editor', 'viewer'];
+	// onMount(() => {
+	// 	console.log('Loading invitations for organization:', $currentOrganization);
+	// 	invitationStore.loadInvitations();
+	// });
 
-	async function handleInvite() {
-		try {
-			await invitationStore.inviteMember({
-				id: $currentOrganization?.id || '',
-				email: inviteEmail,
-				role_id: selectedRoleId,
-				role: selectedRoleId
-			});
-			showInviteModal = false;
-			inviteEmail = '';
-			selectedRoleId = '';
-			toaster.create({ type: 'success', title: 'Invitation sent successfully' });
-		} catch (error: any) {
-			toaster.create({ type: 'error', title: error.message || 'Failed to send invitation' });
-		}
-	}
+	// async function handleInvite() {
+	// 	try {
+	// 		await invitationStore.inviteMember({
+	// 			id: $currentOrganization?.id || '',
+	// 			email: inviteEmail,
+	// 			role_id: selectedRoleId,
+	// 			role: selectedRoleId
+	// 		});
+	// 		showInviteModal = false;
+	// 		inviteEmail = '';
+	// 		selectedRoleId = '';
+	// 		toaster.create({ type: 'success', title: 'Invitation sent successfully' });
+	// 	} catch (error: any) {
+	// 		toaster.create({ type: 'error', title: error.message || 'Failed to send invitation' });
+	// 	}
+	// }
 
-	async function handleCancel(invitation: Invitation) {
-		try {
-			await invitationStore.cancelInvitation(invitation.id);
-			toaster.create({ type: 'success', title: 'Invitation cancelled successfully' });
-		} catch (error: any) {
-			toaster.create({ type: 'error', title: error.message || 'Failed to cancel invitation' });
-		}
-	}
+	// async function handleCancel(invitation: Invitation) {
+	// 	try {
+	// 		await invitationStore.cancelInvitation(invitation.id);
+	// 		toaster.create({ type: 'success', title: 'Invitation cancelled successfully' });
+	// 	} catch (error: any) {
+	// 		toaster.create({ type: 'error', title: error.message || 'Failed to cancel invitation' });
+	// 	}
+	// }
 
-	async function handleResend(invitation: Invitation) {
-		try {
-			await invitationStore.resendInvitation(invitation.id);
-			toaster.create({ type: 'success', title: 'Invitation resent successfully' });
-		} catch (error: any) {
-			toaster.create({ type: 'error', title: error.message || 'Failed to resend invitation' });
-		}
-	}
+	// async function handleResend(invitation: Invitation) {
+	// 	try {
+	// 		await invitationStore.resendInvitation(invitation.id);
+	// 		toaster.create({ type: 'success', title: 'Invitation resent successfully' });
+	// 	} catch (error: any) {
+	// 		toaster.create({ type: 'error', title: error.message || 'Failed to resend invitation' });
+	// 	}
+	// }
 
-	function formatDate(dateString: string) {
-		return new Date(dateString).toLocaleDateString();
-	}
+	// function formatDate(dateString: string) {
+	// 	return new Date(dateString).toLocaleDateString();
+	// }
 </script>
-
+<!-- 
 <div class="space-y-6">
 	<div class="flex justify-between items-center">
 		<h1 class="h2">Team Invitations</h1>
@@ -161,4 +161,4 @@
 	</form>
 		{/snippet}
 
-</Modal> 
+</Modal>  -->
