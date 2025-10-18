@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Button, Input, Alert } from '$lib/components/ui/index.js';
-	import { validateEmail, validateRequired } from '$lib/utils/validation.js';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
+	import { Button, Input, Alert } from '@movsm/v1-consortium-web-pkg';
+	import { validateEmail, validateRequired } from '@movsm/v1-consortium-web-pkg';
 
 	let email = $state('');
 	let errors = $state<Record<string, string>>({});
@@ -52,86 +52,6 @@
 		if (errors.email) {
 			errors = { ...errors, email: '' };
 		}
-	}
-</script>
-
-<svelte:head>
-	<title>Resend Verification - FormApp</title>
-</svelte:head>
-
-<div class="min-h-screen flex items-center justify-center bg-surface-50-900-token py-12 px-4 sm:px-6 lg:px-8">
-	<div class="max-w-md w-full space-y-8">
-		<!-- Header -->
-		<div class="text-center">
-			<div class="mx-auto w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center mb-6">
-				<span class="text-white font-bold text-xl">F</span>
-			</div>
-			{#if isSubmitted}
-				<h2 class="text-3xl font-bold text-on-surface-token">Verification email sent</h2>
-				<p class="mt-2 text-sm text-surface-500-400-token">
-					We've sent a new verification email to {email}
-				</p>
-			{:else}
-				<h2 class="text-3xl font-bold text-on-surface-token"><script lang="ts">
-	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Button, Input, Alert } from '$lib/components/ui/index.js';
-	import { validateEmail, validateRequired } from '$lib/utils/validation.js';
-
-	let email = $state('');
-	let errors = $state<Record<string, string>>({});
-	let isSubmitting = $state(false);
-	let emailSent = $state(false);
-
-	function validateForm(): boolean {
-		const newErrors: Record<string, string> = {};
-
-		const emailError = validateRequired(email, 'Email');
-		if (emailError) {
-			newErrors.email = emailError;
-		} else if (!validateEmail(email)) {
-			newErrors.email = 'Please enter a valid email address';
-		}
-
-		errors = newErrors;
-		return Object.keys(newErrors).length === 0;
-	}
-
-	async function handleSubmit() {
-		if (!validateForm()) return;
-
-		isSubmitting = true;
-		authStore.clearError();
-
-		try {
-			// Simulate API call delay
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			
-			// In a real implementation, this would call a resend verification endpoint
-			// await authStore.resendVerification(email);
-			
-			// For now, we'll simulate success
-			emailSent = true;
-		} catch (error) {
-			authStore.setError('Failed to send verification email. Please try again.');
-		} finally {
-			isSubmitting = false;
-		}
-	}
-
-	function handleFieldInput() {
-		return (event: Event) => {
-			email = (event.target as HTMLInputElement).value;
-			// Clear email error
-			if (errors.email) {
-				errors = { ...errors, email: '' };
-			}
-		};
-	}
-
-	function resendEmail() {
-		emailSent = false;
-		handleSubmit();
 	}
 </script>
 
@@ -234,9 +154,9 @@
 					<div>
 						<Button
 							type="submit"
-							variant="primary"
+							color="primary"
 							size="lg"
-							class="w-full"
+							classes="w-full"
 							disabled={isSubmitting}
 						>
 							{isSubmitting ? 'Sending Verification Email...' : 'Send Verification Email'}
@@ -259,76 +179,6 @@
 						</p>
 					</div>
 				</form>
-			{/if}
-		</div>
-	</div>
-</div></h2>
-				<p class="mt-2 text-sm text-surface-500-400-token">
-					Enter your email address and we'll send you a new verification link.
-				</p>
-			{/if}
-		</div>
-
-		<!-- Form or success message -->
-		<div class="card p-8">
-			{#if isSubmitted}
-				<div class="text-center space-y-4">
-					<Alert type="success" message="Verification email sent successfully!" />
-					
-					<div class="space-y-4">
-						<p class="text-sm text-surface-500-400-token">
-							Check your email and click the verification link. 
-							If you don't see the email, check your spam folder.
-						</p>
-						
-						<div class="flex flex-col space-y-2">
-							<Button variant="filled" onclick={() => { isSubmitted = false; email = ''; }}>
-								Send another email
-							</Button>
-							
-							<a href="/auth/signin">
-								<Button variant="ghost" classes="w-full">
-									Back to sign in
-								</Button>
-							</a>
-						</div>
-					</div>
-				</div>
-			{:else}
-				{#if $authStore.error}
-					<div class="mb-6">
-						<Alert type="error" message={$authStore.error} />
-					</div>
-				{/if}
-
-				<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }} class="space-y-6">
-					<Input
-						type="email"
-						label="Email address"
-						placeholder="Enter your email"
-						value={email}
-						required
-						error={errors.email}
-						oninput={handleEmailInput}
-					/>
-
-					<Button
-						type="submit"
-						variant="filled"
-						size="lg"
-						classes="w-full"
-						loading={isSubmitting}
-						disabled={isSubmitting}
-					>
-						{isSubmitting ? 'Sending...' : 'Send verification email'}
-					</Button>
-				</form>
-
-				<div class="mt-6 text-center">
-					<a href="/auth/signin" class="text-sm font-medium text-primary-500 hover:text-primary-400">
-						← Back to sign in
-					</a>
-				</div>
 			{/if}
 		</div>
 	</div>

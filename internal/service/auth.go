@@ -8,6 +8,7 @@ package service
 import (
 	"context"
 	"v1consortium/internal/model"
+	"v1consortium/internal/model/do"
 	"v1consortium/internal/model/entity"
 )
 
@@ -16,6 +17,8 @@ type (
 		Login(ctx context.Context, email string, password string, ipaddress string, useragent string) (*model.LoginResponse, error)
 		Logout(ctx context.Context, token string) error
 		RegisterUser(ctx context.Context, email string, password string, data map[string]interface{}) (userID string, err error)
+		// make sure to supply id in profileData for create
+		CreateUserProfile(ctx context.Context, id string, profileData *do.UserProfiles) error
 		RefreshToken(ctx context.Context, refreshToken string) (access string, refresh string, err error)
 		GetUserProfileByEmail(ctx context.Context, email string) (*entity.UserProfiles, error)
 		ForgotPassword(ctx context.Context, email string) error

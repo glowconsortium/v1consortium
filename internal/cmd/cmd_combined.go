@@ -32,6 +32,7 @@ var (
 		Usage: "combined",
 		Brief: "start combined server with vanguard and connect",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			SetupInternalStartupData(ctx)
 			return runCombinedServer(ctx)
 		},
 	}
@@ -42,6 +43,11 @@ func runCombinedServer(ctx context.Context) error {
 
 	log.Printf("🚀 Starting V1 Consortium server on %s", cfg.HTTPAddr)
 	log.Printf("📊 Environment: %s", cfg.Environment)
+
+	err := setupRiverDependentServices(ctx)
+	if err != nil {
+		panic(fmt.Errorf("failed to setup River services: %w", err))
+	}
 
 	// Initialize GoFrame server
 	s := g.Server()
@@ -61,6 +67,12 @@ func runCombinedServer(ctx context.Context) error {
 	log.Println("📡 Protocols: HTTP/1.1, HTTP/2, gRPC, gRPC-Web, Connect")
 	log.Printf("📖 Documentation: http://localhost%s/docs/", cfg.HTTPAddr)
 	log.Printf("🔍 Health: http://localhost%s/health", cfg.HTTPAddr)
+
+	// Setup graceful shutdown for River resources
+	defer func() {
+		log.Println("🧹 Cleaning up River dependencies...")
+		CleanupRiverDependencies()
+	}()
 
 	// Start server (GoFrame handles graceful shutdown automatically)
 	s.Run()
@@ -213,6 +225,7 @@ func setupConnectServices(ctx context.Context, cfg *config.Config) (*vanguard.Tr
 	// Auth service
 	authPath, authHandler := authv1connect.NewAuthServiceHandler(
 		authService,
+
 		connect.WithInterceptors(interceptorChain...),
 	)
 	services = append(services, vanguard.NewService(authPath, authHandler))

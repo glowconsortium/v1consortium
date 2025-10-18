@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
-import { apiClient, createApiTransport, type AuthState as ApiAuthState } from '../api/api.js';
-import type { UserSession, LoginResponse, RegisterResponse } from '../gen/auth/v1/auth_pb.js';
+import { apiClient } from '../api/api.js';
+import type { UserSession, LoginResponse } from '../gen/auth/v1/auth_pb.js';
 
 interface AuthState {
     user: UserSession | null;
@@ -15,16 +15,6 @@ interface LoginCredentials {
     email: string;
     password: string;
     rememberMe?: boolean;
-}
-
-interface RegisterCredentials {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    organizationId?: string;
-    role?: string;
-    invitationToken?: string;
 }
 
 interface ApiConfig {
@@ -111,11 +101,8 @@ function createAuthStore() {
             update((state: AuthState) => ({ ...state, isLoading: true }));
 
             try {
-                // Create transport with token interceptor
-                const transport = createApiTransport(config.baseUrl, () => apiClient.getToken());
-                
                 // Initialize API client
-                apiClient.initialize(transport, config.baseUrl);
+                apiClient.initialize(config.baseUrl);
                 
                 // Sync initial state
                 await syncWithApiClient();
@@ -232,36 +219,6 @@ function createAuthStore() {
         // Get access token
         async getAccessToken(): Promise<string | null> {
             return apiClient.getToken();
-        },
-
-        // Register user
-        async register(credentials: RegisterCredentials): Promise<RegisterResponse> {
-            update((state: AuthState) => ({ ...state, isLoading: true, error: null }));
-
-            try {
-                const response = await apiClient.register(
-                    credentials.email,
-                    credentials.password,
-                    credentials.firstName,
-                    credentials.lastName,
-                    credentials.organizationId,
-                    credentials.role,
-                    credentials.invitationToken
-                );
-                
-                return response;
-            } catch (error: any) {
-                const errorMessage = error.message || 'Registration failed';
-                console.error('Registration error:', error);
-                update((state: AuthState) => ({
-                    ...state,
-                    isLoading: false,
-                    error: errorMessage
-                }));
-                throw error;
-            } finally {
-                update((state: AuthState) => ({ ...state, isLoading: false }));
-            }
         },
 
         // Get current user

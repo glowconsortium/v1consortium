@@ -451,38 +451,6 @@
         ]
       }
     },
-    "/api/v1/auth/register": {
-      "post": {
-        "operationId": "AuthService_RegisterUser",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/authRegisterResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/authRegisterRequest"
-            }
-          }
-        ],
-        "tags": [
-          "AuthService"
-        ]
-      }
-    },
     "/api/v1/auth/reset-password": {
       "post": {
         "operationId": "AuthService_ResetPassword",
@@ -589,6 +557,166 @@
         ],
         "tags": [
           "AuthorizationService"
+        ]
+      }
+    },
+    "/api/v1/auth/signup": {
+      "post": {
+        "summary": "New Two-Step Signup Process",
+        "operationId": "AuthService_Signup",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authSignupResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authSignupRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/api/v1/auth/signup/complete": {
+      "post": {
+        "operationId": "AuthService_CompleteRegistration",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authCompleteRegistrationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authCompleteRegistrationRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/api/v1/auth/signup/resend-verification": {
+      "post": {
+        "operationId": "AuthService_ResendVerification",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authResendVerificationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authResendVerificationRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/api/v1/auth/signup/social": {
+      "post": {
+        "operationId": "AuthService_SocialSignup",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authSocialSignupResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authSocialSignupRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/api/v1/auth/signup/status/{workflowId}": {
+      "get": {
+        "summary": "Workflow Management",
+        "operationId": "AuthService_GetSignupStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authGetSignupStatusResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workflowId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AuthService"
         ]
       }
     },
@@ -7316,6 +7444,55 @@
         }
       }
     },
+    "authCompleteRegistrationRequest": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "string"
+        },
+        "emailVerificationToken": {
+          "type": "string"
+        },
+        "organizationId": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "subscriptionPlan": {
+          "type": "string",
+          "title": "Optional subscription plan"
+        }
+      },
+      "title": "Step 2: Complete Registration - After Email Verification and Subscription"
+    },
+    "authCompleteRegistrationResponse": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "$ref": "#/definitions/authUserSession"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
     "authCreateSessionResponse": {
       "type": "object",
       "properties": {
@@ -7426,6 +7603,39 @@
           "items": {
             "$ref": "#/definitions/authPermission"
           }
+        }
+      }
+    },
+    "authGetSignupStatusResponse": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "title": "\"pending_verification\", \"verified\", \"completed\", \"expired\", \"failed\""
+        },
+        "email": {
+          "type": "string"
+        },
+        "emailVerified": {
+          "type": "boolean"
+        },
+        "subscriptionCompleted": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nextStep": {
+          "type": "string",
+          "title": "Description of what the user needs to do next"
         }
       }
     },
@@ -7628,51 +7838,30 @@
         }
       }
     },
-    "authRegisterRequest": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "organizationId": {
-          "type": "string"
-        },
-        "role": {
-          "type": "string"
-        },
-        "invitationToken": {
-          "type": "string"
-        }
-      }
-    },
-    "authRegisterResponse": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        },
-        "requiresVerification": {
-          "type": "boolean"
-        }
-      }
-    },
     "authRemoveRoleResponse": {
       "type": "object",
       "properties": {
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "authResendVerificationRequest": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "string"
+        }
+      }
+    },
+    "authResendVerificationResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "sent": {
+          "type": "boolean"
         }
       }
     },
@@ -7748,6 +7937,94 @@
           "format": "date-time"
         },
         "isCurrent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "authSignupRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "invitationToken": {
+          "type": "string",
+          "title": "Optional invitation token"
+        },
+        "companyName": {
+          "type": "string",
+          "title": "Optional company name"
+        },
+        "isDotCompany": {
+          "type": "boolean",
+          "title": "Optional flag to indicate if the company is a .com company"
+        },
+        "dotNumber": {
+          "type": "string",
+          "title": "Optional DOT number for .com companies"
+        }
+      },
+      "title": "Step 1: Initial Signup - User Information"
+    },
+    "authSignupResponse": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "requiresEmailVerification": {
+          "type": "boolean"
+        }
+      }
+    },
+    "authSocialSignupRequest": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "\"google\", \"facebook\", \"github\", etc."
+        },
+        "providerToken": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "invitationToken": {
+          "type": "string",
+          "title": "Optional invitation token"
+        }
+      },
+      "title": "Social Signup - OAuth/Social Login"
+    },
+    "authSocialSignupResponse": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "requiresEmailVerification": {
           "type": "boolean"
         }
       }
@@ -10544,6 +10821,12 @@
         "IsActive": {
           "type": "boolean"
         },
+        "IsSystemUser": {
+          "type": "boolean"
+        },
+        "StripeCustomerId": {
+          "type": "string"
+        },
         "RequiresDotTesting": {
           "type": "boolean"
         },
@@ -10589,6 +10872,9 @@
         "LastLoginAt": {
           "type": "string",
           "format": "date-time"
+        },
+        "Settings": {
+          "type": "string"
         }
       }
     },

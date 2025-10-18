@@ -1,295 +1,295 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { authService } from '$lib/api/auth.js';
-    import { userStore } from '$lib/stores/user.js';
-    import Button from '$lib/components/ui/Button.svelte';
-    import Input from '$lib/components/ui/Input.svelte';
-    import Card from '$lib/components/ui/Card.svelte';
-    import Icon from '$lib/components/ui/Icon.svelte';
-    import Badge from '$lib/components/ui/Badge.svelte';
-	import { toaster } from '$lib/utils/toaster';
+    // import { onMount } from 'svelte';
+    // import { authService } from '$lib/api/auth.js';
+    // import { userStore } from '$lib/stores/user.js';
+    // import Button from '$lib/components/ui/Button.svelte';
+    // import Input from '$lib/components/ui/Input.svelte';
+    // import Card from '$lib/components/ui/Card.svelte';
+    // import Icon from '$lib/components/ui/Icon.svelte';
+    // import Badge from '$lib/components/ui/Badge.svelte';
+	// import { toaster } from '$lib/utils/toaster';
 
-    // Runes for reactive state
-    let loading = $state(false);
-    let error = $state('');
-    let success = $state('');
+    // // Runes for reactive state
+    // let loading = $state(false);
+    // let error = $state('');
+    // let success = $state('');
     
-    // Use userStore instead of local user state
-    const user = $derived($userStore.profile);
+    // // Use userStore instead of local user state
+    // const user = $derived($userStore.profile);
 
-    // Profile form data
-    let profileForm = $state({
-        name: '',
-        email: '',
-        company: '',
-        timezone: '',
-        avatar_url: ''
-    });
+    // // Profile form data
+    // let profileForm = $state({
+    //     name: '',
+    //     email: '',
+    //     company: '',
+    //     timezone: '',
+    //     avatar_url: ''
+    // });
 
-    // Email change form
-    let emailForm = $state({
-        new_email: '',
-        password: ''
-    });
+    // // Email change form
+    // let emailForm = $state({
+    //     new_email: '',
+    //     password: ''
+    // });
 
-    // Password change form
-    let passwordForm = $state({
-        current_password: '',
-        new_password: '',
-        confirm_password: ''
-    });
+    // // Password change form
+    // let passwordForm = $state({
+    //     current_password: '',
+    //     new_password: '',
+    //     confirm_password: ''
+    // });
 
-    // Form states
-    let editingProfile = $state(false);
-    let changingEmail = $state(false);
-    let changingPassword = $state(false);
-    let deletingAccount = $state(false);
+    // // Form states
+    // let editingProfile = $state(false);
+    // let changingEmail = $state(false);
+    // let changingPassword = $state(false);
+    // let deletingAccount = $state(false);
 
-    // Delete account confirmation
-    let deleteForm = $state({
-        password: '',
-        confirm: '',
-        confirmText: ''
-    });
+    // // Delete account confirmation
+    // let deleteForm = $state({
+    //     password: '',
+    //     confirm: '',
+    //     confirmText: ''
+    // });
 
-    // Available timezones
-    const timezones = [
-        'UTC',
-        'America/New_York',
-        'America/Chicago',
-        'America/Denver',
-        'America/Los_Angeles',
-        'Europe/London',
-        'Europe/Paris',
-        'Europe/Berlin',
-        'Asia/Tokyo',
-        'Asia/Shanghai',
-        'Australia/Sydney'
-    ];
+    // // Available timezones
+    // const timezones = [
+    //     'UTC',
+    //     'America/New_York',
+    //     'America/Chicago',
+    //     'America/Denver',
+    //     'America/Los_Angeles',
+    //     'Europe/London',
+    //     'Europe/Paris',
+    //     'Europe/Berlin',
+    //     'Asia/Tokyo',
+    //     'Asia/Shanghai',
+    //     'Australia/Sydney'
+    // ];
 
-    // Computed values using runes
-    const isValidEmail = $derived(
-        emailForm.new_email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForm.new_email)
-    );
+    // // Computed values using runes
+    // const isValidEmail = $derived(
+    //     emailForm.new_email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForm.new_email)
+    // );
 
-    const passwordsMatch = $derived(
-        passwordForm.new_password === passwordForm.confirm_password
-    );
+    // const passwordsMatch = $derived(
+    //     passwordForm.new_password === passwordForm.confirm_password
+    // );
 
-    const isValidPassword = $derived(
-        passwordForm.new_password && passwordForm.new_password.length >= 8
-    );
+    // const isValidPassword = $derived(
+    //     passwordForm.new_password && passwordForm.new_password.length >= 8
+    // );
 
-    const canChangePassword = $derived(
-        passwordForm.current_password && 
-        isValidPassword && 
-        passwordsMatch && 
-        !loading
-    );
+    // const canChangePassword = $derived(
+    //     passwordForm.current_password && 
+    //     isValidPassword && 
+    //     passwordsMatch && 
+    //     !loading
+    // );
 
-    const canChangeEmail = $derived(
-        isValidEmail && 
-        emailForm.password && 
-        !loading
-    );
+    // const canChangeEmail = $derived(
+    //     isValidEmail && 
+    //     emailForm.password && 
+    //     !loading
+    // );
 
-    const canDeleteAccount = $derived(
-        deleteForm.password && 
-        deleteForm.confirm === deleteForm.password && 
-        deleteForm.confirmText === 'DELETE' && 
-        !loading
-    );
+    // const canDeleteAccount = $derived(
+    //     deleteForm.password && 
+    //     deleteForm.confirm === deleteForm.password && 
+    //     deleteForm.confirmText === 'DELETE' && 
+    //     !loading
+    // );
 
-    const hasProfileChanges = $derived(() => {
-        if (!user) return false;
-        return (
-            profileForm.name !== (user.name || '') ||
-            profileForm.company !== (user.company || '') ||
-            profileForm.timezone !== (user.timezone || '') ||
-            profileForm.avatar_url !== (user.profile_picture || '')
-        );
-    });
+    // const hasProfileChanges = $derived(() => {
+    //     if (!user) return false;
+    //     return (
+    //         profileForm.name !== (user.name || '') ||
+    //         profileForm.company !== (user.company || '') ||
+    //         profileForm.timezone !== (user.timezone || '') ||
+    //         profileForm.avatar_url !== (user.profile_picture || '')
+    //     );
+    // });
 
-    onMount(async () => {
-        await loadUserProfile();
-    });
+    // onMount(async () => {
+    //     await loadUserProfile();
+    // });
 
-    async function loadUserProfile() {
-        try {
-            loading = true;
-            await userStore.loadProfile();
-            const currentUser = $userStore.profile;
+    // async function loadUserProfile() {
+    //     try {
+    //         loading = true;
+    //         await userStore.loadProfile();
+    //         const currentUser = $userStore.profile;
             
-            if (currentUser) {
-                profileForm = {
-                    name: currentUser.name || '',
-                    email: currentUser.email || '',
-                    company: currentUser.company || '',
-                    timezone: currentUser.timezone || 'UTC',
-                    avatar_url: currentUser.profile_picture || ''
-                };
-            }
-        } catch (err: any) {
-            error = err.message || 'Failed to load profile';
-        } finally {
-            loading = false;
-        }
-    }
+    //         if (currentUser) {
+    //             profileForm = {
+    //                 name: currentUser.name || '',
+    //                 email: currentUser.email || '',
+    //                 company: currentUser.company || '',
+    //                 timezone: currentUser.timezone || 'UTC',
+    //                 avatar_url: currentUser.profile_picture || ''
+    //             };
+    //         }
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to load profile';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function handleUpdateProfile() {
-        try {
-            loading = true;
-            error = '';
+    // async function handleUpdateProfile() {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            const updateData = {
-                name: profileForm.name.trim() || undefined,
-                company: profileForm.company.trim() || undefined,
-                timezone: profileForm.timezone || undefined,
-                avatar_url: profileForm.avatar_url.trim() || undefined
-            };
+    //         const updateData = {
+    //             name: profileForm.name.trim() || undefined,
+    //             company: profileForm.company.trim() || undefined,
+    //             timezone: profileForm.timezone || undefined,
+    //             avatar_url: profileForm.avatar_url.trim() || undefined
+    //         };
 
-            await userStore.updateProfile(updateData);
-            success = 'Profile updated successfully';
-            editingProfile = false;
-        } catch (err: any) {
-            error = err.message || 'Failed to update profile';
-        } finally {
-            loading = false;
-        }
-    }
+    //         await userStore.updateProfile(updateData);
+    //         success = 'Profile updated successfully';
+    //         editingProfile = false;
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to update profile';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function handleChangeEmail() {
-        try {
-            loading = true;
-            error = '';
+    // async function handleChangeEmail() {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.changeEmail({
-                new_email: emailForm.new_email.trim(),
-                password: emailForm.password
-            });
+    //         await authService.changeEmail({
+    //             new_email: emailForm.new_email.trim(),
+    //             password: emailForm.password
+    //         });
 
-            success = 'Email change request sent. Please check your email to verify the new address.';
-            changingEmail = false;
-            emailForm = { new_email: '', password: '' };
-        } catch (err: any) {
-            error = err.message || 'Failed to change email';
-        } finally {
-            loading = false;
-        }
-    }
+    //         success = 'Email change request sent. Please check your email to verify the new address.';
+    //         changingEmail = false;
+    //         emailForm = { new_email: '', password: '' };
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to change email';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function handleChangePassword() {
-        try {
-            loading = true;
-            error = '';
+    // async function handleChangePassword() {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.changePassword({
-                current_password: passwordForm.current_password,
-                new_password: passwordForm.new_password
-            });
+    //         await authService.changePassword({
+    //             current_password: passwordForm.current_password,
+    //             new_password: passwordForm.new_password
+    //         });
 
-            success = 'Password changed successfully';
-            changingPassword = false;
-            passwordForm = {
-                current_password: '',
-                new_password: '',
-                confirm_password: ''
-            };
-        } catch (err: any) {
-            error = err.message || 'Failed to change password';
-        } finally {
-            loading = false;
-        }
-    }
+    //         success = 'Password changed successfully';
+    //         changingPassword = false;
+    //         passwordForm = {
+    //             current_password: '',
+    //             new_password: '',
+    //             confirm_password: ''
+    //         };
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to change password';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function handleDeleteAccount() {
-        try {
-            loading = true;
-            error = '';
+    // async function handleDeleteAccount() {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.deleteProfile(deleteForm.password, deleteForm.confirm);
+    //         await authService.deleteProfile(deleteForm.password, deleteForm.confirm);
             
-            // Redirect to login or home page after successful deletion
-            window.location.href = '/';
-        } catch (err: any) {
-            error = err.message || 'Failed to delete account';
-        } finally {
-            loading = false;
-        }
-    }
+    //         // Redirect to login or home page after successful deletion
+    //         window.location.href = '/';
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to delete account';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    function cancelProfileEdit() {
-        editingProfile = false;
-        if (user) {
-            profileForm = {
-                name: user.name || '',
-                email: user.email || '',
-                company: user.company || '',
-                timezone: user.timezone || 'UTC',
-                avatar_url: user.profile_picture || ''
-            };
-        }
-    }
+    // function cancelProfileEdit() {
+    //     editingProfile = false;
+    //     if (user) {
+    //         profileForm = {
+    //             name: user.name || '',
+    //             email: user.email || '',
+    //             company: user.company || '',
+    //             timezone: user.timezone || 'UTC',
+    //             avatar_url: user.profile_picture || ''
+    //         };
+    //     }
+    // }
 
-    function cancelEmailChange() {
-        changingEmail = false;
-        emailForm = { new_email: '', password: '' };
-    }
+    // function cancelEmailChange() {
+    //     changingEmail = false;
+    //     emailForm = { new_email: '', password: '' };
+    // }
 
-    function cancelPasswordChange() {
-        changingPassword = false;
-        passwordForm = {
-            current_password: '',
-            new_password: '',
-            confirm_password: ''
-        };
-    }
+    // function cancelPasswordChange() {
+    //     changingPassword = false;
+    //     passwordForm = {
+    //         current_password: '',
+    //         new_password: '',
+    //         confirm_password: ''
+    //     };
+    // }
 
-    function cancelAccountDeletion() {
-        deletingAccount = false;
-        deleteForm = {
-            password: '',
-            confirm: '',
-            confirmText: ''
-        };
-    }
+    // function cancelAccountDeletion() {
+    //     deletingAccount = false;
+    //     deleteForm = {
+    //         password: '',
+    //         confirm: '',
+    //         confirmText: ''
+    //     };
+    // }
 
-    async function handleResendVerification() {
-        try {
-            loading = true;
-            await authService.resendVerification({ email: user?.email || '' });
-            success = 'Verification email sent';
-        } catch (err: any) {
-            error = 'Failed to send verification email';
-        } finally {
-            loading = false;
-        }
-    }
+    // async function handleResendVerification() {
+    //     try {
+    //         loading = true;
+    //         await authService.resendVerification({ email: user?.email || '' });
+    //         success = 'Verification email sent';
+    //     } catch (err: any) {
+    //         error = 'Failed to send verification email';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    // Clear messages after 5 seconds
-    $effect(() => {
-        if (error || success) {
-            const timer = setTimeout(() => {
-                error = '';
-                success = '';
-            }, 5000);
+    // // Clear messages after 5 seconds
+    // $effect(() => {
+    //     if (error || success) {
+    //         const timer = setTimeout(() => {
+    //             error = '';
+    //             success = '';
+    //         }, 5000);
             
-            return () => clearTimeout(timer);
-        }
-    });
+    //         return () => clearTimeout(timer);
+    //     }
+    // });
 
-    // Sync form data when user changes
-    $effect(() => {
-        if (user && !editingProfile) {
-            profileForm = {
-                name: user.name || '',
-                email: user.email || '',
-                company: user.company || '',
-                timezone: user.timezone || 'UTC',
-                avatar_url: user.profile_picture || ''
-            };
-        }
-    });
+    // // Sync form data when user changes
+    // $effect(() => {
+    //     if (user && !editingProfile) {
+    //         profileForm = {
+    //             name: user.name || '',
+    //             email: user.email || '',
+    //             company: user.company || '',
+    //             timezone: user.timezone || 'UTC',
+    //             avatar_url: user.profile_picture || ''
+    //         };
+    //     }
+    // });
 </script>
 
 <svelte:head>

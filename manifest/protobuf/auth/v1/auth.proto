@@ -23,20 +23,57 @@ message LoginResponse {
   string session_id = 5;
 }
 
-message RegisterRequest {
+// Step 1: Initial Signup - User Information
+message SignupRequest {
   string email = 1;
   string password = 2;
   string first_name = 3;
   string last_name = 4;
-  string organization_id = 5;
-  string role = 6;
-  string invitation_token = 7;
+  string invitation_token = 5; // Optional invitation token
+  string company_name = 6; // Optional company name
+  bool is_dot_company = 7; // Optional flag to indicate if the company is a .com company
+  string dot_number = 8; // Optional DOT number for .com companies
 }
 
-message RegisterResponse {
-  string user_id = 1;
+message SignupResponse {
+  string workflow_id = 1;
   string message = 2;
-  bool requires_verification = 3;
+  bool requires_email_verification = 3;
+}
+
+// Social Signup - OAuth/Social Login
+message SocialSignupRequest {
+  string provider = 1; // "google", "facebook", "github", etc.
+  string provider_token = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string email = 5;
+  string invitation_token = 6; // Optional invitation token
+}
+
+message SocialSignupResponse {
+  string workflow_id = 1;
+  string message = 2;
+  bool requires_email_verification = 3;
+}
+
+// Step 2: Complete Registration - After Email Verification and Subscription
+message CompleteRegistrationRequest {
+  string workflow_id = 1;
+  string email_verification_token = 2;
+  string organization_id = 3;
+  string role = 4;
+  string subscription_plan = 5; // Optional subscription plan
+}
+
+message CompleteRegistrationResponse {
+  string user_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  UserSession user = 5;
+  string session_id = 6;
+  string message = 7;
 }
 
 message RefreshTokenRequest {
@@ -123,6 +160,31 @@ message DisableMFAResponse {
   string message = 1;
 }
 
+// Workflow Management Messages
+message GetSignupStatusRequest {
+  string workflow_id = 1;
+}
+
+message GetSignupStatusResponse {
+  string workflow_id = 1;
+  string status = 2; // "pending_verification", "verified", "completed", "expired", "failed"
+  string email = 3;
+  bool email_verified = 4;
+  bool subscription_completed = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp expires_at = 7;
+  string next_step = 8; // Description of what the user needs to do next
+}
+
+message ResendVerificationRequest {
+  string workflow_id = 1;
+}
+
+message ResendVerificationResponse {
+  string message = 1;
+  bool sent = 2;
+}
+
 // Session and User Information
 message UserSession {
   string user_id = 1;
@@ -188,9 +250,24 @@ service AuthService {
     };
   }
 
-  rpc RegisterUser(RegisterRequest) returns (RegisterResponse) {
+  // New Two-Step Signup Process
+  rpc Signup(SignupRequest) returns (SignupResponse) {
     option (google.api.http) = {
-      post: "/api/v1/auth/register"
+      post: "/api/v1/auth/signup"
+      body: "*"
+    };
+  }
+
+  rpc SocialSignup(SocialSignupRequest) returns (SocialSignupResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/signup/social"
+      body: "*"
+    };
+  }
+
+  rpc CompleteRegistration(CompleteRegistrationRequest) returns (CompleteRegistrationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/signup/complete"
       body: "*"
     };
   }
@@ -283,5 +360,17 @@ service AuthService {
 
   rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse) {
     option (google.api.http) = {get: "/api/v1/auth/users/{user_id}/permissions"};
+  }
+
+  // Workflow Management
+  rpc GetSignupStatus(GetSignupStatusRequest) returns (GetSignupStatusResponse) {
+    option (google.api.http) = {get: "/api/v1/auth/signup/status/{workflow_id}"};
+  }
+
+  rpc ResendVerification(ResendVerificationRequest) returns (ResendVerificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/signup/resend-verification"
+      body: "*"
+    };
   }
 }

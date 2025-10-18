@@ -1,73 +1,73 @@
 <script lang="ts">
-    import { onboardingStore } from '$lib/stores/onboardingStore.js';
-    import { goto } from '$app/navigation';
-    import type { CreateOrganizationData } from '$lib/types/onboarding.js';
-    import { OnboardingStep } from '$lib/types/onboarding.js';
+    // import { onboardingStore } from '$lib/stores/onboardingStore.js';
+    // import { goto } from '$app/navigation';
+    // import type { CreateOrganizationData } from '$lib/types/onboarding.js';
+    // import { OnboardingStep } from '$lib/types/onboarding.js';
 
-    const { loading, error, clearError } = onboardingStore;
+    // const { loading, error, clearError } = onboardingStore;
     
-    let orgData = $state<CreateOrganizationData>({
-        name: '',
-        slug: '',
-        description: ''
-    });
+    // let orgData = $state<CreateOrganizationData>({
+    //     name: '',
+    //     slug: '',
+    //     description: ''
+    // });
     
-    let formErrors = $state<Record<string, string>>({});
+    // let formErrors = $state<Record<string, string>>({});
     
-    // Generate slug from name
-    function generateSlug(name: string): string {
-        return name
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with hyphens
-            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
-            .substring(0, 50); // Limit length
-    }
+    // // Generate slug from name
+    // function generateSlug(name: string): string {
+    //     return name
+    //         .toLowerCase()
+    //         .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with hyphens
+    //         .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+    //         .substring(0, 50); // Limit length
+    // }
     
-    // Update slug when name changes
-    $effect(() => {
-        if (orgData.name) {
-            orgData.slug = generateSlug(orgData.name);
-        }
-    });
+    // // Update slug when name changes
+    // $effect(() => {
+    //     if (orgData.name) {
+    //         orgData.slug = generateSlug(orgData.name);
+    //     }
+    // });
     
-    async function handleSubmit() {
-        formErrors = {};
-        clearError();
+    // async function handleSubmit() {
+    //     formErrors = {};
+    //     clearError();
         
-        // Basic validation
-        if (!orgData.name?.trim()) {
-            formErrors.name = 'Organization name is required';
-            return;
-        }
+    //     // Basic validation
+    //     if (!orgData.name?.trim()) {
+    //         formErrors.name = 'Organization name is required';
+    //         return;
+    //     }
         
-        if (!orgData.slug?.trim()) {
-            formErrors.name = 'Invalid organization name. Please use alphanumeric characters.';
-            return;
-        }
+    //     if (!orgData.slug?.trim()) {
+    //         formErrors.name = 'Invalid organization name. Please use alphanumeric characters.';
+    //         return;
+    //     }
         
-        try {
-            const response = await onboardingStore.createOrganization(orgData);
-            if (response?.data) {
-                goto('/onboarding/plans');
-            } else {
-                formErrors.name = 'Failed to create organization. Please try again.';
-            }
-        } catch (error: any) {
-            console.error('Failed to create organization:', error);
-            formErrors.name = error?.message || 'Failed to create organization. Please try again.';
-        }
-    }
+    //     try {
+    //         const response = await onboardingStore.createOrganization(orgData);
+    //         if (response?.data) {
+    //             goto('/onboarding/plans');
+    //         } else {
+    //             formErrors.name = 'Failed to create organization. Please try again.';
+    //         }
+    //     } catch (error: any) {
+    //         console.error('Failed to create organization:', error);
+    //         formErrors.name = error?.message || 'Failed to create organization. Please try again.';
+    //     }
+    // }
     
-    function handleBack() {
-        goto('/onboarding');
-    }
+    // function handleBack() {
+    //     goto('/onboarding');
+    // }
 </script>
 
 <svelte:head>
     <title>Create Organization - FormApp Onboarding</title>
 </svelte:head>
 
-<div class="max-w-2xl mx-auto px-4 sm:px-6 py-8">
+<!-- <div class="max-w-2xl mx-auto px-4 sm:px-6 py-8">
     <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Create Your Organization</h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">Set up your workspace to start collecting data</p>
@@ -166,4 +166,4 @@
             </div>
         </div>
     {/if}
-</div>
+</div> -->

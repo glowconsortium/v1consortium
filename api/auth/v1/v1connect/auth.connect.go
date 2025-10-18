@@ -35,9 +35,14 @@ const (
 const (
 	// AuthServiceLoginProcedure is the fully-qualified name of the AuthService's Login RPC.
 	AuthServiceLoginProcedure = "/v1consortium.auth.AuthService/Login"
-	// AuthServiceRegisterUserProcedure is the fully-qualified name of the AuthService's RegisterUser
+	// AuthServiceSignupProcedure is the fully-qualified name of the AuthService's Signup RPC.
+	AuthServiceSignupProcedure = "/v1consortium.auth.AuthService/Signup"
+	// AuthServiceSocialSignupProcedure is the fully-qualified name of the AuthService's SocialSignup
 	// RPC.
-	AuthServiceRegisterUserProcedure = "/v1consortium.auth.AuthService/RegisterUser"
+	AuthServiceSocialSignupProcedure = "/v1consortium.auth.AuthService/SocialSignup"
+	// AuthServiceCompleteRegistrationProcedure is the fully-qualified name of the AuthService's
+	// CompleteRegistration RPC.
+	AuthServiceCompleteRegistrationProcedure = "/v1consortium.auth.AuthService/CompleteRegistration"
 	// AuthServiceRefreshTokenProcedure is the fully-qualified name of the AuthService's RefreshToken
 	// RPC.
 	AuthServiceRefreshTokenProcedure = "/v1consortium.auth.AuthService/RefreshToken"
@@ -70,13 +75,22 @@ const (
 	// AuthServiceGetUserPermissionsProcedure is the fully-qualified name of the AuthService's
 	// GetUserPermissions RPC.
 	AuthServiceGetUserPermissionsProcedure = "/v1consortium.auth.AuthService/GetUserPermissions"
+	// AuthServiceGetSignupStatusProcedure is the fully-qualified name of the AuthService's
+	// GetSignupStatus RPC.
+	AuthServiceGetSignupStatusProcedure = "/v1consortium.auth.AuthService/GetSignupStatus"
+	// AuthServiceResendVerificationProcedure is the fully-qualified name of the AuthService's
+	// ResendVerification RPC.
+	AuthServiceResendVerificationProcedure = "/v1consortium.auth.AuthService/ResendVerification"
 )
 
 // AuthServiceClient is a client for the v1consortium.auth.AuthService service.
 type AuthServiceClient interface {
 	// Authentication Operations
 	Login(context.Context, *connect.Request[v1.LoginRequest]) (*connect.Response[v1.LoginResponse], error)
-	RegisterUser(context.Context, *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error)
+	// New Two-Step Signup Process
+	Signup(context.Context, *connect.Request[v1.SignupRequest]) (*connect.Response[v1.SignupResponse], error)
+	SocialSignup(context.Context, *connect.Request[v1.SocialSignupRequest]) (*connect.Response[v1.SocialSignupResponse], error)
+	CompleteRegistration(context.Context, *connect.Request[v1.CompleteRegistrationRequest]) (*connect.Response[v1.CompleteRegistrationResponse], error)
 	RefreshToken(context.Context, *connect.Request[v1.RefreshTokenRequest]) (*connect.Response[v1.RefreshTokenResponse], error)
 	Logout(context.Context, *connect.Request[v1.LogoutRequest]) (*connect.Response[v1.LogoutResponse], error)
 	// Password Management
@@ -95,6 +109,9 @@ type AuthServiceClient interface {
 	// Authorization
 	CheckPermission(context.Context, *connect.Request[v1.CheckPermissionRequest]) (*connect.Response[v1.CheckPermissionResponse], error)
 	GetUserPermissions(context.Context, *connect.Request[v1.GetUserPermissionsRequest]) (*connect.Response[v1.GetUserPermissionsResponse], error)
+	// Workflow Management
+	GetSignupStatus(context.Context, *connect.Request[v1.GetSignupStatusRequest]) (*connect.Response[v1.GetSignupStatusResponse], error)
+	ResendVerification(context.Context, *connect.Request[v1.ResendVerificationRequest]) (*connect.Response[v1.ResendVerificationResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the v1consortium.auth.AuthService service. By
@@ -114,10 +131,22 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("Login")),
 			connect.WithClientOptions(opts...),
 		),
-		registerUser: connect.NewClient[v1.RegisterRequest, v1.RegisterResponse](
+		signup: connect.NewClient[v1.SignupRequest, v1.SignupResponse](
 			httpClient,
-			baseURL+AuthServiceRegisterUserProcedure,
-			connect.WithSchema(authServiceMethods.ByName("RegisterUser")),
+			baseURL+AuthServiceSignupProcedure,
+			connect.WithSchema(authServiceMethods.ByName("Signup")),
+			connect.WithClientOptions(opts...),
+		),
+		socialSignup: connect.NewClient[v1.SocialSignupRequest, v1.SocialSignupResponse](
+			httpClient,
+			baseURL+AuthServiceSocialSignupProcedure,
+			connect.WithSchema(authServiceMethods.ByName("SocialSignup")),
+			connect.WithClientOptions(opts...),
+		),
+		completeRegistration: connect.NewClient[v1.CompleteRegistrationRequest, v1.CompleteRegistrationResponse](
+			httpClient,
+			baseURL+AuthServiceCompleteRegistrationProcedure,
+			connect.WithSchema(authServiceMethods.ByName("CompleteRegistration")),
 			connect.WithClientOptions(opts...),
 		),
 		refreshToken: connect.NewClient[v1.RefreshTokenRequest, v1.RefreshTokenResponse](
@@ -198,26 +227,42 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("GetUserPermissions")),
 			connect.WithClientOptions(opts...),
 		),
+		getSignupStatus: connect.NewClient[v1.GetSignupStatusRequest, v1.GetSignupStatusResponse](
+			httpClient,
+			baseURL+AuthServiceGetSignupStatusProcedure,
+			connect.WithSchema(authServiceMethods.ByName("GetSignupStatus")),
+			connect.WithClientOptions(opts...),
+		),
+		resendVerification: connect.NewClient[v1.ResendVerificationRequest, v1.ResendVerificationResponse](
+			httpClient,
+			baseURL+AuthServiceResendVerificationProcedure,
+			connect.WithSchema(authServiceMethods.ByName("ResendVerification")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // authServiceClient implements AuthServiceClient.
 type authServiceClient struct {
-	login              *connect.Client[v1.LoginRequest, v1.LoginResponse]
-	registerUser       *connect.Client[v1.RegisterRequest, v1.RegisterResponse]
-	refreshToken       *connect.Client[v1.RefreshTokenRequest, v1.RefreshTokenResponse]
-	logout             *connect.Client[v1.LogoutRequest, v1.LogoutResponse]
-	forgotPassword     *connect.Client[v1.ForgotPasswordRequest, v1.ForgotPasswordResponse]
-	resetPassword      *connect.Client[v1.ResetPasswordRequest, v1.ResetPasswordResponse]
-	changePassword     *connect.Client[v1.ChangePasswordRequest, v1.ChangePasswordResponse]
-	verifyEmail        *connect.Client[v1.VerifyEmailRequest, v1.VerifyEmailResponse]
-	enableMFA          *connect.Client[v1.EnableMFARequest, v1.EnableMFAResponse]
-	verifyMFA          *connect.Client[v1.VerifyMFARequest, v1.VerifyMFAResponse]
-	disableMFA         *connect.Client[v1.DisableMFARequest, v1.DisableMFAResponse]
-	getUser            *connect.Client[v1.GetUserRequest, v1.GetUserResponse]
-	updateUser         *connect.Client[v1.UpdateUserRequest, v1.UpdateUserResponse]
-	checkPermission    *connect.Client[v1.CheckPermissionRequest, v1.CheckPermissionResponse]
-	getUserPermissions *connect.Client[v1.GetUserPermissionsRequest, v1.GetUserPermissionsResponse]
+	login                *connect.Client[v1.LoginRequest, v1.LoginResponse]
+	signup               *connect.Client[v1.SignupRequest, v1.SignupResponse]
+	socialSignup         *connect.Client[v1.SocialSignupRequest, v1.SocialSignupResponse]
+	completeRegistration *connect.Client[v1.CompleteRegistrationRequest, v1.CompleteRegistrationResponse]
+	refreshToken         *connect.Client[v1.RefreshTokenRequest, v1.RefreshTokenResponse]
+	logout               *connect.Client[v1.LogoutRequest, v1.LogoutResponse]
+	forgotPassword       *connect.Client[v1.ForgotPasswordRequest, v1.ForgotPasswordResponse]
+	resetPassword        *connect.Client[v1.ResetPasswordRequest, v1.ResetPasswordResponse]
+	changePassword       *connect.Client[v1.ChangePasswordRequest, v1.ChangePasswordResponse]
+	verifyEmail          *connect.Client[v1.VerifyEmailRequest, v1.VerifyEmailResponse]
+	enableMFA            *connect.Client[v1.EnableMFARequest, v1.EnableMFAResponse]
+	verifyMFA            *connect.Client[v1.VerifyMFARequest, v1.VerifyMFAResponse]
+	disableMFA           *connect.Client[v1.DisableMFARequest, v1.DisableMFAResponse]
+	getUser              *connect.Client[v1.GetUserRequest, v1.GetUserResponse]
+	updateUser           *connect.Client[v1.UpdateUserRequest, v1.UpdateUserResponse]
+	checkPermission      *connect.Client[v1.CheckPermissionRequest, v1.CheckPermissionResponse]
+	getUserPermissions   *connect.Client[v1.GetUserPermissionsRequest, v1.GetUserPermissionsResponse]
+	getSignupStatus      *connect.Client[v1.GetSignupStatusRequest, v1.GetSignupStatusResponse]
+	resendVerification   *connect.Client[v1.ResendVerificationRequest, v1.ResendVerificationResponse]
 }
 
 // Login calls v1consortium.auth.AuthService.Login.
@@ -225,9 +270,19 @@ func (c *authServiceClient) Login(ctx context.Context, req *connect.Request[v1.L
 	return c.login.CallUnary(ctx, req)
 }
 
-// RegisterUser calls v1consortium.auth.AuthService.RegisterUser.
-func (c *authServiceClient) RegisterUser(ctx context.Context, req *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error) {
-	return c.registerUser.CallUnary(ctx, req)
+// Signup calls v1consortium.auth.AuthService.Signup.
+func (c *authServiceClient) Signup(ctx context.Context, req *connect.Request[v1.SignupRequest]) (*connect.Response[v1.SignupResponse], error) {
+	return c.signup.CallUnary(ctx, req)
+}
+
+// SocialSignup calls v1consortium.auth.AuthService.SocialSignup.
+func (c *authServiceClient) SocialSignup(ctx context.Context, req *connect.Request[v1.SocialSignupRequest]) (*connect.Response[v1.SocialSignupResponse], error) {
+	return c.socialSignup.CallUnary(ctx, req)
+}
+
+// CompleteRegistration calls v1consortium.auth.AuthService.CompleteRegistration.
+func (c *authServiceClient) CompleteRegistration(ctx context.Context, req *connect.Request[v1.CompleteRegistrationRequest]) (*connect.Response[v1.CompleteRegistrationResponse], error) {
+	return c.completeRegistration.CallUnary(ctx, req)
 }
 
 // RefreshToken calls v1consortium.auth.AuthService.RefreshToken.
@@ -295,11 +350,24 @@ func (c *authServiceClient) GetUserPermissions(ctx context.Context, req *connect
 	return c.getUserPermissions.CallUnary(ctx, req)
 }
 
+// GetSignupStatus calls v1consortium.auth.AuthService.GetSignupStatus.
+func (c *authServiceClient) GetSignupStatus(ctx context.Context, req *connect.Request[v1.GetSignupStatusRequest]) (*connect.Response[v1.GetSignupStatusResponse], error) {
+	return c.getSignupStatus.CallUnary(ctx, req)
+}
+
+// ResendVerification calls v1consortium.auth.AuthService.ResendVerification.
+func (c *authServiceClient) ResendVerification(ctx context.Context, req *connect.Request[v1.ResendVerificationRequest]) (*connect.Response[v1.ResendVerificationResponse], error) {
+	return c.resendVerification.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the v1consortium.auth.AuthService service.
 type AuthServiceHandler interface {
 	// Authentication Operations
 	Login(context.Context, *connect.Request[v1.LoginRequest]) (*connect.Response[v1.LoginResponse], error)
-	RegisterUser(context.Context, *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error)
+	// New Two-Step Signup Process
+	Signup(context.Context, *connect.Request[v1.SignupRequest]) (*connect.Response[v1.SignupResponse], error)
+	SocialSignup(context.Context, *connect.Request[v1.SocialSignupRequest]) (*connect.Response[v1.SocialSignupResponse], error)
+	CompleteRegistration(context.Context, *connect.Request[v1.CompleteRegistrationRequest]) (*connect.Response[v1.CompleteRegistrationResponse], error)
 	RefreshToken(context.Context, *connect.Request[v1.RefreshTokenRequest]) (*connect.Response[v1.RefreshTokenResponse], error)
 	Logout(context.Context, *connect.Request[v1.LogoutRequest]) (*connect.Response[v1.LogoutResponse], error)
 	// Password Management
@@ -318,6 +386,9 @@ type AuthServiceHandler interface {
 	// Authorization
 	CheckPermission(context.Context, *connect.Request[v1.CheckPermissionRequest]) (*connect.Response[v1.CheckPermissionResponse], error)
 	GetUserPermissions(context.Context, *connect.Request[v1.GetUserPermissionsRequest]) (*connect.Response[v1.GetUserPermissionsResponse], error)
+	// Workflow Management
+	GetSignupStatus(context.Context, *connect.Request[v1.GetSignupStatusRequest]) (*connect.Response[v1.GetSignupStatusResponse], error)
+	ResendVerification(context.Context, *connect.Request[v1.ResendVerificationRequest]) (*connect.Response[v1.ResendVerificationResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -333,10 +404,22 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("Login")),
 		connect.WithHandlerOptions(opts...),
 	)
-	authServiceRegisterUserHandler := connect.NewUnaryHandler(
-		AuthServiceRegisterUserProcedure,
-		svc.RegisterUser,
-		connect.WithSchema(authServiceMethods.ByName("RegisterUser")),
+	authServiceSignupHandler := connect.NewUnaryHandler(
+		AuthServiceSignupProcedure,
+		svc.Signup,
+		connect.WithSchema(authServiceMethods.ByName("Signup")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceSocialSignupHandler := connect.NewUnaryHandler(
+		AuthServiceSocialSignupProcedure,
+		svc.SocialSignup,
+		connect.WithSchema(authServiceMethods.ByName("SocialSignup")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceCompleteRegistrationHandler := connect.NewUnaryHandler(
+		AuthServiceCompleteRegistrationProcedure,
+		svc.CompleteRegistration,
+		connect.WithSchema(authServiceMethods.ByName("CompleteRegistration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	authServiceRefreshTokenHandler := connect.NewUnaryHandler(
@@ -417,12 +500,28 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("GetUserPermissions")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceGetSignupStatusHandler := connect.NewUnaryHandler(
+		AuthServiceGetSignupStatusProcedure,
+		svc.GetSignupStatus,
+		connect.WithSchema(authServiceMethods.ByName("GetSignupStatus")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceResendVerificationHandler := connect.NewUnaryHandler(
+		AuthServiceResendVerificationProcedure,
+		svc.ResendVerification,
+		connect.WithSchema(authServiceMethods.ByName("ResendVerification")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/v1consortium.auth.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceLoginProcedure:
 			authServiceLoginHandler.ServeHTTP(w, r)
-		case AuthServiceRegisterUserProcedure:
-			authServiceRegisterUserHandler.ServeHTTP(w, r)
+		case AuthServiceSignupProcedure:
+			authServiceSignupHandler.ServeHTTP(w, r)
+		case AuthServiceSocialSignupProcedure:
+			authServiceSocialSignupHandler.ServeHTTP(w, r)
+		case AuthServiceCompleteRegistrationProcedure:
+			authServiceCompleteRegistrationHandler.ServeHTTP(w, r)
 		case AuthServiceRefreshTokenProcedure:
 			authServiceRefreshTokenHandler.ServeHTTP(w, r)
 		case AuthServiceLogoutProcedure:
@@ -449,6 +548,10 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceCheckPermissionHandler.ServeHTTP(w, r)
 		case AuthServiceGetUserPermissionsProcedure:
 			authServiceGetUserPermissionsHandler.ServeHTTP(w, r)
+		case AuthServiceGetSignupStatusProcedure:
+			authServiceGetSignupStatusHandler.ServeHTTP(w, r)
+		case AuthServiceResendVerificationProcedure:
+			authServiceResendVerificationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -462,8 +565,16 @@ func (UnimplementedAuthServiceHandler) Login(context.Context, *connect.Request[v
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.Login is not implemented"))
 }
 
-func (UnimplementedAuthServiceHandler) RegisterUser(context.Context, *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.RegisterUser is not implemented"))
+func (UnimplementedAuthServiceHandler) Signup(context.Context, *connect.Request[v1.SignupRequest]) (*connect.Response[v1.SignupResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.Signup is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) SocialSignup(context.Context, *connect.Request[v1.SocialSignupRequest]) (*connect.Response[v1.SocialSignupResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.SocialSignup is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) CompleteRegistration(context.Context, *connect.Request[v1.CompleteRegistrationRequest]) (*connect.Response[v1.CompleteRegistrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.CompleteRegistration is not implemented"))
 }
 
 func (UnimplementedAuthServiceHandler) RefreshToken(context.Context, *connect.Request[v1.RefreshTokenRequest]) (*connect.Response[v1.RefreshTokenResponse], error) {
@@ -516,4 +627,12 @@ func (UnimplementedAuthServiceHandler) CheckPermission(context.Context, *connect
 
 func (UnimplementedAuthServiceHandler) GetUserPermissions(context.Context, *connect.Request[v1.GetUserPermissionsRequest]) (*connect.Response[v1.GetUserPermissionsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.GetUserPermissions is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) GetSignupStatus(context.Context, *connect.Request[v1.GetSignupStatusRequest]) (*connect.Response[v1.GetSignupStatusResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.GetSignupStatus is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) ResendVerification(context.Context, *connect.Request[v1.ResendVerificationRequest]) (*connect.Response[v1.ResendVerificationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("v1consortium.auth.AuthService.ResendVerification is not implemented"))
 }

@@ -198,6 +198,41 @@ func (s *sSupabaseService) SignUp(ctx context.Context, email, password string, u
 	return resp, nil
 }
 
+// social signup
+func (s *sSupabaseService) SignUpWithProvider(ctx context.Context, provider string, redirectTo string, scopes string) (*types.AuthorizeResponse, error) {
+	client, err := s.GetAnonClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var providerType types.Provider
+	var flowType types.FlowType
+
+	switch strings.ToLower(provider) {
+	case "google":
+		providerType = types.ProviderGoogle
+		flowType = types.FlowImplicit
+	case "microsoft":
+		providerType = types.ProviderAzure
+		flowType = types.FlowImplicit
+	default:
+		return nil, errors.New("unsupported provider")
+	}
+
+	// Validate redirect URL format (basic check)
+	if redirectTo == "" || !(strings.HasPrefix(redirectTo, "http://") || strings.HasPrefix(redirectTo, "https://")) {
+		return nil, errors.New("invalid redirect URL format")
+	}
+
+	resp, err := client.Auth.Authorize(types.AuthorizeRequest{
+		Provider: providerType,
+		FlowType: flowType,
+		Scopes:   scopes,
+	})
+
+	return resp, err
+}
+
 func (s *sSupabaseService) RefreshToken(ctx context.Context, refreshToken string) (*types.TokenResponse, error) {
 	// Validate refresh token
 	if refreshToken == "" {

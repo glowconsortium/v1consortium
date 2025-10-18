@@ -25,6 +25,8 @@ type UserProfiles struct {
 	HireDate                     *gtime.Time //
 	TerminationDate              *gtime.Time //
 	IsActive                     interface{} //
+	IsSystemUser                 interface{} //
+	StripeCustomerId             interface{} //
 	RequiresDotTesting           interface{} //
 	RequiresNonDotTesting        interface{} //
 	CdlNumber                    interface{} //
@@ -39,4 +41,5 @@ type UserProfiles struct {
 	CreatedAt                    *gtime.Time //
 	UpdatedAt                    *gtime.Time //
 	LastLoginAt                  *gtime.Time //
+	Settings                     interface{} //
 }

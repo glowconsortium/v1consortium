@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { authStore } from '$lib/stores/auth.js';
-	import { Button } from '$lib/components/ui/index.js';
-	import { formatDate, formatNumber } from '$lib/utils/format.js';
+	import { authStore } from '@movsm/v1-consortium-web-pkg';
+	import { Button } from '@movsm/v1-consortium-web-pkg';
+	import { formatDate, formatNumber } from '@movsm/v1-consortium-web-pkg';
 
 	// Mock data for carrier compliance dashboard - will be replaced with real API calls
 	let complianceStats = $state({

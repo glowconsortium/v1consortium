@@ -1,0 +1,550 @@
+2025-10-16T15:26:59.616-04:00 [INFO] {6e4353ef500f6f187a51a725c07ff9b3} V1 Consortium River Worker starting...
+2025-10-16T15:26:59.617-04:00 [FATA] {6e4353ef500f6f187a51a725c07ff9b3} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:28:50.679-04:00 [INFO] {4ff056cb6a0f6f18e89a3378dbf51f4b} V1 Consortium River Worker starting...
+2025-10-16T15:28:50.679-04:00 [FATA] {4ff056cb6a0f6f18e89a3378dbf51f4b} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:28:59.069-04:00 [INFO] {48b151bf6c0f6f184f9265293f026590} V1 Consortium River Worker starting...
+2025-10-16T15:28:59.070-04:00 [FATA] {48b151bf6c0f6f184f9265293f026590} Database URL not found in environment variables or config 
+Stack:
+1.  v1consortium/internal/cmd.getRiverDBURL
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:135
+2.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:34
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:29:42.018-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} V1 Consortium River Worker starting...
+2025-10-16T15:29:42.031-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} Database connection established
+2025-10-16T15:29:42.032-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} River components initialized
+2025-10-16T15:29:42.032-04:00 [INFO] {eaeb42bf760f6f183dd6b5637a990213} Workers registered successfully
+2025-10-16T15:29:42.064-04:00 [FATA] {eaeb42bf760f6f183dd6b5637a990213} Failed to start River client: ERROR: relation "river_queue" does not exist (SQLSTATE 42P01) 
+Stack:
+1.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:94
+2.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:40:55.587-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} V1 Consortium River Worker starting...
+2025-10-16T15:40:55.617-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Database connection established
+2025-10-16T15:40:55.618-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T15:40:55.618-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} River components initialized
+2025-10-16T15:40:55.619-04:00 [INFO] {70cb369313106f189d777d2c951b35c8} Workers registered successfully
+2025-10-16T15:40:55.650-04:00 [FATA] {70cb369313106f189d777d2c951b35c8} Failed to start River client: ERROR: relation "river_queue" does not exist (SQLSTATE 42P01) 
+Stack:
+1.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_river_worker.go:84
+2.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T15:42:37.595-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} V1 Consortium River Worker starting...
+2025-10-16T15:42:37.607-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Database connection established
+2025-10-16T15:42:37.607-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T15:42:37.608-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River components initialized
+2025-10-16T15:42:37.608-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Workers registered successfully
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled stuck workflow monitor: 0 */5 * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled workflow cleanup: 0 0 3 * * * (retention: 30 days)
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled metrics collection: 0 */10 * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Scheduled health check: 0 * * * * *
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River background monitoring jobs configured successfully
+2025-10-16T15:42:37.649-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River worker ready and processing jobs
+2025-10-16T15:43:00.416-04:00 [DEBU] {94803f532b106f1898b89745133e9b2b} River worker health check - running
+2025-10-16T15:44:00.439-04:00 [DEBU] {94803f532b106f1898b89745133e9b2b} River worker health check - running
+2025-10-16T15:44:22.209-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} Received signal interrupt, shutting down gracefully...
+2025-10-16T15:44:22.217-04:00 [INFO] {94803f532b106f1898b89745133e9b2b} River worker shutdown complete
+2025-10-16T18:10:08.381-04:00 [DEBU] {9f189d0b38186f1827ceba713d154c26} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:10:08.767-04:00 [ERRO] {9f189d0b38186f1827ceba713d154c26} Sign-in failed for email user@example.com: response status code 400: {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} 
+Stack:
+1.  v1consortium/internal/logic/supabaseservice.(*sSupabaseService).SignIn
+    /home/kobdev/v1consortium/internal/logic/supabaseservice/supabaseservice.go:169
+2.  v1consortium/internal/logic/auth.(*sAuth).Login
+    /home/kobdev/v1consortium/internal/logic/auth/auth.go:32
+3.  v1consortium/internal/controller/auth.(*Controller).Login
+    /home/kobdev/v1consortium/internal/controller/auth/auth.go:37
+4.  v1consortium/internal/controllerconnect/auth.(*AuthConnectService).Login
+    /home/kobdev/v1consortium/internal/controllerconnect/auth/auth.go:98
+5.  connectrpc.com/connect.NewUnaryHandler[...].func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:51
+6.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+7.  v1consortium/internal/cmd.buildInterceptorChain.AuthInterceptor.func13.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:92
+8.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+9.  v1consortium/internal/cmd.buildInterceptorChain.ValidationInterceptor.func11.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:310
+10. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+11. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieWriterInterceptor.func17.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:449
+12. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieReaderInterceptor.func16.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:422
+13. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+14. v1consortium/internal/cmd.buildInterceptorChain.RateLimitInterceptor.func7.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:258
+15. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+16. v1consortium/internal/cmd.buildInterceptorChain.MetricsInterceptor.func5.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:270
+17. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+18. v1consortium/internal/cmd.buildInterceptorChain.LoggingInterceptor.func3.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:36
+19. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+20. v1consortium/internal/cmd.buildInterceptorChain.RecoveryInterceptor.func1.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:329
+21. connectrpc.com/connect.NewUnaryHandler[...].func2
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:78
+22. connectrpc.com/connect.(*Handler).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:333
+23. v1consortium/api/auth/v1/v1connect.NewAuthServiceHandler.func1
+    /home/kobdev/v1consortium/api/auth/v1/v1connect/auth.connect.go:518
+24. connectrpc.com/vanguard.(*Transcoder).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/vanguard@v0.3.0/transcoder.go:77
+25. v1consortium/internal/cmd.setupRoutes.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:88
+26. v1consortium/internal/cmd.setupRoutes.corsMiddleware.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:133
+
+2025-10-16T18:10:41.974-04:00 [DEBU] {1405f0df3f186f1828ceba713b74732a} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:10:42.135-04:00 [ERRO] {1405f0df3f186f1828ceba713b74732a} Sign-in failed for email user@example.com: response status code 400: {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} 
+Stack:
+1.  v1consortium/internal/logic/supabaseservice.(*sSupabaseService).SignIn
+    /home/kobdev/v1consortium/internal/logic/supabaseservice/supabaseservice.go:169
+2.  v1consortium/internal/logic/auth.(*sAuth).Login
+    /home/kobdev/v1consortium/internal/logic/auth/auth.go:32
+3.  v1consortium/internal/controller/auth.(*Controller).Login
+    /home/kobdev/v1consortium/internal/controller/auth/auth.go:37
+4.  v1consortium/internal/controllerconnect/auth.(*AuthConnectService).Login
+    /home/kobdev/v1consortium/internal/controllerconnect/auth/auth.go:98
+5.  connectrpc.com/connect.NewUnaryHandler[...].func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:51
+6.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+7.  v1consortium/internal/cmd.buildInterceptorChain.AuthInterceptor.func13.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:92
+8.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+9.  v1consortium/internal/cmd.buildInterceptorChain.ValidationInterceptor.func11.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:310
+10. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+11. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieWriterInterceptor.func17.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:449
+12. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieReaderInterceptor.func16.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:422
+13. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+14. v1consortium/internal/cmd.buildInterceptorChain.RateLimitInterceptor.func7.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:258
+15. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+16. v1consortium/internal/cmd.buildInterceptorChain.MetricsInterceptor.func5.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:270
+17. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+18. v1consortium/internal/cmd.buildInterceptorChain.LoggingInterceptor.func3.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:36
+19. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+20. v1consortium/internal/cmd.buildInterceptorChain.RecoveryInterceptor.func1.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:329
+21. connectrpc.com/connect.NewUnaryHandler[...].func2
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:78
+22. connectrpc.com/connect.(*Handler).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:333
+23. v1consortium/api/auth/v1/v1connect.NewAuthServiceHandler.func1
+    /home/kobdev/v1consortium/api/auth/v1/v1connect/auth.connect.go:518
+24. connectrpc.com/vanguard.(*Transcoder).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/vanguard@v0.3.0/transcoder.go:77
+25. v1consortium/internal/cmd.setupRoutes.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:88
+26. v1consortium/internal/cmd.setupRoutes.corsMiddleware.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:133
+
+2025-10-16T18:11:32.600-04:00 [DEBU] {ab9ea7a94b186f1829ceba7120225864} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:11:32.734-04:00 [ERRO] {ab9ea7a94b186f1829ceba7120225864} Sign-in failed for email user@example.com: response status code 400: {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} 
+Stack:
+1.  v1consortium/internal/logic/supabaseservice.(*sSupabaseService).SignIn
+    /home/kobdev/v1consortium/internal/logic/supabaseservice/supabaseservice.go:169
+2.  v1consortium/internal/logic/auth.(*sAuth).Login
+    /home/kobdev/v1consortium/internal/logic/auth/auth.go:32
+3.  v1consortium/internal/controller/auth.(*Controller).Login
+    /home/kobdev/v1consortium/internal/controller/auth/auth.go:37
+4.  v1consortium/internal/controllerconnect/auth.(*AuthConnectService).Login
+    /home/kobdev/v1consortium/internal/controllerconnect/auth/auth.go:98
+5.  connectrpc.com/connect.NewUnaryHandler[...].func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:51
+6.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+7.  v1consortium/internal/cmd.buildInterceptorChain.AuthInterceptor.func13.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:92
+8.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+9.  v1consortium/internal/cmd.buildInterceptorChain.ValidationInterceptor.func11.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:310
+10. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+11. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieWriterInterceptor.func17.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:449
+12. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieReaderInterceptor.func16.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:422
+13. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+14. v1consortium/internal/cmd.buildInterceptorChain.RateLimitInterceptor.func7.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:258
+15. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+16. v1consortium/internal/cmd.buildInterceptorChain.MetricsInterceptor.func5.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:270
+17. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+18. v1consortium/internal/cmd.buildInterceptorChain.LoggingInterceptor.func3.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:36
+19. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+20. v1consortium/internal/cmd.buildInterceptorChain.RecoveryInterceptor.func1.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:329
+21. connectrpc.com/connect.NewUnaryHandler[...].func2
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:78
+22. connectrpc.com/connect.(*Handler).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:333
+23. v1consortium/api/auth/v1/v1connect.NewAuthServiceHandler.func1
+    /home/kobdev/v1consortium/api/auth/v1/v1connect/auth.connect.go:518
+24. connectrpc.com/vanguard.(*Transcoder).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/vanguard@v0.3.0/transcoder.go:77
+25. v1consortium/internal/cmd.setupRoutes.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:88
+26. v1consortium/internal/cmd.setupRoutes.corsMiddleware.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:133
+
+2025-10-16T18:15:47.178-04:00 [INFO] {04120df186186f18abd05276b322662c} Setting up 2 organizations
+2025-10-16T18:15:47.267-04:00 [INFO] {04120df186186f18abd05276b322662c} Created organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c
+2025-10-16T18:15:47.276-04:00 [INFO] {04120df186186f18abd05276b322662c} Created organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c
+2025-10-16T18:15:47.276-04:00 [INFO] {04120df186186f18abd05276b322662c} Finished setting up 2 organizations
+2025-10-16T18:15:47.276-04:00 [INFO] {04120df186186f18abd05276b322662c} Setting up 3 users
+2025-10-16T18:15:47.295-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user1@mail.com exists: false
+2025-10-16T18:15:47.297-04:00 [DEBU] {04120df186186f18abd05276b322662c} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:15:47.497-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user1@mail.com registration response: <nil>
+2025-10-16T18:15:47.497-04:00 [INFO] {04120df186186f18abd05276b322662c} Created user user1@mail.com with roles [internal_su internal_admin] in organization e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c
+2025-10-16T18:15:47.500-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user2@example.com exists: false
+2025-10-16T18:15:47.502-04:00 [DEBU] {04120df186186f18abd05276b322662c} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:15:47.595-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user2@example.com registration response: <nil>
+2025-10-16T18:15:47.595-04:00 [INFO] {04120df186186f18abd05276b322662c} Created user user2@example.com with roles [client_admin] in organization a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c
+2025-10-16T18:15:47.597-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user3@example.com exists: false
+2025-10-16T18:15:47.599-04:00 [DEBU] {04120df186186f18abd05276b322662c} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:15:47.687-04:00 [DEBU] {04120df186186f18abd05276b322662c} User user3@example.com registration response: <nil>
+2025-10-16T18:15:47.687-04:00 [INFO] {04120df186186f18abd05276b322662c} Created user user3@example.com with roles [internal_admin] in organization e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c
+2025-10-16T18:15:47.687-04:00 [INFO] {04120df186186f18abd05276b322662c} Finished setting up 3 users
+2025-10-16T18:16:56.057-04:00 [DEBU] {05676bf796186f18acd05276ed551c18} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:16:56.335-04:00 [ERRO] {05676bf796186f18acd05276ed551c18} Sign-in failed for email user1@mail.com: response status code 400: {"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} 
+Stack:
+1.  v1consortium/internal/logic/supabaseservice.(*sSupabaseService).SignIn
+    /home/kobdev/v1consortium/internal/logic/supabaseservice/supabaseservice.go:169
+2.  v1consortium/internal/logic/auth.(*sAuth).Login
+    /home/kobdev/v1consortium/internal/logic/auth/auth.go:32
+3.  v1consortium/internal/controller/auth.(*Controller).Login
+    /home/kobdev/v1consortium/internal/controller/auth/auth.go:37
+4.  v1consortium/internal/controllerconnect/auth.(*AuthConnectService).Login
+    /home/kobdev/v1consortium/internal/controllerconnect/auth/auth.go:98
+5.  connectrpc.com/connect.NewUnaryHandler[...].func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:51
+6.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+7.  v1consortium/internal/cmd.buildInterceptorChain.AuthInterceptor.func13.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:92
+8.  connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+9.  v1consortium/internal/cmd.buildInterceptorChain.ValidationInterceptor.func11.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:310
+10. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+11. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieWriterInterceptor.func17.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:449
+12. v1consortium/internal/cmd.buildInterceptorChain.BizCtxCookieInterceptor.BizCtxCookieReaderInterceptor.func16.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:422
+13. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+14. v1consortium/internal/cmd.buildInterceptorChain.RateLimitInterceptor.func7.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:258
+15. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+16. v1consortium/internal/cmd.buildInterceptorChain.MetricsInterceptor.func5.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:270
+17. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+18. v1consortium/internal/cmd.buildInterceptorChain.LoggingInterceptor.func3.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:36
+19. connectrpc.com/connect.(*chain).WrapUnary.unaryThunk.func1
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/interceptor.go:120
+20. v1consortium/internal/cmd.buildInterceptorChain.RecoveryInterceptor.func1.1
+    /home/kobdev/v1consortium/internal/pkg/interceptors/interceptors.go:329
+21. connectrpc.com/connect.NewUnaryHandler[...].func2
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:78
+22. connectrpc.com/connect.(*Handler).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/connect@v1.19.1/handler.go:333
+23. v1consortium/api/auth/v1/v1connect.NewAuthServiceHandler.func1
+    /home/kobdev/v1consortium/api/auth/v1/v1connect/auth.connect.go:518
+24. connectrpc.com/vanguard.(*Transcoder).ServeHTTP
+    /home/kobdev/go/pkg/mod/connectrpc.com/vanguard@v0.3.0/transcoder.go:77
+25. v1consortium/internal/cmd.setupRoutes.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:89
+26. v1consortium/internal/cmd.setupRoutes.corsMiddleware.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:134
+
+2025-10-16T18:17:21.633-04:00 [DEBU] {1d09b4eb9c186f18add052767a0af24a} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:17:22.367-04:00 [INFO] {1d09b4eb9c186f18add052767a0af24a} User signed in successfully: user1@mail.com
+2025-10-16T18:17:22.393-04:00 [INFO] {1d09b4eb9c186f18add052767a0af24a} Created session 432ad475-d926-4339-ab9a-0f61eefe0508_22f10eac-7ff3-4f3d-8262-82ede060d9ef_1760653042 for user 432ad475-d926-4339-ab9a-0f61eefe0508 from IP 127.0.0.1
+2025-10-16T18:17:59.205-04:00 [DEBU] {020473aaa5186f18afd05276cd8d8a45} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T18:18:00.174-04:00 [DEBU] {020473aaa5186f18afd05276cd8d8a45} Auth interceptor: authenticated user 432ad475-d926-4339-ab9a-0f61eefe0508 with email user1@mail.com
+2025-10-16T18:18:00.210-04:00 [DEBU] {020473aaa5186f18afd05276cd8d8a45} Supabase Config - URL: http://127.0.0.1:54321, PublicApiKey: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH, SecretApiKey: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+2025-10-16T19:01:59.899-04:00 [INFO] {647aab830c1b6f184e977311e7a89817} Setting up 2 organizations
+2025-10-16T19:01:59.913-04:00 [ERRO] {647aab830c1b6f184e977311e7a89817} Error checking organization e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c: SELECT "id","name","type","usdot_number","mc_number","industry","is_dot_regulated","address_line1","address_line2","city","state","zip_code","country","phone","email","website","tax_id","created_at","updated_at","is_active","settings" FROM "organizations" WHERE "id"='e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c' LIMIT 1: dial tcp 127.0.0.1:54322: connect: connection refused 
+Stack:
+1.  v1consortium/internal/cmd/internalsetup.(*InternalSetupConfig).SetupOrganizations
+    /home/kobdev/v1consortium/internal/cmd/internalsetup/internalsetup.go:46
+2.  v1consortium/internal/cmd.SetupInternalStartupData
+    /home/kobdev/v1consortium/internal/cmd/introutes.go:20
+3.  v1consortium/internal/cmd.init.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:35
+4.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T19:01:59.913-04:00 [ERRO] {647aab830c1b6f184e977311e7a89817} Failed to setup organizations: SELECT "id","name","type","usdot_number","mc_number","industry","is_dot_regulated","address_line1","address_line2","city","state","zip_code","country","phone","email","website","tax_id","created_at","updated_at","is_active","settings" FROM "organizations" WHERE "id"='e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c' LIMIT 1: dial tcp 127.0.0.1:54322: connect: connection refused 
+Stack:
+1.  v1consortium/internal/cmd.SetupInternalStartupData
+    /home/kobdev/v1consortium/internal/cmd/introutes.go:22
+2.  v1consortium/internal/cmd.init.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:35
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T19:01:59.913-04:00 [INFO] {647aab830c1b6f184e977311e7a89817} Setting up 3 users
+2025-10-16T19:01:59.917-04:00 [ERRO] {647aab830c1b6f184e977311e7a89817} Error checking user user1@mail.com: SELECT "id","organization_id","role","employee_id","first_name","last_name","email","phone","date_of_birth","ssn_last_four","hire_date","termination_date","is_active","requires_dot_testing","requires_non_dot_testing","cdl_number","cdl_state","cdl_expiration_date","job_title","department","supervisor_id","emergency_contact_name","emergency_contact_phone","emergency_contact_relationship","created_at","updated_at","last_login_at" FROM "user_profiles" WHERE "email"='user1@mail.com' LIMIT 1: dial tcp 127.0.0.1:54322: connect: connection refused 
+Stack:
+1.  v1consortium/internal/cmd/internalsetup.(*InternalSetupConfig).SetupUsers
+    /home/kobdev/v1consortium/internal/cmd/internalsetup/internalsetup.go:87
+2.  v1consortium/internal/cmd.SetupInternalStartupData
+    /home/kobdev/v1consortium/internal/cmd/introutes.go:24
+3.  v1consortium/internal/cmd.init.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:35
+4.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T19:01:59.917-04:00 [ERRO] {647aab830c1b6f184e977311e7a89817} Failed to setup users: SELECT "id","organization_id","role","employee_id","first_name","last_name","email","phone","date_of_birth","ssn_last_four","hire_date","termination_date","is_active","requires_dot_testing","requires_non_dot_testing","cdl_number","cdl_state","cdl_expiration_date","job_title","department","supervisor_id","emergency_contact_name","emergency_contact_phone","emergency_contact_relationship","created_at","updated_at","last_login_at" FROM "user_profiles" WHERE "email"='user1@mail.com' LIMIT 1: dial tcp 127.0.0.1:54322: connect: connection refused 
+Stack:
+1.  v1consortium/internal/cmd.SetupInternalStartupData
+    /home/kobdev/v1consortium/internal/cmd/introutes.go:26
+2.  v1consortium/internal/cmd.init.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_combined.go:35
+3.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-16T19:04:04.792-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Setting up 2 organizations
+2025-10-16T19:04:04.847-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-16T19:04:04.855-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-16T19:04:04.855-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Finished setting up 2 organizations
+2025-10-16T19:04:04.855-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Setting up 3 users
+2025-10-16T19:04:04.879-04:00 [DEBU] {7e26a297291b6f18ef59141ebb0104c6} User user1@mail.com exists: true
+2025-10-16T19:04:04.879-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} User user1@mail.com already exists, skipping creation
+2025-10-16T19:04:04.882-04:00 [DEBU] {7e26a297291b6f18ef59141ebb0104c6} User user2@example.com exists: true
+2025-10-16T19:04:04.882-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} User user2@example.com already exists, skipping creation
+2025-10-16T19:04:04.885-04:00 [DEBU] {7e26a297291b6f18ef59141ebb0104c6} User user3@example.com exists: true
+2025-10-16T19:04:04.885-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} User user3@example.com already exists, skipping creation
+2025-10-16T19:04:04.885-04:00 [INFO] {7e26a297291b6f18ef59141ebb0104c6} Finished setting up 3 users
+2025-10-16T19:51:42.482-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} V1 Consortium River Worker starting...
+2025-10-16T19:51:42.546-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Database connection established
+2025-10-16T19:51:42.547-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T19:51:42.551-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} River components initialized
+2025-10-16T19:51:42.558-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Workers registered successfully
+2025-10-16T19:51:42.629-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Scheduled stuck workflow monitor: 0 */5 * * * *
+2025-10-16T19:51:42.630-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Scheduled workflow cleanup: 0 0 3 * * * (retention: 30 days)
+2025-10-16T19:51:42.630-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Scheduled metrics collection: 0 */10 * * * *
+2025-10-16T19:51:42.632-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Scheduled health check: 0 * * * * *
+2025-10-16T19:51:42.633-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} River background monitoring jobs configured successfully
+2025-10-16T19:51:42.634-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} River worker ready and processing jobs
+2025-10-16T19:52:00.552-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:53:00.079-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:54:00.665-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:55:00.248-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:57:00.738-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:58:00.237-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T19:59:00.961-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T20:00:00.466-04:00 [DEBU] {420de2f2c21d6f1820440b0c0a77412a} River worker health check - running
+2025-10-16T20:00:00.474-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Workflow metrics (24h): map[]
+2025-10-16T20:00:43.782-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} Received signal interrupt, shutting down gracefully...
+2025-10-16T20:00:43.794-04:00 [INFO] {420de2f2c21d6f1820440b0c0a77412a} River worker shutdown complete
+2025-10-16T21:43:16.888-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Setting up 2 organizations
+2025-10-16T21:43:16.947-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-16T21:43:16.950-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-16T21:43:16.950-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Finished setting up 2 organizations
+2025-10-16T21:43:16.951-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Setting up 3 users
+2025-10-16T21:43:16.970-04:00 [DEBU] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user1@mail.com exists: true
+2025-10-16T21:43:16.970-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user1@mail.com already exists, skipping creation
+2025-10-16T21:43:16.973-04:00 [DEBU] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user2@example.com exists: true
+2025-10-16T21:43:16.973-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user2@example.com already exists, skipping creation
+2025-10-16T21:43:16.975-04:00 [DEBU] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user3@example.com exists: true
+2025-10-16T21:43:16.975-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} User user3@example.com already exists, skipping creation
+2025-10-16T21:43:16.975-04:00 [INFO] {ff9b4a9dd9236f18eb832d7d61c5f0d7} Finished setting up 3 users
+2025-10-16T21:43:29.751-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} V1 Consortium River Worker starting...
+2025-10-16T21:43:29.763-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Database connection established
+2025-10-16T21:43:29.763-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-16T21:43:29.764-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} River components initialized
+2025-10-16T21:43:29.764-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workers registered successfully
+2025-10-16T21:43:29.811-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Scheduled stuck workflow monitor: 0 */5 * * * *
+2025-10-16T21:43:29.811-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Scheduled workflow cleanup: 0 0 3 * * * (retention: 30 days)
+2025-10-16T21:43:29.811-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Scheduled metrics collection: 0 */10 * * * *
+2025-10-16T21:43:29.811-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Scheduled health check: 0 * * * * *
+2025-10-16T21:43:29.811-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} River background monitoring jobs configured successfully
+2025-10-16T21:43:29.812-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} River worker ready and processing jobs
+2025-10-16T21:44:00.734-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:45:00.782-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:46:00.796-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:47:00.817-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:48:00.839-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:49:00.857-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:50:00.907-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:50:00.923-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T21:51:00.919-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:52:00.960-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:54:00.990-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:55:00.054-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:56:00.021-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:57:00.080-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:58:00.019-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T21:59:00.023-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:00:00.996-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:00:01.007-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:01:00.046-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:02:00.010-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:03:00.044-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:05:00.049-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:06:00.107-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:07:00.095-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:08:00.159-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:09:00.127-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:10:00.183-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:10:00.186-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:11:00.202-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:12:00.243-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:13:00.253-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:14:00.314-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:16:00.500-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:17:00.607-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:18:00.647-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:19:00.702-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:20:00.794-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:20:00.796-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:21:00.816-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:22:00.891-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:23:00.924-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:24:00.981-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:25:00.037-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:27:00.218-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:28:00.267-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:29:00.350-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:30:00.398-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:30:00.402-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:31:00.472-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:32:00.536-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:33:00.564-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:34:00.646-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:35:00.639-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:36:00.834-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:38:00.803-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:39:00.818-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:40:00.911-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:40:00.916-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:41:00.939-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:43:00.071-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:44:00.134-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:45:00.228-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:46:00.257-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:47:00.417-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:48:00.405-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:49:00.481-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:50:00.533-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:50:00.535-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T22:51:00.616-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:52:00.682-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:54:00.806-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:55:00.009-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:56:00.158-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:57:00.231-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:58:00.330-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T22:59:00.416-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:00:00.499-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:00:00.516-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T23:01:00.611-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:02:00.687-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:03:00.780-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:05:00.058-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:06:00.112-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:07:00.195-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:08:00.315-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:10:00.458-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:10:00.463-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T23:11:00.574-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:12:00.636-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:13:00.746-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:14:00.782-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:15:00.818-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:16:00.877-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:17:00.011-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:18:00.056-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:19:00.175-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:21:00.292-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:22:00.409-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:23:00.495-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:24:00.617-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:25:00.692-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:26:00.753-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:27:00.874-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:28:00.961-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:29:00.054-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:30:00.159-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:30:00.162-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T23:32:00.306-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:33:00.439-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:34:00.676-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:35:00.858-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:36:00.966-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:37:00.049-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:38:00.203-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:39:00.317-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:40:00.472-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:40:00.474-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T23:41:00.571-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:42:00.616-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:43:00.757-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:44:00.017-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:45:00.117-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:46:00.231-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:48:00.454-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:49:00.569-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:50:00.704-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:50:00.709-04:00 [INFO] {bcab5a9cdc236f18aef01907ebaff0fe} Workflow metrics (24h): map[]
+2025-10-16T23:51:00.820-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:52:00.945-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:53:00.957-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:54:00.124-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:55:00.230-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:56:00.397-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:57:00.501-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running
+2025-10-16T23:59:00.727-04:00 [DEBU] {bcab5a9cdc236f18aef01907ebaff0fe} River worker health check - running

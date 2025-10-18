@@ -93,6 +93,17 @@ func (s *sAuth) RegisterUser(ctx context.Context, email, password string, data m
 	return resp.User.ID.String(), err
 }
 
+// make sure to supply id in profileData for create
+func (s *sAuth) CreateUserProfile(ctx context.Context, id string, profileData *do.UserProfiles) error {
+
+	profileData.Id = id
+	_, err := dao.UserProfiles.Ctx(ctx).Data(profileData).Insert()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *sAuth) RefreshToken(ctx context.Context, refreshToken string) (access string, refresh string, err error) {
 	resp, err := service.SupabaseService().RefreshToken(ctx, refreshToken)
 	if err != nil {
