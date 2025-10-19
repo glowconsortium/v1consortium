@@ -30,14 +30,27 @@ setup:
 	@# Stop the docker containers
 	docker compose stop postgres
 
+.PHONY: bootstrap
+bootstrap: 
+	go install github.com/riverqueue/river/cmd/river@latest
+	river migrate-up --database-url 'postgresql://postgres.bgjjnvfmgrdailakasua:654321fdsA.@aws-1-us-east-1.pooler.supabase.com:5432/postgres'
+
+#	river migrate-up --database-url 'postgres://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable'
+
 .PHONY: dev
-dev:
+dev:	
+	cd supabase && npx supabase start
 	docker compose up --build --watch
 
-.PHONY: gen-web
-gen-web:
+.PHONY: gen-buf
+gen-buf:
 	@echo "Generating TypeScript files from protobuf..."
 	rm -rf v1-consortium-web-pkg/src/lib/gen
+	rm -rf api/gen
 	npx buf format manifest/protobuf -w
-	npx buf generate --template buf.gen-typescript.yaml
-	
+	npx buf generate --template buf.gen.yaml
+
+.PHONY: clean-buf
+clean-buf:
+	rm -rf v1-consortium-web-pkg/src/lib/gen
+	rm -rf api/gen

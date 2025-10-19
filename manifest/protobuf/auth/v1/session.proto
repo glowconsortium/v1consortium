@@ -4,7 +4,7 @@ package v1consortium.auth;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "auth/v1";
+option go_package = "v1consortium/api/auth/v1";
 
 // Session Management Messages
 message CreateSessionRequest {

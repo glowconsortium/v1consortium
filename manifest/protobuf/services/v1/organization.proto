@@ -9,7 +9,7 @@ import "pbentity/organizations.proto";
 import "pbentity/subscription_plans.proto";
 import "pbentity/user_profiles.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Organization Management Messages
 message CreateOrganizationRequest {

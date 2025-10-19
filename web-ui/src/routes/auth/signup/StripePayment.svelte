@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Alert } from '$lib/components/ui/index.js';
+	import { Button, Alert } from '@movsm/v1-consortium-web-pkg';
 
     let {success, error, cancel, selectedPlan, companyName, email, isProcessing}:{
          success: (paymentMethodId: string, customerId: string) => void;

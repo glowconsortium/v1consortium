@@ -23,6 +23,8 @@ type UserProfiles struct {
 	HireDate                     *gtime.Time `json:"hireDate"                     orm:"hire_date"                      description:""` //
 	TerminationDate              *gtime.Time `json:"terminationDate"              orm:"termination_date"               description:""` //
 	IsActive                     bool        `json:"isActive"                     orm:"is_active"                      description:""` //
+	IsSystemUser                 bool        `json:"isSystemUser"                 orm:"is_system_user"                 description:""` //
+	StripeCustomerId             string      `json:"stripeCustomerId"             orm:"stripe_customer_id"             description:""` //
 	RequiresDotTesting           bool        `json:"requiresDotTesting"           orm:"requires_dot_testing"           description:""` //
 	RequiresNonDotTesting        bool        `json:"requiresNonDotTesting"        orm:"requires_non_dot_testing"       description:""` //
 	CdlNumber                    string      `json:"cdlNumber"                    orm:"cdl_number"                     description:""` //
@@ -37,4 +39,5 @@ type UserProfiles struct {
 	CreatedAt                    *gtime.Time `json:"createdAt"                    orm:"created_at"                     description:""` //
 	UpdatedAt                    *gtime.Time `json:"updatedAt"                    orm:"updated_at"                     description:""` //
 	LastLoginAt                  *gtime.Time `json:"lastLoginAt"                  orm:"last_login_at"                  description:""` //
+	Settings                     string      `json:"settings"                     orm:"settings"                       description:""` //
 }

@@ -151,7 +151,7 @@ The platform provides:
 #### 4.3.4 Third-Party Integration
 * Order tests through third-party APIs (Quest Diagnostics, etc.)
 * Retrieve results automatically via API polling
-* Temporal workflows for async test ordering and result processing
+* River jobs for async test ordering and result processing
 * Laboratory information system integration
 * Real-time data synchronization
 
@@ -288,7 +288,7 @@ The platform provides:
 #### 5.1.2 Backend
 * **SvelteKit server routes** with TypeScript
 * **Go (GoFrame framework)** for complex business logic
-* **Temporal workflows** for async operations (test ordering, result polling, random selection scheduling)
+* **River jobs** for async operations (test ordering, result polling, random selection scheduling)
 * RESTful API architecture
 * Microservices design patterns
 
@@ -322,7 +322,7 @@ The platform provides:
 
 ### 5.3 Workflow Management
 
-#### 5.3.1 Temporal Workflows
+#### 5.3.1 River Jobs
 * **Test ordering workflows** with retry logic
 * **Result polling and processing** automation
 * **Random selection scheduling** and execution
@@ -351,7 +351,7 @@ The platform provides:
 
 ### 6.3 Random Testing Management Flow
 1. **Pool Configuration**: Define random testing pools and frequency requirements
-2. **Automated Selection**: Temporal workflow executes random selection algorithm
+2. **Automated Selection**: River job executes random selection algorithm
 3. **Notification Distribution**: Selected employees and managers receive notifications
 4. **Testing Coordination**: Schedule and track completion of required tests
 5. **Audit Documentation**: Generate and store selection reports for compliance
@@ -382,7 +382,7 @@ The platform provides:
 | Custom Reports | ✗ | ✗ | ✓ | ✓ |
 | Training Modules | ✗ | ✗ | ✓ | ✓ |
 | API Access | ✗ | ✗ | ✓ | ✓ |
-| Temporal Workflows | ✗ | ✓ | ✓ | ✓ |
+| River Jobs | ✗ | ✓ | ✓ | ✓ |
 | Dedicated Support | ✗ | ✗ | ✗ | ✓ |
 
 ## 8. Non-Functional Requirements
@@ -430,7 +430,7 @@ The platform provides:
 * **Random Testing**: Basic random selection system
 
 ### 9.2 Phase 2 - Enhanced Features
-* **Advanced Random Testing**: Temporal workflow integration
+* **Advanced Random Testing**: River job integration
 * **MVR Monitoring**: Automated MVR pulls and violation tracking
 * **DOT Physicals**: Scheduling and certificate management
 * **Advanced Certificates**: Full compliance document generation
@@ -441,7 +441,7 @@ The platform provides:
 * **Advanced Analytics**: Custom dashboards and reporting
 * **API Development**: Third-party integration capabilities
 * **Training Modules**: Compliance education platform
-* **Advanced Workflows**: Complex Temporal workflow implementations
+* **Advanced Workflows**: Complex River job implementations
 
 ## 10. Future Enhancements
 
@@ -471,8 +471,8 @@ The platform provides:
 ### 11.1 High-Level Architecture
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   SvelteKit     │    │   Go/GoFrame    │    │   Temporal      │
-│   Frontend      │◄──►│   Backend API   │◄──►│   Workflows     │
+│   SvelteKit     │    │   Go/GoFrame    │    │   River         │
+│   Frontend      │◄──►│   Backend API   │◄──►│   Jobs          │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                        │                        │
          ▼                        ▼                        ▼
@@ -485,7 +485,7 @@ The platform provides:
 ### 11.2 Data Flow Architecture
 * **User Interface** → SvelteKit frontend with TypeScript
 * **API Layer** → Go/GoFrame backend for business logic
-* **Workflow Engine** → Temporal for async operations
+* **Job Engine** → River for async operations
 * **Data Storage** → Supabase PostgreSQL database
 * **Document Storage** → Supabase Storage with encryption
 * **External APIs** → Quest Diagnostics, MVR providers, FMCSA
@@ -494,7 +494,7 @@ The platform provides:
 
 V1 Consortium represents a comprehensive solution for transportation and workplace compliance management, combining modern web technologies with robust business workflows. The platform addresses critical needs in the compliance industry while providing scalable, secure, and user-friendly tools for organizations of all sizes.
 
-The integration of SvelteKit, Go/GoFrame, Temporal workflows, and Supabase provides a solid foundation for current requirements while enabling future growth and feature expansion. The emphasis on regulatory compliance, security, and user experience ensures the platform will meet the evolving needs of the compliance industry.
+The integration of SvelteKit, Go/GoFrame, River jobs, and Supabase provides a solid foundation for current requirements while enabling future growth and feature expansion. The emphasis on regulatory compliance, security, and user experience ensures the platform will meet the evolving needs of the compliance industry.
 
 ---
 
@@ -521,6 +521,6 @@ The integration of SvelteKit, Go/GoFrame, Temporal workflows, and Supabase provi
 ### A.3 Technical References
 - SvelteKit Documentation
 - GoFrame Framework Documentation
-- Temporal Workflow Documentation
+- River Jobs Documentation
 - Supabase Platform Documentation
 - Quest Diagnostics API Documentation

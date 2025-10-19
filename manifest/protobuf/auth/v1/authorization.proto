@@ -5,7 +5,7 @@ package v1consortium.auth;
 import "google/api/annotations.proto";
 import "google/api/http.proto";
 
-option go_package = "auth/v1";
+option go_package = "v1consortium/api/auth/v1";
 
 // Role definitions matching the database schema
 enum UserRole {

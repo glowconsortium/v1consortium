@@ -9,8 +9,7 @@
 <div>
 	<button onclick={() => setLocale('en')}>en</button>
 	<button onclick={() => setLocale('es')}>es</button>
-	<button onclick={() => setLocale('fr')}>fr</button>
-	<button onclick={() => setLocale('de-ch')}>de-ch</button>
+
 </div>
 <p>
 	If you use VSCode, install the <a

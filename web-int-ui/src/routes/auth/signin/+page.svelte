@@ -1,49 +1,57 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
+	import { authStore, isAuthenticated, authLoading, authError } from '@movsm/v1-consortium-web-pkg';
 	import { goto } from '$app/navigation';
-	import { Button } from '@movsm/v1-consortium-web-pkg';
 	import { page } from '$app/stores';
-	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
-	onMount(async () => {
-		// Initialize Auth0 if not already done
-		if (!$isAuthenticated) {
-			try {
-				await authStore.initialize({
-					domain: PUBLIC_AUTH0_DOMAIN,
-					clientId: PUBLIC_AUTH0_CLIENT_ID,
-					audience: PUBLIC_AUTH0_AUDIENCE,
-					scope: 'openid profile email',
-					redirectUri: `${window.location.origin}/auth/callback`
-				});
-			} catch (error) {
-				console.error('Auth initialization failed:', error);
-			}
-		}
+	// Form state
+	let email = $state('');
+	let password = $state('');
+	let rememberMe = $state(false);
+	let isSubmitting = $state(false);
 
+	onMount(() => {
 		// Redirect if already authenticated
 		if ($isAuthenticated) {
-			goto('/dashboard');
+			const returnTo = $page?.url?.searchParams?.get('returnTo') || '/dashboard';
+			goto(returnTo);
 		}
 	});
 
 	async function handleLogin() {
+		if (!email.trim() || !password.trim()) {
+			return;
+		}
+
+		isSubmitting = true;
+		
 		try {
-			console.log('Starting login process...');
-			const returnTo = $page?.url?.searchParams?.get('returnTo') || '/dashboard';
+			// Use the new login API with credentials object
 			await authStore.login({
-				appState: { returnTo },
-				redirectUri: `${window.location.origin}/auth/callback`
+				email: email.trim(),
+				password: password,
+				rememberMe: rememberMe
 			});
-			console.log('Login method completed - user should be redirected to Auth0');
+			
+			// Success - redirect to dashboard or return URL
+			const returnTo = $page?.url?.searchParams?.get('returnTo') || '/dashboard';
+			goto(returnTo);
 		} catch (error) {
+			// Error will be handled by the auth store and displayed via $authError
 			console.error('Login failed:', error);
+		} finally {
+			isSubmitting = false;
 		}
 	}
 
 	function clearError() {
-		authStore.clearError();
+		authStore?.clearError();
+	}
+
+	// Handle form submission
+	function handleSubmit(event: Event) {
+		event.preventDefault();
+		handleLogin();
 	}
 </script>
 
@@ -66,17 +74,72 @@
 				<p class="mt-2 text-gray-600">Sign in to your account</p>
 			</div>
 
-			<!-- Sign up link -->
-			<div class="mt-6 text-center">
-				<p class="text-sm text-gray-600">
-					Don't have an account?
-					<a href="/auth/signup" class="font-medium text-blue-600 hover:text-blue-500">
-						Sign up for free
-					</a>
-				</p>
-			</div>
+			<!-- Login Form -->
+			<form onsubmit={handleSubmit} class="space-y-6">
+				<!-- Email Field -->
+				<div>
+					<label for="email" class="block text-sm font-medium text-gray-700">
+						Email address
+					</label>
+					<div class="mt-1">
+						<input
+							id="email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							required
+							bind:value={email}
+							disabled={isSubmitting || $authLoading}
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 sm:text-sm"
+							placeholder="Enter your email"
+						/>
+					</div>
+				</div>
 
-			<div class="mt-8 space-y-6">
+				<!-- Password Field -->
+				<div>
+					<label for="password" class="block text-sm font-medium text-gray-700">
+						Password
+					</label>
+					<div class="mt-1">
+						<input
+							id="password"
+							name="password"
+							type="password"
+							autocomplete="current-password"
+							required
+							bind:value={password}
+							disabled={isSubmitting || $authLoading}
+							class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 sm:text-sm"
+							placeholder="Enter your password"
+						/>
+					</div>
+				</div>
+
+				<!-- Remember Me -->
+				<div class="flex items-center justify-between">
+					<div class="flex items-center">
+						<input
+							id="remember-me"
+							name="remember-me"
+							type="checkbox"
+							bind:checked={rememberMe}
+							disabled={isSubmitting || $authLoading}
+							class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
+						/>
+						<label for="remember-me" class="ml-2 block text-sm text-gray-900">
+							Remember me
+						</label>
+					</div>
+
+					<div class="text-sm">
+						<a href="/auth/forgot-password" class="font-medium text-indigo-600 hover:text-indigo-500">
+							Forgot your password?
+						</a>
+					</div>
+				</div>
+
+				<!-- Error Display -->
 				{#if $authError}
 					<div class="rounded-md bg-red-50 p-4">
 						<div class="flex">
@@ -90,31 +153,32 @@
 								</svg>
 							</div>
 							<div class="ml-3">
-								<h3 class="text-sm font-medium text-red-800">Authentication Error</h3>
+								<h3 class="text-sm font-medium text-red-800">Sign In Failed</h3>
 								<div class="mt-2 text-sm text-red-700">
 									<p>{$authError}</p>
 								</div>
 								<div class="mt-4">
-									<Button
-										classes="rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-800 hover:bg-red-100 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
+									<button
+										type="button"
 										onclick={clearError}
+										class="rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-800 hover:bg-red-100 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
 									>
 										Dismiss
-									</Button>
-										
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				{/if}
 
+				<!-- Submit Button -->
 				<div>
-					<Button
-						classes="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-						disabled={$authLoading}
-						onclick={handleLogin}
+					<button
+						type="submit"
+						disabled={isSubmitting || $authLoading || !email.trim() || !password.trim()}
+						class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					>
-						{#if $authLoading}
+						{#if isSubmitting || $authLoading}
 							<svg
 								class="mr-3 -ml-1 h-5 w-5 animate-spin text-white"
 								xmlns="http://www.w3.org/2000/svg"
@@ -137,16 +201,21 @@
 							</svg>
 							Signing in...
 						{:else}
-							Sign in with Auth0
+							Sign In
 						{/if}
-					</Button>
+					</button>
 				</div>
+			</form>
 
-				<div class="text-center">
-					<p class="text-sm text-gray-600">Secure authentication powered by Auth0</p>
-				</div>
+			<!-- Sign up link -->
+			<div class="mt-6 text-center">
+				<p class="text-sm text-gray-600">
+					Don't have an account?
+					<a href="/auth/signup" class="font-medium text-indigo-600 hover:text-indigo-500">
+						Sign up for free
+					</a>
+				</p>
 			</div>
-
 			<!-- Security notice -->
 			<div class="mt-6 text-center">
 				<p class="flex items-center justify-center text-xs text-gray-500">

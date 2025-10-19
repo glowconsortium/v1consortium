@@ -1,143 +1,143 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { authService } from '$lib/api/auth.js';
-    import Button from '$lib/components/ui/Button.svelte';
-    import Card from '$lib/components/ui/Card.svelte';
-    import Icon from '$lib/components/ui/Icon.svelte';
-    import Badge from '$lib/components/ui/Badge.svelte';
-    import Modal from '$lib/components/ui/Modal.svelte';
-    import type { v2oneglobe_api_profile_v1_Session } from '$lib/backendapi/generated-backendapi';
-	import { toaster } from '$lib/utils/toaster';
+    // import { onMount } from 'svelte';
+    // import { authService } from '@movsm/v1-consortium-web-pkg';
+    // import { Button } from '@movsm/v1-consortium-web-pkg';
+    // import { Card } from '@movsm/v1-consortium-web-pkg';
+    // import { Icon } from '@movsm/v1-consortium-web-pkg';
+    // import { Badge } from '@movsm/v1-consortium-web-pkg';
+    // import { Modal } from '@movsm/v1-consortium-web-pkg';
+    // import type { v2oneglobe_api_profile_v1_Session } from '$lib/backendapi/generated-backendapi';
+	// import { toaster } from '@movsm/v1-consortium-web-pkg';
 
-    // Runes for reactive state
-    let loading = $state(false);
-    let error = $state('');
-    let success = $state('');
-    let sessions: v2oneglobe_api_profile_v1_Session[] = $state([]);
-    let showRevokeAllModal = $state(false);
+    // // Runes for reactive state
+    // let loading = $state(false);
+    // let error = $state('');
+    // let success = $state('');
+    // let sessions: v2oneglobe_api_profile_v1_Session[] = $state([]);
+    // let showRevokeAllModal = $state(false);
 
-    onMount(async () => {
-        await loadSessions();
-    });
+    // onMount(async () => {
+    //     await loadSessions();
+    // });
 
-    async function loadSessions() {
-        try {
-            loading = true;
-            const response = await authService.getSessions();
-            // Fix: Access nested data structure - try multiple possible paths
-            sessions = response.data?.sessions || response.data?.sessions || response.data?.sessions || [];
-            console.log('Sessions loaded:', sessions);
-        } catch (err: any) {
-            console.error('Failed to load sessions:', err);
-            error = err.message || 'Failed to load sessions';
-        } finally {
-            loading = false;
-        }
-    }
+    // async function loadSessions() {
+    //     try {
+    //         loading = true;
+    //         const response = await authService.getSessions();
+    //         // Fix: Access nested data structure - try multiple possible paths
+    //         sessions = response.data?.sessions || response.data?.sessions || response.data?.sessions || [];
+    //         console.log('Sessions loaded:', sessions);
+    //     } catch (err: any) {
+    //         console.error('Failed to load sessions:', err);
+    //         error = err.message || 'Failed to load sessions';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function revokeSession(sessionId: string) {
-        try {
-            loading = true;
-            error = '';
+    // async function revokeSession(sessionId: string) {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.revokeSession(sessionId);
-            success = 'Session revoked successfully';
-            await loadSessions();
-        } catch (err: any) {
-            error = err.message || 'Failed to revoke session';
-        } finally {
-            loading = false;
-        }
-    }
+    //         await authService.revokeSession(sessionId);
+    //         success = 'Session revoked successfully';
+    //         await loadSessions();
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to revoke session';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    async function revokeAllSessions() {
-        try {
-            loading = true;
-            error = '';
+    // async function revokeAllSessions() {
+    //     try {
+    //         loading = true;
+    //         error = '';
 
-            await authService.revokeAllSessions();
-            success = 'All sessions revoked successfully';
-            showRevokeAllModal = false;
-            await loadSessions();
-        } catch (err: any) {
-            error = err.message || 'Failed to revoke all sessions';
-        } finally {
-            loading = false;
-        }
-    }
+    //         await authService.revokeAllSessions();
+    //         success = 'All sessions revoked successfully';
+    //         showRevokeAllModal = false;
+    //         await loadSessions();
+    //     } catch (err: any) {
+    //         error = err.message || 'Failed to revoke all sessions';
+    //     } finally {
+    //         loading = false;
+    //     }
+    // }
 
-    // Helper function to parse user agent for device info
-    function parseUserAgent(userAgent: string) {
-        const ua = userAgent || '';
+    // // Helper function to parse user agent for device info
+    // function parseUserAgent(userAgent: string) {
+    //     const ua = userAgent || '';
         
-        // Detect OS
-        let os = 'Unknown';
-        if (ua.includes('Windows')) os = 'Windows';
-        else if (ua.includes('Mac OS')) os = 'macOS';
-        else if (ua.includes('Linux')) os = 'Linux';
-        else if (ua.includes('Android')) os = 'Android';
-        else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+    //     // Detect OS
+    //     let os = 'Unknown';
+    //     if (ua.includes('Windows')) os = 'Windows';
+    //     else if (ua.includes('Mac OS')) os = 'macOS';
+    //     else if (ua.includes('Linux')) os = 'Linux';
+    //     else if (ua.includes('Android')) os = 'Android';
+    //     else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
 
-        // Detect browser
-        let browser = 'Unknown';
-        if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
-        else if (ua.includes('Firefox')) browser = 'Firefox';
-        else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
-        else if (ua.includes('Edg')) browser = 'Edge';
+    //     // Detect browser
+    //     let browser = 'Unknown';
+    //     if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
+    //     else if (ua.includes('Firefox')) browser = 'Firefox';
+    //     else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+    //     else if (ua.includes('Edg')) browser = 'Edge';
 
-        // Detect device type
-        let deviceType = 'desktop';
-        if (ua.includes('Mobile') || ua.includes('Android')) deviceType = 'mobile';
-        else if (ua.includes('Tablet') || ua.includes('iPad')) deviceType = 'tablet';
+    //     // Detect device type
+    //     let deviceType = 'desktop';
+    //     if (ua.includes('Mobile') || ua.includes('Android')) deviceType = 'mobile';
+    //     else if (ua.includes('Tablet') || ua.includes('iPad')) deviceType = 'tablet';
 
-        return { os, browser, deviceType };
-    }
+    //     return { os, browser, deviceType };
+    // }
 
-    function getDeviceIcon(userAgent: string) {
-        const { deviceType } = parseUserAgent(userAgent);
-        switch (deviceType) {
-            case 'mobile': return 'smartphone';
-            case 'tablet': return 'tablet';
-            case 'desktop': return 'monitor';
-            default: return 'monitor';
-        }
-    }
+    // function getDeviceIcon(userAgent: string) {
+    //     const { deviceType } = parseUserAgent(userAgent);
+    //     switch (deviceType) {
+    //         case 'mobile': return 'smartphone';
+    //         case 'tablet': return 'tablet';
+    //         case 'desktop': return 'monitor';
+    //         default: return 'monitor';
+    //     }
+    // }
 
-    function getBrowserIcon(userAgent: string) {
-        const { browser } = parseUserAgent(userAgent);
-        switch (browser?.toLowerCase()) {
-            case 'chrome': return 'chrome';
-            case 'firefox': return 'firefox';
-            case 'safari': return 'safari';
-            case 'edge': return 'edge';
-            default: return 'globe';
-        }
-    }
+    // function getBrowserIcon(userAgent: string) {
+    //     const { browser } = parseUserAgent(userAgent);
+    //     switch (browser?.toLowerCase()) {
+    //         case 'chrome': return 'chrome';
+    //         case 'firefox': return 'firefox';
+    //         case 'safari': return 'safari';
+    //         case 'edge': return 'edge';
+    //         default: return 'globe';
+    //     }
+    // }
 
-    function formatLastActivity(timestamp: string) {
-        if (!timestamp) return 'Unknown';
+    // function formatLastActivity(timestamp: string) {
+    //     if (!timestamp) return 'Unknown';
         
-        const date = new Date(timestamp);
-        const now = new Date();
-        const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+    //     const date = new Date(timestamp);
+    //     const now = new Date();
+    //     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
         
-        if (diffInMinutes < 1) return 'Just now';
-        if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
-        if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} hours ago`;
-        return date.toLocaleDateString();
-    }
+    //     if (diffInMinutes < 1) return 'Just now';
+    //     if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+    //     if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} hours ago`;
+    //     return date.toLocaleDateString();
+    // }
 
-    // Clear messages after 5 seconds
-    $effect(() => {
-        if (error || success) {
-            const timer = setTimeout(() => {
-                error = '';
-                success = '';
-            }, 5000);
+    // // Clear messages after 5 seconds
+    // $effect(() => {
+    //     if (error || success) {
+    //         const timer = setTimeout(() => {
+    //             error = '';
+    //             success = '';
+    //         }, 5000);
             
-            return () => clearTimeout(timer);
-        }
-    });
+    //         return () => clearTimeout(timer);
+    //     }
+    // });
 </script>
 
 <svelte:head>

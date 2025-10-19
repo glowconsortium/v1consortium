@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Input, Alert, Spinner, Card } from '$lib/components/ui';
+	import { Button, Input, Alert, Spinner, Card } from '@movsm/v1-consortium-web-pkg';
 	
 	let formData = $state({
 		name: '',

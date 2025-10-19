@@ -8,7 +8,7 @@ import "pbentity/certificates.proto";
 import "pbentity/compliance_status.proto";
 import "pbentity/saved_reports.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Compliance Status Management
 message GetComplianceStatusRequest {

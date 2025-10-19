@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 import "pbentity/background_check_findings.proto";
 import "pbentity/background_checks.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // Background Check Management Messages
 message OrderBackgroundCheckRequest {
@@ -287,22 +287,22 @@ service BackgroundCheckService {
 
   rpc HandleDispute(HandleDisputeRequest) returns (HandleDisputeResponse) {
     option (google.api.http) = {
-      post: "/api/v1/background-checks/{background_check_id}/dispute"
+      post: "/api/v1/adverse-actions/{adverse_action_id}/dispute"
       body: "*"
     };
   }
 
   rpc GetAdverseActionStatus(GetAdverseActionStatusRequest) returns (GetAdverseActionStatusResponse) {
-    option (google.api.http) = {get: "/api/v1/background-checks/{background_check_id}/adverse-action-status"};
+    option (google.api.http) = {get: "/api/v1/adverse-actions/{adverse_action_id}/status"};
   }
 
   // Package and Provider Management
   rpc GetAvailablePackages(GetAvailablePackagesRequest) returns (GetAvailablePackagesResponse) {
-    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-packages"};
+    option (google.api.http) = {get: "/api/v1/background-check-packages"};
   }
 
   rpc GetProviderStatus(GetProviderStatusRequest) returns (GetProviderStatusResponse) {
-    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/background-check-provider-status"};
+    option (google.api.http) = {get: "/api/v1/background-check-provider-status"};
   }
 
   // Analytics

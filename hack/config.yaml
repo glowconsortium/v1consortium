@@ -4,13 +4,13 @@
 gfcli:
   gen:
     dao:
-      - link: "pgsql:postgres:postgres@tcp(127.0.0.1:54322)/postgres"
+      - link: "pgsql:postgres.bgjjnvfmgrdailakasua:654321fdsA.@tcp(aws-1-us-east-1.pooler.supabase.com:5432)/postgres"
         tables: "user_profiles ,organizations, subscription_plans, organization_subscriptions, testing_programs, random_testing_pools, pool_memberships, random_selections, drug_alcohol_tests, random_selection_members, mvr_reports , mvr_violations, dot_physicals, background_checks, background_check_findings, documents, temporal_workflows, notifications, audit_logs, compliance_status, saved_reports, certificates"
         jsonCase: "CamelLower"
         descriptionTag: true
 
     pbentity:
-            link:    "pgsql:postgres:postgres@tcp(127.0.0.1:54322)/postgres"
+            link:    "pgsql:postgres.bgjjnvfmgrdailakasua:654321fdsA.@tcp(aws-1-us-east-1.pooler.supabase.com:5432)/postgres"
             path:    "manifest/protobuf/pbentity"
             tables: "user_profiles ,organizations, subscription_plans, organization_subscriptions, testing_programs, random_testing_pools, pool_memberships, random_selections, drug_alcohol_tests, random_selection_members, mvr_reports , mvr_violations, dot_physicals, background_checks, background_check_findings, documents, temporal_workflows, notifications, audit_logs, compliance_status, saved_reports, certificates"
             package: "v1consortium/api/pbentity"

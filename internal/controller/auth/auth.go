@@ -2,11 +2,18 @@ package auth
 
 import (
 	"context"
+	"fmt"
+	"time"
 	v1 "v1consortium/api/auth/v1"
+	"v1consortium/internal/consts"
+	"v1consortium/internal/service"
 
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Controller struct {
@@ -18,19 +25,77 @@ func Register(s *grpcx.GrpcServer) {
 }
 
 func (*Controller) Login(ctx context.Context, req *v1.LoginRequest) (res *v1.LoginResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	//return nil, gerror.NewCode(gcode.CodeNotImplemented)
+
+	reqinct := g.RequestFromCtx(ctx)
+
+	if reqinct == nil {
+		return nil, gerror.NewCode(gcode.CodeInternalError, "request not found in context")
+	}
+
+	useragent := reqinct.UserAgent()
+	ipaddress := reqinct.GetClientIp()
+
+	resp, err := service.Auth().Login(ctx, req.Email, req.Password, ipaddress, useragent)
+	if err != nil {
+		return nil, err
+	}
+
+	//reqinct.Cookie.SetCookie("session_id", resp.Session.SessionID, "", "/", time.Duration(3600)*time.Second)
+
+	// Update context with session and organization information
+	ctx = service.BizCtx().SetCurrentSessionID(ctx, resp.Session.SessionID)
+	ctx = service.BizCtx().SetCurrentOrganizationID(ctx, resp.User.OrganizationId)
+
+	return &v1.LoginResponse{
+		AccessToken:  resp.Session.AccessToken,
+		RefreshToken: resp.Session.RefreshToken,
+		User: &v1.UserSession{
+			UserId:         resp.User.Id,
+			Email:          resp.User.Email,
+			FirstName:      resp.User.FirstName,
+			LastName:       resp.User.LastName,
+			OrganizationId: resp.User.OrganizationId,
+			LastLogin:      timestamppb.New(gtime.Now().Time),
+		},
+		SessionId: resp.Session.SessionID,
+		ExpiresAt: timestamppb.New(resp.ExpiresAt),
+	}, nil
 }
 
 func (*Controller) RefreshToken(ctx context.Context, req *v1.RefreshTokenRequest) (res *v1.RefreshTokenResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	accessToken, refreshToken, err := service.Auth().RefreshToken(ctx, req.RefreshToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.RefreshTokenResponse{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		ExpiresAt:    timestamppb.New(gtime.Now().Add(time.Hour).Time),
+	}, nil
 }
 
 func (*Controller) Logout(ctx context.Context, req *v1.LogoutRequest) (res *v1.LogoutResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	err = service.Auth().Logout(ctx, req.AccessToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.LogoutResponse{
+		Message: "Successfully logged out",
+	}, nil
 }
 
 func (*Controller) ForgotPassword(ctx context.Context, req *v1.ForgotPasswordRequest) (res *v1.ForgotPasswordResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	err = service.Auth().ForgotPassword(ctx, req.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1.ForgotPasswordResponse{
+		Message: "Password reset email sent successfully",
+	}, nil
 }
 
 func (*Controller) ResetPassword(ctx context.Context, req *v1.ResetPasswordRequest) (res *v1.ResetPasswordResponse, err error) {
@@ -58,7 +123,33 @@ func (*Controller) DisableMFA(ctx context.Context, req *v1.DisableMFARequest) (r
 }
 
 func (*Controller) GetUser(ctx context.Context, req *v1.GetUserRequest) (res *v1.GetUserResponse, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	//session := service.SessionManager().GetSessionInfo(ctx)
+
+	// if session == nil || session["access_token"] == nil {
+	// 	return nil, gerror.NewCode(gcode.CodeNotAuthorized, "no valid session found")
+	// }
+	//resp, err := service.Auth().GetUserInfo(ctx, session["access_token"].(string))
+
+	user, err := service.BizCtx().GetSupabaseUser(ctx)
+	if err != nil {
+		return nil, gerror.NewCode(gcode.CodeNotAuthorized, "no valid user info found in context")
+	}
+
+	resp, err := service.Auth().GetUserProfileByEmail(ctx, user.User.Email)
+	if err != nil {
+		g.Log().Errorf(ctx, "Failed to get user info: %v", err)
+		return nil, err
+	}
+	return &v1.GetUserResponse{
+		User: &v1.UserSession{
+			UserId:         resp.Id,
+			Email:          resp.Email,
+			FirstName:      resp.FirstName,
+			LastName:       resp.LastName,
+			OrganizationId: resp.OrganizationId,
+			Role:           resp.Role,
+		},
+	}, nil
 }
 
 func (*Controller) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (res *v1.UpdateUserResponse, err error) {
@@ -133,6 +224,133 @@ func (*Controller) CleanupExpiredTokens(ctx context.Context, req *v1.CleanupExpi
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }
 
-func (*Controller) RegisterUser(ctx context.Context, req *v1.RegisterRequest) (res *v1.RegisterResponse, err error) {
+func (*Controller) Signup(ctx context.Context, req *v1.SignupRequest) (res *v1.SignupResponse, err error) {
+	// Check if user already exists
+	user, err := service.Auth().GetUserProfileByEmail(ctx, req.Email)
+	if err == nil && user != nil {
+		return nil, gerror.NewCode(gcode.CodeBusinessValidationFailed, "user with this email already exists")
+	}
+
+	// Prepare workflow input data for signupv2
+	workflowInput := map[string]interface{}{
+		"email":      req.Email,
+		"password":   req.Password,
+		"first_name": req.FirstName,
+		"last_name":  req.LastName,
+		"role":       string(consts.RoleClientAdmin),
+		"organization_data": map[string]interface{}{
+			"name":           req.CompanyName,
+			"is_dot_company": req.IsDotCompany,
+			"dot_number":     req.DotNumber,
+		},
+		"metadata": map[string]interface{}{
+			"signup_source":   "api",
+			"registration_ip": "127.0.0.1", // You'd get this from request context
+			"user_agent":      "web",       // You'd get this from request context
+		},
+	}
+
+	// Start the user signup workflow using the bridge (v2)
+	workflowId, err := service.WorkflowBridge().StartUserSignupWorkflow(ctx, workflowInput, "", "")
+	if err != nil {
+		g.Log().Errorf(ctx, "Failed to start user signup workflow: %v", err)
+		return nil, fmt.Errorf("failed to start signup workflow: %w", err)
+	}
+
+	g.Log().Info(ctx, "Started user signup workflow (v2)", g.Map{
+		"workflow_id": workflowId,
+		"email":       req.Email,
+	})
+
+	return &v1.SignupResponse{
+		WorkflowId:                workflowId,
+		Message:                   "user signup initiated successfully",
+		RequiresEmailVerification: true,
+	}, nil
+}
+
+func (*Controller) SocialSignup(ctx context.Context, req *v1.SocialSignupRequest) (res *v1.SocialSignupResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}
+
+func (*Controller) CompleteRegistration(ctx context.Context, req *v1.CompleteRegistrationRequest) (res *v1.CompleteRegistrationResponse, err error) {
+	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+}
+
+func (*Controller) GetSignupStatus(ctx context.Context, req *v1.GetSignupStatusRequest) (res *v1.GetSignupStatusResponse, err error) {
+	execution, err := service.WorkflowBridge().GetWorkflowStatus(ctx, req.WorkflowId)
+	if err != nil {
+		return nil, err
+	}
+
+	var emailVerified bool
+	var subscriptionCompleted bool
+	var email string
+	var createdAt time.Time
+	var status string
+
+	if execution != nil {
+		status = execution.Status
+		// Safely handle execution.Context which is expected to be map[string]interface{}
+		if ctxMap := execution.Context; ctxMap != nil {
+			// Check for email verification (from send_verification step)
+			if v, ok := ctxMap["verification_email_sent"]; ok && v != nil {
+				switch t := v.(type) {
+				case bool:
+					emailVerified = t
+				case *bool:
+					if t != nil {
+						emailVerified = *t
+					}
+				case string:
+					emailVerified = (t == "true")
+				}
+			}
+			// Check for subscription setup (from setup_stripe step)
+			if v, ok := ctxMap["stripe_customer_id"]; ok && v != nil {
+				// If stripe customer was created, consider subscription completed
+				if s, ok := v.(string); ok && s != "" {
+					subscriptionCompleted = true
+				}
+			}
+			// Get email from context (from validation step)
+			if v, ok := ctxMap["validated_email"]; ok && v != nil {
+				if s, ok := v.(string); ok {
+					email = s
+				}
+			}
+			// Get creation timestamp from context
+			if v, ok := ctxMap["validation_completed_at"]; ok && v != nil {
+				switch t := v.(type) {
+				case time.Time:
+					createdAt = t
+				case *time.Time:
+					if t != nil {
+						createdAt = *t
+					}
+				case string:
+					if tt, err := time.Parse(time.RFC3339, t); err == nil {
+						createdAt = tt
+					}
+				}
+			}
+		}
+		// If not found in context, fallback to execution.CreatedAt if available
+		if createdAt.IsZero() && !execution.CreatedAt.IsZero() {
+			createdAt = execution.CreatedAt
+		}
+	}
+
+	return &v1.GetSignupStatusResponse{
+		WorkflowId:            req.WorkflowId,
+		Status:                status,
+		EmailVerified:         emailVerified,
+		SubscriptionCompleted: subscriptionCompleted,
+		Email:                 email,
+		CreatedAt:             timestamppb.New(createdAt),
+	}, nil
+}
+
+func (*Controller) ResendVerification(ctx context.Context, req *v1.ResendVerificationRequest) (res *v1.ResendVerificationResponse, err error) {
 	return nil, gerror.NewCode(gcode.CodeNotImplemented)
 }

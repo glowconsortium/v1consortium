@@ -3,7 +3,9 @@ package auth
 import (
 	"context"
 	"database/sql"
+	"time"
 	"v1consortium/internal/dao"
+	"v1consortium/internal/model"
 	"v1consortium/internal/model/do"
 	"v1consortium/internal/model/entity"
 	"v1consortium/internal/service"
@@ -25,13 +27,37 @@ func init() {
 
 // Add your methods for sAuth here
 
-func (s *sAuth) Login(ctx context.Context, email, password string) (access string, refresh string, err error) {
+func (s *sAuth) Login(ctx context.Context, email, password, ipaddress, useragent string) (*model.LoginResponse, error) {
 
 	resp, err := service.SupabaseService().SignIn(ctx, email, password)
 	if err != nil {
-		return "", "", err
+		return nil, err
 	}
-	return resp.AccessToken, resp.RefreshToken, nil
+
+	userssession, err := service.SessionManager().CreateSession(ctx, &model.CreateSessionRequest{
+		UserID:    resp.User.ID.String(),
+		IPAddress: ipaddress,
+		UserAgent: useragent,
+	})
+
+	userssession.AccessToken = resp.AccessToken
+	userssession.RefreshToken = resp.RefreshToken
+
+	userprofile, err := s.GetUserProfileByEmail(ctx, email)
+	if err != nil {
+		return nil, err
+	}
+	if userprofile == nil || userprofile.Id == "" {
+		return nil, gerror.NewCode(gcode.CodeNotFound, "User profile not found")
+	}
+
+	userssessionresponse := &model.LoginResponse{
+		Session:   userssession,
+		User:      userprofile,
+		ExpiresAt: time.Unix(resp.ExpiresAt, 0),
+	}
+
+	return userssessionresponse, nil
 }
 
 func (s *sAuth) Logout(ctx context.Context, token string) error {
@@ -65,6 +91,17 @@ func (s *sAuth) RegisterUser(ctx context.Context, email, password string, data m
 		LastName:       data["last_name"].(string),
 	})
 	return resp.User.ID.String(), err
+}
+
+// make sure to supply id in profileData for create
+func (s *sAuth) CreateUserProfile(ctx context.Context, id string, profileData *do.UserProfiles) error {
+
+	profileData.Id = id
+	_, err := dao.UserProfiles.Ctx(ctx).Data(profileData).Insert()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *sAuth) RefreshToken(ctx context.Context, refreshToken string) (access string, refresh string, err error) {
@@ -124,9 +161,27 @@ func (s *sAuth) VerifyMFA(ctx context.Context, userID, code string) (string, err
 	return "", nil
 }
 
-func (s *sAuth) GetUserInfo(ctx context.Context, token string) (map[string]interface{}, error) {
+func (s *sAuth) GetUserInfo(ctx context.Context, token string) (*entity.UserProfiles, error) {
 	// Implement your get user info logic here
-	return nil, nil
+	// userfromtoken supabase
+	userInfo, err := service.SupabaseService().GetUserFromToken(ctx, token)
+
+	if err != nil {
+		return nil, err
+	}
+	if userInfo == nil || userInfo.User.Email == "" {
+		return nil, gerror.NewCode(gcode.CodeNotAuthorized, "Invalid token or user not found")
+	}
+
+	userProfile, err := s.GetUserProfileByEmail(ctx, userInfo.User.Email)
+	if err != nil {
+		return nil, err
+	}
+	if userProfile == nil || userProfile.Id == "" {
+		return nil, gerror.NewCode(gcode.CodeNotFound, "User profile not found")
+	}
+
+	return userProfile, nil
 }
 
 func (s *sAuth) UpdateUserProfile(ctx context.Context, userID string, profileData map[string]interface{}) error {

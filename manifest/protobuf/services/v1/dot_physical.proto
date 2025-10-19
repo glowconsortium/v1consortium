@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "pbentity/dot_physicals.proto";
 
-option go_package = "services/v1";
+option go_package = "v1consortium/api/services/v1";
 
 // DOT Physical Management Messages
 message ScheduleDOTPhysicalRequest {
@@ -228,7 +228,7 @@ service DOTPhysicalService {
   // Medical Examiner Management
   rpc RegisterMedicalExaminer(RegisterMedicalExaminerRequest) returns (RegisterMedicalExaminerResponse) {
     option (google.api.http) = {
-      post: "/api/v1/organizations/{organization_id}/medical-examiners"
+      post: "/api/v1/medical-examiners"
       body: "*"
     };
   }
@@ -238,7 +238,7 @@ service DOTPhysicalService {
   }
 
   rpc ListMedicalExaminers(ListMedicalExaminersRequest) returns (ListMedicalExaminersResponse) {
-    option (google.api.http) = {get: "/api/v1/organizations/{organization_id}/medical-examiners"};
+    option (google.api.http) = {get: "/api/v1/medical-examiners"};
   }
 
   // Certificate Management
@@ -263,7 +263,7 @@ service DOTPhysicalService {
 
   rpc SetExpirationReminder(SetExpirationReminderRequest) returns (SetExpirationReminderResponse) {
     option (google.api.http) = {
-      post: "/api/v1/dot-physicals/{physical_id}/expiration-reminder"
+      post: "/api/v1/organizations/{organization_id}/dot-physical-expiration-reminders"
       body: "*"
     };
   }

@@ -1,0 +1,68 @@
+2025-10-18T00:00:00.008-04:00 [DEBU] {231e12c683796f18b127d3164c2ddad5} River worker health check - running
+2025-10-18T00:00:00.036-04:00 [INFO] {231e12c683796f18b127d3164c2ddad5} Workflow metrics (24h): map[]
+2025-10-18T00:01:00.464-04:00 [DEBU] {231e12c683796f18b127d3164c2ddad5} River worker health check - running
+2025-10-18T00:01:07.907-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Setting up 2 organizations
+2025-10-18T00:01:07.946-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-18T00:01:07.948-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-18T00:01:07.948-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Finished setting up 2 organizations
+2025-10-18T00:01:07.948-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Setting up 3 users
+2025-10-18T00:01:07.966-04:00 [DEBU] {ca1887edf3796f18de14d8642322154e} User user1@mail.com exists: true
+2025-10-18T00:01:07.966-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} User user1@mail.com already exists, skipping creation
+2025-10-18T00:01:07.970-04:00 [DEBU] {ca1887edf3796f18de14d8642322154e} User user2@example.com exists: true
+2025-10-18T00:01:07.970-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} User user2@example.com already exists, skipping creation
+2025-10-18T00:01:07.974-04:00 [DEBU] {ca1887edf3796f18de14d8642322154e} User user3@example.com exists: true
+2025-10-18T00:01:07.975-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} User user3@example.com already exists, skipping creation
+2025-10-18T00:01:07.975-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Finished setting up 3 users
+2025-10-18T00:01:07.994-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Database connection established
+2025-10-18T00:01:07.995-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-18T00:01:08.000-04:00 [INFO] {ca1887edf3796f18de14d8642322154e} River dependencies initialized for API server
+2025-10-18T00:01:08.677-04:00 [INFO] Database pool closed
+2025-10-18T00:01:23.973-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Setting up 2 organizations
+2025-10-18T00:01:24.020-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-18T00:01:24.023-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-18T00:01:24.023-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Finished setting up 2 organizations
+2025-10-18T00:01:24.023-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Setting up 3 users
+2025-10-18T00:01:24.036-04:00 [DEBU] {7fe3b1abf7796f183d28e910950e94d9} User user1@mail.com exists: true
+2025-10-18T00:01:24.037-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} User user1@mail.com already exists, skipping creation
+2025-10-18T00:01:24.039-04:00 [DEBU] {7fe3b1abf7796f183d28e910950e94d9} User user2@example.com exists: true
+2025-10-18T00:01:24.039-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} User user2@example.com already exists, skipping creation
+2025-10-18T00:01:24.041-04:00 [DEBU] {7fe3b1abf7796f183d28e910950e94d9} User user3@example.com exists: true
+2025-10-18T00:01:24.042-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} User user3@example.com already exists, skipping creation
+2025-10-18T00:01:24.042-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Finished setting up 3 users
+2025-10-18T00:01:24.054-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Database connection established
+2025-10-18T00:01:24.055-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-18T00:01:24.055-04:00 [INFO] {7fe3b1abf7796f183d28e910950e94d9} River dependencies initialized for API server
+2025-10-18T00:01:43.870-04:00 [INFO] Database pool closed
+2025-10-18T00:02:00.919-04:00 [DEBU] {231e12c683796f18b127d3164c2ddad5} River worker health check - running
+2025-10-18T00:03:00.379-04:00 [DEBU] {231e12c683796f18b127d3164c2ddad5} River worker health check - running
+2025-10-18T00:03:29.529-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Setting up 2 organizations
+2025-10-18T00:03:29.564-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-18T00:03:29.567-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-18T00:03:29.568-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Finished setting up 2 organizations
+2025-10-18T00:03:29.568-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Setting up 3 users
+2025-10-18T00:03:29.583-04:00 [DEBU] {26e75de7147a6f189af5d54570bb6db4} User user1@mail.com exists: true
+2025-10-18T00:03:29.583-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} User user1@mail.com already exists, skipping creation
+2025-10-18T00:03:29.585-04:00 [DEBU] {26e75de7147a6f189af5d54570bb6db4} User user2@example.com exists: true
+2025-10-18T00:03:29.585-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} User user2@example.com already exists, skipping creation
+2025-10-18T00:03:29.589-04:00 [DEBU] {26e75de7147a6f189af5d54570bb6db4} User user3@example.com exists: true
+2025-10-18T00:03:29.589-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} User user3@example.com already exists, skipping creation
+2025-10-18T00:03:29.589-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Finished setting up 3 users
+2025-10-18T00:03:29.601-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Database connection established
+2025-10-18T00:03:29.601-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-18T00:03:29.602-04:00 [INFO] {26e75de7147a6f189af5d54570bb6db4} River dependencies initialized for API server
+2025-10-18T00:03:34.834-04:00 [INFO] {231e12c683796f18b127d3164c2ddad5} Received signal interrupt, shutting down gracefully...
+2025-10-18T00:03:34.840-04:00 [INFO] {231e12c683796f18b127d3164c2ddad5} River worker shutdown complete
+2025-10-18T00:03:36.172-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} V1 Consortium River Worker starting...
+2025-10-18T00:03:36.187-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Database connection established
+2025-10-18T00:03:36.188-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Loaded River configuration: 5 queues, poll interval: 5s
+2025-10-18T00:03:36.188-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} River components initialized
+2025-10-18T00:03:36.189-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Workers registered successfully
+2025-10-18T00:03:36.228-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Scheduled stuck workflow monitor: 0 */5 * * * *
+2025-10-18T00:03:36.228-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Scheduled workflow cleanup: 0 0 3 * * * (retention: 30 days)
+2025-10-18T00:03:36.228-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Scheduled metrics collection: 0 */10 * * * *
+2025-10-18T00:03:36.229-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} Scheduled health check: 0 * * * * *
+2025-10-18T00:03:36.229-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} River background monitoring jobs configured successfully
+2025-10-18T00:03:36.229-04:00 [INFO] {9e7a7a73167a6f18d2081644d2b0c2f0} River worker ready and processing jobs
+2025-10-18T00:03:38.384-04:00 [INFO] {9937f7f5167a6f189bf5d545465b98e5} Started user signup workflow {"email":"usessr@example.com","workflow_id":"user_signup_1760760218362059411_usessr@example.com"}
+2025-10-18T00:04:00.869-04:00 [DEBU] {9e7a7a73167a6f18d2081644d2b0c2f0} River worker health check - running
+2025-10-18T00:04:10.855-04:00 [INFO] Database pool closed

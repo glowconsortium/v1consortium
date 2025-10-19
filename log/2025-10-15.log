@@ -1,0 +1,87 @@
+2025-10-15T18:06:26.975-04:00 [INFO] {662b2af16fc96e187027003b73b4391d} cron job start
+2025-10-15T18:06:27.939-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:28.938-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:29.939-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:30.938-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:31.938-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:32.938-04:00 [DEBU] {662b2af16fc96e187027003b73b4391d} cron job running
+2025-10-15T18:06:33.168-04:00 [INFO] {662b2af16fc96e187027003b73b4391d} cron job shutdown
+2025-10-15T19:26:37.601-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Setting up 2 organizations
+2025-10-15T19:26:37.762-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Organization Org1 with ID e2c1f6a9-3d2b-4f7a-9b8c-1d2e3f4a5b6c already exists, skipping
+2025-10-15T19:26:37.765-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Organization Org2 with ID a3f9c6e1-2d4b-4f7a-9b2e-1c3d5f6a7b8c already exists, skipping
+2025-10-15T19:26:37.765-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Finished setting up 2 organizations
+2025-10-15T19:26:37.766-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Setting up 3 users
+2025-10-15T19:26:37.815-04:00 [DEBU] {93d8e300d0cd6e1828b5707070c88e2a} User user@example.com exists: true
+2025-10-15T19:26:37.815-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} User user@example.com already exists, skipping creation
+2025-10-15T19:26:37.818-04:00 [DEBU] {93d8e300d0cd6e1828b5707070c88e2a} User user2@example.com exists: true
+2025-10-15T19:26:37.818-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} User user2@example.com already exists, skipping creation
+2025-10-15T19:26:37.821-04:00 [DEBU] {93d8e300d0cd6e1828b5707070c88e2a} User user3@example.com exists: true
+2025-10-15T19:26:37.821-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} User user3@example.com already exists, skipping creation
+2025-10-15T19:26:37.821-04:00 [INFO] {93d8e300d0cd6e1828b5707070c88e2a} Finished setting up 3 users
+2025-10-15T19:26:37.822-04:00 [DEBU] set default registry using file registry as no custom registry set, path: /tmp/gsvc
+2025-10-15T19:26:52.092-04:00 [INFO] {a5418560d3cd6e182589d8215bb621e5} V1 Consortium DBOS Worker starting...
+2025-10-15T19:26:52.096-04:00 [FATA] {a5418560d3cd6e182589d8215bb621e5} Failed to ping database: pq: SSL is not enabled on the server 
+Stack:
+1.  v1consortium/internal/cmd.init.func3
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:51
+2.  main.main
+    /home/kobdev/v1consortium/main.go:20
+
+2025-10-15T19:29:52.976-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} V1 Consortium DBOS Worker starting...
+2025-10-15T19:29:52.991-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} Database connection established
+2025-10-15T19:29:53.323-04:00 [INFO] DBOS workflows registered (placeholder)
+2025-10-15T19:29:53.323-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} Workflow components initialized
+2025-10-15T19:29:53.329-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} DBOS runtime launched successfully
+2025-10-15T19:29:53.329-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} Background jobs configured successfully
+2025-10-15T19:29:53.330-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} DBOS worker ready and processing workflows
+2025-10-15T19:29:59.402-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} Received signal interrupt, shutting down gracefully...
+2025-10-15T19:29:59.403-04:00 [INFO] {ff71157efdcd6e18aaf57070ef7acbc0} Shutting down DBOS...
+2025-10-15T19:30:57.006-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} V1 Consortium DBOS Worker starting...
+2025-10-15T19:30:57.016-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} Database connection established
+2025-10-15T19:30:57.213-04:00 [INFO] DBOS workflows registered (placeholder)
+2025-10-15T19:30:57.213-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} Workflow components initialized
+2025-10-15T19:30:57.231-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} DBOS runtime launched successfully
+2025-10-15T19:30:57.231-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} Background jobs configured successfully
+2025-10-15T19:30:57.231-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} DBOS worker ready and processing workflows
+2025-10-15T19:31:00.175-04:00 [DEBU] {ce7283660cce6e1827738d22f96fec5f} Processing pending workflows...
+2025-10-15T19:31:00.175-04:00 [DEBU] {ce7283660cce6e1827738d22f96fec5f} DBOS worker health check - running
+2025-10-15T19:31:00.175-04:00 [DEBU] {ce7283660cce6e1827738d22f96fec5f} Processing failed workflows...
+2025-10-15T19:31:00.185-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Failed to query pending workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/pkg/dbosworkflow.(*WorkflowExecutor).ProcessPendingWorkflows
+    /home/kobdev/v1consortium/internal/pkg/dbosworkflow/dbosworkflow.go:45
+2.  v1consortium/internal/cmd.setupBackgroundJobs.func1
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:132
+
+2025-10-15T19:31:00.185-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Error processing pending workflows: failed to query pending workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/cmd.setupBackgroundJobs.func1
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:133
+
+2025-10-15T19:31:00.191-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Failed to query failed workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/pkg/dbosworkflow.(*WorkflowExecutor).ProcessFailedWorkflows
+    /home/kobdev/v1consortium/internal/pkg/dbosworkflow/dbosworkflow.go:137
+2.  v1consortium/internal/cmd.setupBackgroundJobs.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:142
+
+2025-10-15T19:31:00.191-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Error processing failed workflows: failed to query failed workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/cmd.setupBackgroundJobs.func2
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:143
+
+2025-10-15T19:31:20.901-04:00 [DEBU] {ce7283660cce6e1827738d22f96fec5f} Processing pending workflows...
+2025-10-15T19:31:20.902-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Failed to query pending workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/pkg/dbosworkflow.(*WorkflowExecutor).ProcessPendingWorkflows
+    /home/kobdev/v1consortium/internal/pkg/dbosworkflow/dbosworkflow.go:45
+2.  v1consortium/internal/cmd.setupBackgroundJobs.func1
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:132
+
+2025-10-15T19:31:20.902-04:00 [ERRO] {ce7283660cce6e1827738d22f96fec5f} Error processing pending workflows: failed to query pending workflows: pq: relation "onboarding_workflow_states" does not exist 
+Stack:
+1.  v1consortium/internal/cmd.setupBackgroundJobs.func1
+    /home/kobdev/v1consortium/internal/cmd/cmd_worker.go:133
+
+2025-10-15T19:31:22.910-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} Received signal interrupt, shutting down gracefully...
+2025-10-15T19:31:22.910-04:00 [INFO] {ce7283660cce6e1827738d22f96fec5f} Shutting down DBOS...

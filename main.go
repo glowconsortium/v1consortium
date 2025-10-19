@@ -13,5 +13,9 @@ import (
 )
 
 func main() {
+	err := cmd.Main.AddCommand(&cmd.Combined, &cmd.RiverWorkerV2) // Temporarily commented out undefined commands: &cmd.DBOSWorker, &cmd.RiverWorker
+	if err != nil {
+		panic(err)
+	}
 	cmd.Main.Run(gctx.GetInitCtx())
 }

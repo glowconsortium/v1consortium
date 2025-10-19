@@ -114,6 +114,8 @@ CREATE TABLE user_profiles (
     hire_date DATE,
     termination_date DATE,
     is_active BOOLEAN DEFAULT true,
+    is_system_user BOOLEAN DEFAULT false,
+    stripe_customer_id VARCHAR(255),
     requires_dot_testing BOOLEAN DEFAULT false,
     requires_non_dot_testing BOOLEAN DEFAULT false,
     cdl_number VARCHAR(50),
@@ -128,6 +130,7 @@ CREATE TABLE user_profiles (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     last_login_at TIMESTAMPTZ,
+    settings JSONB DEFAULT '{}'::jsonb,
     
     CONSTRAINT user_profiles_email_check CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
     CONSTRAINT ssn_last_four_check CHECK (ssn_last_four ~ '^[0-9]{4}$' OR ssn_last_four IS NULL)
