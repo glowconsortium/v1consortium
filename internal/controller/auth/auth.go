@@ -6,7 +6,6 @@ import (
 	"time"
 	v1 "v1consortium/api/auth/v1"
 	"v1consortium/internal/consts"
-	"v1consortium/internal/pkg/riverjobs"
 	"v1consortium/internal/service"
 
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
@@ -14,7 +13,6 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
-	"github.com/riverqueue/river"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -233,65 +231,23 @@ func (*Controller) Signup(ctx context.Context, req *v1.SignupRequest) (res *v1.S
 		return nil, gerror.NewCode(gcode.CodeBusinessValidationFailed, "user with this email already exists")
 	}
 
-	// Generate a unique workflow ID
-	workflowId := fmt.Sprintf("user_signup_%d_%s", time.Now().UnixNano(), req.Email)
+	// Prepare workflow input data
+	workflowInput := map[string]interface{}{
+		"email":             req.Email,
+		"password":          req.Password,
+		"first_name":        req.FirstName,
+		"last_name":         req.LastName,
+		"organization_name": req.CompanyName,
+		"is_dot_company":    req.IsDotCompany,
+		"dot_number":        req.DotNumber,
+		"role":              string(consts.RoleClientAdmin),
+	}
 
-	// Start the workflow by enqueuing the first step (validation)
-	// The workflow orchestrator will handle the rest within the River worker process
-	riverClient := service.RiverClient()
-	if riverClient != nil {
-		validateArgs := riverjobs.ValidateStepArgs{
-			BaseJobArgs: riverjobs.BaseJobArgs{
-				WorkflowID:   workflowId,
-				WorkflowType: "user_signup",
-				StepName:     "validate",
-				OrgID:        "", // Will be set during workflow execution
-				UserID:       "", // Will be set during workflow execution
-			},
-			SignupData: map[string]interface{}{
-				"email":             req.Email,
-				"password":          req.Password,
-				"first_name":        req.FirstName,
-				"last_name":         req.LastName,
-				"organization_name": req.CompanyName,
-				"is_dot_company":    req.IsDotCompany,
-				"dot_number":        req.DotNumber,
-			},
-		}
-
-		_, err = riverClient.Insert(ctx, validateArgs, &river.InsertOpts{
-			Priority: 1,
-			Queue:    riverjobs.QueueDefault,
-		})
-
-		if err != nil {
-			g.Log().Errorf(ctx, "Failed to enqueue signup validation step: %v", err)
-			return nil, fmt.Errorf("failed to start signup workflow: %w", err)
-		}
-	} else {
-		// Fallback: Try to use the UserSignupWorker if available
-		userWorker := service.UserSignupWorker()
-		if userWorker != nil {
-			workflowId, err = userWorker.StartNewFlow(ctx, riverjobs.UserSignupArgs{
-				Email:     req.Email,
-				Password:  req.Password,
-				FirstName: req.FirstName,
-				LastName:  req.LastName,
-				Role:      string(consts.RoleClientAdmin),
-				OrganizationData: map[string]interface{}{
-					"company_name":   req.CompanyName,
-					"is_dot_company": req.IsDotCompany,
-					"dot_number":     req.DotNumber,
-				},
-			}, &river.InsertOpts{})
-
-			if err != nil {
-				g.Log().Errorf(ctx, "Failed to start user signup workflow via worker: %v", err)
-				return nil, err
-			}
-		} else {
-			return nil, fmt.Errorf("neither RiverClient nor UserSignupWorker available")
-		}
+	// Start the user signup workflow using the bridge (includes deduplication)
+	workflowId, err := service.WorkflowBridge().StartUserSignupWorkflow(ctx, workflowInput, "", "")
+	if err != nil {
+		g.Log().Errorf(ctx, "Failed to start user signup workflow: %v", err)
+		return nil, fmt.Errorf("failed to start signup workflow: %w", err)
 	}
 
 	g.Log().Info(ctx, "Started user signup workflow", g.Map{
@@ -315,14 +271,78 @@ func (*Controller) CompleteRegistration(ctx context.Context, req *v1.CompleteReg
 }
 
 func (*Controller) GetSignupStatus(ctx context.Context, req *v1.GetSignupStatusRequest) (res *v1.GetSignupStatusResponse, err error) {
-	execution, err := service.UserSignupWorker().GetSignupStatus(ctx, req.WorkflowId)
+	execution, err := service.WorkflowBridge().GetWorkflowStatus(ctx, req.WorkflowId)
 	if err != nil {
 		return nil, err
 	}
 
+	var emailVerified bool
+	var subscriptionCompleted bool
+	var email string
+	var createdAt time.Time
+	var status string
+
+	if execution != nil {
+		status = execution.Status
+		// Safely handle execution.Context which is expected to be map[string]interface{}
+		if ctxMap := execution.Context; ctxMap != nil {
+			if v, ok := ctxMap["email_verified"]; ok && v != nil {
+				switch t := v.(type) {
+				case bool:
+					emailVerified = t
+				case *bool:
+					if t != nil {
+						emailVerified = *t
+					}
+				case string:
+					emailVerified = (t == "true")
+				}
+			}
+			if v, ok := ctxMap["subscription_completed"]; ok && v != nil {
+				switch t := v.(type) {
+				case bool:
+					subscriptionCompleted = t
+				case *bool:
+					if t != nil {
+						subscriptionCompleted = *t
+					}
+				case string:
+					subscriptionCompleted = (t == "true")
+				}
+			}
+			if v, ok := ctxMap["email"]; ok && v != nil {
+				if s, ok := v.(string); ok {
+					email = s
+				}
+			}
+			if v, ok := ctxMap["created_at"]; ok && v != nil {
+				switch t := v.(type) {
+				case time.Time:
+					createdAt = t
+				case *time.Time:
+					if t != nil {
+						createdAt = *t
+					}
+				case string:
+					if tt, err := time.Parse(time.RFC3339, t); err == nil {
+						createdAt = tt
+					}
+				}
+			}
+		}
+		// If not found in context, fallback to execution.CreatedAt if available
+		if createdAt.IsZero() && !execution.CreatedAt.IsZero() {
+			createdAt = execution.CreatedAt
+		}
+	}
+
 	return &v1.GetSignupStatusResponse{
-		WorkflowId: req.WorkflowId,
-		Status:     execution.Status,
+		WorkflowId:            req.WorkflowId,
+		Status:                status,
+		EmailVerified:         emailVerified,
+		SubscriptionCompleted: subscriptionCompleted,
+		Email:                 email,
+		CreatedAt:             timestamppb.New(createdAt),
 	}, nil
 }
 

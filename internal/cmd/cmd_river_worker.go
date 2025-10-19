@@ -15,104 +15,194 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
-	riverjobusersignup "v1consortium/internal/logic/riverjobUsersignup"
+	"v1consortium/internal/logic/workflowbridge"
 	"v1consortium/internal/pkg/riverjobs"
 	"v1consortium/internal/service"
 	signupworkflow "v1consortium/internal/workflow/signup"
+	signupsteps "v1consortium/internal/workflow/signup/steps"
 )
+
+type RiverComponents struct {
+	RiverManager          *riverjobs.RiverManager
+	SimpleWorkflowManager *riverjobs.SimpleWorkflowManager
+	DBPool                *pgxpool.Pool
+	Logger                *slog.Logger
+}
 
 var (
 	RiverWorker = gcmd.Command{
 		Name:  "river_worker",
 		Usage: "river_worker",
 		Brief: "start river job worker",
-		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+		Func: func(ctx context.Context, parser *gcmd.Parser) error {
 			g.Log().Info(ctx, "V1 Consortium River Worker starting...")
 
-			// Initialize logger
-			logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-				Level: slog.LevelInfo,
-			}))
-
-			// Get database URL
-			dbURL := getRiverDBURL(ctx)
-			if dbURL == "" {
-				g.Log().Fatal(ctx, "Database URL not found in environment variables")
-				return fmt.Errorf("database URL not configured")
-			}
-
-			// Create database connection pool
-			dbPool, err := pgxpool.New(ctx, dbURL)
+			components, err := initializeRiverComponents(ctx)
 			if err != nil {
-				g.Log().Fatalf(ctx, "Failed to create database pool: %v", err)
 				return err
 			}
-			defer dbPool.Close()
-
-			// Test database connection
-			if err := dbPool.Ping(ctx); err != nil {
-				g.Log().Fatalf(ctx, "Failed to ping database: %v", err)
-				return err
-			}
-
-			g.Log().Info(ctx, "Database connection established")
-
-			// Load River configuration from config file
-			riverConfig := loadRiverConfig(ctx, dbURL)
-
-			// Initialize River manager with loaded config
-			riverManager, err := riverjobs.NewRiverManager(ctx, riverConfig, logger)
-			if err != nil {
-				g.Log().Fatalf(ctx, "Failed to create River manager: %v", err)
-				return err
-			}
-
-			// Initialize workflow manager
-			workflowManager := riverjobs.NewWorkflowManager(dbPool, logger)
-
-			// Initialize orchestrator
-			orchestrator := riverjobs.NewWorkflowOrchestrator(riverManager, workflowManager, logger)
-
-			g.Log().Info(ctx, "River components initialized")
+			defer components.DBPool.Close()
 
 			// Register workers
-			if err := registerRiverWorkers(riverManager, workflowManager, logger); err != nil {
+			if err := registerAllWorkers(components); err != nil {
 				g.Log().Fatalf(ctx, "Failed to register workers: %v", err)
 				return err
 			}
 
-			g.Log().Info(ctx, "Workers registered successfully")
-
 			// Start River job processing
-			if err := riverManager.Start(ctx); err != nil {
+			if err := components.RiverManager.Start(ctx); err != nil {
 				g.Log().Fatalf(ctx, "Failed to start River client: %v", err)
 				return err
 			}
 
-			// Setup background monitoring jobs with configuration
-			setupRiverBackgroundJobs(ctx, orchestrator, workflowManager, dbPool, riverConfig) // Register shutdown handler
-			gproc.AddSigHandlerShutdown(func(sig os.Signal) {
-				g.Log().Infof(ctx, "Received signal %s, shutting down gracefully...", sig)
+			// Setup background monitoring jobs
+			config := loadRiverConfig(ctx, getRiverDBURL(ctx))
+			setupRiverBackgroundJobs(ctx, components.SimpleWorkflowManager, components.DBPool, config)
 
-				// Stop River client
-				stopCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-				defer cancel()
-
-				if err := riverManager.Stop(stopCtx); err != nil {
-					g.Log().Errorf(ctx, "Error stopping River client: %v", err)
-				}
-
-				g.Log().Info(ctx, "River worker shutdown complete")
-			})
+			// Setup graceful shutdown
+			setupShutdownHandler(ctx, components.RiverManager)
 
 			g.Log().Info(ctx, "River worker ready and processing jobs")
-
-			// Block listening for the shutdown signal
 			g.Listen()
 			return nil
 		},
 	}
 )
+
+// initializeRiverComponents sets up all River-related components
+func initializeRiverComponents(ctx context.Context) (*RiverComponents, error) {
+	// Initialize logger
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+	}))
+
+	// Get database URL
+	dbURL := getRiverDBURL(ctx)
+	if dbURL == "" {
+		return nil, fmt.Errorf("database URL not configured")
+	}
+
+	// Create database connection pool
+	dbPool, err := pgxpool.New(ctx, dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create database pool: %w", err)
+	}
+
+	// Test database connection
+	if err := dbPool.Ping(ctx); err != nil {
+		dbPool.Close()
+		return nil, fmt.Errorf("failed to ping database: %w", err)
+	}
+
+	g.Log().Info(ctx, "Database connection established")
+
+	// Load River configuration
+	riverConfig := loadRiverConfig(ctx, dbURL)
+
+	// Initialize River manager
+	riverManager, err := riverjobs.NewRiverManager(ctx, riverConfig, logger)
+	if err != nil {
+		dbPool.Close()
+		return nil, fmt.Errorf("failed to create River manager: %w", err)
+	}
+
+	// Initialize simple workflow manager
+	simpleWorkflowManager := riverjobs.NewSimpleWorkflowManager(riverManager, dbPool)
+
+	g.Log().Info(ctx, "River components initialized")
+
+	return &RiverComponents{
+		RiverManager:          riverManager,
+		SimpleWorkflowManager: simpleWorkflowManager,
+		DBPool:                dbPool,
+		Logger:                logger,
+	}, nil
+}
+
+// registerAllWorkers registers all workflow workers with River
+func registerAllWorkers(components *RiverComponents) error {
+	// Register workflow definition
+	signupWorkflow := signupworkflow.NewSignupWorkflowDefinition()
+	components.SimpleWorkflowManager.RegisterWorkflow(signupWorkflow)
+	components.Logger.Info("Registered SignupWorkflow definition")
+
+	// Register signup step workers (using StepArgs)
+	// Validate step: register adapter with concrete arg type so kind is unique
+	validateWorker := signupsteps.NewValidateStepWorker(components.SimpleWorkflowManager)
+	validateAdapter := &riverjobs.ValidateAdapter{Impl: validateWorker, Wm: components.SimpleWorkflowManager}
+	river.AddWorker[riverjobs.ValidateStepArgs](components.RiverManager.Workers, validateAdapter)
+	components.Logger.Info("Registered ValidateStepWorker")
+
+	// Create user
+	createUserWorker := signupsteps.NewCreateUserStepWorker(components.SimpleWorkflowManager)
+	createUserAdapter := &riverjobs.CreateUserAdapter{Impl: createUserWorker, Wm: components.SimpleWorkflowManager}
+	river.AddWorker[riverjobs.CreateUserStepArgs](components.RiverManager.Workers, createUserAdapter)
+	components.Logger.Info("Registered CreateUserStepWorker")
+
+	// Create organization
+	createOrgWorker := signupsteps.NewCreateOrganizationStepWorker(components.SimpleWorkflowManager)
+	createOrgAdapter := &riverjobs.CreateOrgAdapter{Impl: createOrgWorker, Wm: components.SimpleWorkflowManager}
+	river.AddWorker[riverjobs.CreateOrganizationStepArgs](components.RiverManager.Workers, createOrgAdapter)
+	components.Logger.Info("Registered CreateOrganizationStepWorker")
+
+	// Stripe setup
+	setupStripeWorker := signupsteps.NewSetupStripeStepWorker(components.SimpleWorkflowManager)
+	setupStripeAdapter := &riverjobs.SetupStripeAdapter{Impl: setupStripeWorker, Wm: components.SimpleWorkflowManager}
+	river.AddWorker[riverjobs.SetupStripeStepArgs](components.RiverManager.Workers, setupStripeAdapter)
+	components.Logger.Info("Registered SetupStripeStepWorker")
+
+	// Send verification
+	sendVerificationWorker := signupsteps.NewSendVerificationStepWorker(components.SimpleWorkflowManager)
+	sendVerificationAdapter := &riverjobs.SendVerificationAdapter{Impl: sendVerificationWorker, Wm: components.SimpleWorkflowManager}
+	river.AddWorker[riverjobs.SendVerificationStepArgs](components.RiverManager.Workers, sendVerificationAdapter)
+	components.Logger.Info("Registered SendVerificationStepWorker")
+
+	components.Logger.Info("All workflow workers registered successfully")
+	return nil
+}
+
+// registerOtherWorkers registers other existing workers
+func registerOtherWorkers(components *RiverComponents, workerBase riverjobs.WorkerBase) {
+	workers := []struct {
+		name   string
+		worker interface{}
+	}{
+		{"CreateOrganizationWorker", &riverjobs.CreateOrganizationWorker{WorkerBase: workerBase}},
+		{"ProcessSubscriptionWorker", &riverjobs.ProcessSubscriptionWorker{WorkerBase: workerBase}},
+		{"DrugTestOrderWorker", &riverjobs.DrugTestOrderWorker{WorkerBase: workerBase}},
+		{"SendTestNotificationWorker", &riverjobs.SendTestNotificationWorker{WorkerBase: workerBase}},
+	}
+
+	for _, worker := range workers {
+		switch w := worker.worker.(type) {
+		case *riverjobs.CreateOrganizationWorker:
+			river.AddWorker[riverjobs.CreateOrganizationArgs](components.RiverManager.Workers, w)
+		case *riverjobs.ProcessSubscriptionWorker:
+			river.AddWorker[riverjobs.ProcessSubscriptionArgs](components.RiverManager.Workers, w)
+		case *riverjobs.DrugTestOrderWorker:
+			river.AddWorker[riverjobs.DrugTestOrderArgs](components.RiverManager.Workers, w)
+		case *riverjobs.SendTestNotificationWorker:
+			river.AddWorker[riverjobs.SendTestNotificationArgs](components.RiverManager.Workers, w)
+		}
+		components.Logger.Info("Registered " + worker.name)
+	}
+}
+
+// setupShutdownHandler configures graceful shutdown
+func setupShutdownHandler(ctx context.Context, riverManager *riverjobs.RiverManager) {
+	gproc.AddSigHandlerShutdown(func(sig os.Signal) {
+		g.Log().Infof(ctx, "Received signal %s, shutting down gracefully...", sig)
+
+		stopCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		if err := riverManager.Stop(stopCtx); err != nil {
+			g.Log().Errorf(ctx, "Error stopping River client: %v", err)
+		}
+
+		g.Log().Info(ctx, "River worker shutdown complete")
+	})
+}
 
 // getRiverDBURL gets the database URL for River
 func getRiverDBURL(ctx context.Context) string {
@@ -132,166 +222,76 @@ func getRiverDBURL(ctx context.Context) string {
 	return dbURL
 }
 
-// registerRiverWorkers registers all workflow workers with River
-func registerRiverWorkers(riverManager *riverjobs.RiverManager, workflowManager *riverjobs.WorkflowManager, logger *slog.Logger) error {
-	// Initialize worker base for all workers
-	workerBase := riverjobs.WorkerBase{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-
-	// Create workflow orchestrator
-	orchestrator := riverjobs.NewWorkflowOrchestrator(riverManager, workflowManager, logger)
-
-	// Register workflow definitions
-	signupWorkflow := signupworkflow.NewSignupWorkflow()
-	orchestrator.RegisterWorkflow(signupWorkflow)
-	logger.Info("Registered SignupWorkflow definition")
-
-	// Register individual step workers for the signup workflow
-	validateWorker := &signupworkflow.ValidateStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.ValidateStepArgs](riverManager.Workers, validateWorker)
-	logger.Info("Registered ValidateStepWorker")
-
-	createUserWorker := &signupworkflow.CreateUserStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.CreateUserStepArgs](riverManager.Workers, createUserWorker)
-	logger.Info("Registered CreateUserStepWorker")
-
-	createOrgStepWorker := &signupworkflow.CreateOrganizationStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.CreateOrganizationStepArgs](riverManager.Workers, createOrgStepWorker)
-	logger.Info("Registered CreateOrganizationStepWorker")
-
-	setupStripeWorker := &signupworkflow.SetupStripeStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.SetupStripeStepArgs](riverManager.Workers, setupStripeWorker)
-	logger.Info("Registered SetupStripeStepWorker")
-
-	sendVerificationWorker := &signupworkflow.SendVerificationStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.SendVerificationStepArgs](riverManager.Workers, sendVerificationWorker)
-	logger.Info("Registered SendVerificationStepWorker")
-
-	// Keep the legacy UserSignupWorker for backward compatibility
-	userSignupWorker := riverjobusersignup.NewUserSignupWorker(&workerBase, orchestrator)
-	service.RegisterUserSignupWorker(userSignupWorker)
-	river.AddWorker[riverjobs.UserSignupArgs](riverManager.Workers, service.UserSignupWorker())
-	logger.Info("Registered UserSignupWorker (legacy)")
-
-	// Register other existing workers
-	createOrgWorker := &riverjobs.CreateOrganizationWorker{
-		WorkerBase: workerBase,
-	}
-	river.AddWorker[riverjobs.CreateOrganizationArgs](riverManager.Workers, createOrgWorker)
-	logger.Info("Registered CreateOrganizationWorker")
-
-	processSubWorker := &riverjobs.ProcessSubscriptionWorker{
-		WorkerBase: workerBase,
-	}
-	river.AddWorker[riverjobs.ProcessSubscriptionArgs](riverManager.Workers, processSubWorker)
-	logger.Info("Registered ProcessSubscriptionWorker")
-
-	// Drug Test Workflow Workers
-	drugTestOrderWorker := &riverjobs.DrugTestOrderWorker{
-		WorkerBase: workerBase,
-	}
-	river.AddWorker[riverjobs.DrugTestOrderArgs](riverManager.Workers, drugTestOrderWorker)
-	logger.Info("Registered DrugTestOrderWorker")
-
-	sendNotificationWorker := &riverjobs.SendTestNotificationWorker{
-		WorkerBase: workerBase,
-	}
-	river.AddWorker[riverjobs.SendTestNotificationArgs](riverManager.Workers, sendNotificationWorker)
-	logger.Info("Registered SendTestNotificationWorker")
-
-	logger.Info("All workflow workers registered successfully")
-	return nil
-}
-
 // setupRiverBackgroundJobs configures monitoring and maintenance jobs
-func setupRiverBackgroundJobs(ctx context.Context, orchestrator *riverjobs.WorkflowOrchestrator, workflowManager *riverjobs.WorkflowManager, dbPool *pgxpool.Pool, config *riverjobs.Config) {
-	// Monitor stuck workflows
-	if config.BackgroundJobs.StuckWorkflowMonitor.Enabled {
-		_, err := gcron.Add(ctx, config.BackgroundJobs.StuckWorkflowMonitor.CronExpression, func(ctx context.Context) {
-			thresholdHours := config.BackgroundJobs.StuckWorkflowMonitor.StuckThresholdHours
-			if thresholdHours == 0 {
-				thresholdHours = 1 // Default to 1 hour
-			}
-			if err := monitorStuckWorkflows(ctx, dbPool, thresholdHours); err != nil {
-				g.Log().Errorf(ctx, "Error monitoring stuck workflows: %v", err)
-			}
-		})
-		if err != nil {
-			g.Log().Warningf(ctx, "Failed to add stuck workflow monitoring cron: %v", err)
-		} else {
-			g.Log().Infof(ctx, "Scheduled stuck workflow monitor: %s", config.BackgroundJobs.StuckWorkflowMonitor.CronExpression)
-		}
+func setupRiverBackgroundJobs(ctx context.Context, simpleWorkflowManager *riverjobs.SimpleWorkflowManager, dbPool *pgxpool.Pool, config *riverjobs.Config) {
+	type backgroundJob struct {
+		name     string
+		enabled  bool
+		cronExpr string
+		jobFunc  func(context.Context)
 	}
 
-	// Cleanup completed workflows
-	if config.BackgroundJobs.WorkflowCleanup.Enabled {
-		_, err := gcron.Add(ctx, config.BackgroundJobs.WorkflowCleanup.CronExpression, func(ctx context.Context) {
-			retentionDays := config.BackgroundJobs.WorkflowCleanup.RetentionDays
-			if retentionDays == 0 {
-				retentionDays = 30 // Default to 30 days
-			}
-			cleaned, err := cleanupOldWorkflows(ctx, dbPool, retentionDays)
-			if err != nil {
-				g.Log().Errorf(ctx, "Error cleaning up workflows: %v", err)
-			} else if cleaned > 0 {
-				g.Log().Infof(ctx, "Cleaned up %d old workflows", cleaned)
-			}
-		})
-		if err != nil {
-			g.Log().Warningf(ctx, "Failed to add workflow cleanup cron: %v", err)
-		} else {
-			g.Log().Infof(ctx, "Scheduled workflow cleanup: %s (retention: %d days)",
-				config.BackgroundJobs.WorkflowCleanup.CronExpression,
-				config.BackgroundJobs.WorkflowCleanup.RetentionDays)
-		}
+	// Define all background jobs
+	jobs := []backgroundJob{
+		{
+			name:     "stuck workflow monitor",
+			enabled:  config.BackgroundJobs.StuckWorkflowMonitor.Enabled,
+			cronExpr: config.BackgroundJobs.StuckWorkflowMonitor.CronExpression,
+			jobFunc: func(ctx context.Context) {
+				threshold := config.BackgroundJobs.StuckWorkflowMonitor.StuckThresholdHours
+				if threshold == 0 {
+					threshold = 1
+				}
+				if err := monitorStuckWorkflows(ctx, dbPool, threshold); err != nil {
+					g.Log().Errorf(ctx, "Error monitoring stuck workflows: %v", err)
+				}
+			},
+		},
+		{
+			name:     "workflow cleanup",
+			enabled:  config.BackgroundJobs.WorkflowCleanup.Enabled,
+			cronExpr: config.BackgroundJobs.WorkflowCleanup.CronExpression,
+			jobFunc: func(ctx context.Context) {
+				retention := config.BackgroundJobs.WorkflowCleanup.RetentionDays
+				if retention == 0 {
+					retention = 30
+				}
+				cleaned, err := cleanupOldWorkflows(ctx, dbPool, retention)
+				if err != nil {
+					g.Log().Errorf(ctx, "Error cleaning up workflows: %v", err)
+				} else if cleaned > 0 {
+					g.Log().Infof(ctx, "Cleaned up %d old workflows", cleaned)
+				}
+			},
+		},
+		{
+			name:     "metrics collection",
+			enabled:  config.BackgroundJobs.MetricsCollection.Enabled,
+			cronExpr: config.BackgroundJobs.MetricsCollection.CronExpression,
+			jobFunc: func(ctx context.Context) {
+				if err := collectWorkflowMetrics(ctx, dbPool); err != nil {
+					g.Log().Errorf(ctx, "Error collecting workflow metrics: %v", err)
+				}
+			},
+		},
+		{
+			name:     "health check",
+			enabled:  config.BackgroundJobs.HealthCheck.Enabled,
+			cronExpr: config.BackgroundJobs.HealthCheck.CronExpression,
+			jobFunc: func(ctx context.Context) {
+				g.Log().Debug(ctx, "River worker health check - running")
+			},
+		},
 	}
 
-	// Collect workflow metrics
-	if config.BackgroundJobs.MetricsCollection.Enabled {
-		_, err := gcron.Add(ctx, config.BackgroundJobs.MetricsCollection.CronExpression, func(ctx context.Context) {
-			if err := collectWorkflowMetrics(ctx, dbPool); err != nil {
-				g.Log().Errorf(ctx, "Error collecting workflow metrics: %v", err)
+	// Schedule enabled jobs
+	for _, job := range jobs {
+		if job.enabled {
+			if _, err := gcron.Add(ctx, job.cronExpr, job.jobFunc); err != nil {
+				g.Log().Warningf(ctx, "Failed to add %s cron: %v", job.name, err)
+			} else {
+				g.Log().Infof(ctx, "Scheduled %s: %s", job.name, job.cronExpr)
 			}
-		})
-		if err != nil {
-			g.Log().Warningf(ctx, "Failed to add metrics collection cron: %v", err)
-		} else {
-			g.Log().Infof(ctx, "Scheduled metrics collection: %s", config.BackgroundJobs.MetricsCollection.CronExpression)
-		}
-	}
-
-	// Health check
-	if config.BackgroundJobs.HealthCheck.Enabled {
-		_, err := gcron.Add(ctx, config.BackgroundJobs.HealthCheck.CronExpression, func(ctx context.Context) {
-			g.Log().Debug(ctx, "River worker health check - running")
-		})
-		if err != nil {
-			g.Log().Warningf(ctx, "Failed to add health check cron: %v", err)
-		} else {
-			g.Log().Infof(ctx, "Scheduled health check: %s", config.BackgroundJobs.HealthCheck.CronExpression)
 		}
 	}
 
@@ -483,8 +483,15 @@ func loadRiverConfig(ctx context.Context, dbURL string) *riverjobs.Config {
 	}
 
 	// Load workflow configurations
+	defaultTimeoutStr := cfg.MustGet(ctx, "river.workflows.defaultTimeout", "5m").String()
+	defaultTimeout, err := time.ParseDuration(defaultTimeoutStr)
+	if err != nil {
+		g.Log().Warningf(ctx, "Invalid default timeout '%s', using 5 minutes", defaultTimeoutStr)
+		defaultTimeout = 5 * time.Minute
+	}
+
 	config.WorkflowDefaults = riverjobs.WorkflowConfig{
-		DefaultTimeout: cfg.MustGet(ctx, "river.workflows.defaultTimeout", "5m").String(),
+		DefaultTimeout: defaultTimeout,
 		MaxRetries:     cfg.MustGet(ctx, "river.workflows.maxRetries", 3).Int(),
 	}
 
@@ -496,136 +503,48 @@ func loadRiverConfig(ctx context.Context, dbURL string) *riverjobs.Config {
 
 // Global variables to hold River dependencies for the API server
 var (
-	globalRiverManager    *riverjobs.RiverManager
-	globalWorkflowManager *riverjobs.WorkflowManager
-	globalOrchestrator    *riverjobs.WorkflowOrchestrator
-	globalDBPool          *pgxpool.Pool
+	globalComponents *RiverComponents
 )
 
+// setupRiverDependentServices initializes River components for API server use
 func setupRiverDependentServices(ctx context.Context) error {
-
-	// Initialize logger
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelInfo,
-	}))
-
-	// Get database URL
-	dbURL := getRiverDBURL(ctx)
-	if dbURL == "" {
-		g.Log().Fatal(ctx, "Database URL not found in environment variables")
-		return fmt.Errorf("database URL not configured")
-	}
-
-	// Create database connection pool - keep it alive for the server lifetime
-	dbPool, err := pgxpool.New(ctx, dbURL)
+	components, err := initializeRiverComponents(ctx)
 	if err != nil {
-		g.Log().Fatalf(ctx, "Failed to create database pool: %v", err)
-		return err
-	}
-	globalDBPool = dbPool // Store globally to keep it alive
-
-	// Test database connection
-	if err := dbPool.Ping(ctx); err != nil {
-		g.Log().Fatalf(ctx, "Failed to ping database: %v", err)
 		return err
 	}
 
-	g.Log().Info(ctx, "Database connection established")
-
-	// Load River configuration from config file
-	riverConfig := loadRiverConfig(ctx, dbURL)
-
-	// Initialize River manager with loaded config
-	riverManager, err := riverjobs.NewRiverManager(ctx, riverConfig, logger)
-	if err != nil {
-		g.Log().Fatalf(ctx, "Failed to create River manager: %v", err)
-		return err
-	}
-	globalRiverManager = riverManager
-
-	// Initialize workflow manager
-	workflowManager := riverjobs.NewWorkflowManager(dbPool, logger)
-	globalWorkflowManager = workflowManager
-
-	workerBase := riverjobs.WorkerBase{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
+	// Register all workflows - IMPORTANT: This must happen before registering the bridge
+	if err := registerAllWorkers(components); err != nil {
+		return fmt.Errorf("failed to register workflows: %w", err)
 	}
 
-	// Initialize orchestrator
-	orchestrator := riverjobs.NewWorkflowOrchestrator(riverManager, workflowManager, logger)
-	globalOrchestrator = orchestrator
+	// Store globally for API server use
+	globalComponents = components
 
-	// Register workflow definitions with orchestrator
-	signupWorkflow := signupworkflow.NewSignupWorkflow()
-	orchestrator.RegisterWorkflow(signupWorkflow)
-	logger.Info("Registered SignupWorkflow definition in API server")
+	// Register workflow service for API controllers
+	workflowService := riverjobs.NewWorkflowService(components.SimpleWorkflowManager)
+	// TODO: Create service.RegisterWorkflowService function
+	_ = workflowService // Temporarily unused
+	service.RegisterRiverClient(components.RiverManager.Client)
 
-	// Register step workers with River client (required for enqueueing jobs)
-	// These workers won't actually process jobs in the API server
-	validateWorker := &signupworkflow.ValidateStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.ValidateStepArgs](riverManager.Workers, validateWorker)
-
-	createUserWorker := &signupworkflow.CreateUserStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.CreateUserStepArgs](riverManager.Workers, createUserWorker)
-
-	createOrgStepWorker := &signupworkflow.CreateOrganizationStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.CreateOrganizationStepArgs](riverManager.Workers, createOrgStepWorker)
-
-	setupStripeWorker := &signupworkflow.SetupStripeStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.SetupStripeStepArgs](riverManager.Workers, setupStripeWorker)
-
-	sendVerificationWorker := &signupworkflow.SendVerificationStepWorker{
-		WorkflowManager: workflowManager,
-		RiverClient:     riverManager.Client,
-		Logger:          logger,
-	}
-	river.AddWorker[riverjobs.SendVerificationStepArgs](riverManager.Workers, sendVerificationWorker)
-
-	logger.Info("Registered step workers in API server River client for enqueueing")
-
-	// Create UserSignup worker for API server use (without starting worker process)
-	userSignupWorker := riverjobusersignup.NewUserSignupWorker(&workerBase, orchestrator)
-
-	// Register the worker so it can be used by the API controllers
-	service.RegisterUserSignupWorker(userSignupWorker)
-
-	// Register the River client for API server use
-	service.RegisterRiverClient(riverManager.Client)
-
+	workflowbrigde := workflowbridge.NewWorkflowBridge(components.SimpleWorkflowManager)
+	service.RegisterWorkflowBridge(workflowbrigde)
 	g.Log().Info(ctx, "River dependencies initialized for API server")
 	return nil
 }
 
 // GetGlobalRiverClient returns the global River client for API server use
 func GetGlobalRiverClient() *river.Client[pgx.Tx] {
-	if globalRiverManager != nil {
-		return globalRiverManager.Client
+	if globalComponents != nil && globalComponents.RiverManager != nil {
+		return globalComponents.RiverManager.Client
 	}
 	return nil
 }
 
 // CleanupRiverDependencies should be called during server shutdown
 func CleanupRiverDependencies() {
-	if globalDBPool != nil {
-		globalDBPool.Close()
+	if globalComponents != nil && globalComponents.DBPool != nil {
+		globalComponents.DBPool.Close()
 		g.Log().Info(context.Background(), "Database pool closed")
 	}
 }

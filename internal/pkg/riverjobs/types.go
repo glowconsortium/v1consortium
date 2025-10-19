@@ -14,7 +14,23 @@ type JobArgs interface {
 	GetStepName() string
 }
 
-// BaseJobArgs provides common workflow job functionality
+// StepArgs is the standardized args for all workflow steps
+type StepArgs struct {
+	WorkflowID    string                 `json:"workflow_id"`
+	WorkflowType  string                 `json:"workflow_type"`
+	StepName      string                 `json:"step_name"`
+	OrgID         string                 `json:"org_id,omitempty"`
+	UserID        string                 `json:"user_id,omitempty"`
+	WorkflowInput map[string]interface{} `json:"workflow_input"` // All workflow data
+	StepInput     map[string]interface{} `json:"step_input"`     // Step-specific data
+}
+
+func (s StepArgs) GetWorkflowID() string   { return s.WorkflowID }
+func (s StepArgs) GetWorkflowType() string { return s.WorkflowType }
+func (s StepArgs) GetStepName() string     { return s.StepName }
+func (s StepArgs) Kind() string            { return s.WorkflowType + "_" + s.StepName }
+
+// BaseJobArgs provides common workflow job functionality (kept for backward compatibility)
 type BaseJobArgs struct {
 	WorkflowID   string `json:"workflow_id"`
 	WorkflowType string `json:"workflow_type"`
@@ -39,7 +55,6 @@ type WorkflowExecution struct {
 	CurrentStep  *string                `json:"current_step" db:"current_step"`
 	TotalSteps   int                    `json:"total_steps" db:"total_steps"`
 	Context      map[string]interface{} `json:"context" db:"context"`
-	Metadata     map[string]interface{} `json:"metadata" db:"metadata"`
 	ArgsHash     string                 `json:"args_hash" db:"args_hash"`
 	StartedAt    time.Time              `json:"started_at" db:"started_at"`
 	CompletedAt  *time.Time             `json:"completed_at" db:"completed_at"`
@@ -94,10 +109,10 @@ type CronJobConfig struct {
 }
 
 // WorkflowConfig holds default workflow configuration
-type WorkflowConfig struct {
-	DefaultTimeout string
-	MaxRetries     int
-}
+// type WorkflowConfig struct {
+// 	DefaultTimeout string
+// 	MaxRetries     int
+// }
 
 // Common queue names
 const (

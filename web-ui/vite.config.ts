@@ -14,15 +14,15 @@ export default defineConfig({
 			outdir: './src/lib/paraglide'
 		})
 	],
-	server: {
-		host: 'userapp.v1consortium.app',
-		allowedHosts: [
-			'userapp.v1consortium.app',
-			'web-ui',
-			'localhost',
-			'127.0.0.1'
-		]
-	},
+	// server: {
+	// 	host: 'userapp.v1consortium.app',
+	// 	allowedHosts: [
+	// 		'userapp.v1consortium.app',
+	// 		'web-ui',
+	// 		'localhost',
+	// 		'127.0.0.1'
+	// 	]
+	// },
 	test: {
 		projects: [
 			{

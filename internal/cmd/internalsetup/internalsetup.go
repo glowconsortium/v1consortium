@@ -104,6 +104,7 @@ func (s *InternalSetupConfig) SetupUsers() error {
 				"role":            role,
 				"first_name":      v.FirstName,
 				"last_name":       v.LastName,
+				"email_confirm":   true,
 			})
 
 			g.Log().Debugf(s.InternalCtx, "User %s registration response: %v", v.Email, err)

@@ -33,7 +33,9 @@ setup:
 .PHONY: bootstrap
 bootstrap: 
 	go install github.com/riverqueue/river/cmd/river@latest
-	river migrate-up --database-url 'postgres://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable'
+	river migrate-up --database-url 'postgresql://postgres.bgjjnvfmgrdailakasua:654321fdsA.@aws-1-us-east-1.pooler.supabase.com:5432/postgres'
+
+#	river migrate-up --database-url 'postgres://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable'
 
 .PHONY: dev
 dev:	

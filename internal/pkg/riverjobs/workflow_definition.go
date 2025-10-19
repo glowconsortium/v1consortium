@@ -1,60 +1,59 @@
 package riverjobs
 
 import (
-	"context"
 	"time"
 )
 
-// WorkflowDefinition defines the structure and behavior of a workflow
-type WorkflowDefinition interface {
-	// GetName returns the workflow type name
-	GetName() string
+// // WorkflowDefinition defines the structure and behavior of a workflow
+// type WorkflowDefinition interface {
+// 	// GetName returns the workflow type name
+// 	GetName() string
 
-	// GetSteps returns all steps in this workflow in execution order
-	GetSteps() []StepDefinition
+// 	// GetSteps returns all steps in this workflow in execution order
+// 	GetSteps() []StepDefinition
 
-	// GetInitialState returns the starting state for new workflows
-	GetInitialState() WorkflowState
+// 	// GetInitialState returns the starting state for new workflows
+// 	GetInitialState() WorkflowState
 
-	// GetNextStep determines the next step based on current state and step result
-	GetNextStep(currentState WorkflowState, stepResult StepResult) (NextAction, error)
+// 	// GetNextStep determines the next step based on current state and step result
+// 	GetNextStep(currentState WorkflowState, stepResult StepResult) (NextAction, error)
 
-	// HandleStepFailure determines how to handle a step failure
-	HandleStepFailure(state WorkflowState, step StepDefinition, err error) (FailureAction, error)
+// 	// HandleStepFailure determines how to handle a step failure
+// 	HandleStepFailure(state WorkflowState, step StepDefinition, err error) (FailureAction, error)
 
-	// ValidateInput validates the initial workflow input
-	ValidateInput(ctx context.Context, input interface{}) error
+// 	// ValidateInput validates the initial workflow input
+// 	ValidateInput(ctx context.Context, input interface{}) error
 
-	// GetCompensationSteps returns steps to run when rolling back
-	GetCompensationSteps(failedStep string) []StepDefinition
-}
+// 	// GetCompensationSteps returns steps to run when rolling back
+// 	GetCompensationSteps(failedStep string) []StepDefinition
+// }
 
-// StepDefinition defines an individual step within a workflow
-type StepDefinition interface {
-	// GetName returns the step name
-	GetName() string
+// // StepDefinition defines an individual step within a workflow
+// type StepDefinition interface {
+// 	// GetName returns the step name
+// 	GetName() string
 
-	// GetQueue returns the queue this step should run in
-	GetQueue() string
+// 	// GetQueue returns the queue this step should run in
+// 	GetQueue() string
 
-	// GetTimeout returns the maximum execution time for this step
-	GetTimeout() time.Duration
+// 	// GetTimeout returns the maximum execution time for this step
+// 	GetTimeout() time.Duration
 
-	// GetRetryPolicy returns the retry configuration for this step
-	GetRetryPolicy() RetryPolicy
+// 	// GetRetryPolicy returns the retry configuration for this step
+// 	GetRetryPolicy() RetryPolicy
 
-	// Execute runs the step with the given input and returns result
-	Execute(ctx context.Context, input StepInput) (StepResult, error)
+// 	// Execute runs the step with the given input and returns result
+// 	Execute(ctx context.Context, input StepInput) (StepResult, error)
 
-	// Compensate runs compensation logic when rolling back
-	Compensate(ctx context.Context, input StepInput) error
+// 	// Compensate runs compensation logic when rolling back
+// 	Compensate(ctx context.Context, input StepInput) error
 
-	// IsRetryable determines if an error is worth retrying
-	IsRetryable(err error) bool
+// 	// IsRetryable determines if an error is worth retrying
+// 	IsRetryable(err error) bool
 
-	// GetPreconditions returns conditions that must be met before running
-	GetPreconditions() []Precondition
-}
+// 	// GetPreconditions returns conditions that must be met before running
+// 	GetPreconditions() []Precondition
+// }
 
 // WorkflowState represents the current state of a workflow
 type WorkflowState string

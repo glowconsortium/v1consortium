@@ -2,98 +2,69 @@ package steps
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"strings"
-	"time"
-
 	"v1consortium/internal/pkg/riverjobs"
 
-	"github.com/riverqueue/river"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
-// ValidateStepWorker handles user signup validation
+// ValidateStepWorker validates the signup input data
 type ValidateStepWorker struct {
-	riverjobs.WorkerBase
+	*riverjobs.BaseStepWorker
 }
 
-// Work implements the River worker interface
-func (w *ValidateStepWorker) Work(ctx context.Context, job *river.Job[riverjobs.ValidateStepArgs]) error {
-	args := job.Args
-
-	w.Logger.Info("Starting signup validation", "workflow_id", args.WorkflowID)
-
-	// Extract signup data
-	signupData := args.SignupData
-
-	// Validate required fields
-	if err := w.validateRequiredFields(signupData); err != nil {
-		return riverjobs.NewStepError(riverjobs.ErrorTypeValidation, err.Error(), false, err)
-	}
-
-	// Validate email format
-	if err := w.validateEmail(signupData); err != nil {
-		return riverjobs.NewStepError(riverjobs.ErrorTypeValidation, err.Error(), false, err)
-	}
-
-	// Validate password strength
-	if err := w.validatePassword(signupData); err != nil {
-		return riverjobs.NewStepError(riverjobs.ErrorTypeValidation, err.Error(), false, err)
-	}
-
-	// Update step status and prepare for next step
-	outputData := map[string]interface{}{
-		"validated_data":       signupData,
-		"validation_timestamp": time.Now().Unix(),
-	}
-
-	// Update workflow step status
-	err := w.WorkflowManager.UpdateStepStatus(ctx, args.WorkflowID, "validate", riverjobs.StepStatusCompleted, outputData, nil)
-	if err != nil {
-		return fmt.Errorf("failed to update step status: %w", err)
-	}
-
-	w.Logger.Info("Signup validation completed", "workflow_id", args.WorkflowID)
-	return nil
+// NewValidateStepWorker creates a new validation step worker
+func NewValidateStepWorker(workflowManager *riverjobs.SimpleWorkflowManager) *ValidateStepWorker {
+	worker := &ValidateStepWorker{}
+	worker.BaseStepWorker = riverjobs.NewBaseStepWorker("validate", workflowManager, worker)
+	return worker
 }
 
-// validateRequiredFields checks that all required fields are present
-func (w *ValidateStepWorker) validateRequiredFields(data map[string]interface{}) error {
-	required := []string{"email", "password", "first_name", "last_name", "organization_name"}
+// Execute validates the signup input
+func (w *ValidateStepWorker) Execute(ctx context.Context, args riverjobs.StepArgs) (map[string]interface{}, error) {
+	g.Log().Info(ctx, "Starting signup validation", g.Map{
+		"workflow_id": args.WorkflowID,
+		"step":        args.StepName,
+	})
 
-	for _, field := range required {
-		if value, exists := data[field]; !exists || value == "" {
-			return fmt.Errorf("required field missing or empty: %s", field)
-		}
+	// Basic validation - check if input exists
+	if args.WorkflowInput == nil {
+		return nil, fmt.Errorf("workflow input is missing")
 	}
 
-	return nil
+	// Validate email exists (data is now passed directly in WorkflowInput)
+	email, hasEmail := args.WorkflowInput["email"].(string)
+	if !hasEmail || email == "" {
+		return nil, fmt.Errorf("email is required")
+	}
+
+	// Validate other required fields
+	firstName, _ := args.WorkflowInput["first_name"].(string)
+	lastName, _ := args.WorkflowInput["last_name"].(string)
+	password, _ := args.WorkflowInput["password"].(string)
+
+	if firstName == "" {
+		return nil, fmt.Errorf("first_name is required")
+	}
+	if lastName == "" {
+		return nil, fmt.Errorf("last_name is required")
+	}
+	if password == "" {
+		return nil, fmt.Errorf("password is required")
+	}
+
+	g.Log().Info(ctx, "Signup validation completed successfully", g.Map{
+		"workflow_id": args.WorkflowID,
+		"email":       email,
+		"first_name":  firstName,
+		"last_name":   lastName,
+	})
+
+	// Return validated input for next steps (pass through the original input)
+	return args.WorkflowInput, nil
 }
 
-// validateEmail checks email format
-func (w *ValidateStepWorker) validateEmail(data map[string]interface{}) error {
-	email, ok := data["email"].(string)
-	if !ok {
-		return errors.New("email must be a string")
-	}
-
-	if !strings.Contains(email, "@") || !strings.Contains(email, ".") {
-		return errors.New("invalid email format")
-	}
-
-	return nil
-}
-
-// validatePassword checks password strength
-func (w *ValidateStepWorker) validatePassword(data map[string]interface{}) error {
-	password, ok := data["password"].(string)
-	if !ok {
-		return errors.New("password must be a string")
-	}
-
-	if len(password) < 8 {
-		return errors.New("password must be at least 8 characters long")
-	}
-
-	return nil
+// GetStepName returns the step name
+func (w *ValidateStepWorker) GetStepName() string {
+	return "validate"
 }

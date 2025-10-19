@@ -16,6 +16,10 @@
   let apiClient = ApiClientPkg.apiClient;
   let pollInterval: NodeJS.Timeout | null = null;
 
+  function safeStringify(obj: unknown) {
+    return JSON.stringify(obj, (_k, v) => typeof v === 'bigint' ? v.toString() : v, 2);
+  }
+
   async function checkSignupStatus() {
     try {
       loading = true;
@@ -27,7 +31,7 @@
       signupStatus = response;
       
       if (response) {
-        statusMessage = `Status received: ${JSON.stringify(response, null, 2)}`;
+        statusMessage = `Status received: ${safeStringify(response)}`;
         loading = false;
       } else {
         statusMessage = 'No status data received';
@@ -71,16 +75,13 @@
   </div>
 {:else}
   <div class="success-container">
-    <h1>Signup Status for Workflow: {workflowID}</h1>
-    <p class="status-message">{statusMessage}</p>
-    <p class="poll-info">Poll count: {pollCount}</p>
-    
     {#if signupStatus}
       <div class="status-data">
         <h2>Status Data:</h2>
-        <pre>{JSON.stringify(signupStatus, null, 2)}</pre>
+        <pre>{safeStringify(signupStatus)}</pre>
       </div>
     {/if}
+
   </div>
 {/if}
 
