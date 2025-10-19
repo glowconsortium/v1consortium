@@ -1,3 +1,5 @@
+export const prerender = false;
+
 /** @type {import('./$types').PageLoad} */
 export function load({ params }) {
   // `params` is an object that contains the dynamic parts of the URL.
@@ -6,3 +8,4 @@ export function load({ params }) {
     workflowID: params.workflowID
   };
 }
+
