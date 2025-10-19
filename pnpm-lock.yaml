@@ -184,8 +184,8 @@ importers:
         specifier: ^2.2.0
         version: 2.4.0
       '@movsm/v1-consortium-web-pkg':
-        specifier: workspace:*
-        version: link:../v1-consortium-web-pkg
+        specifier: ^0.0.8
+        version: 0.0.8(svelte@5.39.12)(tailwindcss@4.1.14)
       axios:
         specifier: ^1.11.0
         version: 1.12.2
@@ -338,8 +338,8 @@ importers:
         specifier: ^2.2.0
         version: 2.4.0
       '@movsm/v1-consortium-web-pkg':
-        specifier: workspace:*
-        version: link:../v1-consortium-web-pkg
+        specifier: ^0.0.8
+        version: 0.0.8(svelte@5.39.12)(tailwindcss@4.1.14)
       axios:
         specifier: ^1.11.0
         version: 1.12.2
@@ -857,6 +857,11 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
+
+  '@movsm/v1-consortium-web-pkg@0.0.8':
+    resolution: {integrity: sha512-clE/WX/mcWseYfnpzwj5HXmENTJyy9CBinBiJzfkfp9RpY1buzUmd838Uo5eNXhZ4J0yAqlago3mWiSBdMnrhQ==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@neoconfetti/react@1.0.0':
     resolution: {integrity: sha512-klcSooChXXOzIm+SE5IISIAn3bYzYfPjbX7D7HoqZL84oAfgREeSg5vSIaSFH+DaGzzvImTyWe1OyrJ67vik4A==}
@@ -3639,6 +3644,17 @@ snapshots:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.2
       react: 19.2.0
+
+  '@movsm/v1-consortium-web-pkg@0.0.8(svelte@5.39.12)(tailwindcss@4.1.14)':
+    dependencies:
+      '@auth0/auth0-spa-js': 2.6.0
+      '@skeletonlabs/skeleton': 3.2.2(tailwindcss@4.1.14)
+      '@skeletonlabs/skeleton-svelte': 1.5.3(svelte@5.39.12)
+      axios: 1.12.2
+      svelte: 5.39.12
+    transitivePeerDependencies:
+      - debug
+      - tailwindcss
 
   '@neoconfetti/react@1.0.0': {}
 

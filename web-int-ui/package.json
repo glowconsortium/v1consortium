@@ -67,7 +67,7 @@
     "@connectrpc/connect": "^2.0.3",
     "@connectrpc/connect-web": "^2.0.3",
 		"@inlang/paraglide-js": "^2.2.0",
-		"@movsm/v1-consortium-web-pkg": "workspace:*",
+		"@movsm/v1-consortium-web-pkg": "^0.0.8", 
 		"axios": "^1.11.0",
 		"form-data": "^4.0.4",
 		"lucide-svelte": "^0.534.0",
