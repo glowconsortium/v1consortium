@@ -1,65 +1,65 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-	import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
+  // import { onMount } from 'svelte';
+  // import { authStore, isAuthenticated, authLoading, authError } from '$lib/stores/auth';
+  // import { goto } from '$app/navigation';
+  // import { page } from '$app/stores';
+	// import { PUBLIC_AUTH0_AUDIENCE, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
 
-  let processing = true;
-  let errorMessage = '';
+  // let processing = true;
+  // let errorMessage = '';
 
-  onMount(async () => {
-    try {
-      console.log('Callback page mounted, URL:', window.location.href);
+  // onMount(async () => {
+  //   try {
+  //     console.log('Callback page mounted, URL:', window.location.href);
 
-      if (!PUBLIC_AUTH0_DOMAIN || !PUBLIC_AUTH0_CLIENT_ID) {
-        throw new Error('Auth0 configuration missing. Please check your environment variables.');
-      }
+  //     if (!PUBLIC_AUTH0_DOMAIN || !PUBLIC_AUTH0_CLIENT_ID) {
+  //       throw new Error('Auth0 configuration missing. Please check your environment variables.');
+  //     }
 
-      // Initialize Auth0 (this will handle redirect if code/state are present)
-      await authStore.initialize({
-        domain: PUBLIC_AUTH0_DOMAIN,
-        clientId: PUBLIC_AUTH0_CLIENT_ID,
-        audience: PUBLIC_AUTH0_AUDIENCE,
-        scope: 'openid profile email',
-        redirectUri: `${window.location.origin}/auth/callback`
-      });
+  //     // Initialize Auth0 (this will handle redirect if code/state are present)
+  //     await authStore.initialize({
+  //       domain: PUBLIC_AUTH0_DOMAIN,
+  //       clientId: PUBLIC_AUTH0_CLIENT_ID,
+  //       audience: PUBLIC_AUTH0_AUDIENCE,
+  //       scope: 'openid profile email',
+  //       redirectUri: `${window.location.origin}/auth/callback`
+  //     });
 
-      // Prefer appState.returnTo from Auth0 callback, fallback to URL param, then dashboard
-      const appState = authStore.getAppState?.();
-      const returnTo = (appState && appState.returnTo) || $page.url.searchParams.get('returnTo') || '/dashboard';
+  //     // Prefer appState.returnTo from Auth0 callback, fallback to URL param, then dashboard
+  //     const appState = authStore.getAppState?.();
+  //     const returnTo = (appState && appState.returnTo) || $page.url.searchParams.get('returnTo') || '/dashboard';
 
-      if ($isAuthenticated) {
-        console.log('User authenticated, redirecting to:', returnTo);
-        goto(returnTo);
-        return;
-      }
+  //     if ($isAuthenticated) {
+  //       console.log('User authenticated, redirecting to:', returnTo);
+  //       goto(returnTo);
+  //       return;
+  //     }
 
-      if ($authError) {
-        console.error('Authentication error:', $authError);
-        errorMessage = $authError;
-        processing = false;
-        return;
-      }
+  //     if ($authError) {
+  //       console.error('Authentication error:', $authError);
+  //       errorMessage = $authError;
+  //       processing = false;
+  //       return;
+  //     }
 
-      console.log('Not authenticated, redirecting to signin');
-      goto('/auth/signin');
-    } catch (error) {
-      console.error('Callback processing failed:', error);
-      errorMessage = error instanceof Error ? error.message : 'Authentication failed';
-      processing = false;
-    }
-  });
+  //     console.log('Not authenticated, redirecting to signin');
+  //     goto('/auth/signin');
+  //   } catch (error) {
+  //     console.error('Callback processing failed:', error);
+  //     errorMessage = error instanceof Error ? error.message : 'Authentication failed';
+  //     processing = false;
+  //   }
+  // });
 
-  function handleRetry() {
-    goto('/auth/signin');
-  }
+  // function handleRetry() {
+  //   goto('/auth/signin');
+  // }
 </script>
 
 <svelte:head>
   <title>Authenticating... - V1 Consortium</title>
 </svelte:head>
-
+<!-- 
 <div class="min-h-screen flex items-center justify-center bg-gray-50">
   <div class="max-w-md w-full text-center">
     {#if processing && !errorMessage}
@@ -92,4 +92,4 @@
       </div>
     {/if}
   </div>
-</div>
+</div> -->

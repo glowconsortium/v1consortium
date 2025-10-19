@@ -231,26 +231,33 @@ func (*Controller) Signup(ctx context.Context, req *v1.SignupRequest) (res *v1.S
 		return nil, gerror.NewCode(gcode.CodeBusinessValidationFailed, "user with this email already exists")
 	}
 
-	// Prepare workflow input data
+	// Prepare workflow input data for signupv2
 	workflowInput := map[string]interface{}{
-		"email":             req.Email,
-		"password":          req.Password,
-		"first_name":        req.FirstName,
-		"last_name":         req.LastName,
-		"organization_name": req.CompanyName,
-		"is_dot_company":    req.IsDotCompany,
-		"dot_number":        req.DotNumber,
-		"role":              string(consts.RoleClientAdmin),
+		"email":      req.Email,
+		"password":   req.Password,
+		"first_name": req.FirstName,
+		"last_name":  req.LastName,
+		"role":       string(consts.RoleClientAdmin),
+		"organization_data": map[string]interface{}{
+			"name":           req.CompanyName,
+			"is_dot_company": req.IsDotCompany,
+			"dot_number":     req.DotNumber,
+		},
+		"metadata": map[string]interface{}{
+			"signup_source":   "api",
+			"registration_ip": "127.0.0.1", // You'd get this from request context
+			"user_agent":      "web",       // You'd get this from request context
+		},
 	}
 
-	// Start the user signup workflow using the bridge (includes deduplication)
+	// Start the user signup workflow using the bridge (v2)
 	workflowId, err := service.WorkflowBridge().StartUserSignupWorkflow(ctx, workflowInput, "", "")
 	if err != nil {
 		g.Log().Errorf(ctx, "Failed to start user signup workflow: %v", err)
 		return nil, fmt.Errorf("failed to start signup workflow: %w", err)
 	}
 
-	g.Log().Info(ctx, "Started user signup workflow", g.Map{
+	g.Log().Info(ctx, "Started user signup workflow (v2)", g.Map{
 		"workflow_id": workflowId,
 		"email":       req.Email,
 	})
@@ -286,7 +293,8 @@ func (*Controller) GetSignupStatus(ctx context.Context, req *v1.GetSignupStatusR
 		status = execution.Status
 		// Safely handle execution.Context which is expected to be map[string]interface{}
 		if ctxMap := execution.Context; ctxMap != nil {
-			if v, ok := ctxMap["email_verified"]; ok && v != nil {
+			// Check for email verification (from send_verification step)
+			if v, ok := ctxMap["verification_email_sent"]; ok && v != nil {
 				switch t := v.(type) {
 				case bool:
 					emailVerified = t
@@ -298,24 +306,21 @@ func (*Controller) GetSignupStatus(ctx context.Context, req *v1.GetSignupStatusR
 					emailVerified = (t == "true")
 				}
 			}
-			if v, ok := ctxMap["subscription_completed"]; ok && v != nil {
-				switch t := v.(type) {
-				case bool:
-					subscriptionCompleted = t
-				case *bool:
-					if t != nil {
-						subscriptionCompleted = *t
-					}
-				case string:
-					subscriptionCompleted = (t == "true")
+			// Check for subscription setup (from setup_stripe step)
+			if v, ok := ctxMap["stripe_customer_id"]; ok && v != nil {
+				// If stripe customer was created, consider subscription completed
+				if s, ok := v.(string); ok && s != "" {
+					subscriptionCompleted = true
 				}
 			}
-			if v, ok := ctxMap["email"]; ok && v != nil {
+			// Get email from context (from validation step)
+			if v, ok := ctxMap["validated_email"]; ok && v != nil {
 				if s, ok := v.(string); ok {
 					email = s
 				}
 			}
-			if v, ok := ctxMap["created_at"]; ok && v != nil {
+			// Get creation timestamp from context
+			if v, ok := ctxMap["validation_completed_at"]; ok && v != nil {
 				switch t := v.(type) {
 				case time.Time:
 					createdAt = t

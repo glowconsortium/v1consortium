@@ -176,7 +176,7 @@
 				})
 			};
 
-			await signupStore.completeSubscription(workflowId, subscriptionData);
+			//await signupStore.completeSubscription(workflowId, subscriptionData);
 			
 			// Redirect to success/dashboard
 			goto('/dashboard');
@@ -243,7 +243,7 @@
 	}
 
 	// Calculate total steps
-	$: totalSteps = accountType === 'company' && selectedPlan === 'premium' ? 6 : 5;
+	// $: totalSteps = accountType === 'company' && selectedPlan === 'premium' ? 6 : 5;
 </script>
 
 <svelte:head>
@@ -265,14 +265,7 @@
 				<div></div>
 			{/if}
 			
-			<div class="text-center">
-				<span class="text-sm text-gray-500">{currentStep} of {totalSteps} Steps</span>
-				<div class="flex space-x-1 mt-1">
-					{#each Array(totalSteps) as _, i}
-						<div class="h-2 w-8 rounded-full {i < currentStep ? 'bg-blue-600' : 'bg-gray-200'}"></div>
-					{/each}
-				</div>
-			</div>
+
 			
 			<div></div>
 		</div>
@@ -627,14 +620,6 @@
 					<p class="text-gray-600 mt-2">Complete your premium subscription</p>
 				</div>
 
-				<StripePayment
-					planType="premium"
-					amount={99}
-					currency="USD"
-					success={handlePaymentSuccess}
-					error={handlePaymentError}
-					cancel={handlePaymentCancel}
-				/>
 			{/if}
 
 			<!-- Error alert -->

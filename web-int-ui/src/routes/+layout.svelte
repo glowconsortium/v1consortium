@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { toaster } from '$lib/utils/toaster';
 	import { Toaster } from '@skeletonlabs/skeleton-svelte';
-	import { ErrorBoundary, createApiTransport } from '@movsm/v1-consortium-web-pkg';
+	import { ErrorBoundary } from '@movsm/v1-consortium-web-pkg';
 	import { authStore, authError, authLoading, isAuthenticated } from '@movsm/v1-consortium-web-pkg';
 	import { onMount } from 'svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
